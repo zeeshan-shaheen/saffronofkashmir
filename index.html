@@ -5,173 +5,1148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saffron of Kashmir | Royal Harvest</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-burgundy: #6B0F24;
-            --brand-gold: #C5A059;
-            --brand-cream: #FDFBF7;
-            --text-dark: #2B2B2B;
+            --gold: #C5A059;
+            --gold-light: #E8CC8A;
+            --gold-dark: #9A7A3E;
+            --burgundy: #6B0F24;
+            --burgundy-deep: #3D0712;
+            --cream: #FDFBF5;
+            --cream-warm: #F5EED8;
+            --ink: #0E0A06;
+            --ink-soft: #1A140D;
+            --text-muted: #9A8B75;
         }
 
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--brand-cream); color: var(--text-dark); overflow-x: hidden; }
-        
-        .navbar { background: var(--brand-burgundy); text-align: center; padding: 15px; border-bottom: 1px solid var(--brand-gold); }
-        .navbar img { height: 80px; width: auto; } 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .hero-banner { width: 100%; background: #4a0a18; }
-        .hero-banner img { width: 100%; display: block; object-fit: cover; }
+        html { scroll-behavior: smooth; }
 
-        .slider-section { background: var(--brand-cream); padding: 50px 20px; text-align: center; }
-        .slider-container { max-width: 1000px; margin: 0 auto; position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 2px solid var(--brand-gold); }
-        .slides { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        .slide { min-width: 100%; height: 500px; background-size: cover; background-position: center; }
-        /* Notice the forward slashes added here */
-        .slide-1 { background-image: url('/slider2.png'); }
-        .slide-2 { background-image: url('/slider3.png'); }
-        .slide-3 { background-image: url('/slider4.png'); }
-        
-        .dots { margin-top: 25px; }
-        .dot { height: 12px; width: 12px; background-color: #D3D3D3; border-radius: 50%; display: inline-block; margin: 0 6px; cursor: pointer; transition: all 0.3s; }
-        .dot.active { background-color: var(--brand-burgundy); transform: scale(1.2); }
-
-        .product-section { background: var(--brand-burgundy); padding: 70px 20px 80px 20px; text-align: center; position: relative; border-top: 3px solid var(--brand-gold); }
-        
-        .floating-btn { 
-            background: var(--brand-cream); color: var(--brand-burgundy); 
-            padding: 18px 45px; border: 2px solid var(--brand-gold); 
-            font-size: 18px; font-weight: 600; font-family: 'Inter', sans-serif;
-            position: absolute; top: -30px; left: 50%; transform: translateX(-50%); 
-            cursor: pointer; border-radius: 4px; box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .floating-btn:hover { background: var(--brand-gold); color: #fff; transform: translate(-50%, -3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
-        
-        .product-section h2 { color: var(--brand-cream); font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 40px; margin-top: 20px; letter-spacing: 1px; }
-
-        .product-card { 
-            background: var(--brand-cream); max-width: 900px; margin: 0 auto; 
-            border-radius: 12px; display: grid; grid-template-columns: 1.2fr 1fr; 
-            gap: 30px; padding: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            text-align: left; align-items: center; border: 1px solid rgba(197, 160, 89, 0.4);
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--ink);
+            color: var(--cream);
+            overflow-x: hidden;
         }
 
-        .card-text h3 { font-family: 'Playfair Display', serif; color: var(--brand-burgundy); font-size: 28px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .card-text ul { padding-left: 20px; color: var(--text-dark); font-size: 16px; line-height: 1.8; margin: 0; }
-        .card-text li { margin-bottom: 15px; }
-        .card-text span { font-family: 'Playfair Display', serif; font-weight: 600; color: var(--brand-burgundy); font-size: 18px; }
+        /* ─── CANVAS PARTICLES ─── */
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.35;
+        }
 
-        .card-image { text-align: center; background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: inset 0 0 15px rgba(0,0,0,0.02); }
-        .card-image img { max-width: 100%; border-radius: 8px; margin-bottom: 20px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); transition: transform 0.3s ease; }
-        .card-image img:hover { transform: scale(1.05); }
-        .card-image p { font-family: 'Inter', sans-serif; font-weight: 600; color: var(--brand-burgundy); font-size: 20px; margin: 0; }
-        .card-image .price { font-size: 24px; color: var(--brand-gold); font-family: 'Playfair Display', serif; display: block; margin-top: 5px;}
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
 
-        .footer { background: #111; color: #777; text-align: center; padding: 50px 20px; font-size: 14px; }
-        .footer .gold-text { color: var(--brand-gold); font-family: 'Playfair Display', serif; font-size: 22px; display: block; margin-bottom: 20px; }
-        
-        .social-links { margin-bottom: 25px; }
-        .social-links a { display: inline-block; margin: 0 15px; color: var(--brand-gold); transition: transform 0.3s ease, color 0.3s ease; }
-        .social-links a:hover { transform: translateY(-5px); color: #fff; }
-        .social-links svg { width: 28px; height: 28px; fill: currentColor; }
+        /* ─── THIN GOLD LINE ─── */
+        .gold-rule {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto;
+        }
 
-        @media (max-width: 768px) {
-            .product-card { grid-template-columns: 1fr; padding: 25px; }
-            .slide { height: 350px; }
-            .floating-btn { width: 90%; font-size: 15px; padding: 15px 10px; text-align: center; }
-            .navbar img { height: 60px; }
+        /* ─────────────────────────
+           NAVIGATION
+        ───────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.5s ease, padding 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(10, 7, 4, 0.92);
+            backdrop-filter: blur(18px);
+            padding: 14px 60px;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+        }
+        .nav-logo img {
+            height: 52px;
+            filter: drop-shadow(0 0 8px rgba(197,160,89,0.3));
+            transition: transform 0.3s;
+        }
+        .nav-logo img:hover { transform: scale(1.04); }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(253,251,245,0.7);
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.35s ease;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 28px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Raleway', sans-serif;
+            cursor: pointer;
+            transition: all 0.35s;
+        }
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--ink);
+        }
+
+        /* ─────────────────────────
+           HERO
+        ───────────────────────── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('Cover.png');
+            background-size: cover;
+            background-position: center 30%;
+            transform: scale(1.08);
+            transition: transform 8s ease-out;
+        }
+        .hero-bg.loaded { transform: scale(1); }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10,7,4,0.55) 0%,
+                rgba(10,7,4,0.3) 40%,
+                rgba(10,7,4,0.75) 100%
+            );
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-eyebrow {
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 400;
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+        .hero-title {
+            font-family: 'Cormorant Garant', serif;
+            font-size: clamp(60px, 9vw, 130px);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -1px;
+            color: var(--cream);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.55s forwards;
+        }
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+        .hero-subtitle {
+            font-family: 'Cormorant Garant', serif;
+            font-size: clamp(18px, 2.5vw, 30px);
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(253,251,245,0.65);
+            letter-spacing: 3px;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.75s forwards;
+        }
+        .hero-badges {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.95s forwards;
+        }
+        .hero-badge-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(197,160,89,0.4);
+        }
+        .hero-badge {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.8s forwards;
+            cursor: pointer;
+        }
+        .hero-scroll span {
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(180deg, var(--gold), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        /* ─────────────────────────
+           MONOGRAM DIVIDER
+        ───────────────────────── */
+        .monogram-divider {
+            background: var(--ink-soft);
+            padding: 70px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .monogram-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.2), rgba(197,160,89,0.5), rgba(197,160,89,0.2), transparent);
+            transform: translateY(-50%);
+        }
+        .monogram-img {
+            width: 110px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 30px rgba(197,160,89,0.25));
+            transition: filter 0.4s, transform 0.5s;
+        }
+        .monogram-img:hover {
+            filter: drop-shadow(0 0 45px rgba(197,160,89,0.5));
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* ─────────────────────────
+           HERITAGE SECTION
+        ───────────────────────── */
+        .heritage {
+            background: var(--ink-soft);
+            padding: 120px 60px;
+            position: relative;
+        }
+        .heritage-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+        .heritage-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+        .heritage-title {
+            font-family: 'Cormorant Garant', serif;
+            font-size: clamp(38px, 4vw, 58px);
+            font-weight: 300;
+            line-height: 1.15;
+            color: var(--cream);
+            margin-bottom: 30px;
+        }
+        .heritage-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+        .heritage-body {
+            font-size: 15px;
+            line-height: 2;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+        .heritage-stats {
+            display: flex;
+            gap: 50px;
+        }
+        .stat-num {
+            font-family: 'Cormorant Garant', serif;
+            font-size: 48px;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        .heritage-images {
+            position: relative;
+            height: 520px;
+        }
+        .heritage-img-main {
+            position: absolute;
+            right: 0; top: 0;
+            width: 78%;
+            height: 85%;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: -20px 20px 60px rgba(0,0,0,0.6);
+        }
+        .heritage-img-accent {
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 52%;
+            height: 55%;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 3px solid var(--ink-soft);
+            box-shadow: 10px -10px 40px rgba(0,0,0,0.5);
+        }
+        .heritage-img-badge {
+            position: absolute;
+            right: 0; bottom: 80px;
+            width: 100px;
+            filter: drop-shadow(0 8px 25px rgba(0,0,0,0.6));
+            animation: floatBadge 4s ease-in-out infinite;
+        }
+
+        /* ─────────────────────────
+           SLIDER SECTION
+        ───────────────────────── */
+        .gallery-section {
+            background: var(--ink);
+            padding: 120px 60px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .section-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-family: 'Cormorant Garant', serif;
+            font-size: clamp(36px, 4vw, 56px);
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+        .section-title em { font-style: italic; color: var(--gold-light); }
+
+        .slider-track {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .slider-frame {
+            overflow: hidden;
+            border-radius: 3px;
+            position: relative;
+        }
+        .slider-frame::before,
+        .slider-frame::after {
+            content: '';
+            position: absolute;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .slider-frame::before {
+            inset: 0;
+            border: 1px solid rgba(197,160,89,0.3);
+            border-radius: 3px;
+        }
+        .slider-frame::after {
+            top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 1px solid rgba(197,160,89,0.12);
+            border-radius: 2px;
+        }
+        .slides-inner {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+        }
+        .slide {
+            min-width: 100%;
+            height: 560px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .slide-1 { background-image: url('slider2.png'); }
+        .slide-2 { background-image: url('slider3.png'); }
+        .slide-3 { background-image: url('slider4.png'); }
+
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 36px;
+        }
+        .slider-arrow {
+            width: 44px; height: 44px;
+            border: 1px solid rgba(197,160,89,0.3);
+            background: transparent;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+            color: var(--gold);
+        }
+        .slider-arrow:hover {
+            background: var(--gold);
+            color: var(--ink);
+            border-color: var(--gold);
+        }
+        .slider-arrow svg { width: 16px; height: 16px; fill: currentColor; }
+        .slider-dots {
+            display: flex;
+            gap: 12px;
+        }
+        .s-dot {
+            width: 28px; height: 2px;
+            background: rgba(197,160,89,0.25);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .s-dot.active {
+            background: var(--gold);
+            width: 48px;
+        }
+
+        /* ─────────────────────────
+           PRODUCT SECTION
+        ───────────────────────── */
+        .product-section {
+            background: linear-gradient(135deg, var(--burgundy-deep) 0%, #2A0810 50%, var(--burgundy-deep) 100%);
+            padding: 140px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-section::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(197,160,89,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .product-section::after {
+            content: '';
+            position: absolute;
+            bottom: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(197,160,89,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .product-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-top: 70px;
+        }
+        .product-visual {
+            text-align: center;
+            position: relative;
+        }
+        .product-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(197,160,89,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .product-img {
+            width: 85%;
+            max-width: 380px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
+            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .product-img:hover { transform: translateY(-12px) scale(1.03); }
+        .product-price-tag {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(197,160,89,0.12);
+            border: 1px solid rgba(197,160,89,0.35);
+            padding: 14px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .price-label { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+        .price-value {
+            font-family: 'Cormorant Garant', serif;
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--gold-light);
+            line-height: 1;
+            margin-top: 4px;
+        }
+        .price-unit { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+        .product-info-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        .product-info-title {
+            font-family: 'Cormorant Garant', serif;
+            font-size: clamp(32px, 3.5vw, 50px);
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+        .product-info-title em { font-style: italic; color: var(--gold-light); }
+
+        .feature-list { list-style: none; margin-bottom: 48px; }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(197,160,89,0.1);
+        }
+        .feature-item:first-child { border-top: 1px solid rgba(197,160,89,0.1); }
+        .feature-icon {
+            width: 24px; height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .feature-icon svg { width: 100%; height: 100%; fill: var(--gold); opacity: 0.8; }
+        .feature-name {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 4px;
+        }
+        .feature-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--gold);
+            color: var(--ink);
+            padding: 18px 44px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            text-decoration: none;
+        }
+        .cta-btn:hover {
+            background: var(--gold-light);
+            transform: translateX(6px);
+        }
+        .cta-btn svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.3s; }
+        .cta-btn:hover svg { transform: translateX(4px); }
+
+        /* ─────────────────────────
+           CERTIFICATIONS STRIP
+        ───────────────────────── */
+        .cert-strip {
+            background: rgba(197,160,89,0.06);
+            border-top: 1px solid rgba(197,160,89,0.12);
+            border-bottom: 1px solid rgba(197,160,89,0.12);
+            padding: 40px 60px;
+        }
+        .cert-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        .cert-item {
+            text-align: center;
+        }
+        .cert-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .cert-name {
+            font-size: 8px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .cert-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ─────────────────────────
+           FOOTER
+        ───────────────────────── */
+        footer {
+            background: #070503;
+            padding: 100px 60px 50px;
+        }
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 80px;
+            padding-bottom: 70px;
+            border-bottom: 1px solid rgba(197,160,89,0.1);
+            margin-bottom: 50px;
+        }
+        .footer-logo img {
+            height: 70px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 15px rgba(197,160,89,0.2));
+        }
+        .footer-tagline {
+            font-family: 'Cormorant Garant', serif;
+            font-size: 20px;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(253,251,245,0.5);
+            line-height: 1.6;
+        }
+        .footer-col-title {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a {
+            text-decoration: none;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-contact p {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 2;
+        }
+        .footer-contact a { color: var(--gold); text-decoration: none; }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-copy {
+            font-size: 11px;
+            color: rgba(154,139,117,0.5);
+            letter-spacing: 1px;
+        }
+        .social-row {
+            display: flex;
+            gap: 20px;
+        }
+        .social-link {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(197,160,89,0.2);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .social-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(197,160,89,0.08);
+        }
+        .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* ─────────────────────────
+           KEYFRAMES
+        ───────────────────────── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.15); }
+        }
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-12px) rotate(-5deg); }
+        }
+
+        /* ─────────────────────────
+           RESPONSIVE
+        ───────────────────────── */
+        @media (max-width: 960px) {
+            nav { padding: 18px 30px; }
+            nav.scrolled { padding: 12px 30px; }
+            .nav-links, .nav-cta { display: none; }
+
+            .heritage { padding: 80px 30px; }
+            .heritage-inner { grid-template-columns: 1fr; gap: 60px; }
+            .heritage-images { height: 380px; }
+
+            .gallery-section { padding: 80px 30px; }
+            .slide { height: 380px; }
+
+            .product-section { padding: 100px 30px; }
+            .product-grid { grid-template-columns: 1fr; gap: 60px; }
+            .product-price-tag { position: static; margin: 20px auto 0; display: inline-block; }
+
+            .cert-strip { padding: 40px 30px; }
+            .cert-inner { gap: 40px; }
+
+            footer { padding: 70px 30px 40px; }
+            .footer-top { grid-template-columns: 1fr; gap: 50px; }
+            .footer-bottom { flex-direction: column; align-items: flex-start; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-title { font-size: 52px; }
+            .hero-badges { flex-wrap: wrap; gap: 15px; }
+            .heritage-stats { gap: 30px; }
+            .slide { height: 260px; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <img src="/logo.png" alt="Saffron of Kashmir Logo">
-    </nav>
+<canvas id="particle-canvas"></canvas>
 
-    <div class="hero-banner">
-        <img src="/Cover.png" alt="Saffron of Kashmir Royal Harvest">
+<!-- NAVIGATION -->
+<nav id="main-nav">
+    <a href="#" class="nav-logo">
+        <img src="logo.png" alt="Saffron of Kashmir">
+    </a>
+    <ul class="nav-links">
+        <li><a href="#heritage">Heritage</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#product">Our Saffron</a></li>
+    </ul>
+    <button class="nav-cta" onclick="window.open('https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20Saffron%20of%20Kashmir.','_blank')">Order Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-eyebrow">Est. 2004 &nbsp;·&nbsp; Pampore, Kashmir</p>
+        <h1 class="hero-title">Saffron of<br><em>Kashmir</em></h1>
+        <p class="hero-subtitle">Royal Harvest · Mongra Grade</p>
+        <div class="hero-badges">
+            <span class="hero-badge">FSSAI Certified</span>
+            <div class="hero-badge-divider"></div>
+            <span class="hero-badge">100% Pure</span>
+            <div class="hero-badge-divider"></div>
+            <span class="hero-badge">Hand Picked</span>
+            <div class="hero-badge-divider"></div>
+            <span class="hero-badge">Direct from Farm</span>
+        </div>
     </div>
+    <div class="hero-scroll" onclick="document.getElementById('heritage').scrollIntoView({behavior:'smooth'})">
+        <span>Discover</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
 
-    <div class="slider-section">
-        <div class="slider-container">
-            <div class="slides" id="slides">
+<!-- MONOGRAM DIVIDER -->
+<div class="monogram-divider">
+    <img src="favicon.png" alt="SK Monogram" class="monogram-img reveal">
+</div>
+
+<!-- HERITAGE -->
+<section class="heritage" id="heritage">
+    <div class="heritage-inner">
+        <div>
+            <p class="heritage-label reveal">Our Story</p>
+            <h2 class="heritage-title reveal reveal-delay-1">
+                The World's Finest<br><em>Red Gold</em><br>from the Valley
+            </h2>
+            <p class="heritage-body reveal reveal-delay-2">
+                Deep in the saffron fields of Pampore, where the Himalayan air is crisp and clean, our family has been cultivating the world's most prized spice for generations. Every single strand is hand-harvested at dawn — the only moment the Crocus sativus reveals its delicate crimson stigmas.
+            </p>
+            <p class="heritage-body reveal reveal-delay-2" style="margin-bottom: 50px;">
+                Our Mongra grade represents the absolute pinnacle of saffron purity — zero floral waste, only the deep red stigmas, dried over slow heat to preserve every molecule of Crocin, Safranal, and Picrocrocin.
+            </p>
+            <div class="heritage-stats reveal reveal-delay-3">
+                <div>
+                    <div class="stat-num">20+</div>
+                    <div class="stat-label">Years of Harvest</div>
+                </div>
+                <div>
+                    <div class="stat-num">100%</div>
+                    <div class="stat-label">Mongra Purity</div>
+                </div>
+                <div>
+                    <div class="stat-num">A+</div>
+                    <div class="stat-label">ISO Grade</div>
+                </div>
+            </div>
+        </div>
+        <div class="heritage-images reveal reveal-delay-1">
+            <img src="slider3.png" alt="Saffron harvest" class="heritage-img-main">
+            <img src="slider4.png" alt="Hand picking saffron" class="heritage-img-accent">
+            <img src="logo.png" alt="Brand seal" class="heritage-img-badge">
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY / SLIDER -->
+<section class="gallery-section" id="gallery">
+    <div class="section-header">
+        <p class="section-label reveal">From Farm to Tin</p>
+        <h2 class="section-title reveal reveal-delay-1">A Journey of <em>Devotion</em></h2>
+        <div class="gold-rule reveal reveal-delay-2"></div>
+    </div>
+    <div class="slider-track reveal">
+        <div class="slider-frame">
+            <div class="slides-inner" id="slides-inner">
                 <div class="slide slide-1"></div>
                 <div class="slide slide-2"></div>
                 <div class="slide slide-3"></div>
             </div>
         </div>
-        <div class="dots">
-            <span class="dot active" onclick="setSlide(0)"></span>
-            <span class="dot" onclick="setSlide(1)"></span>
-            <span class="dot" onclick="setSlide(2)"></span>
+        <div class="slider-controls">
+            <button class="slider-arrow" onclick="changeSlide(-1)" aria-label="Previous">
+                <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="slider-dots">
+                <div class="s-dot active" onclick="setSlide(0)"></div>
+                <div class="s-dot" onclick="setSlide(1)"></div>
+                <div class="s-dot" onclick="setSlide(2)"></div>
+            </div>
+            <button class="slider-arrow" onclick="changeSlide(1)" aria-label="Next">
+                <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
         </div>
     </div>
+</section>
 
-    <div class="product-section">
-        <button class="floating-btn" onclick="window.open('https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20pre-order%20the%202-Gram%20Royal%20Harvest%20Saffron%20Tin.', '_blank')">
-            Shop the 2-Gram Royal Tin
-        </button>
-        
-        <h2>Our Premium Harvest</h2>
-        
-        <div class="product-card">
-            <div class="card-text">
-                <h3>The Royal Mongra Difference</h3>
-                <ul>
-                    <li><span>Grade:</span> 100% Pure Mongra (Zero floral waste, only the deep red stigmas).</li>
-                    <li><span>Potency:</span> Exceptionally high Crocin levels for maximum color yield.</li>
-                    <li><span>Aroma:</span> A rich, earthy, and sweet floral profile.</li>
-                    <li><span>Purity:</span> FSSAI Registered & strictly unadulterated.</li>
+<!-- PRODUCT -->
+<section class="product-section" id="product">
+    <div class="product-inner">
+        <div class="section-header">
+            <p class="section-label reveal">Signature Collection</p>
+            <h2 class="section-title reveal reveal-delay-1">The Royal <em>Mongra</em> Tin</h2>
+            <div class="gold-rule reveal reveal-delay-2" style="margin-top:24px;"></div>
+        </div>
+        <div class="product-grid">
+            <div class="product-visual reveal">
+                <div class="product-glow"></div>
+                <img src="tin.png" alt="2-Gram Saffron Tin" class="product-img">
+                <div class="product-price-tag">
+                    <div class="price-label">Price</div>
+                    <div class="price-value">AED 55</div>
+                    <div class="price-unit">per 2-gram tin</div>
+                </div>
+            </div>
+            <div class="reveal reveal-delay-1">
+                <p class="product-info-label">What Makes It Different</p>
+                <h3 class="product-info-title">Zero Compromise.<br><em>Pure Mongra.</em></h3>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div>
+                            <div class="feature-name">Mongra Grade</div>
+                            <div class="feature-desc">Only the pure red stigmas — zero floral waste, zero yellow style. Maximum potency in every strand.</div>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div>
+                            <div class="feature-name">Exceptional Crocin</div>
+                            <div class="feature-desc">Measured at the highest color-yield levels, far exceeding ISO international standards.</div>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div>
+                            <div class="feature-name">FSSAI Registered</div>
+                            <div class="feature-desc">Strictly unadulterated. No artificial colour, no added moisture, no fillers. Ever.</div>
+                        </div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div>
+                            <div class="feature-name">Handcrafted Tin</div>
+                            <div class="feature-desc">Presented in a hand-painted Kashmiri enamel tin — a keepsake as treasured as what's inside.</div>
+                        </div>
+                    </li>
+                </ul>
+                <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20the%202-Gram%20Royal%20Harvest%20Saffron%20Tin." target="_blank" class="cta-btn">
+                    Order via WhatsApp
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<div class="cert-strip">
+    <div class="cert-inner">
+        <div class="cert-item">
+            <div class="cert-icon">🌿</div>
+            <div class="cert-name">FSSAI Registered</div>
+            <div class="cert-desc">Food Safety Certified</div>
+        </div>
+        <div class="cert-item">
+            <div class="cert-icon">🏔️</div>
+            <div class="cert-name">GI Tagged</div>
+            <div class="cert-desc">Kashmir Origin</div>
+        </div>
+        <div class="cert-item">
+            <div class="cert-icon">✋</div>
+            <div class="cert-name">Hand Picked</div>
+            <div class="cert-desc">Dawn Harvest</div>
+        </div>
+        <div class="cert-item">
+            <div class="cert-icon">⭐</div>
+            <div class="cert-name">ISO Grade A+</div>
+            <div class="cert-desc">International Standard</div>
+        </div>
+        <div class="cert-item">
+            <div class="cert-icon">🚫</div>
+            <div class="cert-name">Zero Adulteration</div>
+            <div class="cert-desc">100% Pure Mongra</div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div>
+                <div class="footer-logo"><img src="logo.png" alt="Saffron of Kashmir"></div>
+                <p class="footer-tagline">"Where the Himalayas<br>meet the harvest."</p>
+            </div>
+            <div>
+                <p class="footer-col-title">Navigate</p>
+                <ul class="footer-links">
+                    <li><a href="#heritage">Our Heritage</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#product">Shop</a></li>
                 </ul>
             </div>
-            <div class="card-image">
-                <img src="/tin.png" alt="2-Gram Saffron Tin">
-                <p>2-Gram Mongra Saffron</p>
-                <span class="price">AED 55.25</span>
+            <div class="footer-contact">
+                <p class="footer-col-title">Connect</p>
+                <p>
+                    <a href="https://wa.me/917006603060">+91 7006 603 060</a><br>
+                    Pampore, Kashmir, India<br><br>
+                    <a href="https://www.instagram.com/saffron_of_kashmir">@saffron_of_kashmir</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 Saffron of Kashmir. All Rights Reserved.</p>
+            <div class="social-row">
+                <a href="https://www.instagram.com/saffron_of_kashmir" target="_blank" class="social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/saffron.ofkashmir/" target="_blank" class="social-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                </a>
+                <a href="https://wa.me/917006603060" target="_blank" class="social-link" aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                </a>
             </div>
         </div>
     </div>
+</footer>
 
-    <div class="footer">
-        <span class="gold-text">Saffron of Kashmir</span>
-        
-        <div class="social-links">
-            <a href="https://www.instagram.com/saffron_of_kashmir" target="_blank" aria-label="Instagram">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-            <a href="https://www.facebook.com/saffronofkashmiir/" target="_blank" aria-label="Facebook">
-                <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
-            </a>
-            <a href="https://wa.me/917006603060" target="_blank" aria-label="WhatsApp">
-                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-            </a>
-        </div>
-        
-        &copy; 2026. All Rights Reserved.
-    </div>
+<script>
+    // ─── PARTICLE CANVAS ───
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-    <script>
-        let currentIndex = 0;
-        const totalSlides = 3;
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-        function setSlide(index) {
-            currentIndex = index;
-            document.getElementById('slides').style.transform = `translateX(-${index * 100}%)`;
-            
-            let dots = document.getElementsByClassName('dot');
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            dots[index].className += " active";
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 1.5 + 0.3;
+            this.opacity = Math.random() * 0.4 + 0.05;
+            this.speed = Math.random() * 0.3 + 0.05;
+            this.angle = Math.random() * Math.PI * 2;
+            this.drift = (Math.random() - 0.5) * 0.3;
         }
+        update() {
+            this.y -= this.speed;
+            this.x += Math.sin(this.angle) * this.drift;
+            this.angle += 0.02;
+            this.opacity -= 0.0008;
+            if (this.y < -10 || this.opacity <= 0) this.reset();
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
 
-        setInterval(() => {
-            let nextIndex = (currentIndex + 1) % totalSlides;
-            setSlide(nextIndex);
-        }, 5000);
-    </script>
+    for (let i = 0; i < 80; i++) {
+        const p = new Particle();
+        p.y = Math.random() * canvas.height;
+        particles.push(p);
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // ─── HERO BG LOAD ───
+    window.addEventListener('load', () => {
+        document.getElementById('hero-bg').classList.add('loaded');
+    });
+
+    // ─── NAV SCROLL ───
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ─── SCROLL REVEAL ───
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ─── SLIDER ───
+    let currentSlide = 0;
+    const totalSlides = 3;
+
+    function setSlide(index) {
+        currentSlide = index;
+        document.getElementById('slides-inner').style.transform = `translateX(-${index * 100}%)`;
+        document.querySelectorAll('.s-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+    function changeSlide(dir) {
+        setSlide((currentSlide + dir + totalSlides) % totalSlides);
+    }
+    setInterval(() => changeSlide(1), 6000);
+</script>
+
 </body>
 </html>
