@@ -133,87 +133,66 @@
         ───────────────────────── */
         .hero {
             position: relative;
-            height: 100vh;
-            min-height: 700px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
+            line-height: 0;
         }
-        .hero-bg {
+        .hero-img-wrap {
+            position: relative;
+            width: 100%;
+        }
+        .hero-img-wrap img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            max-height: 520px;
+            object-position: center center;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+        .hero-img-wrap img.loaded { opacity: 1; }
+        /* Top nav fade */
+        .hero-img-wrap::before {
+            content: '';
             position: absolute;
-            inset: 0;
-            background-image: url('Cover.png');
-            background-size: cover;
-            background-position: center 30%;
-            transform: scale(1.08);
-            transition: transform 8s ease-out;
+            top: 0; left: 0; right: 0;
+            height: 160px;
+            background: linear-gradient(180deg, rgba(10,7,4,0.55) 0%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
         }
-        .hero-bg.loaded { transform: scale(1); }
-        .hero-overlay {
+        /* Bottom fade into next section */
+        .hero-img-wrap::after {
+            content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                180deg,
-                rgba(10,7,4,0.55) 0%,
-                rgba(10,7,4,0.3) 40%,
-                rgba(10,7,4,0.75) 100%
-            );
+            bottom: 0; left: 0; right: 0;
+            height: 180px;
+            background: linear-gradient(0deg, var(--ink) 0%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
         }
-        .hero-content {
+
+        /* Tagline strip below hero image */
+        .hero-tagline-strip {
+            background: var(--ink);
+            text-align: center;
+            padding: 10px 20px 55px;
             position: relative;
             z-index: 2;
-            text-align: center;
-            padding: 0 20px;
-        }
-        .hero-eyebrow {
-            font-size: 10px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            font-weight: 400;
-            margin-bottom: 28px;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.3s forwards;
-        }
-        .hero-title {
-            font-family: 'Cormorant Garant', serif;
-            font-size: clamp(60px, 9vw, 130px);
-            font-weight: 300;
-            line-height: 0.9;
-            letter-spacing: -1px;
-            color: var(--cream);
-            margin-bottom: 12px;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.55s forwards;
-        }
-        .hero-title em {
-            font-style: italic;
-            color: var(--gold-light);
-        }
-        .hero-subtitle {
-            font-family: 'Cormorant Garant', serif;
-            font-size: clamp(18px, 2.5vw, 30px);
-            font-weight: 300;
-            font-style: italic;
-            color: rgba(253,251,245,0.65);
-            letter-spacing: 3px;
-            margin-bottom: 50px;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.75s forwards;
+            margin-top: -4px;
         }
         .hero-badges {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 30px;
+            flex-wrap: wrap;
             opacity: 0;
-            animation: fadeUp 1s ease 0.95s forwards;
+            animation: fadeUp 1s ease 0.5s forwards;
         }
         .hero-badge-divider {
             width: 1px;
-            height: 20px;
-            background: rgba(197,160,89,0.4);
+            height: 18px;
+            background: rgba(197,160,89,0.35);
         }
         .hero-badge {
             font-size: 9px;
@@ -222,18 +201,14 @@
             color: var(--text-muted);
         }
         .hero-scroll {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            opacity: 0;
-            animation: fadeIn 1s ease 1.8s forwards;
+            margin-top: 28px;
             cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
         }
         .hero-scroll span {
             font-size: 8px;
@@ -243,7 +218,7 @@
         }
         .scroll-line {
             width: 1px;
-            height: 50px;
+            height: 45px;
             background: linear-gradient(180deg, var(--gold), transparent);
             animation: scrollPulse 2s ease-in-out infinite;
         }
@@ -518,43 +493,51 @@
         .product-visual {
             text-align: center;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
         }
         .product-glow {
             position: absolute;
-            top: 50%; left: 50%;
+            top: 30%; left: 50%;
             transform: translate(-50%,-50%);
             width: 350px; height: 350px;
             background: radial-gradient(circle, rgba(197,160,89,0.18) 0%, transparent 70%);
             border-radius: 50%;
+            pointer-events: none;
         }
         .product-img {
-            width: 85%;
-            max-width: 380px;
+            width: 88%;
+            max-width: 400px;
             position: relative;
             z-index: 1;
             filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
             transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+            display: block;
         }
         .product-img:hover { transform: translateY(-12px) scale(1.03); }
         .product-price-tag {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: rgba(197,160,89,0.12);
+            position: relative;
+            z-index: 2;
+            margin-top: 28px;
+            background: rgba(197,160,89,0.1);
             border: 1px solid rgba(197,160,89,0.35);
-            padding: 14px 20px;
+            padding: 16px 40px;
             text-align: center;
             backdrop-filter: blur(10px);
+            display: inline-block;
         }
         .price-label { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
         .price-value {
             font-family: 'Cormorant Garant', serif;
-            font-size: 32px;
+            font-size: 38px;
             font-weight: 300;
             color: var(--gold-light);
             line-height: 1;
             margin-top: 4px;
         }
-        .price-unit { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+        .price-unit { font-size: 10px; color: var(--text-muted); margin-top: 4px; letter-spacing: 1px; }
 
         .product-info-label {
             font-size: 9px;
@@ -825,25 +808,23 @@
 
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-bg" id="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <p class="hero-eyebrow">Est. 2004 &nbsp;·&nbsp; Pampore, Kashmir</p>
-        <h1 class="hero-title">Saffron of<br><em>Kashmir</em></h1>
-        <p class="hero-subtitle">Royal Harvest · Mongra Grade</p>
+    <div class="hero-img-wrap">
+        <img src="Cover.png" alt="Saffron of Kashmir – Royal Harvest" id="hero-img">
+    </div>
+    <div class="hero-tagline-strip">
         <div class="hero-badges">
             <span class="hero-badge">FSSAI Certified</span>
             <div class="hero-badge-divider"></div>
-            <span class="hero-badge">100% Pure</span>
+            <span class="hero-badge">100% Pure Mongra</span>
             <div class="hero-badge-divider"></div>
-            <span class="hero-badge">Hand Picked</span>
+            <span class="hero-badge">Hand Picked at Dawn</span>
             <div class="hero-badge-divider"></div>
-            <span class="hero-badge">Direct from Farm</span>
+            <span class="hero-badge">Direct from Pampore</span>
         </div>
-    </div>
-    <div class="hero-scroll" onclick="document.getElementById('heritage').scrollIntoView({behavior:'smooth'})">
-        <span>Discover</span>
-        <div class="scroll-line"></div>
+        <div class="hero-scroll" onclick="document.getElementById('heritage').scrollIntoView({behavior:'smooth'})">
+            <span>Discover</span>
+            <div class="scroll-line"></div>
+        </div>
     </div>
 </section>
 
@@ -1113,10 +1094,13 @@
     }
     animateParticles();
 
-    // ─── HERO BG LOAD ───
-    window.addEventListener('load', () => {
-        document.getElementById('hero-bg').classList.add('loaded');
-    });
+    // ─── HERO IMG LOAD ───
+    const heroImg = document.getElementById('hero-img');
+    if (heroImg.complete) {
+        heroImg.classList.add('loaded');
+    } else {
+        heroImg.addEventListener('load', () => heroImg.classList.add('loaded'));
+    }
 
     // ─── NAV SCROLL ───
     const nav = document.getElementById('main-nav');
