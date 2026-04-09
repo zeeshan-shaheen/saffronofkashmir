@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saffron of Kashmir | Premium Royal Harvest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Reset & Colors */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #FDFBF7; color: #2B2B2B; line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; }
+        
+        /* Smooth Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-up { animation: fadeIn 1.2s ease-out forwards; }
+
+        /* Navigation Bar */
+        nav { background-color: #6B0F24; padding: 20px 40px; text-align: center; border-bottom: 1px solid #C5A059; }
+        nav h2 { color: #C5A059; font-size: 24px; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+
+        /* Hero Section (Full Screen) */
+        .hero { 
+            position: relative; 
+            height: 90vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            /* High-res mountain/Kashmir vibe background */
+            background: linear-gradient(rgba(107, 15, 36, 0.85), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1542301045-8162810ce84e?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            color: #FDFBF7; 
+            padding: 20px;
+        }
+        .hero-content { max-width: 800px; z-index: 2; }
+        .hero h1 { color: #C5A059; font-size: 56px; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 18px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; }
+        
+        /* The Buy Button */
+        .cta-button { 
+            display: inline-block; 
+            background-color: #C5A059; 
+            color: #6B0F24; 
+            font-weight: 600; 
+            font-size: 18px; 
+            padding: 18px 45px; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            transition: all 0.3s ease; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+        }
+        .cta-button:hover { background-color: #D4AF37; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6); }
+
+        /* Details Section (Split Layout) */
+        .details-section { padding: 80px 20px; background-color: #FDFBF7; display: flex; justify-content: center; }
+        .details-container { max-width: 1100px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        
+        /* Text Box inside Details */
+        .details-text { background: #6B0F24; border: 1px solid #C5A059; border-radius: 8px; padding: 40px; color: #FDFBF7; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .details-text h3 { color: #C5A059; font-size: 32px; margin-top: 0; margin-bottom: 25px; border-bottom: 1px solid rgba(197, 160, 89, 0.3); padding-bottom: 15px; }
+        .details-text ul { list-style: none; padding: 0; margin: 0; }
+        .details-text li { font-size: 16px; margin-bottom: 18px; line-height: 1.6; display: flex; align-items: flex-start; }
+        .details-text li::before { content: "✦"; color: #C5A059; margin-right: 12px; font-size: 18px; }
+        .details-text span { color: #C5A059; font-weight: bold; font-family: 'Playfair Display', serif; font-size: 18px; display: inline-block; width: 85px;}
+        
+        /* Image inside Details */
+        /* High-res Saffron/Spice macro shot */
+        .details-image { 
+            width: 100%; 
+            height: 450px; 
+            background: url('https://images.unsplash.com/photo-1615486171448-4fd1fc0c2138?q=80&w=800&auto=format&fit=crop') center/cover; 
+            border-radius: 8px; 
+            box-shadow: 0 15px 40px rgba(107, 15, 36, 0.2); 
+            border: 2px solid #C5A059;
+        }
+
+        /* Footer */
+        footer { background-color: #2B2B2B; color: #FDFBF7; text-align: center; padding: 40px 20px; font-size: 14px; }
+        footer .footer-gold { color: #C5A059; font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px; display: block; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .details-container { grid-template-columns: 1fr; }
+            .details-image { height: 300px; order: -1; } /* Puts image on top on mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Saffron of Kashmir</h2>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content animate-up">
+            <h1>The Authentic Red Gold of the Valley</h1>
+            <p>100% Pure, Hand-Harvested Mongra Saffron • Delivered directly across the UAE.</p>
+            <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20pre-order%20the%202-Gram%20Royal%20Harvest%20Saffron%20Tin." class="cta-button" target="_blank">Shop the 2-Gram Royal Tin</a>
+        </div>
+    </div>
+
+    <div class="details-section">
+        <div class="details-container">
+            <div class="details-image animate-up" style="animation-delay: 0.3s;"></div>
+            
+            <div class="details-text animate-up" style="animation-delay: 0.5s;">
+                <h3>The Royal Mongra Difference</h3>
+                <ul>
+                    <li><span>Grade:</span> 100% Pure Mongra (Zero floral waste, only the deep red stigmas).</li>
+                    <li><span>Potency:</span> Exceptionally high Crocin levels for maximum color yield in your culinary creations.</li>
+                    <li><span>Aroma:</span> A rich, earthy, and sweet floral profile that transforms any dish.</li>
+                    <li><span>Purity:</span> FSSAI Registered & strictly unadulterated. Harvested by hand in Pampore.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span class="footer-gold">Saffron of Kashmir</span>
+        <p>Premium Heritage • Handpicked • Est. 2026</p>
+        <p style="margin-top: 20px; opacity: 0.6;">&copy; 2026 Saffron of Kashmir. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
