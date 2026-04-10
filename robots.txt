@@ -1,0 +1,12 @@
+# robots.txt — Saffron of Kashmir
+# https://saffronofkashmir.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://saffronofkashmir.com/sitemap.xml
+
+# Block irrelevant crawling
+User-agent: *
+Disallow: /404.html
