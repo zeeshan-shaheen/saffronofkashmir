@@ -1208,14 +1208,18 @@
 
             /* Tin image — the star */
             .mobile-hero-tin {
+                display: block;
                 position: relative;
                 z-index: 2;
-                width: 75vw;
-                max-width: 310px;
-                margin: 20px auto 0;
+                width: 68vw;
+                max-width: 260px;
+                height: auto;
+                aspect-ratio: 1 / 1;
+                object-fit: contain;
+                margin: 16px auto 0;
                 flex-shrink: 0;
-                filter: drop-shadow(0 24px 48px rgba(0,0,0,0.75))
-                        drop-shadow(0 0 40px rgba(197,160,89,0.18));
+                filter: drop-shadow(0 20px 40px rgba(0,0,0,0.75))
+                        drop-shadow(0 0 30px rgba(197,160,89,0.15));
                 animation: tinFloat 5s ease-in-out infinite;
             }
             @keyframes tinFloat {
@@ -1364,9 +1368,41 @@
             .slide { height: 240px; }
             .section-header { margin-bottom: 40px; }
 
-            /* ── Product section mobile ── */
-            .product-section { padding: 60px 20px 80px; }
-            .product-grid { gap: 32px; }
+            /* ── Product section mobile: hide tin (shown in hero already) ── */
+            .product-visual { display: none; }
+            .product-grid { grid-template-columns: 1fr; gap: 0; }
+            /* Show a compact price line above features instead */
+            .product-mobile-price-row {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                margin-bottom: 28px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid rgba(197,160,89,0.15);
+            }
+            .product-mobile-price-row .pmpr-price {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 38px;
+                font-weight: 300;
+                color: var(--gold-light);
+                line-height: 1;
+            }
+            .product-mobile-price-row .pmpr-meta {
+                font-size: 9px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                line-height: 1.6;
+            }
+
+            /* Tighten mobile hero so it doesn't overflow on small phones */
+            .mobile-hero {
+                min-height: 100svh;
+                min-height: 100vh;
+                padding-bottom: 80px;
+            }
+            .mobile-hero-brand { padding-top: 16px; }
+            .mobile-hero-card { margin-top: 14px; padding: 16px 18px; }
             .product-info-title { font-size: 28px; margin-bottom: 24px; }
             .feature-item { padding: 14px 0; gap: 14px; }
             .feature-desc { font-size: 12px; }
@@ -1670,6 +1706,11 @@
                 </div>
             </div>
             <div class="reveal reveal-delay-1">
+                <!-- Mobile-only compact price row (tin hidden on mobile) -->
+                <div class="product-mobile-price-row" style="display:none;" id="mobilePriceRow">
+                    <div class="pmpr-price">AED 55</div>
+                    <div class="pmpr-meta">2-Gram<br>Royal Mongra Tin</div>
+                </div>
                 <p class="product-info-label">What Makes It Different</p>
                 <h3 class="product-info-title">Zero Compromise.<br><em>Pure Mongra.</em></h3>
                 <ul class="feature-list">
@@ -1803,6 +1844,17 @@
 </footer>
 
 <script>
+    // ─── MOBILE PRICE ROW ───
+    // Show compact price row on mobile (tin hidden), hide on desktop
+    const mobilePriceRow = document.getElementById('mobilePriceRow');
+    function checkMobilePriceRow() {
+        if (mobilePriceRow) {
+            mobilePriceRow.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+        }
+    }
+    checkMobilePriceRow();
+    window.addEventListener('resize', checkMobilePriceRow);
+
     // ─── PARTICLE CANVAS ───
     // Reduce particles on mobile for performance
     const canvas = document.getElementById('particle-canvas');
