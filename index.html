@@ -1500,9 +1500,67 @@
             @keyframes tinFloat {}
         }
     </style>
-    <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"db2d24d665e1547227581208dcc466b8"})});</script>
+    <!-- 👉 EDIT (optional): paste analytics / tracker scripts here. Removed metricool tracker — re-add if you use it. -->
 </head>
 <body>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+  📝  HOW TO EDIT THIS PAGE  (read this first — it's short)
+═══════════════════════════════════════════════════════════════════════════════
+
+  This is a SINGLE-FILE static website. No server, no database, no admin
+  panel. To change something, you edit this file (or replace an image) and
+  push to your GitHub repo. That's the whole maintenance story.
+
+  ─────────────────────────────────────────────────────────────────────────
+  IMAGE FILES  (all live next to this index.html, at the repo root)
+  ─────────────────────────────────────────────────────────────────────────
+      Cover.webp      ← desktop hero banner (top of page on tablet+)
+      tin.webp        ← the tin photo (mobile hero + product card)
+      slider2.webp    ← gallery slide #1
+      slider3.webp    ← gallery slide #2 + heritage main photo
+      slider4.webp    ← gallery slide #3 + heritage accent photo
+      logo.webp       ← logo (nav, heritage badge, footer)
+      favicon.webp    ← browser tab icon + monogram divider
+
+  ─────────────────────────────────────────────────────────────────────────
+  TO SWAP A PHOTO  (no HTML editing needed)
+  ─────────────────────────────────────────────────────────────────────────
+    1. Save your new photo as a .webp file with the EXACT same filename
+       as the one you're replacing (e.g. `Cover.webp` — note the capital C).
+    2. Commit it to the repo, replacing the old file.
+    3. Push. The site updates automatically.
+    Done. Zero HTML changes.
+
+    Tip: if your photos are JPGs, convert them at https://squoosh.app
+    (free, runs in browser). Pick WebP, quality 80–85. Aim for ~200 KB.
+
+  ─────────────────────────────────────────────────────────────────────────
+  TO CHANGE THE PRICE, PRODUCT NAME, OR WHATSAPP NUMBER
+  ─────────────────────────────────────────────────────────────────────────
+    Search this file (Ctrl+F / Cmd+F) for the comment marker  EDIT:
+    Every editable thing has one above it.
+
+    For the WhatsApp number specifically: it appears in 8 places (page
+    buttons, footer link, JSON-LD structured data). The simplest way is
+    to search for  917006603060  and Replace All with your new number.
+    Use the international format with no + or spaces.
+
+    For the price:  search for  AED 55  and Replace All. Don't forget
+    the JSON-LD block at the top of <head> — Google reads that too.
+
+  ─────────────────────────────────────────────────────────────────────────
+  TO ADD A SECOND PRODUCT (when you eventually do)
+  ─────────────────────────────────────────────────────────────────────────
+    Find the comment  EDIT: PRODUCT SECTION  below. Copy the whole
+    <section class="product-section"> block, paste it just below itself,
+    and change the name / price / image inside the copy.
+
+═══════════════════════════════════════════════════════════════════════════════
+-->
+
+
 
 <canvas id="particle-canvas"></canvas>
 
@@ -1516,12 +1574,14 @@
         <li><a href="#gallery" onclick="closeDrawer()">Gallery</a></li>
         <li><a href="#product" onclick="closeDrawer()">Our Saffron</a></li>
     </ul>
+    <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
     <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20Saffron%20of%20Kashmir." target="_blank" class="mobile-drawer-cta">
         Order via WhatsApp
     </a>
 </div>
 
 <!-- NAVIGATION -->
+<!-- 👉 EDIT: NAV — change menu items, the "Order Now" button text, or the logo -->
 <nav id="main-nav">
     <a href="#" class="nav-logo">
         <img src="logo.webp" alt="Saffron of Kashmir">
@@ -1531,6 +1591,7 @@
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#product">Our Saffron</a></li>
     </ul>
+    <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
     <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20Saffron%20of%20Kashmir." target="_blank" class="nav-cta">Order Now</a>
     <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -1549,7 +1610,8 @@
     <div class="mobile-hero-nav-space"></div>
 
     <div class="mobile-hero-brand">
-        <p class="mobile-hero-eyebrow">Est. 2004 · Pampore, Kashmir</p>
+        <!-- 👉 EDIT: TAGLINE — small text above the brand name -->
+<p class="mobile-hero-eyebrow">Est. 2004 · Pampore, Kashmir</p>
         <h1 class="mobile-hero-title">Saffron of<br><em>Kashmir</em></h1>
     </div>
 
@@ -1561,8 +1623,10 @@
 
     <div class="mobile-hero-card">
         <p class="mobile-hero-product-name">2g Royal Mongra Tin</p>
-        <div class="mobile-hero-price">AED 55</div>
+        <!-- 👉 EDIT: PRICE (mobile hero) — also update the JSON-LD at top of <head> -->
+<div class="mobile-hero-price">AED 55</div>
         <div class="mobile-hero-price-unit">per tin · free delivery UAE</div>
+        <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
         <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20the%202-Gram%20Royal%20Harvest%20Saffron%20Tin."
            target="_blank"
            class="mobile-hero-btn"
@@ -1621,6 +1685,7 @@
 </div>
 
 <!-- HERITAGE -->
+<!-- 👉 EDIT: HERITAGE TEXT — your story, the two paragraphs, the 3 stats -->
 <section class="heritage" id="heritage">
     <div class="heritage-inner">
         <div>
@@ -1634,7 +1699,8 @@
             <p class="heritage-body reveal reveal-delay-2" style="margin-bottom: 50px;">
                 Our Mongra grade represents the absolute pinnacle of saffron purity — zero floral waste, only the deep red stigmas, dried over slow heat to preserve every molecule of Crocin, Safranal, and Picrocrocin.
             </p>
-            <div class="heritage-stats reveal reveal-delay-3">
+            <!-- 👉 EDIT: HERITAGE STATS — the three numbers (20+, 100%, A+) and labels -->
+<div class="heritage-stats reveal reveal-delay-3">
                 <div>
                     <div class="stat-num">20+</div>
                     <div class="stat-label">Years of Harvest</div>
@@ -1658,6 +1724,7 @@
 </section>
 
 <!-- GALLERY / SLIDER -->
+<!-- 👉 EDIT: GALLERY — to change slide photos, replace slider2.webp / slider3.webp / slider4.webp -->
 <section class="gallery-section" id="gallery">
     <div class="section-header">
         <p class="section-label reveal">From Farm to Tin</p>
@@ -1689,11 +1756,13 @@
 </section>
 
 <!-- PRODUCT -->
+<!-- 👉 EDIT: PRODUCT SECTION — copy this entire <section> to add a second product -->
 <section class="product-section" id="product">
     <div class="product-inner">
         <div class="section-header">
             <p class="section-label reveal">Signature Collection</p>
-            <h2 class="section-title reveal reveal-delay-1">The Royal <em>Mongra</em> Tin</h2>
+            <!-- 👉 EDIT: PRODUCT NAME -->
+<h2 class="section-title reveal reveal-delay-1">The Royal <em>Mongra</em> Tin</h2>
             <div class="gold-rule reveal reveal-delay-2" style="margin-top:24px;"></div>
         </div>
         <div class="product-grid">
@@ -1702,7 +1771,8 @@
                 <img src="tin.webp" alt="Saffron of Kashmir 2-gram Royal Mongra Saffron in hand-painted Kashmiri enamel tin — AED 55" class="product-img" width="500" height="500" loading="lazy">
                 <div class="product-price-tag">
                     <div class="price-label">Price</div>
-                    <div class="price-value">AED 55</div>
+                    <!-- 👉 EDIT: PRICE (product card) -->
+<div class="price-value">AED 55</div>
                     <div class="price-unit">per 2-gram tin</div>
                 </div>
             </div>
@@ -1752,6 +1822,7 @@
                         </div>
                     </li>
                 </ul>
+                <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
                 <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20the%202-Gram%20Royal%20Harvest%20Saffron%20Tin." target="_blank" class="cta-btn">
                     Order via WhatsApp
                     <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1803,6 +1874,7 @@
 </main>
 
 <!-- FOOTER -->
+<!-- 👉 EDIT: FOOTER — address, phone, social links, copyright year -->
 <footer itemscope itemtype="https://schema.org/WPFooter">
     <div class="footer-inner">
         <div class="footer-top">
@@ -1821,6 +1893,7 @@
             <div class="footer-contact">
                 <p class="footer-col-title">Connect</p>
                 <p>
+                    <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
                     <a href="https://wa.me/917006603060">+91 7006 603 060</a><br>
                     Pampore, Kashmir, India<br><br>
                     <a href="https://www.instagram.com/saffron_of_kashmir">@saffron_of_kashmir</a>
@@ -1836,6 +1909,7 @@
                 <a href="https://www.facebook.com/saffron.ofkashmir/" target="_blank" class="social-link" aria-label="Facebook">
                     <svg viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
                 </a>
+                <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
                 <a href="https://wa.me/917006603060" target="_blank" class="social-link" aria-label="WhatsApp">
                     <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                 </a>
@@ -2025,6 +2099,7 @@
         <div class="mbb-label">2g Mongra Tin</div>
     </div>
     <div class="mbb-divider"></div>
+    <!-- 👉 EDIT: WHATSAPP NUMBER (search for 917006603060 to find them all) -->
     <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20the%202-Gram%20Royal%20Harvest%20Saffron%20Tin."
        target="_blank"
        rel="noopener"
