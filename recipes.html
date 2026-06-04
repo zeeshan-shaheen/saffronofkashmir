@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saffron Recipes | Saffron of Kashmir</title>
+    <meta name="description" content="Recipes crafted with Kashmiri Mongra saffron — from classic Kesar Doodh and Saffron Paneer Butter Masala to Zafrani Pulao. Cooking with the world's finest red gold.">
+    <meta name="keywords" content="kashmiri saffron recipes, kesar doodh recipe, saffron paneer butter masala, zafrani pulao, saffron milk, saffron of kashmir recipes">
+    <meta name="author" content="Saffron of Kashmir">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://saffronofkashmir.com/recipes.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Saffron of Kashmir">
+    <meta property="og:title" content="Saffron Recipes | Saffron of Kashmir">
+    <meta property="og:description" content="Recipes crafted with Kashmiri Mongra saffron — Kesar Doodh, Paneer Butter Masala, Zafrani Pulao and more.">
+    <meta property="og:image" content="https://saffronofkashmir.com/Cover.webp">
+    <meta property="og:url" content="https://saffronofkashmir.com/recipes.html">
+    <link rel="icon" type="image/webp" href="favicon.webp">
+    <link rel="apple-touch-icon" href="favicon.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Marcellus&family=Jost:wght@300;400;500&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9569ES4LBP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9569ES4LBP');
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1140202034977517');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1140202034977517&ev=PageView&noscript=1"
+    /></noscript>
+
+    <style>
+        :root {
+            --gold: #C5A059;
+            --gold-light: #E8CC8A;
+            --gold-dark: #9A7A3E;
+            --burgundy: #6B0F24;
+            --cream: #FDFBF5;
+            --cream-warm: #F5EED8;
+            --ink: #0E0A06;
+            --ink-soft: #1A140D;
+            --text-muted: #9A8B75;
+            --amber: #E8A23D;
+            --saffron-bright: #F4B740;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Jost', 'Raleway', sans-serif;
+            background: var(--ink);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* ─── PRELOADER ─── */
+        #darbar-preloader {
+            position: fixed; inset: 0; background: var(--ink); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #darbar-preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { text-align: center; }
+        .preloader-logo {
+            width: 80px; opacity: 0;
+            animation: fadeIn 0.6s ease 0.2s forwards;
+            filter: drop-shadow(0 0 20px rgba(197,160,89,0.5));
+        }
+        .preloader-bar {
+            width: 80px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 18px auto 0; transform: scaleX(0); transform-origin: left;
+            animation: preloaderBar 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+        }
+        @keyframes preloaderBar { from{transform:scaleX(0);opacity:0} to{transform:scaleX(1);opacity:1} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+        /* ─── GOLD FOIL ─── */
+        @keyframes goldFoil {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .foil-heading {
+            background: linear-gradient(120deg,
+                var(--gold-dark) 0%, var(--gold) 22%,
+                var(--saffron-bright) 42%, var(--gold-light) 58%,
+                var(--gold) 78%, var(--gold-dark) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldFoil 6s linear infinite;
+        }
+        .foil-heading em { font-style: italic; }
+
+        /* ─── JALI ─── */
+        .jali-layer {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 0L44 22L22 44L0 22Z' fill='none' stroke='%23C5A059' stroke-width='0.5'/%3E%3Cpath d='M22 11L33 22L22 33L11 22Z' fill='none' stroke='%23C5A059' stroke-width='0.3'/%3E%3Ccircle cx='22' cy='22' r='1.5' fill='none' stroke='%23C5A059' stroke-width='0.3'/%3E%3C/svg%3E");
+            background-size: 44px 44px;
+        }
+
+        /* ─── REVEAL ─── */
+        .reveal {
+            opacity: 0; transform: translateY(40px) scale(0.98);
+            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+
+        .gold-rule {
+            width: 60px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto;
+        }
+
+        #particle-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; opacity: 0.35;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 60px; display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.5s ease, padding 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(10,7,4,0.9);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            padding: 14px 60px;
+            border-bottom: 1px solid rgba(197,160,89,0.2);
+            box-shadow: 0 4px 40px rgba(0,0,0,0.5);
+        }
+        .nav-logo img { height: 52px; filter: drop-shadow(0 0 8px rgba(197,160,89,0.3)); transition: transform 0.3s; }
+        .nav-logo img:hover { transform: scale(1.04); }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: rgba(253,251,245,0.7);
+            font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+            font-family: 'Marcellus', 'Raleway', sans-serif; transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+            transition: width 0.35s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta {
+            background: transparent; border: 1px solid rgba(197,160,89,0.6);
+            color: var(--gold); padding: 10px 28px;
+            font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+            font-family: 'Marcellus', 'Raleway', sans-serif;
+            cursor: pointer; transition: all 0.35s; text-decoration: none;
+        }
+        .nav-cta:hover { background: var(--gold); color: var(--ink); }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 4px;
+        }
+        .hamburger span { display: block; width: 22px; height: 1px; background: var(--gold); transition: all 0.3s; }
+
+        /* ─── PAGE HERO ─── */
+        .page-hero {
+            position: relative; overflow: hidden;
+            padding: 180px 60px 100px; text-align: center;
+            background: linear-gradient(180deg, rgba(107,15,36,0.06) 0%, transparent 60%);
+        }
+        .page-hero::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 0L44 22L22 44L0 22Z' fill='none' stroke='%23C5A059' stroke-width='0.4'/%3E%3C/svg%3E");
+            background-size: 44px 44px; opacity: 0.03; pointer-events: none;
+        }
+        .page-hero-label {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 20px;
+        }
+        .page-hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(42px, 7vw, 78px); font-weight: 300;
+            line-height: 1.1; margin-bottom: 24px;
+        }
+        .page-hero-sub {
+            font-size: 14px; color: var(--text-muted);
+            max-width: 520px; margin: 0 auto; line-height: 1.9;
+        }
+
+        /* ─── RECIPE CARDS ─── */
+        .recipe-index {
+            max-width: 1100px; margin: 0 auto;
+            padding: 60px 60px 100px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px;
+        }
+        .recipe-card {
+            border: 1px solid rgba(197,160,89,0.15);
+            background: rgba(197,160,89,0.025);
+            padding: 40px 32px; position: relative; overflow: hidden;
+            transition: border-color 0.4s, transform 0.4s;
+            text-decoration: none; color: inherit; display: block;
+        }
+        .recipe-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(197,160,89,0.04) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .recipe-card:hover { border-color: rgba(197,160,89,0.45); transform: translateY(-4px); }
+        .recipe-card:hover::before { opacity: 1; }
+        .recipe-card-label {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 8px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 18px;
+        }
+        .recipe-card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px; font-weight: 400; line-height: 1.35;
+            margin-bottom: 14px; color: var(--cream);
+        }
+        .recipe-meta-row {
+            display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .recipe-meta-item {
+            font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+            font-family: 'Marcellus', sans-serif; color: var(--text-muted);
+        }
+        .recipe-meta-item strong { color: var(--gold-light); }
+        .recipe-card-excerpt { font-size: 12px; color: var(--text-muted); line-height: 1.85; margin-bottom: 28px; }
+        .recipe-card-link { font-family: 'Marcellus', sans-serif; font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); }
+        .recipe-card-link::after { content: ' →'; }
+
+        /* ─── RECIPE ARTICLES ─── */
+        .recipe-articles { max-width: 820px; margin: 0 auto; padding: 0 40px 160px; }
+
+        .recipe-block {
+            position: relative; padding: 80px 0;
+            border-top: 1px solid rgba(197,160,89,0.12);
+        }
+        .recipe-block:first-child { border-top: none; }
+
+        .recipe-label {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 16px;
+        }
+        .recipe-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(30px, 5vw, 50px); font-weight: 300;
+            line-height: 1.2; margin-bottom: 8px;
+        }
+        .recipe-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; font-style: italic; color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .recipe-stats {
+            display: flex; gap: 0; margin-bottom: 48px;
+            border: 1px solid rgba(197,160,89,0.15);
+        }
+        .stat-cell {
+            flex: 1; padding: 20px 16px; text-align: center;
+            border-right: 1px solid rgba(197,160,89,0.1);
+        }
+        .stat-cell:last-child { border-right: none; }
+        .stat-label {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 7px; letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--gold); display: block; margin-bottom: 6px;
+        }
+        .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--cream); }
+
+        .ingredients-section, .method-section, .tips-section {
+            margin-bottom: 48px;
+        }
+        .section-heading {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 24px;
+            padding-bottom: 10px; border-bottom: 1px solid rgba(197,160,89,0.1);
+        }
+
+        .ingredient-group { margin-bottom: 28px; }
+        .ingredient-group-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px; font-style: italic; color: var(--gold-light);
+            margin-bottom: 12px;
+        }
+        .ingredient-list { list-style: none; }
+        .ingredient-list li {
+            font-size: 14px; color: rgba(253,251,245,0.82); line-height: 1.8;
+            padding: 7px 0; border-bottom: 1px solid rgba(197,160,89,0.06);
+            display: flex; align-items: baseline; gap: 12px;
+        }
+        .ingredient-list li::before {
+            content: '—'; color: var(--gold); font-size: 10px; flex-shrink: 0;
+        }
+
+        .method-step {
+            display: flex; gap: 24px; margin-bottom: 28px; align-items: flex-start;
+        }
+        .step-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px; font-weight: 300; color: rgba(197,160,89,0.25);
+            line-height: 1; flex-shrink: 0; min-width: 36px;
+        }
+        .step-content {}
+        .step-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; font-weight: 400; color: var(--gold-light);
+            margin-bottom: 8px;
+        }
+        .step-text { font-size: 14px; color: rgba(253,251,245,0.8); line-height: 1.9; }
+
+        .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .tip-item {
+            border: 1px solid rgba(197,160,89,0.12);
+            background: rgba(197,160,89,0.025);
+            padding: 20px 18px;
+        }
+        .tip-item p { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
+
+        .recipe-note {
+            border-left: 2px solid var(--gold);
+            background: rgba(197,160,89,0.04);
+            padding: 20px 24px; margin: 32px 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; font-style: italic; color: var(--cream-warm); line-height: 1.7;
+        }
+
+        .variation-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
+        .variation-item {
+            border: 1px solid rgba(197,160,89,0.12);
+            background: rgba(197,160,89,0.03);
+            padding: 22px 20px;
+        }
+        .variation-name {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 8px;
+        }
+        .variation-desc { font-size: 12px; color: var(--text-muted); line-height: 1.75; }
+
+        /* ─── CTA BAND ─── */
+        .cta-band {
+            position: relative; overflow: hidden;
+            background: rgba(197,160,89,0.05);
+            border-top: 1px solid rgba(197,160,89,0.18);
+            border-bottom: 1px solid rgba(197,160,89,0.18);
+            padding: 80px 60px; text-align: center;
+        }
+        .cta-band-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 4vw, 44px); font-weight: 300; margin-bottom: 16px;
+        }
+        .cta-band-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 36px; }
+        .btn-gold {
+            display: inline-block; background: transparent;
+            border: 1px solid rgba(197,160,89,0.6); color: var(--gold);
+            padding: 14px 40px; font-family: 'Marcellus', sans-serif;
+            font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+            text-decoration: none; transition: all 0.35s;
+        }
+        .btn-gold:hover { background: var(--gold); color: var(--ink); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #070503; padding: 80px 60px 40px; position: relative;
+        }
+        footer::before {
+            content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197,160,89,0.2), rgba(197,160,89,0.65), rgba(197,160,89,0.2), transparent);
+        }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-top {
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 80px; padding-bottom: 50px;
+            border-bottom: 1px solid rgba(197,160,89,0.1); margin-bottom: 40px;
+        }
+        .footer-logo img { height: 70px; margin-bottom: 24px; filter: drop-shadow(0 0 15px rgba(197,160,89,0.2)); }
+        .footer-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; font-weight: 300; font-style: italic;
+            color: rgba(253,251,245,0.5); line-height: 1.6;
+        }
+        .footer-col-title {
+            font-family: 'Marcellus', sans-serif;
+            font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 24px;
+        }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a {
+            text-decoration: none; font-size: 13px;
+            color: var(--text-muted); font-weight: 300; transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-contact p { font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 2; }
+        .footer-contact a { color: var(--gold); text-decoration: none; }
+        .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .footer-copy { font-size: 11px; color: rgba(154,139,117,0.5); letter-spacing: 1px; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            nav { padding: 18px 24px; }
+            nav.scrolled { padding: 14px 24px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .page-hero { padding: 140px 24px 70px; }
+            .recipe-index { grid-template-columns: 1fr; padding: 40px 24px 80px; }
+            .recipe-articles { padding: 0 24px 100px; }
+            .recipe-stats { flex-wrap: wrap; }
+            .stat-cell { min-width: 80px; }
+            .tips-grid, .variation-grid { grid-template-columns: 1fr; }
+            .method-step { gap: 16px; }
+            .cta-band { padding: 60px 24px; }
+            footer { padding: 60px 24px 36px; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        /* ─── DRAWER ─── */
+        .drawer-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); z-index: 200;
+        }
+        .drawer-overlay.open { display: block; }
+        .mobile-drawer {
+            position: fixed; top: 0; right: -280px; bottom: 0;
+            width: 280px; background: var(--ink-soft);
+            border-left: 1px solid rgba(197,160,89,0.15);
+            z-index: 300; padding: 80px 32px 40px;
+            transition: right 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .mobile-drawer.open { right: 0; }
+        .mobile-drawer ul { list-style: none; }
+        .mobile-drawer ul li { margin-bottom: 28px; }
+        .mobile-drawer ul a {
+            text-decoration: none; color: var(--cream);
+            font-family: 'Marcellus', sans-serif;
+            font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s;
+        }
+        .mobile-drawer ul a:hover { color: var(--gold); }
+        .mobile-drawer-cta {
+            display: block; margin-top: 40px; background: transparent;
+            border: 1px solid rgba(197,160,89,0.5); color: var(--gold);
+            padding: 14px 24px; font-family: 'Marcellus', sans-serif;
+            font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+            text-decoration: none; text-align: center; transition: all 0.3s;
+        }
+        .mobile-drawer-cta:hover { background: var(--gold); color: var(--ink); }
+    </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="darbar-preloader" aria-hidden="true">
+    <div class="preloader-inner">
+        <img src="favicon.webp" alt="" class="preloader-logo" width="80" height="80">
+        <div class="preloader-bar"></div>
+    </div>
+</div>
+
+<!-- CANVAS PARTICLES -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="mobile-drawer" id="mobile-drawer">
+    <ul>
+        <li><a href="index.html" onclick="closeDrawer()">Home</a></li>
+        <li><a href="index.html#heritage" onclick="closeDrawer()">Heritage</a></li>
+        <li><a href="index.html#gallery" onclick="closeDrawer()">Gallery</a></li>
+        <li><a href="index.html#product" onclick="closeDrawer()">Our Saffron</a></li>
+        <li><a href="blogs.html" onclick="closeDrawer()">Guides</a></li>
+        <li><a href="recipes.html" onclick="closeDrawer()">Recipes</a></li>
+    </ul>
+    <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20Saffron%20of%20Kashmir." target="_blank" class="mobile-drawer-cta">Order via WhatsApp</a>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="main-nav">
+    <a href="index.html" class="nav-logo">
+        <img src="logo.webp" alt="Saffron of Kashmir">
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html#heritage">Heritage</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#product">Our Saffron</a></li>
+        <li><a href="blogs.html">Guides</a></li>
+        <li><a href="recipes.html" class="active">Recipes</a></li>
+    </ul>
+    <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20Saffron%20of%20Kashmir." target="_blank" class="nav-cta">Order Now</a>
+    <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <p class="page-hero-label reveal">The Darbar Kitchen</p>
+    <h1 class="page-hero-title foil-heading reveal reveal-delay-1">Crafted with<br><em>Red Gold</em></h1>
+    <div class="gold-rule" style="margin:28px auto"></div>
+    <p class="page-hero-sub reveal reveal-delay-2">Recipes that honour the saffron thread — from ancient Kashmiri traditions to the modern table.</p>
+</section>
+
+<!-- RECIPE CARDS -->
+<section>
+    <div class="recipe-index">
+        <a href="#kesar-doodh" class="recipe-card reveal">
+            <p class="recipe-card-label">Beverage — Traditional</p>
+            <h2 class="recipe-card-title">Kesar Doodh — Saffron Milk</h2>
+            <div class="recipe-meta-row">
+                <span class="recipe-meta-item">Prep <strong>20 min</strong></span>
+                <span class="recipe-meta-item">Serves <strong>1–2</strong></span>
+                <span class="recipe-meta-item">Saffron <strong>5–6 threads</strong></span>
+            </div>
+            <p class="recipe-card-excerpt">The ancient golden elixir of Kashmir — warm spiced milk infused with Mongra threads. Seven variations from classic to rose-rose petal and coconut.</p>
+            <span class="recipe-card-link">View Recipe</span>
+        </a>
+        <a href="#paneer-butter-masala" class="recipe-card reveal reveal-delay-1">
+            <p class="recipe-card-label">Main Course — Indian</p>
+            <h2 class="recipe-card-title">Saffron Paneer Butter Masala</h2>
+            <div class="recipe-meta-row">
+                <span class="recipe-meta-item">Prep <strong>10 min</strong></span>
+                <span class="recipe-meta-item">Cook <strong>30 min</strong></span>
+                <span class="recipe-meta-item">Serves <strong>4–6</strong></span>
+            </div>
+            <p class="recipe-card-excerpt">The classic butter masala elevated with a saffron bloom — transforming a beloved dish into something unmistakably regal.</p>
+            <span class="recipe-card-link">View Recipe</span>
+        </a>
+        <a href="#zafrani-pulao" class="recipe-card reveal reveal-delay-2">
+            <p class="recipe-card-label">Rice — Kashmiri</p>
+            <h2 class="recipe-card-title">Zafrani Pulao — Saffron Rice</h2>
+            <div class="recipe-meta-row">
+                <span class="recipe-meta-item">Prep <strong>15 min</strong></span>
+                <span class="recipe-meta-item">Cook <strong>25 min</strong></span>
+                <span class="recipe-meta-item">Serves <strong>4</strong></span>
+            </div>
+            <p class="recipe-card-excerpt">A fragrant Kashmiri saffron rice with whole spices, fried onions, and nuts — the ceremonial rice of the valley, fit for a wazwan feast.</p>
+            <span class="recipe-card-link">View Recipe</span>
+        </a>
+    </div>
+</section>
+
+<!-- FULL RECIPES -->
+<div class="recipe-articles">
+
+    <!-- ── RECIPE 1: KESAR DOODH ── -->
+    <article class="recipe-block" id="kesar-doodh">
+        <p class="recipe-label">Beverage — Traditional Kashmiri</p>
+        <h2 class="recipe-title foil-heading reveal">Kesar Doodh</h2>
+        <p class="recipe-subtitle reveal reveal-delay-1">Saffron Milk — the golden elixir of Kashmir</p>
+        <div class="gold-rule" style="margin: 0 0 40px"></div>
+
+        <div class="recipe-stats reveal">
+            <div class="stat-cell"><span class="stat-label">Prep</span><span class="stat-value">20 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Cook</span><span class="stat-value">10 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Total</span><span class="stat-value">30 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Serves</span><span class="stat-value">1–2</span></div>
+            <div class="stat-cell"><span class="stat-label">Saffron</span><span class="stat-value">5–6 threads</span></div>
+        </div>
+
+        <div class="recipe-note">
+            "Kesar Doodh is not merely a drink — it is a Kashmiri ritual. Prepared before sleep, shared at celebrations, gifted to new mothers. Always made with Mongra."
+        </div>
+
+        <div class="ingredients-section">
+            <h3 class="section-heading">Ingredients</h3>
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Base Recipe</p>
+                <ul class="ingredient-list">
+                    <li>1 cup full-fat milk (or plant-based alternative)</li>
+                    <li>5–6 strands Kashmiri Mongra saffron</li>
+                    <li>1–2 teaspoons sweetener (raw honey, jaggery, or cane sugar)</li>
+                    <li>2 tablespoons warm milk (for blooming the saffron)</li>
+                </ul>
+            </div>
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Traditional Additions (optional)</p>
+                <ul class="ingredient-list">
+                    <li>2 green cardamom pods, lightly crushed</li>
+                    <li>A pinch of freshly grated nutmeg</li>
+                    <li>4–5 raw almonds, blanched and slivered</li>
+                    <li>1 teaspoon rose water</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="method-section">
+            <h3 class="section-heading">Method</h3>
+
+            <div class="method-step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h4 class="step-title">Bloom the Saffron</h4>
+                    <p class="step-text">Place 5–6 saffron threads in a small bowl with 2 tablespoons of warm (not boiling) milk. Gently crush the threads with the back of a spoon to help release their crocin. Allow to steep for 15–20 minutes — the liquid will turn a deep, clear gold. This step is non-negotiable: blooming unlocks both colour and aroma.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h4 class="step-title">Warm the Milk</h4>
+                    <p class="step-text">Pour the remaining milk into a small saucepan. Add crushed cardamom pods if using. Heat over medium-low flame until the milk reaches a gentle simmer — small bubbles at the edges, not a rolling boil. Stir frequently to prevent a skin forming.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h4 class="step-title">Combine and Simmer</h4>
+                    <p class="step-text">Pour the bloomed saffron liquid — threads and all — into the simmering milk. Stir gently. Reduce heat to low and simmer for 5–7 minutes, stirring occasionally. The milk will deepen to a warm amber-gold. The longer you simmer, the more intense the colour and flavour.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <h4 class="step-title">Sweeten and Serve</h4>
+                    <p class="step-text">Remove from heat. Add your sweetener of choice and stir until dissolved. Strain if you prefer a clean cup, or serve with the threads — they are entirely edible. Garnish with almond slivers and a dusting of nutmeg. Serve immediately, or cool and refrigerate (keeps 2 days; reheat gently).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h3 class="section-heading">Seven Variations</h3>
+            <div class="variation-grid">
+                <div class="variation-item">
+                    <p class="variation-name">Traditional Kesar Doodh</p>
+                    <p class="variation-desc">Cardamom, a pinch of nutmeg, blanched almonds. The classic Kashmiri recipe — rich, warming, deeply fragrant.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Golden Turmeric Saffron</p>
+                    <p class="variation-desc">Add ¼ tsp turmeric, a sliver of ginger, a crack of black pepper. An immunity-focused golden milk for winter mornings.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Rose Saffron Milk</p>
+                    <p class="variation-desc">1 tsp rose water, cardamom, a few dried rose petals. Delicate, floral — a beauty-focused variation popular in Mughal court cuisine.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Almond Saffron Milk</p>
+                    <p class="variation-desc">Swap dairy for almond milk. Add almond butter for richness. Plant-based but still authentically golden.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Spiced Winter Warmer</p>
+                    <p class="variation-desc">Add a cinnamon stick, 2 cloves, and a sliver of ginger alongside the saffron. Strain and serve with jaggery — best drunk after dinner in December.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Coconut Saffron Milk</p>
+                    <p class="variation-desc">Full-fat coconut milk in place of dairy. Rich and tropical — works both warm and chilled over ice.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Chocolate Saffron</p>
+                    <p class="variation-desc">1 tsp raw cacao, a pinch of cinnamon, saffron bloom. The unexpected pairing that works — bitter chocolate grounds the floral threads.</p>
+                </div>
+                <div class="variation-item">
+                    <p class="variation-name">Bedtime Sleep Blend</p>
+                    <p class="variation-desc">Saffron, warm full-fat milk, raw honey, a pinch of nutmeg. Consume 30–45 minutes before sleep. Safranal in the threads promotes calm and restful sleep onset.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- ── RECIPE 2: PANEER BUTTER MASALA ── -->
+    <article class="recipe-block" id="paneer-butter-masala">
+        <p class="recipe-label">Main Course — North Indian</p>
+        <h2 class="recipe-title foil-heading reveal">Saffron Paneer Butter Masala</h2>
+        <p class="recipe-subtitle reveal reveal-delay-1">Creamy cottage cheese curry elevated with Kashmiri Mongra</p>
+        <div class="gold-rule" style="margin: 0 0 40px"></div>
+
+        <div class="recipe-stats reveal">
+            <div class="stat-cell"><span class="stat-label">Prep</span><span class="stat-value">10 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Bloom</span><span class="stat-value">10 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Cook</span><span class="stat-value">30 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Total</span><span class="stat-value">50 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Serves</span><span class="stat-value">4–6</span></div>
+        </div>
+
+        <div class="recipe-note">
+            "The saffron does not overwhelm the butter masala — it dignifies it. The gravy shifts from orange to amber-gold, and the aroma becomes unmistakable."
+        </div>
+
+        <div class="ingredients-section">
+            <h3 class="section-heading">Ingredients</h3>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Saffron Infusion</p>
+                <ul class="ingredient-list">
+                    <li>15–20 strands Kashmiri Mongra saffron</li>
+                    <li>3 tablespoons warm milk or cream</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Paneer</p>
+                <ul class="ingredient-list">
+                    <li>400g paneer, cut into 1-inch cubes</li>
+                    <li>2 tablespoons ghee or butter (for optional frying)</li>
+                    <li>Warm salted water (for soaking, keeps paneer soft)</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Tomato-Cashew Gravy Base</p>
+                <ul class="ingredient-list">
+                    <li>500g ripe tomatoes, roughly chopped</li>
+                    <li>15–20 cashew nuts</li>
+                    <li>1 large onion (200g), roughly chopped</li>
+                    <li>6–8 garlic cloves</li>
+                    <li>1-inch ginger piece</li>
+                    <li>2 green cardamom pods</li>
+                    <li>2–3 cloves</li>
+                    <li>1-inch cinnamon stick</li>
+                    <li>1 bay leaf</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Tempering & Spices</p>
+                <ul class="ingredient-list">
+                    <li>3 tablespoons butter, divided</li>
+                    <li>1 teaspoon cumin seeds</li>
+                    <li>1 teaspoon Kashmiri red chilli powder</li>
+                    <li>½ teaspoon garam masala</li>
+                    <li>1 teaspoon coriander powder</li>
+                    <li>½ teaspoon turmeric powder</li>
+                    <li>1 teaspoon sugar</li>
+                    <li>Salt to taste</li>
+                    <li>½ cup fresh cream (minimum 25% fat)</li>
+                    <li>2 tablespoons kasuri methi (dried fenugreek), crushed</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Garnish</p>
+                <ul class="ingredient-list">
+                    <li>Fresh coriander leaves, chopped</li>
+                    <li>1–2 tablespoons additional cream</li>
+                    <li>Extra saffron strands</li>
+                    <li>Ginger julienne (optional)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="method-section">
+            <h3 class="section-heading">Method</h3>
+
+            <div class="method-step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h4 class="step-title">Bloom the Saffron (10 minutes)</h4>
+                    <p class="step-text">Place saffron strands in a small bowl with warm milk or cream. Gently crush threads with a spoon. Steep for at least 10 minutes until the liquid turns deep golden-orange. This is your flavour concentrate — do not rush it.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h4 class="step-title">Prepare the Paneer (10 minutes)</h4>
+                    <p class="step-text">Cut paneer into 1-inch cubes. For restaurant texture, heat ghee in a pan and lightly fry cubes until golden on each side — 2–3 minutes total. Transfer immediately to warm salted water to keep the interior soft while the exterior firms up.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h4 class="step-title">Build the Tomato-Cashew Purée (15 minutes)</h4>
+                    <p class="step-text">Heat 1 tablespoon butter in a deep pan. Add bay leaf, cardamom, cloves, and cinnamon — sizzle 30 seconds. Add onions, sauté 3–4 minutes until translucent. Add ginger and garlic for 2 minutes. Add cashews for 1 minute. Add tomatoes with a pinch of salt; cook covered 8–10 minutes until fully soft. Cool 10 minutes. Remove whole spices. Blend into a smooth purée and strain through a fine sieve for a restaurant-quality finish.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <h4 class="step-title">Temper the Spices (2 minutes)</h4>
+                    <p class="step-text">Heat 2 tablespoons butter over medium heat. Add cumin seeds — let them crackle for 15–20 seconds. Pour the tomato-cashew purée into the pan. Add chilli powder, coriander powder, turmeric, and salt. Mix well. Cook 5–6 minutes until the oil begins to separate at the edges of the gravy.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    <h4 class="step-title">Add the Saffron Bloom (1 minute)</h4>
+                    <p class="step-text">Pour the bloomed saffron — with all its liquid — into the gravy. Stir gently to distribute the colour evenly. Add 1 teaspoon sugar to balance the tomato acidity. The gravy should shift from orange to a deep amber-gold.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">6</span>
+                <div class="step-content">
+                    <h4 class="step-title">Cream and Paneer (3–4 minutes)</h4>
+                    <p class="step-text">Lower heat to medium-low. Add cream and stir gently. If too thick, add ¼–½ cup water. Drain paneer from the salted water and add to the gravy. Simmer 2–3 minutes only — avoid vigorous stirring to prevent the paneer from breaking.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">7</span>
+                <div class="step-content">
+                    <h4 class="step-title">Finish and Serve</h4>
+                    <p class="step-text">Crush kasuri methi between your palms and add along with garam masala. Simmer 1 final minute. Optionally stir in another tablespoon of butter for extra richness. Transfer to a serving dish. Drizzle with cream, scatter coriander, ginger julienne, and a few extra saffron threads. Serve with butter naan, roti, or steamed basmati.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h3 class="section-heading">Chef's Notes</h3>
+            <div class="tips-grid">
+                <div class="tip-item"><p>Always strain the tomato-cashew purée — this single step transforms home cooking into restaurant-quality texture.</p></div>
+                <div class="tip-item"><p>Do not overcook the paneer. Two to three minutes in the gravy is sufficient; longer and the cubes become rubbery.</p></div>
+                <div class="tip-item"><p>Bloom the saffron in cream rather than milk for a richer, more intense colour yield in the final gravy.</p></div>
+                <div class="tip-item"><p>Always crush kasuri methi between your palms before adding — this releases the volatile oils that give the dish its signature finish.</p></div>
+                <div class="tip-item"><p>Cook the tomatoes completely before blending. Under-cooked tomatoes produce a raw, acidic gravy that no amount of cream will fix.</p></div>
+                <div class="tip-item"><p>Kashmiri red chilli powder is key — it gives deep colour without excessive heat, complementing rather than overpowering the saffron.</p></div>
+            </div>
+        </div>
+    </article>
+
+    <!-- ── RECIPE 3: ZAFRANI PULAO ── -->
+    <article class="recipe-block" id="zafrani-pulao">
+        <p class="recipe-label">Rice — Kashmiri Ceremonial</p>
+        <h2 class="recipe-title foil-heading reveal">Zafrani Pulao</h2>
+        <p class="recipe-subtitle reveal reveal-delay-1">Kashmiri Saffron Rice — the gold of the wazwan table</p>
+        <div class="gold-rule" style="margin: 0 0 40px"></div>
+
+        <div class="recipe-stats reveal">
+            <div class="stat-cell"><span class="stat-label">Prep</span><span class="stat-value">15 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Soak</span><span class="stat-value">30 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Cook</span><span class="stat-value">25 min</span></div>
+            <div class="stat-cell"><span class="stat-label">Total</span><span class="stat-value">1 hr</span></div>
+            <div class="stat-cell"><span class="stat-label">Serves</span><span class="stat-value">4</span></div>
+        </div>
+
+        <div class="recipe-note">
+            "In every Kashmiri wazwan feast, the Zafrani Pulao arrives last — a fragrant, jewelled rice that signals the meal has reached its peak. The saffron is not decoration. It is the soul of the dish."
+        </div>
+
+        <div class="ingredients-section">
+            <h3 class="section-heading">Ingredients</h3>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Saffron Bloom</p>
+                <ul class="ingredient-list">
+                    <li>20–25 strands Kashmiri Mongra saffron</li>
+                    <li>4 tablespoons warm milk</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Rice & Base</p>
+                <ul class="ingredient-list">
+                    <li>2 cups aged Basmati rice, soaked 30 minutes</li>
+                    <li>3 tablespoons ghee</li>
+                    <li>1 large onion, thinly sliced</li>
+                    <li>3½ cups water or light vegetable stock</li>
+                    <li>Salt to taste</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Whole Spices</p>
+                <ul class="ingredient-list">
+                    <li>2 bay leaves</li>
+                    <li>4 green cardamom pods, lightly cracked</li>
+                    <li>4 cloves</li>
+                    <li>1-inch cinnamon stick</li>
+                    <li>1 black cardamom pod</li>
+                    <li>1 small star anise</li>
+                </ul>
+            </div>
+
+            <div class="ingredient-group">
+                <p class="ingredient-group-name">Garnish (Mezban Style)</p>
+                <ul class="ingredient-list">
+                    <li>2 tablespoons ghee (finishing)</li>
+                    <li>12–15 raw cashews</li>
+                    <li>2 tablespoons raisins (kishmish)</li>
+                    <li>1 tablespoon blanched almonds, slivered</li>
+                    <li>Dried rose petals (optional)</li>
+                    <li>Extra saffron strands</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="method-section">
+            <h3 class="section-heading">Method</h3>
+
+            <div class="method-step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <h4 class="step-title">Bloom the Saffron</h4>
+                    <p class="step-text">Add saffron threads to warm milk. Crush lightly with a spoon. Set aside to steep for 20–30 minutes. The liquid should become a deep, clear saffron gold — this is what will marble through the rice.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <h4 class="step-title">Fry the Onions</h4>
+                    <p class="step-text">Heat 3 tablespoons ghee in a heavy-bottomed pot over medium-high heat. Add sliced onions with a pinch of salt and fry, stirring regularly, until they turn deep golden-brown — 10–12 minutes. Do not rush this step. The caramelised onions give the pulao its depth. Remove half for garnish; leave half in the pot.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <h4 class="step-title">Bloom the Whole Spices</h4>
+                    <p class="step-text">Reduce heat to medium. Add all whole spices to the pot with the remaining onions. Sizzle for 30–45 seconds until fragrant. The ghee should perfume the kitchen.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <h4 class="step-title">Add Rice and Water</h4>
+                    <p class="step-text">Drain the soaked rice and add to the pot. Stir gently for 1 minute, coating each grain in ghee. Add water or stock and salt. Bring to a boil over high heat. Once boiling, reduce to the lowest possible heat, cover tightly, and cook for 12 minutes.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    <h4 class="step-title">Add the Saffron Bloom</h4>
+                    <p class="step-text">After 12 minutes, uncover briefly. Drizzle the saffron milk across the surface of the rice — do not stir. Replace the lid. Continue cooking on the lowest heat for a further 8–10 minutes, or until the rice is fully cooked and the liquid absorbed. The saffron will marble naturally downward.</p>
+                </div>
+            </div>
+
+            <div class="method-step">
+                <span class="step-number">6</span>
+                <div class="step-content">
+                    <h4 class="step-title">Dum Rest and Garnish</h4>
+                    <p class="step-text">Remove from heat. Leave covered — undisturbed — for 10 minutes. This dum rest allows the steam to finish the rice and the saffron to fully penetrate. Meanwhile, heat 2 tablespoons ghee in a small pan. Fry cashews until golden, add raisins (they puff immediately), then almonds. Uncover the pulao, gently fluff with a fork, and turn out onto a serving platter. Scatter the fried nuts, reserved golden onions, rose petals, and fresh saffron strands.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h3 class="section-heading">Chef's Notes</h3>
+            <div class="tips-grid">
+                <div class="tip-item"><p>Use aged Basmati — at least one year old. Freshly harvested Basmati has higher moisture content and will turn sticky. Look for "Extra Long" or "Aged" on the packaging.</p></div>
+                <div class="tip-item"><p>Soaking the rice for 30 minutes is not optional for Pulao. It relaxes the starch and ensures each grain cooks separately, never clumping.</p></div>
+                <div class="tip-item"><p>Do not stir after adding the saffron. The two-tone effect — ivory grains marbled with gold — is achieved only if you let the saffron seep through undisturbed.</p></div>
+                <div class="tip-item"><p>The dum rest is as important as the cook. Remove from heat with the lid on and wait the full 10 minutes. Opening early lets the steam escape and the texture suffers.</p></div>
+                <div class="tip-item"><p>More saffron is better in Zafrani Pulao. Unlike many recipes where one pinch suffices, this dish is defined by the saffron. Use 20–25 threads, not 5–6.</p></div>
+                <div class="tip-item"><p>To serve the traditional wazwan way, layer the pulao on a large copper thaal with the garnishes mounded in the centre. Accompany with Rogan Josh and yoghurt.</p></div>
+            </div>
+        </div>
+    </article>
+
+</div>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+    <div class="jali-layer" aria-hidden="true" style="opacity:0.04"></div>
+    <p style="font-family:'Marcellus',sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">The ingredient that transforms</p>
+    <h2 class="cta-band-title">The Royal Mongra Tin — <em>AED 65</em></h2>
+    <p class="cta-band-sub">2g of Grade 1 Kashmiri Mongra. FSSAI certified. GI tagged. Free UAE delivery over AED 120.</p>
+    <a href="https://wa.me/917006603060?text=Hi!%20I%20would%20like%20to%20order%20Saffron%20of%20Kashmir." target="_blank" class="btn-gold">Order via WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div>
+                <div class="footer-logo"><img src="logo.webp" alt="Saffron of Kashmir"></div>
+                <p class="footer-tagline">"Where the Himalayas<br>meet the harvest."</p>
+            </div>
+            <div>
+                <p class="footer-col-title">Navigate</p>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#heritage">Our Heritage</a></li>
+                    <li><a href="index.html#gallery">Gallery</a></li>
+                    <li><a href="index.html#product">Shop</a></li>
+                    <li><a href="blogs.html">Guides</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <p class="footer-col-title">Connect</p>
+                <p>
+                    <a href="https://wa.me/917006603060">+91 7006 603 060</a><br>
+                    zeeshanshaheen97@gmail.com<br>
+                    Pampore, Kashmir — UAE Delivery
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 Saffron of Kashmir. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Preloader
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        var pl = document.getElementById('darbar-preloader');
+        if (pl) pl.classList.add('hidden');
+    }, 700);
+});
+
+// Nav scroll
+var nav = document.getElementById('main-nav');
+window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+}, { passive: true });
+
+// Drawer
+function toggleDrawer() {
+    document.getElementById('mobile-drawer').classList.toggle('open');
+    document.getElementById('drawer-overlay').classList.toggle('open');
+}
+function closeDrawer() {
+    document.getElementById('mobile-drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+// Scroll reveal
+(function() {
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.1 });
+    els.forEach(function(el) { io.observe(el); });
+})();
+
+// WhatsApp tracking
+document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href*="wa.me"]');
+    if (!a) return;
+    if (typeof gtag === 'function') gtag('event', 'contact_whatsapp');
+    if (typeof fbq === 'function') fbq('track', 'Contact');
+}, { passive: true });
+
+// Particles
+(function() {
+    var canvas = document.getElementById('particle-canvas');
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var COUNT = 55;
+
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    function Particle() { this.reset(); }
+    Particle.prototype.reset = function() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height + 40;
+        this.len = Math.random() * 18 + 5;
+        this.width = Math.random() * 1.1 + 0.25;
+        this.curve = (Math.random() - 0.5) * 7;
+        this.opacity = Math.random() * 0.32 + 0.05;
+        this.speed = Math.random() * 0.38 + 0.07;
+        this.angle = Math.random() * Math.PI * 2;
+        this.drift = (Math.random() - 0.5) * 0.22;
+        this.rot = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.007;
+        this.isCrimson = Math.random() > 0.72;
+    };
+    Particle.prototype.update = function() {
+        this.y -= this.speed;
+        this.x += Math.sin(this.angle) * this.drift;
+        this.angle += 0.018;
+        this.rot += this.rotSpeed;
+        this.opacity -= 0.00055;
+        if (this.y < -20 || this.opacity <= 0) this.reset();
+    };
+    Particle.prototype.draw = function() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rot);
+        ctx.beginPath();
+        ctx.moveTo(-this.len / 2, 0);
+        ctx.quadraticCurveTo(0, this.curve, this.len / 2, 0);
+        ctx.lineWidth = this.width;
+        ctx.strokeStyle = this.isCrimson
+            ? 'rgba(107,15,36,' + this.opacity + ')'
+            : 'rgba(197,160,89,' + this.opacity + ')';
+        ctx.stroke();
+        ctx.restore();
+    };
+
+    for (var i = 0; i < COUNT; i++) { particles.push(new Particle()); }
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function animate() {
+        if (reduced) return;
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(function(p) { p.update(); p.draw(); });
+    }
+    animate();
+})();
+
+// Cursor glow
+(function() {
+    if ('ontouchstart' in window) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var g = document.createElement('div');
+    g.style.cssText = 'position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(197,160,89,0.05) 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);left:-300px;top:-300px;transition:left 0.18s ease,top 0.18s ease;';
+    document.body.appendChild(g);
+    document.addEventListener('mousemove', function(e) { g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px'; }, { passive: true });
+})();
+</script>
+</body>
+</html>
