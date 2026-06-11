@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://saffronofkashmir.com/</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2025-06-11</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-
-    <image:image>
-      <image:loc>https://saffronofkashmir.com/Cover.webp</image:loc>
-      <image:title>Saffron of Kashmir — Royal Harvest, Premium Kashmiri Mongra Saffron</image:title>
-      <image:caption>Pure Kashmiri Mongra Saffron hand-harvested at dawn in Pampore, Kashmir. Est. 2004.</image:caption>
-    </image:image>
-
-    <image:image>
-      <image:loc>https://saffronofkashmir.com/tin.webp</image:loc>
-      <image:title>2-Gram Royal Mongra Saffron Tin — Saffron of Kashmir</image:title>
-      <image:caption>Hand-painted Kashmiri enamel tin containing 2g of 100% pure Mongra saffron. AED 55.</image:caption>
-    </image:image>
-
-    <image:image>
-      <image:loc>https://saffronofkashmir.com/slider2.webp</image:loc>
-      <image:title>Kashmiri Mongra Saffron in Traditional Copper Bowl at Sunrise</image:title>
-      <image:caption>Pure Kashmiri Mongra saffron threads in an ornate copper bowl with saffron tea, Himalayan backdrop.</image:caption>
-    </image:image>
-
-    <image:image>
-      <image:loc>https://saffronofkashmir.com/slider3.webp</image:loc>
-      <image:title>Saffron Harvest Fields in Pampore, Kashmir</image:title>
-      <image:caption>Workers hand-harvesting Crocus sativus flowers at dawn across the saffron fields of Pampore, Kashmir.</image:caption>
-    </image:image>
-
-    <image:image>
-      <image:loc>https://saffronofkashmir.com/slider4.webp</image:loc>
-      <image:title>Hand-Picking Saffron Stigmas from Crocus Flower in Kashmir</image:title>
-      <image:caption>A skilled harvester carefully extracts the three crimson stigmas from a Crocus sativus flower in Pampore.</image:caption>
-    </image:image>
-
-    <image:image>
-      <image:loc>https://saffronofkashmir.com/logo.webp</image:loc>
-      <image:title>Saffron of Kashmir — Official Brand Logo</image:title>
-      <image:caption>The official gold seal of Saffron of Kashmir, Est. 2004.</image:caption>
-    </image:image>
-
   </url>
-
+  <url>
+    <loc>https://saffronofkashmir.com/products.html</loc>
+    <lastmod>2025-06-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blogs.html</loc>
+    <lastmod>2025-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blogs.html#mongra</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blogs.html#pampore</loc>
+    <lastmod>2025-02-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blogs.html#purity</loc>
+    <lastmod>2025-03-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blogs.html#arabic</loc>
+    <lastmod>2025-04-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blogs.html#health</loc>
+    <lastmod>2025-05-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/recipes.html</loc>
+    <lastmod>2025-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

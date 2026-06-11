@@ -1,0 +1,271 @@
+/* ═══════════════════════════════════════════════════════════
+   SAFFRON OF KASHMIR — animations.css
+   Keyframes · GSAP classes · AOS overrides · Micro-anim
+═══════════════════════════════════════════════════════════ */
+
+/* ─── KEYFRAMES ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+@keyframes waPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  50%       { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+}
+
+@keyframes scrollDot {
+  0%   { top: 0; opacity: 1; }
+  80%  { top: 100%; opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes breatheGold {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+@keyframes chinarDraw {
+  from { stroke-dashoffset: 2000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes preloaderBar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes preloaderFade {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ─── GSAP ANIMATION BASES ─── */
+.gsap-fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.gsap-fade-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+.gsap-fade-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+.gsap-scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* ─── CHINAR LEAF SVG ─── */
+.chinar-draw path {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+}
+
+.chinar-draw.animated path {
+  animation: chinarDraw 2.5s ease forwards;
+}
+
+/* ─── SAFFRON LETTER SCROLL EFFECT ─── */
+.saffron-word {
+  display: inline-flex;
+  gap: 0.02em;
+}
+
+.saffron-word .letter {
+  display: inline-block;
+  color: var(--ivory-cream);
+  transition: color 0.3s ease;
+}
+
+.saffron-word.gold-active .letter { color: var(--antique-gold); }
+
+/* ─── PARALLAX LAYERS ─── */
+.parallax-slow  { will-change: transform; }
+.parallax-med   { will-change: transform; }
+.parallax-fast  { will-change: transform; }
+
+/* ─── PAGE TRANSITIONS ─── */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--ink-black);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ─── PRELOADER ─── */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--ink-black);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+
+#preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.preloader-monogram {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 64px;
+  font-weight: 300;
+  color: var(--antique-gold);
+  animation: breatheGold 1.5s ease-in-out infinite;
+  letter-spacing: -0.04em;
+}
+
+.preloader-bar-wrap {
+  width: 120px;
+  height: 1px;
+  background: rgba(201,168,76,0.15);
+  margin-top: 24px;
+  overflow: hidden;
+}
+
+.preloader-bar {
+  height: 100%;
+  background: var(--antique-gold);
+  width: 0%;
+  transition: width 1.5s ease;
+}
+
+.preloader-bar.loaded { width: 100%; }
+
+/* ─── AOS CUSTOM OVERRIDES ─── */
+[data-aos="fade-up-gold"] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition-property: opacity, transform;
+}
+
+[data-aos="fade-up-gold"].aos-animate {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── SCROLL COLOR TRANSITION SECTION ─── */
+.scroll-color-section {
+  position: relative;
+  background: var(--ink-black);
+  transition: background 0.1s linear;
+}
+
+/* ─── FEATURE CARD HOVER GLOW ─── */
+.feature-card {
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ─── PRODUCT CARD TILT ─── */
+.tilt-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  will-change: transform;
+}
+
+/* ─── NAV SCROLL TRANSITION ─── */
+#main-nav {
+  transition:
+    background 0.4s ease,
+    backdrop-filter 0.4s ease,
+    border-color 0.4s ease;
+}
+
+/* ─── FLOAT ANIMATION ─── */
+.float-anim {
+  animation: floatY 4s ease-in-out infinite;
+}
+
+/* ─── SPIN SLOW ─── */
+.spin-slow {
+  animation: spinSlow 20s linear infinite;
+}
+
+/* ─── STORY QUOTE ─── */
+.story-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(24px, 3.5vw, 40px);
+  line-height: 1.4;
+  color: var(--ivory-cream);
+  position: relative;
+  padding-left: var(--space-md);
+}
+
+.story-quote::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -12px;
+  font-size: 80px;
+  color: var(--antique-gold);
+  opacity: 0.25;
+  line-height: 1;
+  font-family: var(--font-display);
+}
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes goldShimmer   { from, to { background-position: 0 center; } }
+  @keyframes waPulse       { from, to { box-shadow: none; } }
+  @keyframes scrollDot     { from, to { top: 50%; } }
+  @keyframes breatheGold   { from, to { opacity: 0.55; } }
+  @keyframes floatY        { from, to { transform: none; } }
+  @keyframes chinarDraw    { from { stroke-dashoffset: 0; } }
+
+  .gsap-fade-up,
+  .gsap-fade-left,
+  .gsap-fade-right,
+  .gsap-scale-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  #preloader { display: none; }
+}
