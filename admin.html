@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Admin — Saffron of Kashmir</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/webp" href="favicon.webp">
+<style>
+  :root{
+    --cream:#FBF8F1; --paper:#fff; --ink:#2B2117; --muted:#6f6358;
+    --burgundy:#6B1A2A; --burgundy-d:#541321; --gold:#A8842F; --saffron:#C2660E;
+    --green:#107C41; --line:#E8DFD2; --danger:#9d2235; --ok:#1d7a46;
+    --radius:10px; --shadow:0 1px 3px rgba(43,33,23,.08),0 4px 14px rgba(43,33,23,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--ink)}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.25;margin:0 0 8px}
+  a{color:var(--burgundy)}
+  button{font:inherit;cursor:pointer}
+  input,textarea,select{font:inherit;color:var(--ink);width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  input:focus,textarea:focus,select:focus{outline:2px solid rgba(168,132,47,.45);outline-offset:1px;border-color:var(--gold)}
+  textarea{resize:vertical;min-height:74px}
+  input[type=checkbox]{width:auto;transform:translateY(1px)}
+  ::placeholder{color:#b3a695}
+
+  .btn{display:inline-flex;align-items:center;gap:7px;border:1px solid transparent;border-radius:8px;padding:9px 15px;font-weight:600;text-decoration:none}
+  .btn-primary{background:var(--burgundy);color:#fff}
+  .btn-primary:hover{background:var(--burgundy-d)}
+  .btn-green{background:var(--green);color:#fff}
+  .btn-outline{background:#fff;color:var(--burgundy);border-color:var(--line)}
+  .btn-outline:hover{border-color:var(--gold)}
+  .btn-ghost{background:transparent;color:var(--muted);border:none;padding:6px 8px}
+  .btn-ghost:hover{color:var(--ink)}
+  .btn-sm{padding:5px 10px;font-size:13px;border-radius:7px}
+  .btn-danger{background:#fff;color:var(--danger);border-color:#ecc8ce}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+
+  /* ---------- login ---------- */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);max-width:460px;width:100%;padding:30px 30px 24px}
+  .login-card .logo{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .login-card .logo .mark{width:42px;height:42px;border-radius:9px;background:var(--burgundy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:20px}
+  .login-card .logo small{display:block;color:var(--muted)}
+  .login-card label{display:block;font-size:13px;font-weight:600;margin:13px 0 5px;color:#574b3f}
+  .login-card .hint{font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.5}
+  .login-card .err{display:none;background:#fcebed;border:1px solid #f1c4ca;color:var(--danger);border-radius:8px;padding:9px 12px;font-size:13.5px;margin-top:14px}
+  .login-actions{display:flex;align-items:center;justify-content:space-between;margin-top:20px;gap:10px}
+
+  /* ---------- app layout ---------- */
+  #app{display:none;min-height:100vh}
+  .topbar{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:10px 18px}
+  .topbar .title{display:flex;align-items:center;gap:10px;font-family:Georgia,serif;font-size:17px;font-weight:700}
+  .topbar .title .mark{width:30px;height:30px;border-radius:7px;background:var(--burgundy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .chip{font-size:12.5px;border:1px solid var(--line);border-radius:99px;padding:3px 11px;color:var(--muted);background:var(--cream);white-space:nowrap}
+  .chip.dirty{background:#fdf3e2;border-color:#ecd9ae;color:#7c5a12}
+  .chip.clean{background:#e9f5ee;border-color:#bfe2cc;color:var(--ok)}
+  .chip.demo{background:#efe9fb;border-color:#d4c6f2;color:#5b3ea8}
+  .topbar .spacer{flex:1}
+  .menu-wrap{position:relative}
+  .menu{display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);min-width:190px;padding:6px;z-index:40}
+  .menu.open{display:block}
+  .menu button{display:block;width:100%;text-align:left;background:none;border:none;border-radius:7px;padding:8px 11px;font-size:14px}
+  .menu button:hover{background:var(--cream)}
+
+  .shell{display:flex;align-items:flex-start;gap:0}
+  .sidenav{width:215px;flex:0 0 215px;position:sticky;top:55px;height:calc(100vh - 55px);overflow-y:auto;padding:16px 10px 30px;border-right:1px solid var(--line)}
+  .sidenav button{display:flex;width:100%;align-items:center;gap:10px;background:none;border:none;border-radius:8px;padding:9px 12px;font-size:14.5px;color:#4d4136;text-align:left}
+  .sidenav button .ic{width:20px;text-align:center}
+  .sidenav button:hover{background:#f3ecdf}
+  .sidenav button.active{background:var(--burgundy);color:#fff;font-weight:600}
+  .sidenav .group{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#a3947f;margin:16px 12px 6px}
+
+  .content{flex:1;min-width:0;padding:26px 30px 90px;max-width:940px}
+  .page-h{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .page-h p{color:var(--muted);margin:2px 0 0;font-size:14px}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin:16px 0}
+  .card>h3{font-size:17px;display:flex;align-items:center;gap:8px}
+  .card>h3 .ic{font-size:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+  @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+  .f{margin:11px 0 2px}
+  .f label{display:block;font-size:13px;font-weight:600;color:#574b3f;margin-bottom:5px}
+  .f .hint{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
+  .f.inline{display:flex;align-items:center;gap:9px;margin-top:16px}
+  .f.inline label{margin:0}
+  .imgfield{display:flex;gap:10px;align-items:flex-start}
+  .imgfield .thumb{width:74px;height:58px;flex:0 0 74px;border:1px solid var(--line);border-radius:8px;background:#f4eee2 center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:#c2b49d;font-size:11px;overflow:hidden}
+  .imgfield .thumb img{width:100%;height:100%;object-fit:cover}
+  .imgfield .grow{flex:1}
+  .imgfield .grow .row{display:flex;gap:8px}
+  .imgfield .grow .row input{flex:1}
+
+  /* list editors */
+  .items{margin-top:8px}
+  .item{border:1px solid var(--line);border-radius:10px;margin:10px 0;background:#fffdf8;overflow:hidden}
+  .item-head{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer}
+  .item-head:hover{background:#f8f2e6}
+  .item-head .ttl{flex:1;font-weight:600;font-size:14.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .item-head .sub{font-size:12.5px;color:var(--muted);font-weight:400}
+  .item-head .ctrl{display:flex;gap:2px;flex:0 0 auto}
+  .item-head .ctrl button{background:none;border:1px solid transparent;border-radius:6px;padding:4px 7px;font-size:13px;color:var(--muted)}
+  .item-head .ctrl button:hover{border-color:var(--line);color:var(--ink);background:#fff}
+  .item-head .ctrl button.del:hover{color:var(--danger);border-color:#ecc8ce}
+  .item-body{padding:4px 16px 16px;border-top:1px dashed var(--line)}
+  .subgrp{border-left:3px solid var(--line);padding-left:14px;margin:16px 0 6px}
+  .subgrp>.lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8d7c63;margin-bottom:2px}
+  .add-row{margin-top:12px}
+
+  .banner{display:flex;gap:12px;align-items:center;background:#fdf6e7;border:1px solid #ecd9ae;border-radius:10px;padding:11px 14px;margin:14px 0;font-size:14px}
+  .banner.purple{background:#f3eefc;border-color:#d4c6f2}
+  .banner .grow{flex:1}
+
+  /* media grid */
+  .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:14px}
+  .media-cell{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+  .media-cell .imgbox{height:96px;background:#f4eee2 center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:#c2b49d}
+  .media-cell .nm{font-size:12px;padding:7px 9px;word-break:break-all;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:6px;align-items:center}
+  .media-cell .nm button{border:none;background:none;color:var(--burgundy);font-size:12px;padding:0}
+
+  /* modal */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(34,25,17,.45);z-index:60;align-items:center;justify-content:center;padding:20px}
+  .overlay.open{display:flex}
+  .modal{background:#fff;border-radius:14px;max-width:560px;width:100%;box-shadow:0 18px 60px rgba(0,0,0,.25);padding:22px 24px;max-height:88vh;overflow-y:auto}
+  .modal h3{font-size:19px}
+  .pub-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--line);padding:8px 2px;font-size:14px}
+  .pub-row .st{font-size:13px;color:var(--muted);white-space:nowrap}
+  .pub-row .st.ok{color:var(--ok)} .pub-row .st.skip{color:#8d7c63} .pub-row .st.err{color:var(--danger)} .pub-row .st.run{color:var(--saffron)}
+  .modal .foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+  .pub-note{font-size:13px;color:var(--muted);background:var(--cream);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:14px;line-height:1.5}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;border-radius:99px;padding:9px 18px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:900px){
+    .shell{display:block}
+    .sidenav{position:static;width:auto;height:auto;display:flex;gap:4px;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line);padding:8px 10px}
+    .sidenav .group{display:none}
+    .sidenav button{white-space:nowrap;width:auto}
+    .content{padding:18px 16px 80px}
+    .topbar{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="login">
+  <div class="login-card">
+    <div class="logo">
+      <div class="mark">S</div>
+      <div><strong style="font-family:Georgia,serif;font-size:18px;">Saffron of Kashmir</strong><small>Site Admin · publishes via GitHub</small></div>
+    </div>
+    <p style="margin:0 0 4px;color:var(--muted);font-size:14px;">Connect to the GitHub repository that hosts your website. Your token is stored only in this browser.</p>
+
+    <label for="in-owner">GitHub username / owner</label>
+    <input id="in-owner" autocomplete="off" placeholder="e.g. saffronofkashmir">
+    <label for="in-repo">Repository name</label>
+    <input id="in-repo" autocomplete="off" placeholder="e.g. saffronofkashmir.github.io">
+    <label for="in-branch">Branch</label>
+    <input id="in-branch" value="main" autocomplete="off">
+    <label for="in-token">Personal access token</label>
+    <input id="in-token" type="password" autocomplete="off" placeholder="github_pat_…">
+
+    <div class="err" id="login-err"></div>
+
+    <div class="login-actions">
+      <a href="#demo" id="try-demo" style="font-size:13.5px;">Try demo (no token)</a>
+      <button class="btn btn-primary" id="connect-btn">Connect →</button>
+    </div>
+
+    <p class="hint">
+      <strong>How to create a token (2 min):</strong> GitHub → Settings → Developer settings →
+      <em>Fine-grained personal access tokens</em> → Generate new token → select <em>only this repository</em> →
+      under Repository permissions set <em>Contents: Read and write</em> → Generate, then paste it above.
+      Full steps with screenshots are in <code>ADMIN-GUIDE.md</code> in your site folder.
+    </p>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app">
+  <div class="topbar">
+    <span class="title"><span class="mark">S</span> Site Admin</span>
+    <span class="chip" id="repo-chip">—</span>
+    <span class="chip clean" id="status-chip">Loading…</span>
+    <span class="spacer"></span>
+    <div class="menu-wrap">
+      <button class="btn btn-outline btn-sm" id="preview-btn">Preview ▾</button>
+      <div class="menu" id="preview-menu">
+        <button data-preview="index.html">Home page</button>
+        <button data-preview="products.html">Products page</button>
+        <button data-preview="recipes.html">Recipes page</button>
+        <button data-preview="blogs.html">Blog page</button>
+        <button data-preview="404.html">404 page</button>
+      </div>
+    </div>
+    <a class="btn btn-outline btn-sm" id="open-site" target="_blank" rel="noopener">Open site ↗</a>
+    <button class="btn btn-green btn-sm" id="publish-btn">⤴ Publish</button>
+  </div>
+
+  <div id="draft-banner"></div>
+
+  <div class="shell">
+    <nav class="sidenav" id="sidenav">
+      <div class="group">Content</div>
+      <button data-sec="home" class="active"><span class="ic">🏠</span> Homepage</button>
+      <button data-sec="products"><span class="ic">🛍️</span> Products</button>
+      <button data-sec="recipes"><span class="ic">🍲</span> Recipes</button>
+      <button data-sec="posts"><span class="ic">📰</span> Blog posts</button>
+      <button data-sec="faq"><span class="ic">❓</span> FAQs</button>
+      <button data-sec="testimonials"><span class="ic">⭐</span> Testimonials</button>
+      <div class="group">Site</div>
+      <button data-sec="brand"><span class="ic">🪪</span> Brand &amp; contact</button>
+      <button data-sec="seo"><span class="ic">🔎</span> SEO &amp; meta</button>
+      <button data-sec="media"><span class="ic">🖼️</span> Media</button>
+      <button data-sec="settings"><span class="ic">⚙️</span> Settings</button>
+    </nav>
+    <main class="content" id="panel"></main>
+  </div>
+</div>
+
+<!-- publish modal -->
+<div class="overlay" id="pub-overlay">
+  <div class="modal">
+    <h3 id="pub-title">Publish to your live site</h3>
+    <p style="color:var(--muted);font-size:14px;margin:4px 0 14px;" id="pub-sub">
+      This regenerates your pages from the content above and commits them to GitHub.
+      GitHub Pages then redeploys automatically (usually under a minute).
+    </p>
+    <div id="pub-rows"></div>
+    <div class="pub-note" id="pub-note" style="display:none;"></div>
+    <div class="foot">
+      <button class="btn btn-outline" id="pub-cancel">Close</button>
+      <button class="btn btn-green" id="pub-go">Publish now</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept="image/*" style="display:none;">
+<div class="toast" id="toast"></div>
+
+<script src="assets/admin/templates.js"></script>
+<script src="assets/admin/admin.js"></script>
+</body>
+</html>

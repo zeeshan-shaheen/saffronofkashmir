@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /assets/admin/
+Disallow: /data/
 
 Sitemap: https://saffronofkashmir.com/sitemap.xml
