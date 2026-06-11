@@ -1,6 +1,8 @@
 {
-  "meta": { "schemaVersion": 1, "lastPublished": "" },
-
+  "meta": {
+    "schemaVersion": 1,
+    "lastPublished": "2026-06-11T20:30:45.888Z"
+  },
   "brand": {
     "name": "Saffron of Kashmir",
     "tagline": "Pampore · Est. 2004",
@@ -10,16 +12,15 @@
     "ogImage": "Cover.webp",
     "phoneDisplay": "+91 7006 603060",
     "phoneTel": "+917006603060",
-    "whatsappNumber": "917006603060",
+    "whatsappNumber": "971522613060",
     "defaultWaText": "Hi! I'd like to order from Saffron of Kashmir.",
-    "email": "saffronofkmr@gmail.com",
-    "instagramUser": "saffronofkashmir",
+    "email": "info@saffronofkashmir.com",
+    "instagramUser": "saffron_of_kashmir",
     "foundingYear": "2004",
     "orgDescription": "Premium Kashmiri Mongra saffron harvested in Pampore, Kashmir. Supplying the UAE since 2004.",
     "gaId": "G-9569ES4LBP",
     "fbPixelId": "1140202034977517"
   },
-
   "seo": {
     "home": {
       "title": "Saffron of Kashmir | Buy Pure Mongra Saffron from Pampore — UAE Delivery",
@@ -46,36 +47,56 @@
       "ogDescription": "Saffron guides, Kashmir heritage stories, purity tests, and health research."
     }
   },
-
   "hero": {
     "eyebrow": "Established 2004 · Pampore, Kashmir",
     "title": "Pure Mongra Saffron, Direct from Pampore to Your Door",
     "lead": "Only the crimson stigma tips — lab-tested to ISO 3632 Grade A, packed at origin, and delivered anywhere in the UAE within 48 hours.",
-    "primaryCta": { "label": "Shop Saffron — from AED 65", "href": "products.html" },
+    "primaryCta": {
+      "label": "Shop Saffron — from AED 65",
+      "href": "products.html"
+    },
     "waCtaLabel": "Order on WhatsApp",
-    "points": ["ISO 3632 Grade A", "48hr UAE delivery", "Free delivery over AED 120", "No minimum order"],
+    "points": [
+      "ISO 3632 Grade A",
+      "48hr UAE delivery",
+      "Free delivery over AED 120",
+      "No minimum order"
+    ],
     "image": "slider3.webp",
     "imageAlt": "Hand-picking saffron crocus flowers in the fields of Pampore, Kashmir"
   },
-
   "whyUs": {
     "eyebrow": "Why Choose Us",
     "heading": "The Saffron Standard",
     "cards": [
-      { "icon": "🌺", "title": "100% Mongra Grade", "text": "Only the crimson stigma tips — never the yellow style. The most potent grade of Kashmiri saffron." },
-      { "icon": "⛰️", "title": "Direct from Pampore", "text": "No middlemen. We source directly from partner farming families in Pampore, J&K — harvested and packed within 48 hours." },
-      { "icon": "🔬", "title": "Lab-Tested Purity", "text": "Every batch tested for crocin, picrocrocin, and safranal per ISO 3632 Grade A. Certificate available on request." },
-      { "icon": "🚚", "title": "UAE Delivery in 48hrs", "text": "Order via WhatsApp, receive your saffron within 48 hours anywhere in the UAE. Free delivery over AED 120." }
+      {
+        "icon": "🌺",
+        "title": "100% Mongra Grade",
+        "text": "Only the crimson stigma tips — never the yellow style. The most potent grade of Kashmiri saffron."
+      },
+      {
+        "icon": "⛰️",
+        "title": "Direct from Pampore",
+        "text": "No middlemen. We source directly from partner farming families in Pampore, J&K — harvested and packed within 48 hours."
+      },
+      {
+        "icon": "🔬",
+        "title": "Lab-Tested Purity",
+        "text": "Every batch tested for crocin, picrocrocin, and safranal per ISO 3632 Grade A. Certificate available on request."
+      },
+      {
+        "icon": "🚚",
+        "title": "UAE Delivery in 48hrs",
+        "text": "Order via WhatsApp, receive your saffron within 48 hours anywhere in the UAE. Free delivery over AED 120."
+      }
     ]
   },
-
   "homeProducts": {
     "eyebrow": "Our Collection",
     "heading": "Pure Mongra Saffron",
     "sub": "Three sizes. One uncompromising grade. Hand-packed in our signature collector's tin.",
     "viewAllLabel": "View All Products →"
   },
-
   "products": [
     {
       "id": "royal-1g",
@@ -93,13 +114,33 @@
       "featured": true,
       "waText": "Hi! I'd like to order Royal Mongra 1g from Saffron of Kashmir.",
       "specs": [
-        { "label": "Grade", "value": "ISO 3632 Grade A (Mongra) — red stigma tips only" },
-        { "label": "Origin", "value": "Pampore, Pulwama district, J&K, India" },
-        { "label": "Colour", "value": ">250 USP units (Grade A minimum: 190)" },
-        { "label": "Storage", "value": "Airtight tin away from light. Shelf life 36 months." },
-        { "label": "Certified", "value": "FSSAI | ISO 3632 Grade A | Lab report on request" }
+        {
+          "label": "Grade",
+          "value": "ISO 3632 Grade A (Mongra) — red stigma tips only"
+        },
+        {
+          "label": "Origin",
+          "value": "Pampore, Pulwama district, J&K, India"
+        },
+        {
+          "label": "Colour",
+          "value": ">250 USP units (Grade A minimum: 190)"
+        },
+        {
+          "label": "Storage",
+          "value": "Airtight tin away from light. Shelf life 36 months."
+        },
+        {
+          "label": "Certified",
+          "value": "FSSAI | ISO 3632 Grade A | Lab report on request"
+        }
       ],
-      "compare": { "label": "Royal Mongra 1g", "grams": 1, "servings": "15–20", "bestFor": "First-time buyers, trying Mongra grade" }
+      "compare": {
+        "label": "Royal Mongra 1g",
+        "grams": 1,
+        "servings": "15–20",
+        "bestFor": "First-time buyers, trying Mongra grade"
+      }
     },
     {
       "id": "collectors-5g",
@@ -117,13 +158,33 @@
       "featured": true,
       "waText": "Hi! I'd like to order Collector's Tin 5g from Saffron of Kashmir.",
       "specs": [
-        { "label": "Grade", "value": "ISO 3632 Grade A — Mongra (stigma tips only)" },
-        { "label": "Origin", "value": "Pampore, Pulwama district, J&K, India" },
-        { "label": "Best for", "value": "Daily cooking, gifts, restaurants" },
-        { "label": "Storage", "value": "Airtight collector's tin. 36-month shelf life." },
-        { "label": "Value", "value": "AED 58/g — best value for home chefs" }
+        {
+          "label": "Grade",
+          "value": "ISO 3632 Grade A — Mongra (stigma tips only)"
+        },
+        {
+          "label": "Origin",
+          "value": "Pampore, Pulwama district, J&K, India"
+        },
+        {
+          "label": "Best for",
+          "value": "Daily cooking, gifts, restaurants"
+        },
+        {
+          "label": "Storage",
+          "value": "Airtight collector's tin. 36-month shelf life."
+        },
+        {
+          "label": "Value",
+          "value": "AED 58/g — best value for home chefs"
+        }
       ],
-      "compare": { "label": "Collector's Tin 5g", "grams": 5, "servings": "80–100", "bestFor": "Regular home cooking, gifts" }
+      "compare": {
+        "label": "Collector's Tin 5g",
+        "grams": 5,
+        "servings": "80–100",
+        "bestFor": "Regular home cooking, gifts"
+      }
     },
     {
       "id": "heritage-10g",
@@ -141,13 +202,33 @@
       "featured": true,
       "waText": "Hi! I'd like to order Heritage Reserve 10g from Saffron of Kashmir.",
       "specs": [
-        { "label": "Grade", "value": "ISO 3632 Grade A — Mongra (stigma tips only)" },
-        { "label": "Origin", "value": "Pampore, Pulwama district, J&K, India" },
-        { "label": "Best for", "value": "Professional kitchens, bulk orders, corporate gifts" },
-        { "label": "Value", "value": "AED 52/g — our best per-gram price" },
-        { "label": "Delivery", "value": "Same-day dispatch, 48hr UAE delivery" }
+        {
+          "label": "Grade",
+          "value": "ISO 3632 Grade A — Mongra (stigma tips only)"
+        },
+        {
+          "label": "Origin",
+          "value": "Pampore, Pulwama district, J&K, India"
+        },
+        {
+          "label": "Best for",
+          "value": "Professional kitchens, bulk orders, corporate gifts"
+        },
+        {
+          "label": "Value",
+          "value": "AED 52/g — our best per-gram price"
+        },
+        {
+          "label": "Delivery",
+          "value": "Same-day dispatch, 48hr UAE delivery"
+        }
       ],
-      "compare": { "label": "Heritage Reserve 10g", "grams": 10, "servings": "160–200", "bestFor": "Restaurants, bulk, corporate gifting" }
+      "compare": {
+        "label": "Heritage Reserve 10g",
+        "grams": 10,
+        "servings": "160–200",
+        "bestFor": "Restaurants, bulk, corporate gifting"
+      }
     },
     {
       "id": "honey-250g",
@@ -204,17 +285,24 @@
       "compare": null
     }
   ],
-
   "howItWorks": {
     "eyebrow": "Simple Ordering",
     "heading": "How It Works",
     "steps": [
-      { "title": "Message us on WhatsApp", "text": "Tap any order button — your message is pre-filled with the product name. Tell us your delivery address in the UAE." },
-      { "title": "We confirm your order", "text": "We confirm availability, total price, and payment details on WhatsApp, then dispatch the same day." },
-      { "title": "Delivered within 48 hours", "text": "Your saffron arrives sealed in its airtight tin, anywhere in the UAE. Free delivery on orders over AED 120." }
+      {
+        "title": "Message us on WhatsApp",
+        "text": "Tap any order button — your message is pre-filled with the product name. Tell us your delivery address in the UAE."
+      },
+      {
+        "title": "We confirm your order",
+        "text": "We confirm availability, total price, and payment details on WhatsApp, then dispatch the same day."
+      },
+      {
+        "title": "Delivered within 48 hours",
+        "text": "Your saffron arrives sealed in its airtight tin, anywhere in the UAE. Free delivery on orders over AED 120."
+      }
     ]
   },
-
   "story": {
     "eyebrow": "Our Heritage",
     "heading": "The Story of Mongra",
@@ -227,72 +315,126 @@
     "linkLabel": "Read more on our blog →",
     "linkHref": "blogs.html"
   },
-
   "testimonials": {
     "eyebrow": "What Our Customers Say",
     "heading": "Trusted by Connoisseurs",
     "items": [
-      { "stars": 5, "quote": "“The colour alone tells you it's real. I've been buying Kashmiri saffron for 20 years — this is the finest I've had.”", "name": "Fatima Al-Rashidi, Dubai" },
-      { "stars": 5, "quote": "“Ordered at 9pm, arrived next day. The aroma filled my kitchen from across the room. I will never go back to supermarket saffron.”", "name": "Chef Mohammed Al-Hamad, Abu Dhabi" },
-      { "stars": 5, "quote": "“I use it in our restaurant's biryani. Our guests specifically ask what saffron we use. Worth every dirham.”", "name": "Rajesh Nair, Sharjah" }
+      {
+        "stars": 5,
+        "quote": "“The colour alone tells you it's real. I've been buying Kashmiri saffron for 20 years — this is the finest I've had.”",
+        "name": "Fatima Al-Rashidi, Dubai"
+      },
+      {
+        "stars": 5,
+        "quote": "“Ordered at 9pm, arrived next day. The aroma filled my kitchen from across the room. I will never go back to supermarket saffron.”",
+        "name": "Chef Mohammed Al-Hamad, Abu Dhabi"
+      },
+      {
+        "stars": 5,
+        "quote": "“I use it in our restaurant's biryani. Our guests specifically ask what saffron we use. Worth every dirham.”",
+        "name": "Rajesh Nair, Sharjah"
+      }
     ]
   },
-
   "faq": {
     "eyebrow": "Good to Know",
     "heading": "Frequently Asked Questions",
     "items": [
-      { "q": "How fast is delivery in the UAE?", "a": "Orders are dispatched the same day and delivered anywhere in the UAE within 48 hours. Delivery is free on orders over AED 120." },
-      { "q": "How do I place an order?", "a": "Tap any \"Order on WhatsApp\" button, send us the pre-filled message, and we confirm your order, delivery address, and payment on WhatsApp. There is no minimum order." },
-      { "q": "How do I know the saffron is genuine?", "a": "Every batch is lab-tested to ISO 3632 Grade A standards for crocin, picrocrocin, and safranal. A lab certificate is available on request — and you can verify it yourself with [three simple at-home tests](products.html#identify)." },
-      { "q": "How should I store saffron?", "a": "Keep the tin airtight, away from light and humidity. Stored correctly, Mongra saffron keeps its potency for 36 months." },
-      { "q": "How much saffron should I use in a dish?", "a": "8–15 threads is enough for most recipes serving 2–4 people. Always bloom the threads in warm (not boiling) liquid for 10–20 minutes first — see [our recipes](recipes.html) for exact amounts." }
+      {
+        "q": "How fast is delivery in the UAE?",
+        "a": "Orders are dispatched the same day and delivered anywhere in the UAE within 48 hours. Delivery is free on orders over AED 120."
+      },
+      {
+        "q": "How do I place an order?",
+        "a": "Tap any \"Order on WhatsApp\" button, send us the pre-filled message, and we confirm your order, delivery address, and payment on WhatsApp. There is no minimum order."
+      },
+      {
+        "q": "How do I know the saffron is genuine?",
+        "a": "Every batch is lab-tested to ISO 3632 Grade A standards for crocin, picrocrocin, and safranal. A lab certificate is available on request — and you can verify it yourself with [three simple at-home tests](products.html#identify)."
+      },
+      {
+        "q": "How should I store saffron?",
+        "a": "Keep the tin airtight, away from light and humidity. Stored correctly, Mongra saffron keeps its potency for 36 months."
+      },
+      {
+        "q": "How much saffron should I use in a dish?",
+        "a": "8–15 threads is enough for most recipes serving 2–4 people. Always bloom the threads in warm (not boiling) liquid for 10–20 minutes first — see [our recipes](recipes.html) for exact amounts."
+      }
     ]
   },
-
   "contact": {
     "heading": "Contact Us",
     "text": "Questions about products, bulk orders for restaurants, or corporate gifting? Reach us directly — we reply fastest on WhatsApp.",
     "originLine": "Pampore, Jammu & Kashmir, India · Serving all UAE"
   },
-
   "footer": {
     "about": "Established 2004 in Pampore, Kashmir. Supplying the UAE's finest households and restaurants with certified Mongra grade saffron.",
     "locationLine": "Pampore, J&K, India",
     "bottomRight": "Premium Kashmiri Mongra Saffron — ISO 3632 Grade A"
   },
-
   "productsPage": {
     "h1": "Our Products",
     "sub": "Every product starts with the same ingredient: pure Mongra grade saffron from Pampore. Order on WhatsApp — same-day dispatch, 48hr UAE delivery, free over AED 120.",
     "filters": [
-      { "key": "saffron", "label": "Saffron Tins" },
-      { "key": "gift", "label": "Gift & Wellness" }
+      {
+        "key": "saffron",
+        "label": "Saffron Tins"
+      },
+      {
+        "key": "gift",
+        "label": "Gift & Wellness"
+      }
     ],
     "allLabel": "All Products",
-    "compare": { "eyebrow": "Choose Your Size", "heading": "Which Tin Is Right for You?" },
+    "compare": {
+      "eyebrow": "Choose Your Size",
+      "heading": "Which Tin Is Right for You?"
+    },
     "identify": {
       "eyebrow": "Saffron Literacy",
       "heading": "How to Identify Real Saffron",
       "sub": "85% of saffron sold globally is adulterated. Here's how to know yours is genuine — in three simple tests.",
       "steps": [
-        { "title": "The Water Test", "text": "Place a few threads in cold water. Real saffron slowly releases a deep golden-yellow colour over 10–15 minutes. It won't bleed instantly — and the threads remain crimson throughout." },
-        { "title": "The Smell Test", "text": "Rub a few threads between your fingers. Genuine Mongra saffron has a complex, honey-like aroma with hay and metallic notes — never artificial or chemical." },
-        { "title": "The Shape Test", "text": "Each thread should be trumpet-shaped — narrow at one end, widening to a feathered top. Mongra grade has no yellow style attached. Any yellow at the base is lower-grade Lachha or blended saffron." }
+        {
+          "title": "The Water Test",
+          "text": "Place a few threads in cold water. Real saffron slowly releases a deep golden-yellow colour over 10–15 minutes. It won't bleed instantly — and the threads remain crimson throughout."
+        },
+        {
+          "title": "The Smell Test",
+          "text": "Rub a few threads between your fingers. Genuine Mongra saffron has a complex, honey-like aroma with hay and metallic notes — never artificial or chemical."
+        },
+        {
+          "title": "The Shape Test",
+          "text": "Each thread should be trumpet-shaped — narrow at one end, widening to a feathered top. Mongra grade has no yellow style attached. Any yellow at the base is lower-grade Lachha or blended saffron."
+        }
       ],
-      "footerLink": { "label": "Read the full purity-testing guide on our blog →", "href": "blogs.html" }
+      "footerLink": {
+        "label": "Read the full purity-testing guide on our blog →",
+        "href": "blogs.html"
+      }
     },
     "delivery": {
       "eyebrow": "Delivery & Orders",
       "heading": "Delivery, Payment & Bulk Orders",
       "cards": [
-        { "icon": "🚚", "title": "Delivery", "text": "Same-day dispatch. Delivered anywhere in the UAE within 48 hours. Free delivery on orders over AED 120." },
-        { "icon": "💬", "title": "Payment", "text": "Order on WhatsApp — we confirm the total and payment options with you directly before dispatch. No minimum order." },
-        { "icon": "🏨", "title": "Restaurants & bulk", "text": "Special pricing for restaurants, hotels, and corporate gifting. [Message us for a quote](wa:Hi! I'd like a bulk quote from Saffron of Kashmir.)." }
+        {
+          "icon": "🚚",
+          "title": "Delivery",
+          "text": "Same-day dispatch. Delivered anywhere in the UAE within 48 hours. Free delivery on orders over AED 120."
+        },
+        {
+          "icon": "💬",
+          "title": "Payment",
+          "text": "Order on WhatsApp — we confirm the total and payment options with you directly before dispatch. No minimum order."
+        },
+        {
+          "icon": "🏨",
+          "title": "Restaurants & bulk",
+          "text": "Special pricing for restaurants, hotels, and corporate gifting. [Message us for a quote](wa:Hi! I'd like a bulk quote from Saffron of Kashmir.)."
+        }
       ]
     }
   },
-
   "recipesPage": {
     "h1": "Saffron Recipes",
     "sub": "Six tested recipes with full ingredients and step-by-step methods — from Kashmiri classics to UAE favourites. Every recipe is print-friendly.",
@@ -300,11 +442,16 @@
       "eyebrow": "The Golden Rule",
       "heading": "Always Bloom Your Saffron First",
       "sub": "Whatever you're making, bloom your Mongra saffron threads in warm (not boiling) liquid for 10–20 minutes before adding to your dish. This releases the crocin pigment and safranal aroma, giving maximum colour, flavour, and benefit from every thread.",
-      "primary": { "label": "Buy Mongra Saffron →", "href": "products.html" },
-      "secondary": { "label": "Read Our Blog", "href": "blogs.html" }
+      "primary": {
+        "label": "Buy Mongra Saffron →",
+        "href": "products.html"
+      },
+      "secondary": {
+        "label": "Read Our Blog",
+        "href": "blogs.html"
+      }
     }
   },
-
   "recipes": [
     {
       "id": "kahwa",
@@ -509,16 +656,31 @@
       "tip": "**UAE twist:** Swap the syrup for 3 tbsp of our [Saffron Honey](products.html) — extraordinary for Iftar and Eid gatherings."
     }
   ],
-
   "blogPage": {
     "h1": "From the Saffron Journal",
     "sub": "Buying guides, heritage stories, and research — everything you need to know about Kashmiri saffron.",
     "allLabel": "All Articles",
     "categories": [
-      { "key": "guide", "label": "Buyer's Guides", "postLabel": "Buyer's Guide" },
-      { "key": "heritage", "label": "Kashmir Heritage", "postLabel": "Kashmir Heritage" },
-      { "key": "cooking", "label": "Cooking", "postLabel": "Cooking with Saffron" },
-      { "key": "health", "label": "Health", "postLabel": "Health Benefits" }
+      {
+        "key": "guide",
+        "label": "Buyer's Guides",
+        "postLabel": "Buyer's Guide"
+      },
+      {
+        "key": "heritage",
+        "label": "Kashmir Heritage",
+        "postLabel": "Kashmir Heritage"
+      },
+      {
+        "key": "cooking",
+        "label": "Cooking",
+        "postLabel": "Cooking with Saffron"
+      },
+      {
+        "key": "health",
+        "label": "Health",
+        "postLabel": "Health Benefits"
+      }
     ],
     "sidebar": {
       "orderHeading": "Order Mongra Saffron",
@@ -529,14 +691,25 @@
       "waText": "Hi! I'd like to order Mongra Saffron from Saffron of Kashmir.",
       "alsoHeading": "Also from SOK",
       "links": [
-        { "label": "→ Saffron Recipes", "href": "recipes.html" },
-        { "label": "→ View All Products", "href": "products.html" },
-        { "label": "→ How to Spot Real Saffron", "href": "products.html#identify" },
-        { "label": "→ FAQ", "href": "index.html#faq" }
+        {
+          "label": "→ Saffron Recipes",
+          "href": "recipes.html"
+        },
+        {
+          "label": "→ View All Products",
+          "href": "products.html"
+        },
+        {
+          "label": "→ How to Spot Real Saffron",
+          "href": "products.html#identify"
+        },
+        {
+          "label": "→ FAQ",
+          "href": "index.html#faq"
+        }
       ]
     }
   },
-
   "posts": [
     {
       "id": "mongra-grade",
@@ -584,11 +757,16 @@
       "body": "## Mood and mental health\n\nA 2014 meta-analysis in *Human Psychopharmacology* reviewed five randomised controlled trials and found saffron supplementation (30mg/day) significantly more effective than placebo for mild-to-moderate depression. The compound responsible appears to be crocin, which influences serotonin, dopamine, and norepinephrine pathways.\n\n## Antioxidant properties\n\nSaffron contains more than 150 compounds, including crocin, crocetin, and safranal — among the most powerful plant antioxidants identified, able to neutralise reactive oxygen species and reduce lipid peroxidation.\n\n## Vision and eye health\n\nStudies from the University of L'Aquila (Italy) found daily saffron supplementation improved vision in patients with age-related macular degeneration. The crocetin in saffron appears to improve oxygen transport to the retina and protect photoreceptor cells.\n\n## Dosage note\n\nResearch doses range from 20–100mg per day; a generous pinch of Mongra saffron (~30mg) in your daily Kahwa or Kesar Doodh falls within this range. This is not medical advice — consult your healthcare provider for therapeutic applications."
     }
   ],
-
   "notFound": {
     "title": "Page not found",
     "text": "The page you're looking for doesn't exist or has moved.",
-    "primary": { "label": "Back to Home", "href": "index.html" },
-    "secondary": { "label": "View Products", "href": "products.html" }
+    "primary": {
+      "label": "Back to Home",
+      "href": "index.html"
+    },
+    "secondary": {
+      "label": "View Products",
+      "href": "products.html"
+    }
   }
 }
