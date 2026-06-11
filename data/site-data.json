@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-11T20:38:38.918Z"
+    "lastPublished": "2026-06-11T20:42:43.929Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -100,12 +100,12 @@
   "products": [
     {
       "id": "royal-1g",
-      "name": "Royal Mongra — 1g",
-      "badge": "1g",
+      "name": "Royal Mongra — 2g",
+      "badge": "2g",
       "unitLabel": "/ tin",
       "price": 65,
-      "image": "tin.png",
-      "imageAlt": "Royal Mongra 1g saffron tin from Pampore Kashmir",
+      "image": "tin-1.webp",
+      "imageAlt": "Royal Mongra 2g saffron tin from Pampore Kashmir",
       "homeDesc": "Perfect introduction to genuine Mongra grade. 15–20 servings of tea or rice.",
       "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Grade A. 15–20 servings.",
       "schemaName": "Royal Mongra Saffron — 1g",
