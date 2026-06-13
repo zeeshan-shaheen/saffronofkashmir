@@ -292,6 +292,41 @@ details.read-more h3 { font-size: 18px; color: var(--burgundy); margin-top: 18px
   .brand-tag { display: none; }
 }
 
+/* ── First-visit discount overlay ──────────────────────── */
+.sok-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(43,33,23,.55); z-index: 200;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.sok-overlay.sok-overlay-open { display: flex; }
+.sok-overlay-box {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  max-width: 460px; width: 100%; padding: 32px 28px 28px;
+  position: relative; max-height: 90vh; overflow-y: auto;
+}
+.sok-overlay-close {
+  position: absolute; top: 12px; right: 14px;
+  background: none; border: none; font-size: 22px;
+  cursor: pointer; color: var(--muted); line-height: 1; padding: 4px 6px;
+}
+.sok-overlay-close:hover { color: var(--ink); }
+.sok-overlay-img { width: 100%; border-radius: 6px; margin-bottom: 16px; }
+.sok-overlay-heading { font-size: 22px; margin: 0 0 8px; padding-right: 24px; }
+.sok-overlay-text { color: var(--muted); font-size: 15px; margin: 0 0 8px; }
+.sok-overlay-discount { font-size: 20px; font-weight: 700; color: var(--saffron); margin: 0 0 16px; }
+.sok-overlay-form { display: flex; flex-direction: column; gap: 10px; }
+.sok-overlay-form input[type="email"] {
+  width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+  border-radius: var(--radius); font-size: 15.5px; font-family: var(--font-body);
+}
+.sok-overlay-form input[type="email"]:focus { outline: 3px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.sok-overlay-consent { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; color: var(--muted); cursor: pointer; }
+.sok-overlay-consent input[type="checkbox"] { margin-top: 3px; flex: none; }
+.sok-overlay-form .btn { align-self: stretch; justify-content: center; }
+.sok-overlay-msg { font-size: 13.5px; color: var(--burgundy); margin: 0; min-height: 1.3em; }
+.sok-overlay-success { color: var(--wa-green); font-size: 15px; font-weight: 600; text-align: center; padding: 16px 0 4px; }
+
 /* ── Print (recipes) ────────────────────────────────────── */
 @media print {
   .site-header, .site-footer, .float-wa, .back-top, .btn, .filter-bar,

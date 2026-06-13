@@ -728,11 +728,44 @@
       quickLinks + statsHtml + qa;
   }
 
+  function secOverlay() {
+    const ov = S.data.overlay || {};
+    const enabled = ov.enabled;
+    const statusNote = enabled
+      ? '<p style="background:#e6f9ee;border:1px solid #b2dfca;border-radius:6px;padding:10px 14px;font-size:13.5px;color:#1a6b3a;margin:0 0 16px;">🟢 Overlay is <strong>live</strong>. Visitors who haven\'t seen it yet will see it after 4 seconds or on first scroll.</p>'
+      : '<p style="background:#fdf6e7;border:1px solid #e8c96a;border-radius:6px;padding:10px 14px;font-size:13.5px;color:#7c5a12;margin:0 0 16px;">⚠ Overlay is <strong>disabled</strong>. Enable it below once you\'re ready.</p>';
+    const toggleCard = card('🎁', 'Overlay status',
+      statusNote +
+      f('Enable overlay', 'overlay.enabled', { type: 'checkbox' })
+    );
+    const contentCard = card('✏️', 'Content',
+      f('Heading', 'overlay.heading', { placeholder: 'Welcome — 10% Off Your First Order' }) +
+      f('Body text', 'overlay.text', { type: 'textarea', rows: 2 }) +
+      f('Discount label (shown large)', 'overlay.discountText', { placeholder: '10% off your first order' }) +
+      f('Button label', 'overlay.buttonLabel', { placeholder: 'Claim My Discount' }) +
+      f('Success message', 'overlay.successText', { placeholder: 'Thank you! Your discount code is on its way — check your inbox.' }) +
+      imgField('Optional image (left of form)', 'overlay.image', { hint: 'Leave blank for no image. Use a portrait or square image, max ~400 px wide.' })
+    );
+    const settingsCard = card('⚙️', 'Settings',
+      f('Mailchimp form endpoint', 'overlay.formEndpoint', {
+        hint: 'Paste the full URL from your Mailchimp embedded form (the "action" attribute). Must contain /subscribe/post?',
+        placeholder: 'https://yourlist.us5.list-manage.com/subscribe/post?u=…&id=…'
+      }) +
+      f('Privacy policy link (href)', 'overlay.privacyHref', {
+        placeholder: 'privacy-policy.html',
+        hint: 'Relative path to your privacy policy page.'
+      })
+    );
+    return '<div class="page-h"><div><h2>Discount overlay</h2>' +
+      '<p>First-visit email capture — shows after 4 s or first scroll, once per session, never again after subscription.</p></div></div>' +
+      toggleCard + contentCard + settingsCard;
+  }
+
   const SECTIONS = {
     dashboard: secDashboard,
     home: secHome, products: secProducts, recipes: secRecipes, posts: secPosts,
     faq: secFaq, testimonials: secTestimonials, brand: secBrand, seo: secSeo,
-    media: secMedia, settings: secSettings
+    media: secMedia, settings: secSettings, overlay: secOverlay
   };
 
   function render(sec) {
@@ -941,7 +974,8 @@
     const map = {
       'index.html': SOKTemplates.renderIndex, 'products.html': SOKTemplates.renderProducts,
       'recipes.html': SOKTemplates.renderRecipes, 'blogs.html': SOKTemplates.renderBlogs,
-      '404.html': SOKTemplates.render404
+      '404.html': SOKTemplates.render404,
+      'privacy-policy.html': SOKTemplates.renderPrivacyPolicy
     };
     try {
       let html = map[file](S.data);
