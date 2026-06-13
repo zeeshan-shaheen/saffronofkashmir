@@ -637,6 +637,18 @@
       '</urlset>\n';
   }
 
+  function renderLlms(data) {
+    var b = data.brand;
+    var u = b.siteUrl;
+    return '# ' + b.name + '\n\n' +
+      '> ' + b.orgDescription + '\n\n' +
+      '## Pages\n\n' +
+      '- [Home](' + u + '/): Products, ordering information, FAQ, and the brand story.\n' +
+      '- [Products](' + u + '/products.html): Full product catalogue — Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
+      '- [Recipes](' + u + '/recipes.html): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.\n' +
+      '- [Blog](' + u + '/blogs.html): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
+  }
+
   /* ---------- public API ---------- */
 
   function renderAll(data) {
@@ -646,7 +658,8 @@
       'recipes.html': renderRecipes(data),
       'blogs.html': renderBlogs(data),
       '404.html': render404(data),
-      'sitemap.xml': renderSitemap(data)
+      'sitemap.xml': renderSitemap(data),
+      'llms.txt': renderLlms(data)
     };
   }
 
@@ -654,6 +667,7 @@
     esc: esc, waUrl: waUrl, inlineMd: inlineMd, plainMd: plainMd,
     renderIndex: renderIndex, renderProducts: renderProducts,
     renderRecipes: renderRecipes, renderBlogs: renderBlogs,
-    render404: render404, renderSitemap: renderSitemap, renderAll: renderAll
+    render404: render404, renderSitemap: renderSitemap,
+    renderLlms: renderLlms, renderAll: renderAll
   };
 }));
