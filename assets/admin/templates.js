@@ -180,8 +180,8 @@
     var opts = order.filter(function (c) { return currs[c]; }).map(function (c) {
       var cu = currs[c];
       return '      <option value="' + esc(c) + '" data-rate="' + esc(cu.rate) +
-        '" data-symbol="' + esc(cu.symbol) + '" data-decimals="' + esc(cu.decimals) + '">' +
-        esc(c) + '</option>';
+        '" data-symbol="' + esc(cu.symbol) + '" data-decimals="' + esc(cu.decimals) +
+        '" data-markup="' + esc(cu.markup || 0) + '">' + esc(c) + '</option>';
     }).join('\n');
     if (!opts) return '';
     return '    <select id="sok-curr" class="currency-select" aria-label="Select currency">\n' +

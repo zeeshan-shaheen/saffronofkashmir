@@ -22,12 +22,12 @@
     "fbPixelId": "1140202034977517",
     "baseCurrency": "AED",
     "currencies": {
-      "AED": { "name": "UAE Dirham",   "symbol": "AED", "rate": 1,      "decimals": 2 },
-      "USD": { "name": "US Dollar",    "symbol": "USD", "rate": 0.2723, "decimals": 2 },
-      "INR": { "name": "Indian Rupee", "symbol": "₹",   "rate": 22.73,  "decimals": 0 },
-      "SAR": { "name": "Saudi Riyal",  "symbol": "SAR", "rate": 1.021,  "decimals": 2 },
-      "QAR": { "name": "Qatari Riyal", "symbol": "QAR", "rate": 0.991,  "decimals": 2 },
-      "OMR": { "name": "Omani Rial",   "symbol": "OMR", "rate": 0.1048, "decimals": 3 }
+      "AED": { "name": "UAE Dirham",   "symbol": "AED", "rate": 1,      "decimals": 2, "markup": 0 },
+      "USD": { "name": "US Dollar",    "symbol": "USD", "rate": 0.2723, "decimals": 2, "markup": 0 },
+      "INR": { "name": "Indian Rupee", "symbol": "₹",   "rate": 22.73,  "decimals": 0, "markup": 0 },
+      "SAR": { "name": "Saudi Riyal",  "symbol": "SAR", "rate": 1.021,  "decimals": 2, "markup": 0 },
+      "QAR": { "name": "Qatari Riyal", "symbol": "QAR", "rate": 0.991,  "decimals": 2, "markup": 0 },
+      "OMR": { "name": "Omani Rial",   "symbol": "OMR", "rate": 0.1048, "decimals": 3, "markup": 0 }
     }
   },
   "seo": {

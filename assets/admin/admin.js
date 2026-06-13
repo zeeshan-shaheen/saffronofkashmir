@@ -773,7 +773,13 @@
         f('Display symbol', 'brand.currencies.' + c + '.symbol', { placeholder: c }) +
         (isBase
           ? '<p style="font-size:13px;color:var(--muted);margin:4px 0 0;">Rate is always 1 — this is the base.</p>'
-          : num('Rate (1 ' + base + ' = ? ' + c + ')', 'brand.currencies.' + c + '.rate', { placeholder: '1.0' })) +
+          : num('Exchange rate (1 ' + base + ' = ? ' + c + ')', 'brand.currencies.' + c + '.rate', { placeholder: '1.0' })) +
+        (isBase
+          ? ''
+          : num('Price adjustment (%)', 'brand.currencies.' + c + '.markup', {
+              placeholder: '0',
+              hint: 'Applied on top of the exchange rate. Positive = mark up (e.g. 15 adds 15% for shipping). Negative = mark down (e.g. -20 lowers price by 20%). 0 = pure conversion.'
+            })) +
         num('Decimal places', 'brand.currencies.' + c + '.decimals', { placeholder: '2' })
       );
     }).join('');
