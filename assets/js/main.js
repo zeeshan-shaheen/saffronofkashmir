@@ -71,7 +71,8 @@
         code: code,
         rate: parseFloat(opt.dataset.rate),
         symbol: opt.dataset.symbol,
-        decimals: parseInt(opt.dataset.decimals, 10)
+        decimals: parseInt(opt.dataset.decimals, 10),
+        markup: parseFloat(opt.dataset.markup || 0)
       };
     }
 
@@ -80,7 +81,7 @@
       if (!curr) return;
       document.querySelectorAll('[data-price]').forEach(function (el) {
         var aed = parseFloat(el.dataset.price);
-        var converted = aed * curr.rate;
+        var converted = aed * curr.rate * (1 + curr.markup / 100);
         var formatted;
         try {
           formatted = new Intl.NumberFormat('en', {
