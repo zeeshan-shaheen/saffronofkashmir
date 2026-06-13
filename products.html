@@ -120,7 +120,7 @@
           "@type": "Offer",
           "priceCurrency": "AED",
           "price": "95",
-          "availability": "https://schema.org/InStock",
+          "availability": "https://schema.org/PreOrder",
           "url": "https://saffronofkashmir.com/products.html"
         }
       },
@@ -137,7 +137,7 @@
           "@type": "Offer",
           "priceCurrency": "AED",
           "price": "110",
-          "availability": "https://schema.org/InStock",
+          "availability": "https://schema.org/PreOrder",
           "url": "https://saffronofkashmir.com/products.html"
         }
       },
@@ -154,7 +154,7 @@
           "@type": "Offer",
           "priceCurrency": "AED",
           "price": "85",
-          "availability": "https://schema.org/InStock",
+          "availability": "https://schema.org/OutOfStock",
           "url": "https://saffronofkashmir.com/products.html"
         }
       }
@@ -183,6 +183,14 @@
       <a href="index.html#faq">FAQ</a>
       <a href="index.html#contact">Contact</a>
     </div>
+    <select id="sok-curr" class="currency-select" aria-label="Select currency">
+      <option value="AED" data-rate="1" data-symbol="AED" data-decimals="2" data-markup="0">AED</option>
+      <option value="USD" data-rate="0.2723" data-symbol="USD" data-decimals="2" data-markup="0">USD</option>
+      <option value="INR" data-rate="22.73" data-symbol="₹" data-decimals="0" data-markup="0">INR</option>
+      <option value="SAR" data-rate="1.021" data-symbol="SAR" data-decimals="2" data-markup="0">SAR</option>
+      <option value="QAR" data-rate="0.991" data-symbol="QAR" data-decimals="2" data-markup="0">QAR</option>
+      <option value="OMR" data-rate="0.1048" data-symbol="OMR" data-decimals="3" data-markup="0">OMR</option>
+    </select>
     <a class="btn btn-whatsapp nav-cta-desktop" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order Now</a>
   </nav>
 </header>
@@ -218,7 +226,7 @@
           <div class="p-body">
             <h3>Royal Mongra — 2g</h3>
             <p class="p-desc">Pure crimson stigma tips, no style. ISO 3632 Grade A. 15–20 servings.</p>
-<div class="p-price">AED 65 <span>/ tin</span></div>
+<div class="p-price"><span data-price="65">AED 65</span> <span class="unit">/ tin</span></div>
             <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Royal%20Mongra%201g%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order on WhatsApp</a>
             <details class="specs">
               <summary>Details</summary>
@@ -242,7 +250,7 @@
           <div class="p-body">
             <h3>Collector's Tin — 5g</h3>
             <p class="p-desc">For serious saffron lovers. 80–100 servings. Gift-worthy packaging.</p>
-<div class="p-price"><s style="font-size:15px;font-weight:400;color:var(--muted);">AED 160</s> AED 125 <span>/ tin</span> <span style="background:#e8f5e9;color:#1d7a46;font-size:12.5px;font-weight:700;border-radius:99px;padding:3px 9px;">25% off</span></div>
+<div class="p-price"><s style="font-size:15px;font-weight:400;color:var(--muted);" data-price="160">AED 160</s> <span data-price="125">AED 125</span> <span class="unit">/ tin</span> <span style="background:#e8f5e9;color:#1d7a46;font-size:12.5px;font-weight:700;border-radius:99px;padding:3px 9px;">25% off</span></div>
             <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Collector's%20Tin%205g%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order on WhatsApp</a>
             <details class="specs">
               <summary>Details</summary>
@@ -266,7 +274,7 @@
           <div class="p-body">
             <h3>Heritage Reserve — 10g</h3>
             <p class="p-desc">Our largest tin. Best per-gram value. Ideal for restaurants and gifting.</p>
-<div class="p-price"><s style="font-size:15px;font-weight:400;color:var(--muted);">AED 300</s> AED 220 <span>/ tin</span> <span style="background:#e8f5e9;color:#1d7a46;font-size:12.5px;font-weight:700;border-radius:99px;padding:3px 9px;">27% off</span></div>
+<div class="p-price"><s style="font-size:15px;font-weight:400;color:var(--muted);" data-price="300">AED 300</s> <span data-price="220">AED 220</span> <span class="unit">/ tin</span> <span style="background:#e8f5e9;color:#1d7a46;font-size:12.5px;font-weight:700;border-radius:99px;padding:3px 9px;">27% off</span></div>
             <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Heritage%20Reserve%2010g%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order on WhatsApp</a>
             <details class="specs">
               <summary>Details</summary>
@@ -285,12 +293,12 @@
           <div class="p-img">
             <img src="product-honey.jpg" alt="Kashmiri saffron honey — wildflower honey infused with Mongra saffron" loading="lazy" width="400" height="300">
             <span class="weight-badge">250g</span>
-
+<span style="position:absolute;top:12px;left:12px;background:#A8842F;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;">Coming Soon</span>
           </div>
           <div class="p-body">
             <h3>Saffron Honey — 250g</h3>
             <p class="p-desc">Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.</p>
-<div class="p-price">AED 95 <span>/ jar</span></div>
+<div class="p-price"><span data-price="95">AED 95</span> <span class="unit">/ jar</span></div>
             <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Saffron%20Honey%20250g%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order on WhatsApp</a>
           </div>
         </article>
@@ -299,12 +307,12 @@
           <div class="p-img">
             <img src="product-oil.jpg" alt="Kashmiri saffron oil — 15ml cold-pressed saffron-infused almond oil" loading="lazy" width="400" height="300">
             <span class="weight-badge">15ml</span>
-
+<span style="position:absolute;top:12px;left:12px;background:#A8842F;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;">Coming Soon</span>
           </div>
           <div class="p-body">
             <h3>Saffron Oil — 15ml</h3>
             <p class="p-desc">Cold-pressed saffron-infused almond oil. For skin, hair, and wellness rituals.</p>
-<div class="p-price">AED 110 <span>/ bottle</span></div>
+<div class="p-price"><span data-price="110">AED 110</span> <span class="unit">/ bottle</span></div>
             <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Saffron%20Oil%2015ml%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order on WhatsApp</a>
           </div>
         </article>
@@ -313,13 +321,13 @@
           <div class="p-img">
             <img src="product-tea.jpg" alt="Kashmiri Kahwa saffron tea blend — 50g tin" loading="lazy" width="400" height="300">
             <span class="weight-badge">50g</span>
-
+<span style="position:absolute;top:12px;left:12px;background:#9d2235;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;">Out of Stock</span>
           </div>
           <div class="p-body">
             <h3>Kashmiri Kahwa Blend — 50g</h3>
             <p class="p-desc">Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.</p>
-<div class="p-price">AED 85 <span>/ tin</span></div>
-            <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Kashmiri%20Kahwa%20Blend%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Order on WhatsApp</a>
+<div class="p-price"><span data-price="85">AED 85</span> <span class="unit">/ tin</span></div>
+            <a class="btn btn-whatsapp" href="https://wa.me/971522613060?text=Hi!%20I'd%20like%20to%20order%20Kashmiri%20Kahwa%20Blend%20from%20Saffron%20of%20Kashmir." target="_blank" rel="noopener">Ask about restock</a>
           </div>
         </article>
       </div>
