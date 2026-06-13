@@ -19,7 +19,16 @@
     "foundingYear": "2004",
     "orgDescription": "Premium Kashmiri Mongra saffron harvested in Pampore, Kashmir. Supplying the UAE since 2004.",
     "gaId": "G-9569ES4LBP",
-    "fbPixelId": "1140202034977517"
+    "fbPixelId": "1140202034977517",
+    "baseCurrency": "AED",
+    "currencies": {
+      "AED": { "name": "UAE Dirham",   "symbol": "AED", "rate": 1,      "decimals": 2 },
+      "USD": { "name": "US Dollar",    "symbol": "USD", "rate": 0.2723, "decimals": 2 },
+      "INR": { "name": "Indian Rupee", "symbol": "₹",   "rate": 22.73,  "decimals": 0 },
+      "SAR": { "name": "Saudi Riyal",  "symbol": "SAR", "rate": 1.021,  "decimals": 2 },
+      "QAR": { "name": "Qatari Riyal", "symbol": "QAR", "rate": 0.991,  "decimals": 2 },
+      "OMR": { "name": "Omani Rial",   "symbol": "OMR", "rate": 0.1048, "decimals": 3 }
+    }
   },
   "seo": {
     "home": {

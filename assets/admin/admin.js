@@ -761,11 +761,35 @@
       toggleCard + contentCard + settingsCard;
   }
 
+  function secCurrencies() {
+    const b = S.data.brand;
+    const base = b.baseCurrency || 'AED';
+    const currs = b.currencies || {};
+    const order = ['AED', 'USD', 'INR', 'SAR', 'QAR', 'OMR'];
+    const rateRows = order.filter(c => currs[c]).map(c => {
+      const cu = currs[c];
+      const isBase = c === base;
+      return card('💱', cu.name + ' (' + c + ')' + (isBase ? ' — base currency' : ''),
+        f('Display symbol', 'brand.currencies.' + c + '.symbol', { placeholder: c }) +
+        (isBase
+          ? '<p style="font-size:13px;color:var(--muted);margin:4px 0 0;">Rate is always 1 — this is the base.</p>'
+          : num('Rate (1 ' + base + ' = ? ' + c + ')', 'brand.currencies.' + c + '.rate', { placeholder: '1.0' })) +
+        num('Decimal places', 'brand.currencies.' + c + '.decimals', { placeholder: '2' })
+      );
+    }).join('');
+    return '<div class="page-h"><div><h2>Currencies &amp; rates</h2>' +
+      '<p>Rates are applied client-side. Update them whenever exchange rates drift significantly.</p></div></div>' +
+      '<div class="card" style="background:#fdf6e7;border-color:#e8c96a;">' +
+      '<p style="font-size:13.5px;margin:0;">ℹ Prices are stored in <strong>' + A(base) + '</strong>. All other currencies are converted at the rates below. After changing rates, publish to update the live site.</p>' +
+      '</div>' +
+      rateRows;
+  }
+
   const SECTIONS = {
     dashboard: secDashboard,
     home: secHome, products: secProducts, recipes: secRecipes, posts: secPosts,
     faq: secFaq, testimonials: secTestimonials, brand: secBrand, seo: secSeo,
-    media: secMedia, settings: secSettings, overlay: secOverlay
+    media: secMedia, settings: secSettings, overlay: secOverlay, currencies: secCurrencies
   };
 
   function render(sec) {

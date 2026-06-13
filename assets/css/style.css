@@ -88,6 +88,15 @@ section { padding: 56px 0; }
 .nav-links a:hover { background: var(--cream); }
 .nav-links a[aria-current="page"] { color: var(--burgundy); font-weight: 600; box-shadow: inset 0 -2px 0 var(--gold); border-radius: 6px 6px 0 0; }
 
+.currency-select {
+  appearance: none; -webkit-appearance: none;
+  background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E") no-repeat right 8px center;
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 6px 26px 6px 10px; font-size: 13px; font-weight: 600; color: var(--ink);
+  cursor: pointer; line-height: 1.4; min-width: 62px;
+}
+.currency-select:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+
 .nav-toggle {
   display: none; background: none; border: 1px solid var(--border); border-radius: 6px;
   padding: 8px 10px; cursor: pointer; font-size: 20px; line-height: 1; color: var(--ink);
@@ -289,6 +298,7 @@ details.read-more h3 { font-size: 18px; color: var(--burgundy); margin-top: 18px
   .nav-links a { padding: 12px; }
   .nav-toggle { display: block; }
   .nav-cta-desktop { display: none; }
+  .currency-select { font-size: 12px; padding: 5px 22px 5px 8px; min-width: 54px; }
   .brand-tag { display: none; }
 }
 
