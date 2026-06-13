@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-12T05:41:39.720Z"
+    "lastPublished": "2026-06-13T20:41:03.257Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -22,12 +22,48 @@
     "fbPixelId": "1140202034977517",
     "baseCurrency": "AED",
     "currencies": {
-      "AED": { "name": "UAE Dirham",   "symbol": "AED", "rate": 1,      "decimals": 2, "markup": 0 },
-      "USD": { "name": "US Dollar",    "symbol": "USD", "rate": 0.2723, "decimals": 2, "markup": 0 },
-      "INR": { "name": "Indian Rupee", "symbol": "₹",   "rate": 22.73,  "decimals": 0, "markup": 0 },
-      "SAR": { "name": "Saudi Riyal",  "symbol": "SAR", "rate": 1.021,  "decimals": 2, "markup": 0 },
-      "QAR": { "name": "Qatari Riyal", "symbol": "QAR", "rate": 0.991,  "decimals": 2, "markup": 0 },
-      "OMR": { "name": "Omani Rial",   "symbol": "OMR", "rate": 0.1048, "decimals": 3, "markup": 0 }
+      "AED": {
+        "name": "UAE Dirham",
+        "symbol": "AED",
+        "rate": 1,
+        "decimals": 2,
+        "markup": 0
+      },
+      "USD": {
+        "name": "US Dollar",
+        "symbol": "USD",
+        "rate": 0.2723,
+        "decimals": 2,
+        "markup": 0
+      },
+      "INR": {
+        "name": "Indian Rupee",
+        "symbol": "₹",
+        "rate": 22.73,
+        "decimals": 0,
+        "markup": 0
+      },
+      "SAR": {
+        "name": "Saudi Riyal",
+        "symbol": "SAR",
+        "rate": 1.021,
+        "decimals": 2,
+        "markup": 0
+      },
+      "QAR": {
+        "name": "Qatari Riyal",
+        "symbol": "QAR",
+        "rate": 0.991,
+        "decimals": 2,
+        "markup": 0
+      },
+      "OMR": {
+        "name": "Omani Rial",
+        "symbol": "OMR",
+        "rate": 0.1048,
+        "decimals": 3,
+        "markup": 0
+      }
     }
   },
   "seo": {
@@ -113,7 +149,7 @@
       "badge": "2g",
       "unitLabel": "/ tin",
       "price": 65,
-      "image": "tin-1.webp",
+      "image": "2gm-1.webp",
       "imageAlt": "Royal Mongra 2g saffron tin from Pampore Kashmir",
       "homeDesc": "Perfect introduction to genuine Mongra grade. 15–20 servings of tea or rice.",
       "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Grade A. 15–20 servings.",
@@ -159,7 +195,7 @@
       "badge": "5g",
       "unitLabel": "/ tin",
       "price": 290,
-      "image": "tin.png",
+      "image": "5gm-1.webp",
       "imageAlt": "Collector's Tin 5g Mongra saffron from Saffron of Kashmir",
       "homeDesc": "For the serious saffron lover. 80–100 servings. Gift-worthy collector's edition tin.",
       "pageDesc": "For serious saffron lovers. 80–100 servings. Gift-worthy packaging.",
@@ -205,7 +241,7 @@
       "badge": "10g",
       "unitLabel": "/ tin",
       "price": 520,
-      "image": "tin.png",
+      "image": "10gm-1.webp",
       "imageAlt": "Heritage Reserve 10g Mongra saffron collector tin",
       "homeDesc": "Our largest tin. Best value for restaurants, gifting, or the dedicated home chef.",
       "pageDesc": "Our largest tin. Best per-gram value. Ideal for restaurants and gifting.",
