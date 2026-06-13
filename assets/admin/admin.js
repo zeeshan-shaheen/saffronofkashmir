@@ -642,7 +642,94 @@
         'Developers can also rebuild pages locally with <code>node build.js</code>.</p>');
   }
 
+  function secDashboard() {
+    const d = S.data;
+    const b = d.brand;
+    const siteU = siteUrl();
+    const lp = d.meta && d.meta.lastPublished;
+    const products = d.products || [];
+    const posts = d.posts || [];
+
+    // Quick links
+    const gscHref = 'https://search.google.com/search-console?resource_id=' + encodeURIComponent(siteU + '/');
+    const psiHref = 'https://pagespeed.web.dev/report?url=' + encodeURIComponent(siteU + '/');
+
+    const quickLinks = card('🔗', 'Quick links',
+      '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;">' +
+      (b.gaId
+        ? '<a class="btn btn-outline btn-sm" href="https://analytics.google.com/" target="_blank" rel="noopener">📊 Google Analytics ↗</a>'
+        : '<span style="font-size:13.5px;color:var(--muted);align-self:center;">Google Analytics — add a GA ID in <a href="#" data-goto="brand">Brand &amp; contact</a> first.</span>') +
+      '<a class="btn btn-outline btn-sm" href="' + A(gscHref) + '" target="_blank" rel="noopener">🔎 Search Console ↗</a>' +
+      '<a class="btn btn-outline btn-sm" href="' + A(psiHref) + '" target="_blank" rel="noopener">⚡ PageSpeed Insights ↗</a>' +
+      '</div>'
+    );
+
+    // Stats
+    const onSale = products.filter(p => p.sale && typeof p.sale.price === 'number');
+    const outOfStock = products.filter(p => p.status === 'out_of_stock');
+    const comingSoon = products.filter(p => p.status === 'coming_soon');
+
+    function statRow(label, value) {
+      return '<tr>' +
+        '<td style="padding:8px 0;border-bottom:1px dashed var(--line);color:var(--muted);width:180px;font-size:14px;">' + label + '</td>' +
+        '<td style="padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px;font-weight:600;">' + value + '</td>' +
+        '</tr>';
+    }
+
+    function pill(name, bg, color) {
+      return '<span style="background:' + bg + ';color:' + color + ';border-radius:4px;padding:1px 7px;font-size:13px;font-weight:600;margin-right:4px;">' + A(name) + '</span>';
+    }
+
+    const statsHtml = card('📊', 'Site stats',
+      '<table style="width:100%;border-collapse:collapse;">' +
+      statRow('Products', products.length) +
+      statRow('On sale', onSale.length || '—') +
+      statRow('Out of stock', outOfStock.length ? outOfStock.map(p => pill(p.name, '#fcebed', 'var(--danger)')).join('') : '—') +
+      statRow('Coming soon', comingSoon.length ? comingSoon.map(p => pill(p.name, '#fdf6e7', '#7c5a12')).join('') : '—') +
+      statRow('Blog posts', posts.length) +
+      statRow('Last published', lp ? A(new Date(lp).toLocaleString()) : '<span style="color:var(--muted);">Never</span>') +
+      '</table>'
+    );
+
+    // Content QA
+    const issues = [];
+
+    products.forEach(p => {
+      const nm = '<strong>' + A(p.name) + '</strong>';
+      if (!p.image) issues.push('Product ' + nm + ': no image set.');
+      if (p.image && !p.imageAlt) issues.push('Product ' + nm + ': image has no alt text.');
+      if (p.sale && !p.sale.until) issues.push('Product ' + nm + ': on sale with no "valid until" date set.');
+    });
+
+    [['home', 'Home'], ['products', 'Products'], ['recipes', 'Recipes'], ['blog', 'Blog']].forEach(([key, label]) => {
+      const s = d.seo && d.seo[key];
+      if (s) {
+        if (!s.title) issues.push('<strong>' + label + ' page</strong>: SEO title is empty.');
+        if (!s.description) issues.push('<strong>' + label + ' page</strong>: SEO description is empty.');
+      }
+    });
+
+    posts.forEach(p => {
+      const ttl = '<strong>' + A(p.title || p.id) + '</strong>';
+      if (!p.excerpt) issues.push('Post ' + ttl + ': excerpt is empty.');
+      if (!p.body) issues.push('Post ' + ttl + ': body is empty.');
+    });
+
+    const qa = card('✅', 'Content QA',
+      issues.length === 0
+        ? '<p style="color:var(--ok);font-size:14px;margin:8px 0 0;">✓ All clear — no issues found.</p>'
+        : '<ul style="margin:10px 0 0 18px;padding:0;font-size:14px;line-height:1.9;">' +
+          issues.map(i => '<li style="color:var(--danger);">⚠ ' + i + '</li>').join('') +
+          '</ul>'
+    );
+
+    return '<div class="page-h"><div><h2>Dashboard</h2>' +
+      '<p>At-a-glance overview — read-only, no API calls, built entirely from your current content.</p></div></div>' +
+      quickLinks + statsHtml + qa;
+  }
+
   const SECTIONS = {
+    dashboard: secDashboard,
     home: secHome, products: secProducts, recipes: secRecipes, posts: secPosts,
     faq: secFaq, testimonials: secTestimonials, brand: secBrand, seo: secSeo,
     media: secMedia, settings: secSettings
