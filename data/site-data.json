@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-13T20:41:03.257Z"
+    "lastPublished": "2026-06-13T20:46:28.641Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -153,7 +153,7 @@
       "imageAlt": "Royal Mongra 2g saffron tin from Pampore Kashmir",
       "homeDesc": "Perfect introduction to genuine Mongra grade. 15–20 servings of tea or rice.",
       "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Grade A. 15–20 servings.",
-      "schemaName": "Royal Mongra Saffron — 1g",
+      "schemaName": "Royal Mongra Saffron — 2g",
       "schemaDesc": "Pure Kashmiri Mongra saffron, 1g tin. Crimson stigma tips only. ISO 3632 Grade A.",
       "category": "saffron",
       "featured": true,
@@ -183,8 +183,8 @@
         }
       ],
       "compare": {
-        "label": "Royal Mongra 1g",
-        "grams": 1,
+        "label": "Royal Mongra 2g",
+        "grams": 2,
         "servings": "15–20",
         "bestFor": "First-time buyers, trying Mongra grade"
       }
@@ -194,7 +194,7 @@
       "name": "Collector's Tin — 5g",
       "badge": "5g",
       "unitLabel": "/ tin",
-      "price": 290,
+      "price": 160,
       "image": "5gm-1.webp",
       "imageAlt": "Collector's Tin 5g Mongra saffron from Saffron of Kashmir",
       "homeDesc": "For the serious saffron lover. 80–100 servings. Gift-worthy collector's edition tin.",
@@ -204,7 +204,11 @@
       "category": "saffron",
       "featured": true,
       "status": "available",
-      "sale": null,
+      "sale": {
+        "price": 125,
+        "label": "25% off",
+        "until": ""
+      },
       "waText": "Hi! I'd like to order Collector's Tin 5g from Saffron of Kashmir.",
       "specs": [
         {
@@ -240,7 +244,7 @@
       "name": "Heritage Reserve — 10g",
       "badge": "10g",
       "unitLabel": "/ tin",
-      "price": 520,
+      "price": 300,
       "image": "10gm-1.webp",
       "imageAlt": "Heritage Reserve 10g Mongra saffron collector tin",
       "homeDesc": "Our largest tin. Best value for restaurants, gifting, or the dedicated home chef.",
@@ -250,7 +254,11 @@
       "category": "saffron",
       "featured": true,
       "status": "available",
-      "sale": null,
+      "sale": {
+        "price": 220,
+        "label": "27% off",
+        "until": ""
+      },
       "waText": "Hi! I'd like to order Heritage Reserve 10g from Saffron of Kashmir.",
       "specs": [
         {
