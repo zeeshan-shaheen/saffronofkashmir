@@ -41,6 +41,16 @@
     });
   });
 
+  // WhatsApp conversion tracking
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href*="wa.me"]');
+    if (!link) return;
+    if (typeof gtag !== 'function') return;
+    var card = link.closest('article') || link.closest('.card');
+    var h3 = card && card.querySelector('h3');
+    gtag('event', 'whatsapp_click', { item: h3 ? h3.textContent.trim() : 'general' });
+  });
+
   // Print a single recipe: open its details, print, restore
   document.querySelectorAll('.print-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
