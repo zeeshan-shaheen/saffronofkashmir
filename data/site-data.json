@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-13T20:46:28.641Z"
+    "lastPublished": "2026-06-13T21:04:04.642Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -303,7 +303,7 @@
       "schemaDesc": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
       "category": "gift",
       "featured": false,
-      "status": "available",
+      "status": "coming_soon",
       "sale": null,
       "waText": "Hi! I'd like to order Saffron Honey 250g from Saffron of Kashmir.",
       "specs": [],
@@ -323,7 +323,7 @@
       "schemaDesc": "Cold-pressed saffron-infused almond oil for skin, hair, and wellness.",
       "category": "gift",
       "featured": false,
-      "status": "available",
+      "status": "coming_soon",
       "sale": null,
       "waText": "Hi! I'd like to order Saffron Oil 15ml from Saffron of Kashmir.",
       "specs": [],
@@ -343,7 +343,7 @@
       "schemaDesc": "Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.",
       "category": "gift",
       "featured": false,
-      "status": "available",
+      "status": "out_of_stock",
       "sale": null,
       "waText": "Hi! I'd like to order Kashmiri Kahwa Blend from Saffron of Kashmir.",
       "specs": [],
