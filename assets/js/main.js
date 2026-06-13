@@ -41,6 +41,79 @@
     });
   });
 
+  // WhatsApp conversion tracking
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href*="wa.me"]');
+    if (!link) return;
+    if (typeof gtag !== 'function') return;
+    var card = link.closest('article') || link.closest('.card');
+    var h3 = card && card.querySelector('h3');
+    gtag('event', 'whatsapp_click', { item: h3 ? h3.textContent.trim() : 'general' });
+  });
+
+  // First-visit discount overlay
+  (function () {
+    var el = document.getElementById('sok-overlay');
+    if (!el) return;
+    var SEEN = 'sok_overlay_seen';
+    var DONE = 'sok_overlay_done';
+    if (localStorage.getItem(DONE) || sessionStorage.getItem(SEEN)) return;
+    function open() {
+      el.classList.add('sok-overlay-open');
+      var email = el.querySelector('[data-mc-email]');
+      if (email) email.focus();
+    }
+    function close() {
+      el.classList.remove('sok-overlay-open');
+      sessionStorage.setItem(SEEN, '1');
+    }
+    var fired = false;
+    function trigger() {
+      if (fired) return;
+      fired = true;
+      sessionStorage.setItem(SEEN, '1');
+      open();
+    }
+    var t = setTimeout(trigger, 4000);
+    window.addEventListener('scroll', function () { clearTimeout(t); trigger(); }, { passive: true, once: true });
+    el.querySelector('.sok-overlay-close').addEventListener('click', close);
+    el.addEventListener('click', function (e) { if (e.target === el) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    var form = el.querySelector('[data-mc-form]');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var emailEl = form.querySelector('[data-mc-email]');
+      var consentEl = form.querySelector('[name="consent"]');
+      var msgEl = form.querySelector('.sok-overlay-msg');
+      var submitBtn = form.querySelector('[type="submit"]');
+      if (!consentEl.checked) { msgEl.textContent = 'Please tick the box to continue.'; return; }
+      msgEl.textContent = '';
+      submitBtn.disabled = true;
+      var url = form.dataset.endpoint.replace('/post?', '/post-json?') +
+        '&EMAIL=' + encodeURIComponent(emailEl.value) + '&c=sokMcCb';
+      window.sokMcCb = function (res) {
+        if (res.result === 'success') {
+          form.style.display = 'none';
+          var ok = el.querySelector('.sok-overlay-success');
+          if (ok) ok.style.display = '';
+          localStorage.setItem(DONE, '1');
+          setTimeout(close, 3000);
+        } else {
+          msgEl.textContent = res.msg ? res.msg.replace(/<[^>]+>/g, '').trim() : 'Something went wrong — please try again.';
+          submitBtn.disabled = false;
+        }
+      };
+      var s = document.createElement('script');
+      s.src = url;
+      s.onerror = function () {
+        msgEl.textContent = 'Connection error — please try again.';
+        submitBtn.disabled = false;
+      };
+      document.head.appendChild(s);
+    });
+  })();
+
   // Print a single recipe: open its details, print, restore
   document.querySelectorAll('.print-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {

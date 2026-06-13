@@ -112,6 +112,8 @@
       "schemaDesc": "Pure Kashmiri Mongra saffron, 1g tin. Crimson stigma tips only. ISO 3632 Grade A.",
       "category": "saffron",
       "featured": true,
+      "status": "available",
+      "sale": null,
       "waText": "Hi! I'd like to order Royal Mongra 1g from Saffron of Kashmir.",
       "specs": [
         {
@@ -156,6 +158,8 @@
       "schemaDesc": "Pure Kashmiri Mongra saffron, 5g collector's tin. ISO 3632 Grade A.",
       "category": "saffron",
       "featured": true,
+      "status": "available",
+      "sale": null,
       "waText": "Hi! I'd like to order Collector's Tin 5g from Saffron of Kashmir.",
       "specs": [
         {
@@ -200,6 +204,8 @@
       "schemaDesc": "Pure Kashmiri Mongra saffron, 10g tin. Best per-gram value. ISO 3632 Grade A.",
       "category": "saffron",
       "featured": true,
+      "status": "available",
+      "sale": null,
       "waText": "Hi! I'd like to order Heritage Reserve 10g from Saffron of Kashmir.",
       "specs": [
         {
@@ -244,6 +250,8 @@
       "schemaDesc": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
       "category": "gift",
       "featured": false,
+      "status": "available",
+      "sale": null,
       "waText": "Hi! I'd like to order Saffron Honey 250g from Saffron of Kashmir.",
       "specs": [],
       "compare": null
@@ -262,6 +270,8 @@
       "schemaDesc": "Cold-pressed saffron-infused almond oil for skin, hair, and wellness.",
       "category": "gift",
       "featured": false,
+      "status": "available",
+      "sale": null,
       "waText": "Hi! I'd like to order Saffron Oil 15ml from Saffron of Kashmir.",
       "specs": [],
       "compare": null
@@ -280,6 +290,8 @@
       "schemaDesc": "Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.",
       "category": "gift",
       "featured": false,
+      "status": "available",
+      "sale": null,
       "waText": "Hi! I'd like to order Kashmiri Kahwa Blend from Saffron of Kashmir.",
       "specs": [],
       "compare": null
@@ -768,5 +780,16 @@
       "label": "View Products",
       "href": "products.html"
     }
+  },
+  "overlay": {
+    "enabled": false,
+    "heading": "Welcome — 10% Off Your First Order",
+    "text": "Join our list and receive an exclusive discount code for your first Mongra saffron order.",
+    "discountText": "10% off your first order",
+    "buttonLabel": "Claim My Discount",
+    "successText": "Thank you! Your discount code is on its way — check your inbox.",
+    "image": "",
+    "privacyHref": "privacy-policy.html",
+    "formEndpoint": "https://saffronofkashmir.us5.list-manage.com/subscribe/post?u=236b4cb10d93993487bd4853a&id=aace8dda1c&f_id=00e8a9e1f0"
   }
 }

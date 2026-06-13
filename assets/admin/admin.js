@@ -230,6 +230,7 @@
         _open: true, id: 'new-product', name: 'New Product', badge: '', unitLabel: '/ tin',
         price: 0, image: '', imageAlt: '', homeDesc: '', pageDesc: '',
         schemaName: '', schemaDesc: '',
+        status: 'available', sale: null,
         category: (S.data.productsPage.filters[0] || {}).key || 'saffron',
         featured: false,
         waText: "Hi! I'd like to order [product] from " + S.data.brand.name + '.',
@@ -392,6 +393,25 @@
           num('Price (AED)', p + '.price') +
           f('Unit label', p + '.unitLabel', { placeholder: '/ tin' }) +
           f('Category', p + '.category', { type: 'select', options: filterOpts }) +
+          '</div>' +
+          f('Availability status', p + '.status', {
+            type: 'select',
+            options: [
+              { v: 'available', l: 'Available (in stock)' },
+              { v: 'out_of_stock', l: 'Out of stock' },
+              { v: 'coming_soon', l: 'Coming soon (pre-order)' }
+            ]
+          }) +
+          '<div class="subgrp"><div class="lbl">Sale / discount</div>' +
+          '<div class="f inline"><input type="checkbox" id="sale-' + i + '" data-action="toggle-sale" data-idx="' + i + '"' +
+          (it.sale ? ' checked' : '') + '><label for="sale-' + i + '">This product is on sale</label></div>' +
+          (it.sale ?
+            '<div class="grid3">' +
+            num('Sale price (AED)', p + '.sale.price') +
+            f('Label (e.g. 20% off)', p + '.sale.label') +
+            f('Valid until', p + '.sale.until', { placeholder: 'YYYY-MM-DD or leave blank', hint: 'Optional — not shown on the site.' }) +
+            '</div>'
+            : '') +
           '</div>' +
           f('Show on homepage', p + '.featured', { type: 'checkbox' }) +
           imgField('Photo', p + '.image') +
@@ -622,10 +642,130 @@
         'Developers can also rebuild pages locally with <code>node build.js</code>.</p>');
   }
 
+  function secDashboard() {
+    const d = S.data;
+    const b = d.brand;
+    const siteU = siteUrl();
+    const lp = d.meta && d.meta.lastPublished;
+    const products = d.products || [];
+    const posts = d.posts || [];
+
+    // Quick links
+    const gscHref = 'https://search.google.com/search-console?resource_id=' + encodeURIComponent(siteU + '/');
+    const psiHref = 'https://pagespeed.web.dev/report?url=' + encodeURIComponent(siteU + '/');
+
+    const quickLinks = card('🔗', 'Quick links',
+      '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;">' +
+      (b.gaId
+        ? '<a class="btn btn-outline btn-sm" href="https://analytics.google.com/" target="_blank" rel="noopener">📊 Google Analytics ↗</a>'
+        : '<span style="font-size:13.5px;color:var(--muted);align-self:center;">Google Analytics — add a GA ID in <a href="#" data-goto="brand">Brand &amp; contact</a> first.</span>') +
+      '<a class="btn btn-outline btn-sm" href="' + A(gscHref) + '" target="_blank" rel="noopener">🔎 Search Console ↗</a>' +
+      '<a class="btn btn-outline btn-sm" href="' + A(psiHref) + '" target="_blank" rel="noopener">⚡ PageSpeed Insights ↗</a>' +
+      '</div>'
+    );
+
+    // Stats
+    const onSale = products.filter(p => p.sale && typeof p.sale.price === 'number');
+    const outOfStock = products.filter(p => p.status === 'out_of_stock');
+    const comingSoon = products.filter(p => p.status === 'coming_soon');
+
+    function statRow(label, value) {
+      return '<tr>' +
+        '<td style="padding:8px 0;border-bottom:1px dashed var(--line);color:var(--muted);width:180px;font-size:14px;">' + label + '</td>' +
+        '<td style="padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px;font-weight:600;">' + value + '</td>' +
+        '</tr>';
+    }
+
+    function pill(name, bg, color) {
+      return '<span style="background:' + bg + ';color:' + color + ';border-radius:4px;padding:1px 7px;font-size:13px;font-weight:600;margin-right:4px;">' + A(name) + '</span>';
+    }
+
+    const statsHtml = card('📊', 'Site stats',
+      '<table style="width:100%;border-collapse:collapse;">' +
+      statRow('Products', products.length) +
+      statRow('On sale', onSale.length || '—') +
+      statRow('Out of stock', outOfStock.length ? outOfStock.map(p => pill(p.name, '#fcebed', 'var(--danger)')).join('') : '—') +
+      statRow('Coming soon', comingSoon.length ? comingSoon.map(p => pill(p.name, '#fdf6e7', '#7c5a12')).join('') : '—') +
+      statRow('Blog posts', posts.length) +
+      statRow('Last published', lp ? A(new Date(lp).toLocaleString()) : '<span style="color:var(--muted);">Never</span>') +
+      '</table>'
+    );
+
+    // Content QA
+    const issues = [];
+
+    products.forEach(p => {
+      const nm = '<strong>' + A(p.name) + '</strong>';
+      if (!p.image) issues.push('Product ' + nm + ': no image set.');
+      if (p.image && !p.imageAlt) issues.push('Product ' + nm + ': image has no alt text.');
+      if (p.sale && !p.sale.until) issues.push('Product ' + nm + ': on sale with no "valid until" date set.');
+    });
+
+    [['home', 'Home'], ['products', 'Products'], ['recipes', 'Recipes'], ['blog', 'Blog']].forEach(([key, label]) => {
+      const s = d.seo && d.seo[key];
+      if (s) {
+        if (!s.title) issues.push('<strong>' + label + ' page</strong>: SEO title is empty.');
+        if (!s.description) issues.push('<strong>' + label + ' page</strong>: SEO description is empty.');
+      }
+    });
+
+    posts.forEach(p => {
+      const ttl = '<strong>' + A(p.title || p.id) + '</strong>';
+      if (!p.excerpt) issues.push('Post ' + ttl + ': excerpt is empty.');
+      if (!p.body) issues.push('Post ' + ttl + ': body is empty.');
+    });
+
+    const qa = card('✅', 'Content QA',
+      issues.length === 0
+        ? '<p style="color:var(--ok);font-size:14px;margin:8px 0 0;">✓ All clear — no issues found.</p>'
+        : '<ul style="margin:10px 0 0 18px;padding:0;font-size:14px;line-height:1.9;">' +
+          issues.map(i => '<li style="color:var(--danger);">⚠ ' + i + '</li>').join('') +
+          '</ul>'
+    );
+
+    return '<div class="page-h"><div><h2>Dashboard</h2>' +
+      '<p>At-a-glance overview — read-only, no API calls, built entirely from your current content.</p></div></div>' +
+      quickLinks + statsHtml + qa;
+  }
+
+  function secOverlay() {
+    const ov = S.data.overlay || {};
+    const enabled = ov.enabled;
+    const statusNote = enabled
+      ? '<p style="background:#e6f9ee;border:1px solid #b2dfca;border-radius:6px;padding:10px 14px;font-size:13.5px;color:#1a6b3a;margin:0 0 16px;">🟢 Overlay is <strong>live</strong>. Visitors who haven\'t seen it yet will see it after 4 seconds or on first scroll.</p>'
+      : '<p style="background:#fdf6e7;border:1px solid #e8c96a;border-radius:6px;padding:10px 14px;font-size:13.5px;color:#7c5a12;margin:0 0 16px;">⚠ Overlay is <strong>disabled</strong>. Enable it below once you\'re ready.</p>';
+    const toggleCard = card('🎁', 'Overlay status',
+      statusNote +
+      f('Enable overlay', 'overlay.enabled', { type: 'checkbox' })
+    );
+    const contentCard = card('✏️', 'Content',
+      f('Heading', 'overlay.heading', { placeholder: 'Welcome — 10% Off Your First Order' }) +
+      f('Body text', 'overlay.text', { type: 'textarea', rows: 2 }) +
+      f('Discount label (shown large)', 'overlay.discountText', { placeholder: '10% off your first order' }) +
+      f('Button label', 'overlay.buttonLabel', { placeholder: 'Claim My Discount' }) +
+      f('Success message', 'overlay.successText', { placeholder: 'Thank you! Your discount code is on its way — check your inbox.' }) +
+      imgField('Optional image (left of form)', 'overlay.image', { hint: 'Leave blank for no image. Use a portrait or square image, max ~400 px wide.' })
+    );
+    const settingsCard = card('⚙️', 'Settings',
+      f('Mailchimp form endpoint', 'overlay.formEndpoint', {
+        hint: 'Paste the full URL from your Mailchimp embedded form (the "action" attribute). Must contain /subscribe/post?',
+        placeholder: 'https://yourlist.us5.list-manage.com/subscribe/post?u=…&id=…'
+      }) +
+      f('Privacy policy link (href)', 'overlay.privacyHref', {
+        placeholder: 'privacy-policy.html',
+        hint: 'Relative path to your privacy policy page.'
+      })
+    );
+    return '<div class="page-h"><div><h2>Discount overlay</h2>' +
+      '<p>First-visit email capture — shows after 4 s or first scroll, once per session, never again after subscription.</p></div></div>' +
+      toggleCard + contentCard + settingsCard;
+  }
+
   const SECTIONS = {
+    dashboard: secDashboard,
     home: secHome, products: secProducts, recipes: secRecipes, posts: secPosts,
     faq: secFaq, testimonials: secTestimonials, brand: secBrand, seo: secSeo,
-    media: secMedia, settings: secSettings
+    media: secMedia, settings: secSettings, overlay: secOverlay
   };
 
   function render(sec) {
@@ -742,6 +882,12 @@
         markDirty(); rerender();
         break;
       }
+      case 'toggle-sale': {
+        const pItem = S.data.products[idx];
+        pItem.sale = t.checked ? { price: 0, label: '', until: '' } : null;
+        markDirty(); rerender();
+        break;
+      }
       case 'slugify': {
         S.data.posts[idx].id = slugify(S.data.posts[idx].title);
         markDirty(); rerender(); break;
@@ -828,7 +974,8 @@
     const map = {
       'index.html': SOKTemplates.renderIndex, 'products.html': SOKTemplates.renderProducts,
       'recipes.html': SOKTemplates.renderRecipes, 'blogs.html': SOKTemplates.renderBlogs,
-      '404.html': SOKTemplates.render404
+      '404.html': SOKTemplates.render404,
+      'privacy-policy.html': SOKTemplates.renderPrivacyPolicy
     };
     try {
       let html = map[file](S.data);

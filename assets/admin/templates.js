@@ -69,7 +69,60 @@
       '\n  </script>';
   }
 
+  function statusBadge(status) {
+    if (status === 'out_of_stock') {
+      return '<span style="position:absolute;top:12px;left:12px;background:#9d2235;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;">Out of Stock</span>';
+    }
+    if (status === 'coming_soon') {
+      return '<span style="position:absolute;top:12px;left:12px;background:#A8842F;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;">Coming Soon</span>';
+    }
+    return '';
+  }
+
+  function statusAvailability(status) {
+    if (status === 'out_of_stock') return 'https://schema.org/OutOfStock';
+    if (status === 'coming_soon') return 'https://schema.org/PreOrder';
+    return 'https://schema.org/InStock';
+  }
+
+  function productPriceHtml(p) {
+    if (p.sale && typeof p.sale.price === 'number') {
+      var saleLabel = p.sale.label
+        ? ' <span style="background:#e8f5e9;color:#1d7a46;font-size:12.5px;font-weight:700;border-radius:99px;padding:3px 9px;">' + esc(p.sale.label) + '</span>'
+        : '';
+      return '<div class="p-price"><s style="font-size:15px;font-weight:400;color:var(--muted);">AED ' + esc(p.price) + '</s> AED ' + esc(p.sale.price) + ' <span>' + esc(p.unitLabel) + '</span>' + saleLabel + '</div>';
+    }
+    return '<div class="p-price">AED ' + esc(p.price) + ' <span>' + esc(p.unitLabel) + '</span></div>';
+  }
+
   const WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+
+  function renderOverlayHtml(data) {
+    var ov = data.overlay;
+    if (!ov || !ov.enabled || !ov.formEndpoint) return '';
+    var uM = ov.formEndpoint.match(/[?&]u=([^&]+)/);
+    var idM = ov.formEndpoint.match(/[?&]id=([^&]+)/);
+    var honeypot = (uM && idM) ? 'b_' + uM[1] + '_' + idM[1] : '';
+    return '<div id="sok-overlay" class="sok-overlay" role="dialog" aria-modal="true" aria-labelledby="sok-ov-h">\n' +
+      '  <div class="sok-overlay-box">\n' +
+      '    <button class="sok-overlay-close" aria-label="Close this popup">×</button>\n' +
+      (ov.image ? '    <img src="' + esc(ov.image) + '" alt="" class="sok-overlay-img" loading="lazy">\n' : '') +
+      '    <h2 id="sok-ov-h" class="sok-overlay-heading">' + esc(ov.heading) + '</h2>\n' +
+      '    <p class="sok-overlay-text">' + esc(ov.text) + '</p>\n' +
+      (ov.discountText ? '    <p class="sok-overlay-discount">' + esc(ov.discountText) + '</p>\n' : '') +
+      '    <form class="sok-overlay-form" data-mc-form data-endpoint="' + esc(ov.formEndpoint) + '" novalidate>\n' +
+      '      <input type="email" name="EMAIL" data-mc-email required autocomplete="email" placeholder="Your email address">\n' +
+      (honeypot ? '      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="' + esc(honeypot) + '" tabindex="-1" value=""></div>\n' : '') +
+      '      <label class="sok-overlay-consent"><input type="checkbox" name="consent" required>\n' +
+      '        I agree to receive occasional emails from ' + esc(data.brand.name) + '.\n' +
+      '        See our <a href="' + esc(ov.privacyHref || 'privacy-policy.html') + '">Privacy&nbsp;Policy</a>.\n' +
+      '      </label>\n' +
+      '      <button type="submit" class="btn btn-primary">' + esc(ov.buttonLabel || 'Subscribe') + '</button>\n' +
+      '      <p class="sok-overlay-msg" role="status" aria-live="polite"></p>\n' +
+      '    </form>\n' +
+      '    <p class="sok-overlay-success" style="display:none;">' + esc(ov.successText || 'Thank you! Check your inbox.') + '</p>\n' +
+      '  </div>\n</div>\n';
+  }
 
   /* ---------- shared page chrome ---------- */
 
@@ -173,6 +226,7 @@
       '<a class="float-wa" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
       '  ' + WA_SVG + '\n</a>\n' +
       '<button class="back-top" aria-label="Back to top">↑</button>\n\n' +
+      renderOverlayHtml(data) +
       '<script src="assets/js/main.js" defer></script>\n</body>\n</html>\n';
   }
 
@@ -260,12 +314,13 @@
         return '        <article class="card product-card">\n' +
           '          <div class="p-img">\n' +
           '            <img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '" loading="lazy" width="400" height="300">\n' +
-          '            <span class="weight-badge">' + esc(p.badge) + '</span>\n          </div>\n' +
+          '            <span class="weight-badge">' + esc(p.badge) + '</span>\n' +
+          statusBadge(p.status) + '\n          </div>\n' +
           '          <div class="p-body">\n' +
           '            <h3>' + esc(p.name) + '</h3>\n' +
           '            <p class="p-desc">' + esc(p.homeDesc || p.pageDesc) + '</p>\n' +
-          '            <div class="p-price">AED ' + esc(p.price) + ' <span>' + esc(p.unitLabel) + '</span></div>\n' +
-          '            <a class="btn btn-whatsapp" href="' + esc(waUrl(b, p.waText)) + '" target="_blank" rel="noopener">Order on WhatsApp</a>\n' +
+          productPriceHtml(p) + '\n' +
+          '            <a class="btn btn-whatsapp" href="' + esc(waUrl(b, p.waText)) + '" target="_blank" rel="noopener">' + (p.status === 'out_of_stock' ? 'Ask about restock' : 'Order on WhatsApp') + '</a>\n' +
           '          </div>\n        </article>';
       }).join('\n') +
       '\n      </div>\n' +
@@ -355,8 +410,9 @@
             description: p.schemaDesc || p.pageDesc,
             brand: { '@type': 'Brand', name: b.name },
             offers: {
-              '@type': 'Offer', priceCurrency: 'AED', price: String(p.price),
-              availability: 'https://schema.org/InStock', url: b.siteUrl + '/products.html'
+              '@type': 'Offer', priceCurrency: 'AED',
+              price: String(p.sale && typeof p.sale.price === 'number' ? p.sale.price : p.price),
+              availability: statusAvailability(p.status), url: b.siteUrl + '/products.html'
             }
           };
         })
@@ -382,12 +438,13 @@
       return '        <article class="card product-card" data-category="' + esc(p.category) + '">\n' +
         '          <div class="p-img">\n' +
         '            <img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '" loading="lazy" width="400" height="300">\n' +
-        '            <span class="weight-badge">' + esc(p.badge) + '</span>\n          </div>\n' +
+        '            <span class="weight-badge">' + esc(p.badge) + '</span>\n' +
+        statusBadge(p.status) + '\n          </div>\n' +
         '          <div class="p-body">\n' +
         '            <h3>' + esc(p.name) + '</h3>\n' +
         '            <p class="p-desc">' + esc(p.pageDesc) + '</p>\n' +
-        '            <div class="p-price">AED ' + esc(p.price) + ' <span>' + esc(p.unitLabel) + '</span></div>\n' +
-        '            <a class="btn btn-whatsapp" href="' + esc(waUrl(b, p.waText)) + '" target="_blank" rel="noopener">Order on WhatsApp</a>\n' +
+        productPriceHtml(p) + '\n' +
+        '            <a class="btn btn-whatsapp" href="' + esc(waUrl(b, p.waText)) + '" target="_blank" rel="noopener">' + (p.status === 'out_of_stock' ? 'Ask about restock' : 'Order on WhatsApp') + '</a>\n' +
         specs +
         '          </div>\n        </article>';
     }).join('\n\n');
@@ -592,6 +649,53 @@
       '    </p>\n  </div>\n</main>\n</body>\n</html>\n';
   }
 
+  function renderPrivacyPolicy(data) {
+    var b = data.brand;
+    var url = b.siteUrl + '/privacy-policy.html';
+    var year = new Date().getFullYear();
+    var jsonLd = ld({ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: url, publisher: { '@type': 'Organization', name: b.name } });
+    var gaBlock = b.gaId
+      ? '  <script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(b.gaId) + '"></script>\n' +
+        '  <script>\n    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}\n' +
+        "    gtag('js',new Date());gtag('config','" + b.gaId + "');\n  </script>\n"
+      : '';
+    return '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n' +
+      '  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+      '  <title>Privacy Policy | ' + esc(b.name) + '</title>\n' +
+      '  <meta name="description" content="Privacy policy for ' + esc(b.name) + ' — how we collect, use and protect your information.">\n' +
+      '  <meta name="robots" content="index, follow">\n' +
+      '  <link rel="canonical" href="' + esc(url) + '">\n' +
+      '  <meta property="og:type" content="website">\n' +
+      '  <meta property="og:title" content="Privacy Policy | ' + esc(b.name) + '">\n' +
+      '  <meta property="og:url" content="' + esc(url) + '">\n' +
+      '  <link rel="icon" type="image/webp" href="' + esc(b.favicon) + '">\n' +
+      '  <link rel="stylesheet" href="assets/css/style.css">\n' +
+      gaBlock +
+      jsonLd + '\n</head>\n' +
+      header(data, '') +
+      '\n<main id="main">\n' + breadcrumbs('Privacy Policy') +
+      '\n  <section style="padding-top:24px;">\n    <div class="container" style="max-width:760px;">\n' +
+      '      <h1>Privacy Policy</h1>\n' +
+      '      <p style="color:var(--muted);font-size:14px;">Last updated: ' + year + '</p>\n\n' +
+      '      <h2>Who we are</h2>\n' +
+      '      <p>' + esc(b.name) + ' sells premium Kashmiri Mongra saffron and related products online. Our website is <a href="' + esc(b.siteUrl) + '">' + esc(b.siteUrl) + '</a>.</p>\n\n' +
+      '      <h2>What information we collect</h2>\n' +
+      '      <p>We collect your <strong>email address</strong> only if you voluntarily subscribe through the opt-in form on this website. We do not collect any other personal data through the site. Orders placed via WhatsApp are handled through WhatsApp\'s own platform.</p>\n\n' +
+      '      <h2>How we use your information</h2>\n' +
+      '      <p>Your email address is used solely to send you occasional promotional emails — discount offers, new product announcements, and saffron guides. We will never sell, rent, or share your email address with third parties for their own marketing.</p>\n\n' +
+      '      <h2>Email service provider</h2>\n' +
+      '      <p>We use <strong>Mailchimp</strong> (The Rocket Science Group LLC, USA) to manage our mailing list and send emails. Your email address is stored on Mailchimp\'s servers. You can read <a href="https://mailchimp.com/legal/privacy/" target="_blank" rel="noopener">Mailchimp\'s privacy policy</a>.</p>\n\n' +
+      '      <h2>Your rights</h2>\n' +
+      '      <p>You may <strong>unsubscribe at any time</strong> via the link in any email we send. To request access to, correction of, or deletion of your data, email us at <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a>.</p>\n\n' +
+      (b.gaId
+        ? '      <h2>Analytics</h2>\n      <p>We use Google Analytics to understand how visitors use this site. It uses cookies to collect anonymous usage data. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out add-on</a>.</p>\n\n'
+        : '') +
+      '      <h2>Contact</h2>\n' +
+      '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
+      '    </div>\n  </section>\n</main>\n\n' +
+      footer(data);
+  }
+
   function renderSitemap(data, dateStr) {
     const d = dateStr || new Date().toISOString().slice(0, 10);
     const u = data.brand.siteUrl;
@@ -605,7 +709,20 @@
       url(u + '/products.html', 'weekly', '0.9') + '\n' +
       url(u + '/recipes.html', 'monthly', '0.8') + '\n' +
       url(u + '/blogs.html', 'monthly', '0.8') + '\n' +
+      url(u + '/privacy-policy.html', 'yearly', '0.3') + '\n' +
       '</urlset>\n';
+  }
+
+  function renderLlms(data) {
+    var b = data.brand;
+    var u = b.siteUrl;
+    return '# ' + b.name + '\n\n' +
+      '> ' + b.orgDescription + '\n\n' +
+      '## Pages\n\n' +
+      '- [Home](' + u + '/): Products, ordering information, FAQ, and the brand story.\n' +
+      '- [Products](' + u + '/products.html): Full product catalogue — Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
+      '- [Recipes](' + u + '/recipes.html): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.\n' +
+      '- [Blog](' + u + '/blogs.html): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
   }
 
   /* ---------- public API ---------- */
@@ -617,7 +734,9 @@
       'recipes.html': renderRecipes(data),
       'blogs.html': renderBlogs(data),
       '404.html': render404(data),
-      'sitemap.xml': renderSitemap(data)
+      'sitemap.xml': renderSitemap(data),
+      'llms.txt': renderLlms(data),
+      'privacy-policy.html': renderPrivacyPolicy(data)
     };
   }
 
@@ -625,6 +744,8 @@
     esc: esc, waUrl: waUrl, inlineMd: inlineMd, plainMd: plainMd,
     renderIndex: renderIndex, renderProducts: renderProducts,
     renderRecipes: renderRecipes, renderBlogs: renderBlogs,
-    render404: render404, renderSitemap: renderSitemap, renderAll: renderAll
+    render404: render404, renderSitemap: renderSitemap,
+    renderLlms: renderLlms, renderPrivacyPolicy: renderPrivacyPolicy,
+    renderOverlayHtml: renderOverlayHtml, renderAll: renderAll
   };
 }));
