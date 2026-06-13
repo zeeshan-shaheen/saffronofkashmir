@@ -230,6 +230,7 @@
         _open: true, id: 'new-product', name: 'New Product', badge: '', unitLabel: '/ tin',
         price: 0, image: '', imageAlt: '', homeDesc: '', pageDesc: '',
         schemaName: '', schemaDesc: '',
+        status: 'available', sale: null,
         category: (S.data.productsPage.filters[0] || {}).key || 'saffron',
         featured: false,
         waText: "Hi! I'd like to order [product] from " + S.data.brand.name + '.',
@@ -392,6 +393,25 @@
           num('Price (AED)', p + '.price') +
           f('Unit label', p + '.unitLabel', { placeholder: '/ tin' }) +
           f('Category', p + '.category', { type: 'select', options: filterOpts }) +
+          '</div>' +
+          f('Availability status', p + '.status', {
+            type: 'select',
+            options: [
+              { v: 'available', l: 'Available (in stock)' },
+              { v: 'out_of_stock', l: 'Out of stock' },
+              { v: 'coming_soon', l: 'Coming soon (pre-order)' }
+            ]
+          }) +
+          '<div class="subgrp"><div class="lbl">Sale / discount</div>' +
+          '<div class="f inline"><input type="checkbox" id="sale-' + i + '" data-action="toggle-sale" data-idx="' + i + '"' +
+          (it.sale ? ' checked' : '') + '><label for="sale-' + i + '">This product is on sale</label></div>' +
+          (it.sale ?
+            '<div class="grid3">' +
+            num('Sale price (AED)', p + '.sale.price') +
+            f('Label (e.g. 20% off)', p + '.sale.label') +
+            f('Valid until', p + '.sale.until', { placeholder: 'YYYY-MM-DD or leave blank', hint: 'Optional — not shown on the site.' }) +
+            '</div>'
+            : '') +
           '</div>' +
           f('Show on homepage', p + '.featured', { type: 'checkbox' }) +
           imgField('Photo', p + '.image') +
@@ -739,6 +759,12 @@
         pItem.compare = t.checked
           ? { label: (pItem.name || '').replace(' — ', ' '), grams: 1, servings: '', bestFor: '' }
           : null;
+        markDirty(); rerender();
+        break;
+      }
+      case 'toggle-sale': {
+        const pItem = S.data.products[idx];
+        pItem.sale = t.checked ? { price: 0, label: '', until: '' } : null;
         markDirty(); rerender();
         break;
       }
