@@ -51,6 +51,77 @@
     gtag('event', 'whatsapp_click', { item: h3 ? h3.textContent.trim() : 'general' });
   });
 
+  // Currency switcher
+  (function () {
+    var PREF = 'sok_currency';
+    var sel = document.getElementById('sok-curr');
+    if (!sel) return;
+
+    var COUNTRY_MAP = {
+      AE: 'AED', IN: 'INR', US: 'USD', SA: 'SAR', QA: 'QAR', OM: 'OMR',
+      GB: 'USD', AU: 'USD', CA: 'USD', PK: 'USD', BD: 'USD',
+      NZ: 'USD', SG: 'USD', MY: 'USD', KW: 'AED', BH: 'AED',
+      JO: 'USD', EG: 'USD', TR: 'USD', DE: 'USD', FR: 'USD'
+    };
+
+    function getCurrData(code) {
+      var opt = sel.querySelector('option[value="' + code + '"]');
+      if (!opt) return null;
+      return {
+        code: code,
+        rate: parseFloat(opt.dataset.rate),
+        symbol: opt.dataset.symbol,
+        decimals: parseInt(opt.dataset.decimals, 10)
+      };
+    }
+
+    function applyRate(code) {
+      var curr = getCurrData(code);
+      if (!curr) return;
+      document.querySelectorAll('[data-price]').forEach(function (el) {
+        var aed = parseFloat(el.dataset.price);
+        var converted = aed * curr.rate;
+        var formatted;
+        try {
+          formatted = new Intl.NumberFormat('en', {
+            minimumFractionDigits: curr.decimals,
+            maximumFractionDigits: curr.decimals
+          }).format(converted);
+        } catch (e) {
+          formatted = converted.toFixed(curr.decimals);
+        }
+        el.textContent = curr.symbol + ' ' + formatted;
+      });
+      sel.value = code;
+    }
+
+    function setAndSave(code) {
+      applyRate(code);
+      localStorage.setItem(PREF, code);
+    }
+
+    function geoDetect() {
+      fetch('https://ipapi.co/json/')
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          var code = COUNTRY_MAP[d.country_code] || 'USD';
+          setAndSave(code);
+        })
+        .catch(function () { /* stay on AED default */ });
+    }
+
+    var saved = localStorage.getItem(PREF);
+    if (saved && sel.querySelector('option[value="' + saved + '"]')) {
+      applyRate(saved);
+    } else {
+      geoDetect();
+    }
+
+    sel.addEventListener('change', function () {
+      setAndSave(sel.value);
+    });
+  })();
+
   // First-visit discount overlay
   (function () {
     var el = document.getElementById('sok-overlay');
