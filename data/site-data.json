@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-13T21:04:04.642Z"
+    "lastPublished": "2026-06-14T12:37:26.822Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -130,9 +130,19 @@
         "text": "Every batch tested for crocin, picrocrocin, and safranal per ISO 3632 Grade A. Certificate available on request."
       },
       {
-        "icon": "🚚",
-        "title": "UAE Delivery in 48hrs",
-        "text": "Order via WhatsApp, receive your saffron within 48 hours anywhere in the UAE. Free delivery over AED 120."
+        "icon": "🇦🇪",
+        "title": "UAE delivery in 48 Hours",
+        "text": "Order via WhatsApp, receive your saffron within 04 to 06 days anywhere in UAE. Free delivery over USD 150."
+      },
+      {
+        "icon": "🇮🇳",
+        "title": "PAN India Delivery in 02 - 04 Days",
+        "text": "Order via WhatsApp, receive your saffron within 04 to 06 days PAN India. Free delivery over INR 4000."
+      },
+      {
+        "icon": "🌐",
+        "title": "International delivery in 04 to 06 Days",
+        "text": "Order via WhatsApp, receive your saffron within 04 to 06 days worldwide. Free delivery over USD 120."
       }
     ]
   },
@@ -205,8 +215,8 @@
       "featured": true,
       "status": "available",
       "sale": {
-        "price": 125,
-        "label": "25% off",
+        "price": 144,
+        "label": "20% off",
         "until": ""
       },
       "waText": "Hi! I'd like to order Collector's Tin 5g from Saffron of Kashmir.",
@@ -244,7 +254,7 @@
       "name": "Heritage Reserve — 10g",
       "badge": "10g",
       "unitLabel": "/ tin",
-      "price": 300,
+      "price": 320,
       "image": "10gm-1.webp",
       "imageAlt": "Heritage Reserve 10g Mongra saffron collector tin",
       "homeDesc": "Our largest tin. Best value for restaurants, gifting, or the dedicated home chef.",
@@ -255,8 +265,8 @@
       "featured": true,
       "status": "available",
       "sale": {
-        "price": 220,
-        "label": "27% off",
+        "price": 288,
+        "label": "10% off",
         "until": ""
       },
       "waText": "Hi! I'd like to order Heritage Reserve 10g from Saffron of Kashmir.",
@@ -430,10 +440,10 @@
   "contact": {
     "heading": "Contact Us",
     "text": "Questions about products, bulk orders for restaurants, or corporate gifting? Reach us directly — we reply fastest on WhatsApp.",
-    "originLine": "Pampore, Jammu & Kashmir, India · Serving all UAE"
+    "originLine": "Pampore, Jammu & Kashmir, India · Serving everywhere in Middle east"
   },
   "footer": {
-    "about": "Established 2004 in Pampore, Kashmir. Supplying the UAE's finest households and restaurants with certified Mongra grade saffron.",
+    "about": "Established 2004 in Pampore, Kashmir. Supplying the Middle east's finest households and restaurants with certified Mongra grade saffron.",
     "locationLine": "Pampore, J&K, India",
     "bottomRight": "Premium Kashmiri Mongra Saffron — ISO 3632 Grade A"
   },
