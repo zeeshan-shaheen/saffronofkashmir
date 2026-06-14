@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-14T12:51:47.819Z"
+    "lastPublished": "2026-06-14T13:10:13.422Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -301,11 +301,11 @@
     },
     {
       "id": "honey-250g",
-      "name": "Saffron Honey — 250g",
-      "badge": "250g",
+      "name": "Saffron Honey — 500 ml",
+      "badge": "500 ml",
       "unitLabel": "/ jar",
-      "price": 95,
-      "image": "product-honey.jpg",
+      "price": 74,
+      "image": "honey-sidr.webp",
       "imageAlt": "Kashmiri saffron honey — wildflower honey infused with Mongra saffron",
       "homeDesc": "",
       "pageDesc": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
