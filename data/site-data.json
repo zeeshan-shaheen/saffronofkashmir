@@ -1,13 +1,13 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-14T13:10:13.422Z"
+    "lastPublished": "2026-06-14T13:31:01.978Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
     "tagline": "Pampore · Est. 2004",
     "siteUrl": "https://saffronofkashmir.com",
-    "logo": "logo.webp",
+    "logo": "logo-1.webp",
     "favicon": "favicon.webp",
     "ogImage": "Cover.webp",
     "phoneDisplay": "+91 7006 603060",
@@ -305,7 +305,7 @@
       "badge": "500 ml",
       "unitLabel": "/ jar",
       "price": 74,
-      "image": "honey-sidr.webp",
+      "image": "honey-sidr-1.webp",
       "imageAlt": "Kashmiri saffron honey — wildflower honey infused with Mongra saffron",
       "homeDesc": "",
       "pageDesc": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
@@ -325,7 +325,7 @@
       "badge": "15ml",
       "unitLabel": "/ bottle",
       "price": 110,
-      "image": "product-oil.jpg",
+      "image": "saffronoil-1.webp",
       "imageAlt": "Kashmiri saffron oil — 15ml cold-pressed saffron-infused almond oil",
       "homeDesc": "",
       "pageDesc": "Cold-pressed saffron-infused almond oil. For skin, hair, and wellness rituals.",
@@ -345,7 +345,7 @@
       "badge": "50g",
       "unitLabel": "/ tin",
       "price": 85,
-      "image": "product-tea.jpg",
+      "image": "kashmirkehwa-1.webp",
       "imageAlt": "Kashmiri Kahwa saffron tea blend — 50g tin",
       "homeDesc": "",
       "pageDesc": "Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.",
