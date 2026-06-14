@@ -67,7 +67,20 @@ saffronofkashmir/
 6. Apostrophes/quotes: data uses real `'` and `'`; testimonials use curly quotes. Keep them.
 
 ---
-
+## Writing style — write like a person, not an AI
+Applies to ALL copy in data/site-data.json AND any hardcoded text in templates.js.
+- NEVER use the em dash (—). Replace with a comma, a full stop, parentheses, or a
+  spaced hyphen " - ", chosen to fit the sentence.
+- Use plain hyphens for number ranges, not en dashes: write "15-20 servings",
+  not "15–20". The en dash (–) is also banned in body copy.
+- Avoid AI-tell vocabulary: elevate, unlock, seamless, robust, leverage, delve,
+  tapestry, testament to, "navigate the landscape", "in today's world",
+  "whether you're X or Y", "not just X, but Y", nestled, curated, artisanal (as filler).
+- Straight punctuation only. EXCEPTION: the curly quotes inside customer
+  testimonials are real quotes — leave them exactly as written (Hard rule #6).
+- Short, concrete sentences in the voice of a Pampore saffron seller, not a brochure.
+- Test: read it aloud. If it sounds like marketing copy or a chatbot, rewrite it plainer.
+---
 ## Verification — run after EVERY change, before committing
 
 ```powershell
