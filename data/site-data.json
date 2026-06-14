@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-14T14:03:50.396Z"
+    "lastPublished": "2026-06-14T14:21:20.160Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -534,7 +534,7 @@
       "schemaName": "Kashmiri Kahwa Tea",
       "cardDesc": "The jewel of Kashmiri hospitality — fragrant green tea scented with saffron, cardamom, and cinnamon.",
       "schemaDesc": "Traditional Kashmiri green tea with saffron, cardamom, and cinnamon.",
-      "image": "product-tea.jpg",
+      "image": "kehwa-1.webp",
       "imageAlt": "Kashmiri Kahwa — green tea with saffron threads and almonds",
       "timeLabel": "15 min",
       "totalISO": "PT15M",
@@ -543,7 +543,7 @@
       "servesLabel": "Serves 2",
       "yield": "2 cups",
       "ingredients": [
-        "8 Mongra saffron threads",
+        "8 - 10 Mongra saffron threads",
         "1 tbsp green tea leaves (or 1 green tea bag)",
         "4 green cardamom pods, lightly crushed",
         "1 small cinnamon stick",
