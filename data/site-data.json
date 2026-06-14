@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-14T14:21:20.160Z"
+    "lastPublished": "2026-06-14T14:45:41.004Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -567,7 +567,7 @@
       "schemaName": "Zafrani Pulao (Saffron Rice)",
       "cardDesc": "Fragrant saffron rice with caramelised onions and whole spices — the ceremonial rice of Kashmir.",
       "schemaDesc": "Fragrant Kashmiri saffron rice with caramelised onions and whole spices.",
-      "image": "slider4.webp",
+      "image": "pulao-1.webp",
       "imageAlt": "Zafrani Pulao — golden saffron rice with whole spices",
       "timeLabel": "50 min",
       "totalISO": "PT50M",
@@ -601,9 +601,9 @@
       "id": "kesar-doodh",
       "name": "Kesar Doodh",
       "schemaName": "Kesar Doodh (Saffron Milk)",
-      "cardDesc": "Warm saffron milk — the traditional wellness drink, served before sleep for over a thousand years.",
+      "cardDesc": "Warm saffron milk - the traditional wellness drink, served before sleep for over a thousand years.",
       "schemaDesc": "Warm saffron milk — the traditional Kashmiri wellness drink.",
-      "image": "slider4.webp",
+      "image": "zafran-milk-1.webp",
       "imageAlt": "Kesar Doodh — warm golden saffron milk with pistachios",
       "timeLabel": "10 min",
       "totalISO": "PT10M",
@@ -613,7 +613,7 @@
       "yield": "1 serving",
       "ingredients": [
         "250ml full-fat whole milk",
-        "8–10 Mongra saffron threads",
+        "8 - 10 Mongra saffron threads",
         "1 tbsp warm milk (for pre-blooming)",
         "1 tsp raw honey or sugar",
         "3 green cardamom pods, seeds crushed",
@@ -622,12 +622,12 @@
       ],
       "steps": [
         "Bloom the saffron in 1 tbsp warm milk for 10 minutes until deep amber.",
-        "Warm the remaining milk until steaming — around 70°C, do not boil.",
+        "Warm the remaining milk until steaming - around 70°C, do not boil.",
         "Add crushed cardamom and stir for 1 minute.",
         "Pour into your cup, add the saffron bloom and honey, and stir gently.",
-        "Garnish with slivered pistachios and 2–3 saffron threads. Drink warm before bed."
+        "Garnish with slivered pistachios and 2- 3 saffron threads. Drink warm before bed."
       ],
-      "tip": "**Wellness note:** About 8–10 Mongra threads (~30mg) is the amount used in most published research on saffron's benefits — Kesar Doodh is the simplest daily way to enjoy it."
+      "tip": "**Wellness note:** About 8 - 10 Mongra threads (~30mg) is the amount used in most published research on saffron's benefits - Kesar Doodh is the simplest daily way to enjoy it."
     },
     {
       "id": "machboos",
