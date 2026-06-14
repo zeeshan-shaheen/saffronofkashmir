@@ -1,15 +1,15 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-14T13:31:01.978Z"
+    "lastPublished": "2026-06-14T14:03:50.396Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
     "tagline": "Pampore · Est. 2004",
     "siteUrl": "https://saffronofkashmir.com",
     "logo": "logo-1.webp",
-    "favicon": "favicon.webp",
-    "ogImage": "Cover.webp",
+    "favicon": "logoback-1.webp",
+    "ogImage": "covercgpt-1.webp",
     "phoneDisplay": "+91 7006 603060",
     "phoneTel": "+917006603060",
     "whatsappNumber": "971522613060",
@@ -17,7 +17,7 @@
     "email": "info@saffronofkashmir.com",
     "instagramUser": "saffron_of_kashmir",
     "foundingYear": "2004",
-    "orgDescription": "Premium Kashmiri Mongra saffron harvested in Pampore, Kashmir. Supplying the UAE since 2004.",
+    "orgDescription": "Premium Kashmiri Mongra saffron harvested in Pampore, Kashmir. Supplying worldwide since 2004.",
     "gaId": "G-9569ES4LBP",
     "fbPixelId": "1140202034977517",
     "baseCurrency": "AED",
