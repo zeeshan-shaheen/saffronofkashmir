@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-06-14T12:37:26.822Z"
+    "lastPublished": "2026-06-14T12:51:47.819Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -216,7 +216,7 @@
       "status": "available",
       "sale": {
         "price": 144,
-        "label": "20% off",
+        "label": "10% off",
         "until": ""
       },
       "waText": "Hi! I'd like to order Collector's Tin 5g from Saffron of Kashmir.",
