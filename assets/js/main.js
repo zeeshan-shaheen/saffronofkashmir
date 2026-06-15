@@ -172,7 +172,7 @@
           localStorage.setItem(DONE, '1');
           setTimeout(close, 3000);
         } else {
-          msgEl.textContent = res.msg ? res.msg.replace(/<[^>]+>/g, '').trim() : 'Something went wrong — please try again.';
+          msgEl.textContent = res.msg ? res.msg.replace(/<[^>]+>/g, '').trim() : 'Something went wrong. Please try again.';
           submitBtn.disabled = false;
         }
       };

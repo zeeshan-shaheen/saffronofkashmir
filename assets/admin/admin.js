@@ -224,16 +224,15 @@
 
   const KINDS = {
     product: {
-      label: (it) => (it.name || 'Untitled product'),
-      sub: (it) => 'AED ' + (it.price || 0) + ' · ' + (it.category || '—') + (it.featured ? ' · ★ featured' : ''),
+      label: (it) => (it.baseName && it.size ? it.baseName + ' ' + it.size : it.baseName || 'Untitled product'),
+      sub: (it) => 'AED ' + (it.price || 0) + ' · ' + (it.category || '') + (it.featured ? ' · ★ featured' : ''),
       make: () => ({
-        _open: true, id: 'new-product', name: 'New Product', badge: '', unitLabel: '/ tin',
-        price: 0, image: '', imageAlt: '', homeDesc: '', pageDesc: '',
-        schemaName: '', schemaDesc: '',
+        _open: true, id: 'new-product', baseName: 'New Product', size: '', grams: null,
+        unitLabel: '/ tin', price: 0, image: '', altContext: '', descBody: '',
+        homeDesc: '', pageDesc: '', valueBlurb: '',
         status: 'available', sale: null,
         category: (S.data.productsPage.filters[0] || {}).key || 'saffron',
         featured: false,
-        waText: "Hi! I'd like to order [product] from " + S.data.brand.name + '.',
         specs: [], compare: null
       })
     },
@@ -388,11 +387,15 @@
 
       card('🧺', 'Product catalogue',
         listEditor('products', 'product', (p, it, i) =>
-          '<div class="grid2">' + f('Name', p + '.name') + f('Badge on photo', p + '.badge', { placeholder: '5g' }) + '</div>' +
-          '<div class="grid3">' +
+          '<div class=”grid2”>' + f('Base name', p + '.baseName', { placeholder: 'Royal Mongra' }) + f('Size', p + '.size', { placeholder: '2g' }) + '</div>' +
+          '<div class=”grid3”>' +
           num('Price (AED)', p + '.price') +
           f('Unit label', p + '.unitLabel', { placeholder: '/ tin' }) +
           f('Category', p + '.category', { type: 'select', options: filterOpts }) +
+          '</div>' +
+          '<div class=”grid2”>' +
+          num('Grams in pack (saffron tins only)', p + '.grams', { placeholder: 'leave blank for honey / oil / tea', hint: 'Used to calculate per-gram price automatically.' }) +
+          f('Value blurb (saffron tins only)', p + '.valueBlurb', { placeholder: 'best value for home chefs' }) +
           '</div>' +
           f('Availability status', p + '.status', {
             type: 'select',
@@ -402,11 +405,11 @@
               { v: 'coming_soon', l: 'Coming soon (pre-order)' }
             ]
           }) +
-          '<div class="subgrp"><div class="lbl">Sale / discount</div>' +
-          '<div class="f inline"><input type="checkbox" id="sale-' + i + '" data-action="toggle-sale" data-idx="' + i + '"' +
-          (it.sale ? ' checked' : '') + '><label for="sale-' + i + '">This product is on sale</label></div>' +
+          '<div class=”subgrp”><div class=”lbl”>Sale / discount</div>' +
+          '<div class=”f inline”><input type=”checkbox” id=”sale-' + i + '” data-action=”toggle-sale” data-idx=”' + i + '”' +
+          (it.sale ? ' checked' : '') + '><label for=”sale-' + i + '”>This product is on sale</label></div>' +
           (it.sale ?
-            '<div class="grid3">' +
+            '<div class=”grid3”>' +
             num('Sale price (AED)', p + '.sale.price') +
             f('Label (e.g. 20% off)', p + '.sale.label') +
             f('Valid until', p + '.sale.until', { placeholder: 'YYYY-MM-DD or leave blank', hint: 'Optional — not shown on the site.' }) +
@@ -415,25 +418,24 @@
           '</div>' +
           f('Show on homepage', p + '.featured', { type: 'checkbox' }) +
           imgField('Photo', p + '.image') +
-          f('Photo description (alt text)', p + '.imageAlt') +
+          '<div class=”f”><label>Alt text</label><div class=”hint”>Auto-derived: “' + A((it.baseName || 'Base name') + ' ' + (it.size || 'size') + ', [alt context]') + '”</div></div>' +
+          f('Alt context (descriptive tail, no size)', p + '.altContext', { placeholder: 'saffron tin from Pampore, Kashmir' }) +
           f('Description on products page', p + '.pageDesc', { type: 'textarea', rows: 2 }) +
           f('Description on homepage', p + '.homeDesc', { type: 'textarea', rows: 2, hint: 'Used when “Show on homepage” is on. Leave blank to reuse the products-page text.' }) +
-          f('Pre-filled WhatsApp message', p + '.waText', { type: 'textarea', rows: 2 }) +
-          '<div class="subgrp"><div class="lbl">Details table (optional)</div>' +
+          f('Schema description body (no size)', p + '.descBody', { type: 'textarea', rows: 2, hint: 'Auto-derives: “Base name Size. [this text]” for Google.' }) +
+          '<div class=”subgrp”><div class=”lbl”>Details table (optional)</div>' +
           rowsEditor(p + '.specs',
             [{ key: 'label', label: 'Label', w: '140px' }, { key: 'value', label: 'Value' }],
-            'Add row', { label: '', value: '' }) + '</div>' +
-          '<div class="subgrp"><div class="lbl">Size-comparison table</div>' +
-          '<div class="f inline"><input type="checkbox" id="cmp-' + i + '" data-action="toggle-compare" data-idx="' + i + '"' +
-          (it.compare ? ' checked' : '') + '><label for="cmp-' + i + '">Include this product in the comparison table</label></div>' +
+            'Add row', { label: '', value: '' }) +
+          '<div class=”hint”>Do not add a “Value (AED/g)” row — it is derived automatically from price and grams.</div></div>' +
+          '<div class=”subgrp”><div class=”lbl”>Size-comparison table</div>' +
+          '<div class=”f inline”><input type=”checkbox” id=”cmp-' + i + '” data-action=”toggle-compare” data-idx=”' + i + '”' +
+          (it.compare ? ' checked' : '') + '><label for=”cmp-' + i + '”>Include this product in the comparison table</label></div>' +
           (it.compare ?
-            '<div class="grid2">' + f('Row label', p + '.compare.label') + num('Grams in pack', p + '.compare.grams', { hint: 'Per-gram price is calculated automatically.' }) + '</div>' +
-            '<div class="grid2">' + f('Servings', p + '.compare.servings', { placeholder: '80–100' }) + f('Best for', p + '.compare.bestFor') + '</div>'
+            '<div class=”grid2”>' + f('Servings', p + '.compare.servings', { placeholder: '80-100' }) + f('Best for', p + '.compare.bestFor') + '</div>' +
+            '<div class=”hint”>Name and per-gram price are derived automatically.</div>'
             : '') +
-          '</div>' +
-          '<div class="subgrp"><div class="lbl">Search listing (Google)</div>' +
-          '<div class="grid2">' + f('Product name for Google', p + '.schemaName') + '</div>' +
-          f('Short description for Google', p + '.schemaDesc', { type: 'textarea', rows: 2 }) + '</div>',
+          '</div>',
           'Add product')) +
 
       card('⚖️', 'Comparison section heading',
@@ -569,7 +571,12 @@
         f('Phone as displayed', 'brand.phoneDisplay', { placeholder: '+91 7006 603060' }) +
         f('Phone for tap-to-call', 'brand.phoneTel', { placeholder: '+917006603060', hint: 'Digits with country code, no spaces.' }) +
         '</div>' +
-        f('WhatsApp number', 'brand.whatsappNumber', { placeholder: '917006603060', hint: 'Country code + number, digits only — used in every WhatsApp button.' }) +
+        f('WhatsApp number (primary, used in all order buttons)', 'brand.whatsappNumber', { placeholder: '917006603060', hint: 'Country code + number, digits only — used in every WhatsApp button.' }) +
+        '<div class="subgrp"><div class="lbl">WhatsApp numbers for contact display</div>' +
+        rowsEditor('brand.whatsappNumbers',
+          [{ key: 'market', label: 'Market label', w: '200px', placeholder: 'UAE & Middle East' }, { key: 'number', label: 'Number (digits only)', placeholder: '971522613060' }],
+          'Add number', { market: '', number: '' }) +
+        '<div class="hint">Shown in the contact strip and footer. Each also becomes a ContactPoint in Google schema.</div></div>' +
         f('Default WhatsApp message', 'brand.defaultWaText', { type: 'textarea', rows: 2 }) +
         '<div class="grid2">' + f('Email', 'brand.email') + f('Instagram username', 'brand.instagramUser', { hint: 'Without the @.' }) + '</div>') +
       card('📈', 'Analytics',
@@ -684,8 +691,8 @@
       '<table style="width:100%;border-collapse:collapse;">' +
       statRow('Products', products.length) +
       statRow('On sale', onSale.length || '—') +
-      statRow('Out of stock', outOfStock.length ? outOfStock.map(p => pill(p.name, '#fcebed', 'var(--danger)')).join('') : '—') +
-      statRow('Coming soon', comingSoon.length ? comingSoon.map(p => pill(p.name, '#fdf6e7', '#7c5a12')).join('') : '—') +
+      statRow('Out of stock', outOfStock.length ? outOfStock.map(p => pill(SOKTemplates.productView(p).name, '#fcebed', 'var(--danger)')).join('') : '—') +
+      statRow('Coming soon', comingSoon.length ? comingSoon.map(p => pill(SOKTemplates.productView(p).name, '#fdf6e7', '#7c5a12')).join('') : '—') +
       statRow('Blog posts', posts.length) +
       statRow('Last published', lp ? A(new Date(lp).toLocaleString()) : '<span style="color:var(--muted);">Never</span>') +
       '</table>'
@@ -695,9 +702,9 @@
     const issues = [];
 
     products.forEach(p => {
-      const nm = '<strong>' + A(p.name) + '</strong>';
+      const nm = '<strong>' + A(SOKTemplates.productView(p).name) + '</strong>';
       if (!p.image) issues.push('Product ' + nm + ': no image set.');
-      if (p.image && !p.imageAlt) issues.push('Product ' + nm + ': image has no alt text.');
+      if (!p.altContext) issues.push('Product ' + nm + ': alt context is empty.');
       if (p.sale && !p.sale.until) issues.push('Product ' + nm + ': on sale with no "valid until" date set.');
     });
 
@@ -906,9 +913,7 @@
       }
       case 'toggle-compare': {
         const pItem = S.data.products[idx];
-        pItem.compare = t.checked
-          ? { label: (pItem.name || '').replace(' — ', ' '), grams: 1, servings: '', bestFor: '' }
-          : null;
+        pItem.compare = t.checked ? { servings: '', bestFor: '' } : null;
         markDirty(); rerender();
         break;
       }
@@ -1030,8 +1035,8 @@
     if (!d.brand.name.trim()) return 'Brand & contact → Brand name is required.';
     if (!d.brand.whatsappNumber.trim()) return 'Brand & contact → WhatsApp number is required.';
     for (const p of d.products) {
-      if (!p.name.trim()) return 'Products → every product needs a name.';
-      if (typeof p.price !== 'number' || p.price < 0) return 'Products → “' + p.name + '” needs a valid price.';
+      if (!p.baseName || !p.baseName.trim()) return 'Products → every product needs a base name.';
+      if (typeof p.price !== 'number' || p.price < 0) return 'Products → “' + SOKTemplates.productView(p).name + '” needs a valid price.';
     }
     const ids = {};
     for (const post of d.posts) {
