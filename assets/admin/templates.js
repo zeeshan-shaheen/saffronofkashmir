@@ -662,6 +662,7 @@
         data.posts.map(function (p) {
           return {
             '@type': 'BlogPosting', headline: p.title,
+            image: p.image ? b.siteUrl + '/' + p.image : undefined,
             datePublished: p.dateISO, dateModified: p.dateModified || p.dateISO,
             description: p.excerpt, inLanguage: 'en',
             articleSection: catLabel[p.categoryKey] || p.categoryKey,
@@ -683,6 +684,7 @@
 
     const articles = data.posts.map(function (p) {
       return '          <article class="card blog-card" data-category="' + esc(p.categoryKey) + '" id="' + esc(p.id) + '">\n' +
+        (p.image ? '            <div class="blog-img"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></div>\n' : '') +
         '            <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
         '            <h2>' + esc(p.title) + '</h2>\n' +
         '            <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
