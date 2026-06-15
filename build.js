@@ -11,7 +11,9 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'data/site-data.json'), 
 const files = T.renderAll(data);
 
 Object.keys(files).forEach(function (name) {
-  fs.writeFileSync(path.join(root, name), files[name], 'utf8');
+  const dest = path.join(root, name);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.writeFileSync(dest, files[name], 'utf8');
   console.log('wrote', name, '(' + files[name].length + ' bytes)');
 });
 console.log('Done. Open index.html to view.');
