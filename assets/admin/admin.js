@@ -525,6 +525,8 @@
           f('Date as shown', p + '.dateDisplay') +
           '</div>' +
           f('Excerpt (shown before “Read full article”)', p + '.excerpt', { type: 'textarea', rows: 3 }) +
+          imgField('Image (optional)', p + '.image') +
+          f('Image description (alt text)', p + '.imageAlt', { hint: 'Shown on the blog card and used for Google and social previews. Leave the image blank to show no image.' }) +
           f('Article body', p + '.body', { type: 'textarea', rows: 14, hint: 'Blank line = new paragraph. Start a line with <code>## </code> for a sub-heading. ' + MD_HINT }),
           'Add article')) +
 
