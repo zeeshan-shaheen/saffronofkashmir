@@ -520,6 +520,7 @@
       "cuisine": "Kashmiri",
       "servesLabel": "Serves 2",
       "yield": "2 cups",
+      "recipeCategory": "Beverage",
       "ingredients": [
         "8 - 10 Mongra saffron threads",
         "1 tbsp green tea leaves (or 1 green tea bag)",
@@ -553,6 +554,7 @@
       "cuisine": "Kashmiri",
       "servesLabel": "Serves 4",
       "yield": "4 servings",
+      "recipeCategory": "Main Course",
       "ingredients": [
         "2 cups aged basmati rice, soaked 30 minutes",
         "12 - 15 Mongra saffron threads",
@@ -589,6 +591,7 @@
       "cuisine": "Kashmiri",
       "servesLabel": "Serves 1",
       "yield": "1 serving",
+      "recipeCategory": "Beverage",
       "ingredients": [
         "250ml full-fat whole milk",
         "8 - 10 Mongra saffron threads",
@@ -621,6 +624,7 @@
       "cuisine": "Gulf Arabic",
       "servesLabel": "Serves 4-6",
       "yield": "4-6 servings",
+      "recipeCategory": "Main Course",
       "ingredients": [
         "1 whole chicken, cut into pieces (or 1kg thighs)",
         "2 cups long-grain or basmati rice, soaked",
