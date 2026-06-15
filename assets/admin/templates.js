@@ -466,7 +466,12 @@
       '@graph': [breadcrumbLd(data, 'Products', 'products.html')].concat(
         data.products.map(function (p) {
           var pv = productView(p);
-          var schema = {
+          // No aggregateRating/review here on purpose: the testimonials are
+          // brand-level and are not displayed on this product page, so marking
+          // them up as product reviews would breach Google's review policy and
+          // the project's "no review schema without real, displayed reviews"
+          // rule. Add it back only when per-product reviews are shown on-page.
+          return {
             '@type': 'Product', name: pv.schemaName,
             sku: pv.id,
             image: b.siteUrl + '/' + pv.image,
@@ -478,27 +483,6 @@
               availability: statusAvailability(pv.status), url: b.siteUrl + '/products.html'
             }
           };
-          if (p.id === 'collectors-5g') {
-            var revItems = (data.testimonials && data.testimonials.items) || [];
-            if (revItems.length) {
-              var total = revItems.reduce(function(s, r) { return s + (r.stars || 5); }, 0);
-              schema.aggregateRating = {
-                '@type': 'AggregateRating',
-                ratingValue: Math.round(total / revItems.length * 10) / 10,
-                reviewCount: revItems.length, bestRating: 5, worstRating: 1
-              };
-              schema.review = revItems.map(function(r) {
-                var body = String(r.quote || '').replace(/^[“”"]+/, '').replace(/[“”"]+$/, '');
-                return {
-                  '@type': 'Review',
-                  reviewRating: { '@type': 'Rating', ratingValue: r.stars || 5, bestRating: 5 },
-                  author: { '@type': 'Person', name: r.name || '' },
-                  reviewBody: body
-                };
-              });
-            }
-          }
-          return schema;
         })
       )
     });
