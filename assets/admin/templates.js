@@ -1,5 +1,5 @@
 /* ============================================================
-   Saffron of Kashmir — site templates
+   Saffron of Kashmir - site templates
    Pure functions: data (site-data.json) -> HTML strings.
    Used by the admin panel (publish/preview) and build.js.
    Works in both the browser and Node (UMD-style export at bottom).

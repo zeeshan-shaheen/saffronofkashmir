@@ -135,6 +135,13 @@
     }
   }
 
+  async function deleteFile(path, sha, message) {
+    return gh(repoPath(path), {
+      method: 'DELETE',
+      body: JSON.stringify({ message: message, sha: sha, branch: S.cfg.branch })
+    });
+  }
+
   /* ================= state / drafts ================= */
 
   function draftKey() { return S.cfg.owner + '/' + S.cfg.repo; }
@@ -599,8 +606,11 @@
 
   function secMedia() {
     return '<div class="page-h"><div><h2>Media</h2><p>Images in the repository. Click a filename to copy it, then paste into any image field.</p></div>' +
-      '<button class="btn btn-primary btn-sm" data-action="upload" data-path="@media" type="button">⤴ Upload image</button></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+      (S.demo ? '' : '<button class="btn btn-outline btn-sm" data-action="find-unused" type="button">🔍 Find unused images</button>') +
+      '<button class="btn btn-primary btn-sm" data-action="upload" data-path="@media" type="button">⤴ Upload image</button></div></div>' +
       (S.demo ? '<div class="banner purple"><div class="grow">Connect with a GitHub token to list and upload images.</div></div>' :
+        '<div id="unused-panel"></div>' +
         '<div class="media-grid" id="media-grid"><div style="color:var(--muted);">Loading…</div></div>');
   }
 
@@ -620,6 +630,48 @@
         '</div></div>').join('');
     } catch (e) {
       grid.innerHTML = '<div style="color:var(--danger);">Could not list images: ' + A(e.message) + '</div>';
+    }
+  }
+
+  // Collect every image filename referenced anywhere in the content JSON.
+  // site-data.json is the single source of truth, so any value that looks like
+  // an image filename (logo, favicon, ogImage, product/recipe/post images, etc.)
+  // is a reference. Returns a Set of lowercased filenames.
+  function referencedImages(data) {
+    const ref = new Set();
+    JSON.stringify(data).replace(/[\w.\- ]+\.(?:png|jpe?g|webp|gif|svg|avif)/gi, function (m) {
+      ref.add(m.trim().toLowerCase());
+      return m;
+    });
+    return ref;
+  }
+
+  async function findUnusedImages() {
+    if (S.demo) return;
+    const panel = $('#unused-panel');
+    if (!panel) return;
+    panel.innerHTML = '<div class="banner"><div class="grow">Scanning the repository for unused images…</div></div>';
+    try {
+      const list = await gh('/repos/' + S.cfg.owner + '/' + S.cfg.repo + '/contents?ref=' + encodeURIComponent(S.cfg.branch));
+      const imgs = list.filter(x => x.type === 'file' && /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(x.name));
+      const ref = referencedImages(S.data);
+      const unused = imgs.filter(x => !ref.has(x.name.toLowerCase()));
+      if (!unused.length) {
+        panel.innerHTML = '<div class="banner green"><div class="grow">Every image in the repository is used in your content. Nothing to clean up.</div></div>';
+        return;
+      }
+      panel.innerHTML = '<div class="banner purple"><div class="grow"><strong>' + unused.length +
+        ' image' + (unused.length === 1 ? '' : 's') + ' not referenced</strong> in your content. ' +
+        'Deleting one removes it from the repository (publish history keeps a copy). Double-check before deleting.</div></div>' +
+        '<div class="media-grid">' + unused.map(x =>
+          '<div class="media-cell">' +
+          '<div class="imgbox" style="background-image:url(\'' + A(rawUrl(x.name)) + '?v=' + Date.now() + '\')"></div>' +
+          '<div class="nm"><span>' + A(x.name) + '</span>' +
+          '<button type="button" class="del" title="Delete from repository" data-action="delete-image" data-name="' +
+          A(x.name) + '" data-sha="' + A(x.sha) + '">delete</button>' +
+          '</div></div>').join('') + '</div>';
+    } catch (e) {
+      panel.innerHTML = '<div class="banner"><div class="grow" style="color:var(--danger);">Could not scan images: ' + A(e.message) + '</div></div>';
     }
   }
 
@@ -941,6 +993,19 @@
         navigator.clipboard.writeText(t.dataset.name).then(
           () => toast('Copied “' + t.dataset.name + '”'),
           () => toast('Copy failed — select it manually'));
+        break;
+      }
+      case 'find-unused': {
+        findUnusedImages();
+        break;
+      }
+      case 'delete-image': {
+        const nm = t.dataset.name;
+        if (!confirm('Delete “' + nm + '” from the repository? This cannot be undone from here (the file stays in your Git history).')) break;
+        toast('Deleting ' + nm + '…', 60000);
+        deleteFile(nm, t.dataset.sha, 'Delete unused image ' + nm + ' via site admin').then(
+          () => { toast('Deleted ' + nm + ' ✓'); findUnusedImages(); loadMedia(); },
+          (err) => toast('Could not delete: ' + err.message));
         break;
       }
       case 'reload-data': {
