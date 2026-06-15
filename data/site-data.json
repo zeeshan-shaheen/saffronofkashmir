@@ -395,23 +395,35 @@
     "items": [
       {
         "q": "How fast is delivery in the UAE?",
-        "a": "Orders are dispatched the same day and delivered anywhere in the UAE within 48 hours. Delivery is free on orders over AED 120."
+        "a": "Delivery anywhere in the UAE takes up to 48 hours. We dispatch your order the same day you confirm it on WhatsApp, and delivery is free on orders over AED 120. There is no minimum order."
       },
       {
         "q": "How do I place an order?",
-        "a": "Tap any \"Order on WhatsApp\" button, send us the pre-filled message, and we confirm your order, delivery address, and payment on WhatsApp. There is no minimum order."
+        "a": "You order on WhatsApp, not through a checkout. Tap any \"Order on WhatsApp\" button and the message is pre-filled with the product name. We reply to confirm your saffron, delivery address, and payment. There is no minimum order."
       },
       {
         "q": "How do I know the saffron is genuine?",
-        "a": "Every batch is lab-tested to ISO 3632 Grade A standards for crocin, picrocrocin, and safranal. A lab certificate is available on request - and you can verify it yourself with [three simple at-home tests](products.html#identify)."
+        "a": "Every batch is lab-tested to ISO 3632 Grade A for crocin, picrocrocin, and safranal, the three compounds behind saffron's colour, taste, and aroma. We send the lab certificate on request, and you can check the threads yourself with [three simple at-home tests](products.html#identify)."
       },
       {
         "q": "How should I store saffron?",
-        "a": "Keep the tin airtight, away from light and humidity. Stored correctly, Mongra saffron keeps its potency for 36 months."
+        "a": "Store saffron in an airtight tin, away from light, heat, and humidity. Kept this way, Mongra saffron holds its full colour and aroma for up to 36 months."
       },
       {
         "q": "How much saffron should I use in a dish?",
-        "a": "8-15 threads is enough for most recipes serving 2-4 people. Always bloom the threads in warm (not boiling) liquid for 10-20 minutes first - see [our recipes](recipes.html) for exact amounts."
+        "a": "Use 8-15 threads for most dishes serving 2-4 people. Always bloom them first in warm (not boiling) liquid for 10-20 minutes to draw out the colour and aroma. See [our recipes](recipes.html) for exact amounts per dish."
+      },
+      {
+        "q": "Do you deliver outside the UAE?",
+        "a": "Yes. We ship worldwide from Kashmir. Across the Middle East and the UAE within 48 hours, PAN India in 3-5 days (free over INR 4000), and the rest of the world in 4-6 days (free over USD 120). Message us on WhatsApp with your location for the rate."
+      },
+      {
+        "q": "Where does your saffron come from?",
+        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district, which produces around 90% of India's saffron. We have worked directly with Pampore farming families since 2004, buying only the deep-red stigma tips."
+      },
+      {
+        "q": "How much does Kashmiri Mongra saffron cost?",
+        "a": "Our Mongra saffron starts at AED 65 for a 2g tin, AED 160 for 5g, and AED 300 for 10g. Every tin is the same ISO 3632 Grade A saffron; the larger tins give the best price per gram. Prices show in your local currency on the site."
       }
     ]
   },
@@ -520,6 +532,7 @@
       "cuisine": "Kashmiri",
       "servesLabel": "Serves 2",
       "yield": "2 cups",
+      "recipeCategory": "Beverage",
       "ingredients": [
         "8 - 10 Mongra saffron threads",
         "1 tbsp green tea leaves (or 1 green tea bag)",
@@ -553,6 +566,7 @@
       "cuisine": "Kashmiri",
       "servesLabel": "Serves 4",
       "yield": "4 servings",
+      "recipeCategory": "Main Course",
       "ingredients": [
         "2 cups aged basmati rice, soaked 30 minutes",
         "12 - 15 Mongra saffron threads",
@@ -589,6 +603,7 @@
       "cuisine": "Kashmiri",
       "servesLabel": "Serves 1",
       "yield": "1 serving",
+      "recipeCategory": "Beverage",
       "ingredients": [
         "250ml full-fat whole milk",
         "8 - 10 Mongra saffron threads",
@@ -621,6 +636,7 @@
       "cuisine": "Gulf Arabic",
       "servesLabel": "Serves 4-6",
       "yield": "4-6 servings",
+      "recipeCategory": "Main Course",
       "ingredients": [
         "1 whole chicken, cut into pieces (or 1kg thighs)",
         "2 cups long-grain or basmati rice, soaked",

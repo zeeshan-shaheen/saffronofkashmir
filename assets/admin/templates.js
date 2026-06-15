@@ -164,11 +164,16 @@
       '  <link rel="canonical" href="' + esc(url) + '">\n' +
       '  <link rel="alternate" hreflang="en" href="' + esc(url) + '">\n\n' +
       '  <meta property="og:type" content="website">\n' +
+      '  <meta property="og:site_name" content="' + esc(b.name) + '">\n' +
+      '  <meta property="og:locale" content="en_US">\n' +
       '  <meta property="og:title" content="' + esc(s.ogTitle) + '">\n' +
       '  <meta property="og:description" content="' + esc(s.ogDescription) + '">\n' +
       '  <meta property="og:image" content="' + esc(b.siteUrl + '/' + b.ogImage) + '">\n' +
       '  <meta property="og:url" content="' + esc(url) + '">\n' +
-      '  <meta name="twitter:card" content="summary_large_image">\n\n' +
+      '  <meta name="twitter:card" content="summary_large_image">\n' +
+      '  <meta name="twitter:title" content="' + esc(s.ogTitle) + '">\n' +
+      '  <meta name="twitter:description" content="' + esc(s.ogDescription) + '">\n' +
+      '  <meta name="twitter:image" content="' + esc(b.siteUrl + '/' + b.ogImage) + '">\n\n' +
       '  <link rel="icon" type="image/webp" href="' + esc(b.favicon) + '">\n' +
       (opts && opts.appleIcon ? '  <link rel="apple-touch-icon" href="' + esc(b.favicon) + '">\n' : '') +
       (opts && opts.preload ? '  <link rel="preload" as="image" href="' + esc(opts.preload) + '">\n' : '') +
@@ -304,6 +309,7 @@
           '@type': 'Organization', name: b.name, url: b.siteUrl,
           logo: b.siteUrl + '/' + b.logo, foundingDate: b.foundingYear,
           description: b.orgDescription,
+          sameAs: b.instagramUser ? ['https://www.instagram.com/' + b.instagramUser] : undefined,
           address: { '@type': 'PostalAddress', addressCountry: 'IN', addressRegion: 'Jammu & Kashmir' },
           contactPoint: (b.whatsappNumbers && b.whatsappNumbers.length)
             ? b.whatsappNumbers.map(function(wn, i) {
@@ -480,6 +486,8 @@
             offers: {
               '@type': 'Offer', priceCurrency: 'AED',
               price: String(pv.sale && typeof pv.sale.price === 'number' ? pv.sale.price : pv.price),
+              priceValidUntil: (pv.sale && pv.sale.until) ? pv.sale.until : undefined,
+              itemCondition: 'https://schema.org/NewCondition',
               availability: statusAvailability(pv.status), url: b.siteUrl + '/products.html'
             }
           };
@@ -588,6 +596,8 @@
             '@type': 'Recipe', name: r.schemaName || r.name,
             image: b.siteUrl + '/' + r.image,
             description: r.schemaDesc || r.cardDesc,
+            inLanguage: 'en',
+            recipeCategory: r.recipeCategory || undefined,
             totalTime: r.totalISO, recipeYield: r.yield, recipeCuisine: r.cuisine,
             recipeIngredient: r.ingredients.map(plainMd),
             recipeInstructions: r.steps.map(function (s) { return { '@type': 'HowToStep', text: plainMd(s) }; }),
@@ -651,11 +661,13 @@
       '@graph': [breadcrumbLd(data, 'Blog', 'blogs.html')].concat(
         data.posts.map(function (p) {
           return {
-            '@type': 'BlogPosting', headline: p.title, datePublished: p.dateISO,
-            description: p.excerpt,
+            '@type': 'BlogPosting', headline: p.title,
+            datePublished: p.dateISO, dateModified: p.dateModified || p.dateISO,
+            description: p.excerpt, inLanguage: 'en',
             articleSection: catLabel[p.categoryKey] || p.categoryKey,
             author: { '@type': 'Organization', name: b.name },
-            publisher: { '@type': 'Organization', name: b.name },
+            publisher: { '@type': 'Organization', name: b.name, logo: { '@type': 'ImageObject', url: b.siteUrl + '/' + b.logo } },
+            mainEntityOfPage: b.siteUrl + '/blogs.html#' + p.id,
             url: b.siteUrl + '/blogs.html#' + p.id
           };
         })
