@@ -1,5 +1,5 @@
 /* ============================================================
-   Saffron of Kashmir — site templates
+   Saffron of Kashmir - site templates
    Pure functions: data (site-data.json) -> HTML strings.
    Used by the admin panel (publish/preview) and build.js.
    Works in both the browser and Node (UMD-style export at bottom).
@@ -83,6 +83,29 @@
     if (status === 'out_of_stock') return 'https://schema.org/OutOfStock';
     if (status === 'coming_soon') return 'https://schema.org/PreOrder';
     return 'https://schema.org/InStock';
+  }
+
+  function productView(p) {
+    var name = (p.baseName || '') + ' ' + (p.size || '');
+    var perGram = p.grams ? Math.round(p.price / p.grams) : null;
+    return Object.assign({}, p, {
+      name: name,
+      badge: p.size,
+      schemaName: name,
+      schemaDesc: name + '. ' + (p.descBody || ''),
+      imageAlt: (p.baseName || '') + ' ' + (p.size || '') + ', ' + (p.altContext || ''),
+      waText: "Hi! I'd like to order " + (p.baseName || '') + ' ' + (p.size || '') + ' from Saffron of Kashmir.',
+      notifyWaText: 'Hi! Please notify me when ' + name + ' is available.',
+      perGram: perGram
+    });
+  }
+
+  function orderBtn(brand, pv) {
+    var label = pv.status === 'out_of_stock' ? 'Ask about restock'
+      : pv.status === 'coming_soon' ? 'Notify me when available'
+      : 'Order on WhatsApp';
+    var text = pv.status === 'coming_soon' ? pv.notifyWaText : pv.waText;
+    return '<a class="btn btn-whatsapp" href="' + esc(waUrl(brand, text)) + '" target="_blank" rel="noopener">' + label + '</a>';
   }
 
   function productPriceHtml(p) {
@@ -201,7 +224,7 @@
     return '<body>\n<a class="skip-link" href="#main">Skip to content</a>\n\n' +
       '<header class="site-header">\n' +
       '  <nav class="nav-inner" aria-label="Main navigation">\n' +
-      '    <a href="index.html" class="brand" aria-label="' + esc(b.name) + ' — home">\n' +
+      '    <a href="index.html" class="brand" aria-label="' + esc(b.name) + ' - home">\n' +
       '      <img src="' + esc(b.logo) + '" alt="' + esc(b.name) + ' logo" width="40" height="40">\n' +
       '      <span>\n' +
       '        <span class="brand-name">' + esc(b.name) + '</span>\n' +
@@ -234,7 +257,11 @@
       '    <div>\n      <h3>Order &amp; Contact</h3>\n      <ul>\n' +
       '        <li><a href="tel:' + esc(b.phoneTel) + '">' + esc(b.phoneDisplay) + '</a></li>\n' +
       '        <li><a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a></li>\n' +
-      '        <li><a href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">Order on WhatsApp</a></li>\n' +
+      ((b.whatsappNumbers && b.whatsappNumbers.length)
+        ? b.whatsappNumbers.map(function(wn) {
+            return '        <li><a href="https://wa.me/' + esc(wn.number) + '?text=' + encodeURIComponent(b.defaultWaText || '') + '" target="_blank" rel="noopener">WhatsApp (' + esc(wn.market) + ')</a></li>';
+          }).join('\n') + '\n'
+        : '        <li><a href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">Order on WhatsApp</a></li>\n') +
       '      </ul>\n    </div>\n' +
       '  </div>\n' +
       '  <div class="container footer-bottom">\n' +
@@ -278,7 +305,13 @@
           logo: b.siteUrl + '/' + b.logo, foundingDate: b.foundingYear,
           description: b.orgDescription,
           address: { '@type': 'PostalAddress', addressCountry: 'IN', addressRegion: 'Jammu & Kashmir' },
-          contactPoint: { '@type': 'ContactPoint', contactType: 'sales', telephone: b.phoneTel, email: b.email }
+          contactPoint: (b.whatsappNumbers && b.whatsappNumbers.length)
+            ? b.whatsappNumbers.map(function(wn, i) {
+                var cp = { '@type': 'ContactPoint', contactType: 'sales', telephone: '+' + wn.number };
+                if (i === 0) cp.email = b.email;
+                return cp;
+              })
+            : { '@type': 'ContactPoint', contactType: 'sales', telephone: b.phoneTel, email: b.email }
         },
         { '@type': 'WebSite', url: b.siteUrl, name: b.name },
         {
@@ -291,13 +324,17 @@
     });
 
     const h = data.hero;
+    const minPrice = data.products.filter(function (p) { return p.status === 'available'; }).reduce(function (m, p) { return Math.min(m, p.price); }, Infinity);
+    const ctaLabel = (minPrice < Infinity && h.primaryCta && h.primaryCta.label)
+      ? h.primaryCta.label.replace(/from AED \d+/i, 'from AED ' + minPrice)
+      : (h.primaryCta ? h.primaryCta.label : '');
     const hero =
       '  <!-- Hero -->\n  <section class="hero">\n    <div class="container hero-grid">\n      <div>\n' +
       '        <span class="eyebrow">' + esc(h.eyebrow) + '</span>\n' +
       '        <h1>' + esc(h.title) + '</h1>\n' +
       '        <p class="lead">' + esc(h.lead) + '</p>\n' +
       '        <div class="hero-cta">\n' +
-      '          <a class="btn btn-primary" href="' + esc(h.primaryCta.href) + '">' + esc(h.primaryCta.label) + '</a>\n' +
+      '          <a class="btn btn-primary" href="' + esc(h.primaryCta.href) + '">' + esc(ctaLabel) + '</a>\n' +
       '          <a class="btn btn-whatsapp" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">\n' +
       '            ' + WA_SVG + '\n            ' + esc(h.waCtaLabel) + '\n          </a>\n' +
       '        </div>\n' +
@@ -322,7 +359,7 @@
       '\n      </div>\n    </div>\n  </section>\n';
 
     const hp = data.homeProducts;
-    const featured = data.products.filter(function (p) { return p.featured; });
+    const featured = data.products.filter(function (p) { return p.featured; }).map(productView);
     const teaser =
       '\n  <!-- Products teaser -->\n  <section>\n    <div class="container">\n' +
       '      <span class="eyebrow">' + esc(hp.eyebrow) + '</span>\n' +
@@ -338,7 +375,7 @@
           '            <h3>' + esc(p.name) + '</h3>\n' +
           '            <p class="p-desc">' + esc(p.homeDesc || p.pageDesc) + '</p>\n' +
           productPriceHtml(p) + '\n' +
-          '            <a class="btn btn-whatsapp" href="' + esc(waUrl(b, p.waText)) + '" target="_blank" rel="noopener">' + (p.status === 'out_of_stock' ? 'Ask about restock' : 'Order on WhatsApp') + '</a>\n' +
+          '            ' + orderBtn(b, p) + '\n' +
           '          </div>\n        </article>';
       }).join('\n') +
       '\n      </div>\n' +
@@ -397,12 +434,18 @@
       '\n      </div>\n    </div>\n  </section>\n';
 
     const c = data.contact;
+    const waContactLines = (b.whatsappNumbers && b.whatsappNumbers.length)
+      ? b.whatsappNumbers.map(function(wn) {
+          return '        <li>💬 WhatsApp (' + esc(wn.market) + '): <a href="https://wa.me/' + esc(wn.number) + '" target="_blank" rel="noopener">+' + esc(wn.number) + '</a></li>';
+        }).join('\n') + '\n'
+      : '';
     const contact =
       '\n  <!-- Contact -->\n  <section class="contact-strip" id="contact">\n    <div class="container grid-2">\n' +
       '      <div>\n        <h2>' + esc(c.heading) + '</h2>\n' +
       '        <p>' + esc(c.text) + '</p>\n      </div>\n' +
       '      <ul class="contact-list">\n' +
-      '        <li>📞 Phone / WhatsApp: <a href="tel:' + esc(b.phoneTel) + '">' + esc(b.phoneDisplay) + '</a></li>\n' +
+      '        <li>📞 Phone: <a href="tel:' + esc(b.phoneTel) + '">' + esc(b.phoneDisplay) + '</a></li>\n' +
+      waContactLines +
       '        <li>✉️ Email: <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a></li>\n' +
       '        <li>📸 Instagram: <a href="https://www.instagram.com/' + esc(b.instagramUser) + '" target="_blank" rel="noopener">@' + esc(b.instagramUser) + '</a></li>\n' +
       '        <li>📍 Origin: ' + esc(c.originLine) + '</li>\n' +
@@ -422,15 +465,22 @@
       '@context': 'https://schema.org',
       '@graph': [breadcrumbLd(data, 'Products', 'products.html')].concat(
         data.products.map(function (p) {
+          var pv = productView(p);
+          // No aggregateRating/review here on purpose: the testimonials are
+          // brand-level and are not displayed on this product page, so marking
+          // them up as product reviews would breach Google's review policy and
+          // the project's "no review schema without real, displayed reviews"
+          // rule. Add it back only when per-product reviews are shown on-page.
           return {
-            '@type': 'Product', name: p.schemaName || p.name,
-            image: b.siteUrl + '/' + p.image,
-            description: p.schemaDesc || p.pageDesc,
+            '@type': 'Product', name: pv.schemaName,
+            sku: pv.id,
+            image: b.siteUrl + '/' + pv.image,
+            description: pv.schemaDesc,
             brand: { '@type': 'Brand', name: b.name },
             offers: {
               '@type': 'Offer', priceCurrency: 'AED',
-              price: String(p.sale && typeof p.sale.price === 'number' ? p.sale.price : p.price),
-              availability: statusAvailability(p.status), url: b.siteUrl + '/products.html'
+              price: String(pv.sale && typeof pv.sale.price === 'number' ? pv.sale.price : pv.price),
+              availability: statusAvailability(pv.status), url: b.siteUrl + '/products.html'
             }
           };
         })
@@ -445,31 +495,37 @@
       }).join('\n') + '\n      </div>\n';
 
     const cards = data.products.map(function (p) {
-      let specs = '';
-      if (p.specs && p.specs.length) {
+      var pv = productView(p);
+      var specsArr = (p.specs || []).slice();
+      if (pv.perGram && p.valueBlurb) {
+        specsArr = specsArr.concat([{ label: 'Value', value: 'AED ' + pv.perGram + '/g, ' + p.valueBlurb }]);
+      }
+      var specs = '';
+      if (specsArr.length) {
         specs = '            <details class="specs">\n              <summary>Details</summary>\n              <dl>\n' +
-          p.specs.map(function (s) {
+          specsArr.map(function (s) {
             return '                <div class="spec-row"><dt>' + esc(s.label) + '</dt><dd>' + esc(s.value) + '</dd></div>';
           }).join('\n') +
           '\n              </dl>\n            </details>\n';
       }
-      return '        <article class="card product-card" data-category="' + esc(p.category) + '">\n' +
+      return '        <article class="card product-card" data-category="' + esc(pv.category) + '">\n' +
         '          <div class="p-img">\n' +
-        '            <img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '" loading="lazy" width="400" height="300">\n' +
-        '            <span class="weight-badge">' + esc(p.badge) + '</span>\n' +
-        statusBadge(p.status) + '\n          </div>\n' +
+        '            <img src="' + esc(pv.image) + '" alt="' + esc(pv.imageAlt) + '" loading="lazy" width="400" height="300">\n' +
+        '            <span class="weight-badge">' + esc(pv.badge) + '</span>\n' +
+        statusBadge(pv.status) + '\n          </div>\n' +
         '          <div class="p-body">\n' +
-        '            <h3>' + esc(p.name) + '</h3>\n' +
-        '            <p class="p-desc">' + esc(p.pageDesc) + '</p>\n' +
-        productPriceHtml(p) + '\n' +
-        '            <a class="btn btn-whatsapp" href="' + esc(waUrl(b, p.waText)) + '" target="_blank" rel="noopener">' + (p.status === 'out_of_stock' ? 'Ask about restock' : 'Order on WhatsApp') + '</a>\n' +
+        '            <h3>' + esc(pv.name) + '</h3>\n' +
+        '            <p class="p-desc">' + esc(pv.pageDesc) + '</p>\n' +
+        productPriceHtml(pv) + '\n' +
+        '            ' + orderBtn(b, pv) + '\n' +
         specs +
         '          </div>\n        </article>';
     }).join('\n\n');
 
     const compareRows = data.products.filter(function (p) { return p.compare; }).map(function (p) {
-      const perGram = p.compare.grams ? 'AED ' + Math.round(p.price / p.compare.grams) + '/g' : '—';
-      return '            <tr><td>' + esc(p.compare.label) + '</td><td>AED ' + esc(p.price) + '</td><td>' + perGram + '</td><td>' + esc(p.compare.servings) + '</td><td>' + esc(p.compare.bestFor) + '</td></tr>';
+      var pv = productView(p);
+      var perGram = pv.perGram ? 'AED ' + pv.perGram + '/g' : 'n/a';
+      return '            <tr><td>' + esc(pv.name) + '</td><td>AED ' + esc(pv.price) + '</td><td>' + perGram + '</td><td>' + esc(pv.compare.servings) + '</td><td>' + esc(pv.compare.bestFor) + '</td></tr>';
     }).join('\n');
 
     const compare =
@@ -596,6 +652,8 @@
         data.posts.map(function (p) {
           return {
             '@type': 'BlogPosting', headline: p.title, datePublished: p.dateISO,
+            description: p.excerpt,
+            articleSection: catLabel[p.categoryKey] || p.categoryKey,
             author: { '@type': 'Organization', name: b.name },
             publisher: { '@type': 'Organization', name: b.name },
             url: b.siteUrl + '/blogs.html#' + p.id
@@ -623,12 +681,18 @@
     }).join('\n\n');
 
     const sb = bp.sidebar;
+    const sbRawProduct = data.products.find(function (p) { return p.id === 'royal-1g'; }) ||
+      data.products.filter(function (p) { return p.category === 'saffron' && p.status === 'available'; }).sort(function (a, b) { return a.price - b.price; })[0];
+    const sbPv = sbRawProduct ? productView(sbRawProduct) : null;
+    const sbPriceHtml = sbPv
+      ? '<span data-price="' + esc(sbPv.price) + '">AED ' + esc(sbPv.price) + '</span> <span>/ ' + esc(sbPv.size) + ' tin</span>'
+      : 'AED ' + esc(sb.priceAmount) + ' <span>' + esc(sb.priceUnit) + '</span>';
     const sidebar =
       '        <aside class="sidebar" aria-label="Blog sidebar">\n' +
       '          <div class="card">\n' +
       '            <h3>' + esc(sb.orderHeading) + '</h3>\n' +
       '            <p style="color:var(--muted);font-size:15px;margin:8px 0 4px;">' + esc(sb.orderText) + '</p>\n' +
-      '            <div class="p-price" style="margin-bottom:12px;">AED ' + esc(sb.priceAmount) + ' <span>' + esc(sb.priceUnit) + '</span></div>\n' +
+      '            <div class="p-price" style="margin-bottom:12px;">' + sbPriceHtml + '</div>\n' +
       '            <a class="btn btn-whatsapp" style="width:100%;" href="' + esc(waUrl(b, sb.waText)) + '" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
       '          </div>\n' +
       '          <div class="card">\n' +
@@ -680,7 +744,7 @@
     return '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n' +
       '  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
       '  <title>Privacy Policy | ' + esc(b.name) + '</title>\n' +
-      '  <meta name="description" content="Privacy policy for ' + esc(b.name) + ' — how we collect, use and protect your information.">\n' +
+      '  <meta name="description" content="Privacy policy for ' + esc(b.name) + '. How we collect, use and protect your information.">\n' +
       '  <meta name="robots" content="index, follow">\n' +
       '  <link rel="canonical" href="' + esc(url) + '">\n' +
       '  <meta property="og:type" content="website">\n' +
@@ -700,7 +764,7 @@
       '      <h2>What information we collect</h2>\n' +
       '      <p>We collect your <strong>email address</strong> only if you voluntarily subscribe through the opt-in form on this website. We do not collect any other personal data through the site. Orders placed via WhatsApp are handled through WhatsApp\'s own platform.</p>\n\n' +
       '      <h2>How we use your information</h2>\n' +
-      '      <p>Your email address is used solely to send you occasional promotional emails — discount offers, new product announcements, and saffron guides. We will never sell, rent, or share your email address with third parties for their own marketing.</p>\n\n' +
+      '      <p>Your email address is used solely to send you occasional promotional emails: discount offers, new product announcements, and saffron guides. We will never sell, rent, or share your email address with third parties for their own marketing.</p>\n\n' +
       '      <h2>Email service provider</h2>\n' +
       '      <p>We use <strong>Mailchimp</strong> (The Rocket Science Group LLC, USA) to manage our mailing list and send emails. Your email address is stored on Mailchimp\'s servers. You can read <a href="https://mailchimp.com/legal/privacy/" target="_blank" rel="noopener">Mailchimp\'s privacy policy</a>.</p>\n\n' +
       '      <h2>Your rights</h2>\n' +
@@ -738,7 +802,7 @@
       '> ' + b.orgDescription + '\n\n' +
       '## Pages\n\n' +
       '- [Home](' + u + '/): Products, ordering information, FAQ, and the brand story.\n' +
-      '- [Products](' + u + '/products.html): Full product catalogue — Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
+      '- [Products](' + u + '/products.html): Full product catalogue: Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
       '- [Recipes](' + u + '/recipes.html): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.\n' +
       '- [Blog](' + u + '/blogs.html): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
   }
@@ -760,6 +824,7 @@
 
   return {
     esc: esc, waUrl: waUrl, inlineMd: inlineMd, plainMd: plainMd,
+    productView: productView,
     renderIndex: renderIndex, renderProducts: renderProducts,
     renderRecipes: renderRecipes, renderBlogs: renderBlogs,
     render404: render404, renderSitemap: renderSitemap,

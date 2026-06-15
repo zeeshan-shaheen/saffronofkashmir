@@ -5,6 +5,6 @@
 ## Pages
 
 - [Home](https://saffronofkashmir.com/): Products, ordering information, FAQ, and the brand story.
-- [Products](https://saffronofkashmir.com/products.html): Full product catalogue — Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.
+- [Products](https://saffronofkashmir.com/products.html): Full product catalogue: Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.
 - [Recipes](https://saffronofkashmir.com/recipes.html): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.
 - [Blog](https://saffronofkashmir.com/blogs.html): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.

@@ -13,6 +13,10 @@
     "phoneDisplay": "+91 7006 603060",
     "phoneTel": "+917006603060",
     "whatsappNumber": "971522613060",
+    "whatsappNumbers": [
+      { "market": "UAE & Middle East", "number": "971522613060" },
+      { "market": "India", "number": "917006603060" }
+    ],
     "defaultWaText": "Hi! I'd like to order from Saffron of Kashmir.",
     "email": "info@saffronofkashmir.com",
     "instagramUser": "saffron_of_kashmir",
@@ -75,7 +79,7 @@
     },
     "products": {
       "title": "Products - Pure Mongra Saffron, Honey, Oil & Kahwa | Saffron of Kashmir",
-      "description": "Shop Kashmiri Mongra saffron tins (1g AED 65, 5g AED 290, 10g AED 520), saffron honey, saffron oil & Kahwa blend. ISO 3632 Grade A. 48hr UAE delivery.",
+      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Grade A. 48hr UAE delivery.",
       "ogTitle": "Products - Pure Mongra Saffron | Saffron of Kashmir",
       "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Grade A. UAE delivery in 48 hours."
     },
@@ -86,7 +90,7 @@
       "ogDescription": "Authentic saffron recipes: Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Panna Cotta, Saffron Lemonade."
     },
     "blog": {
-      "title": "Blog — Saffron Guides, Heritage & Health | Saffron of Kashmir",
+      "title": "Blog - Saffron Guides, Heritage & Health | Saffron of Kashmir",
       "description": "Guides on Mongra saffron grades, testing purity at home, Pampore's 700-year saffron heritage, cooking with saffron in Arabic cuisine, and research-backed health benefits.",
       "ogTitle": "Blog | Saffron of Kashmir",
       "ogDescription": "Saffron guides, Kashmir heritage stories, purity tests, and health research."
@@ -95,7 +99,7 @@
   "hero": {
     "eyebrow": "Established 2004 · Pampore, Kashmir",
     "title": "Pure Mongra Saffron, Direct from Pampore to Your Door",
-    "lead": "Only the crimson stigma tips — lab-tested to ISO 3632 Grade A, packed at origin, and delivered anywhere in the UAE within 48 hours.",
+    "lead": "Only the crimson stigma tips, lab-tested to ISO 3632 Grade A, packed at origin, and delivered anywhere in the UAE within 48 hours.",
     "primaryCta": {
       "label": "Shop Saffron - from AED 65",
       "href": "products.html"
@@ -117,12 +121,12 @@
       {
         "icon": "🌺",
         "title": "100% Mongra Grade",
-        "text": "Only the crimson stigma tips — never the yellow style. The most potent grade of Kashmiri saffron."
+        "text": "Only the crimson stigma tips, never the yellow style. The most potent grade of Kashmiri saffron."
       },
       {
         "icon": "⛰️",
         "title": "Direct from Pampore",
-        "text": "No middlemen. We source directly from partner farming families in Pampore, J&K — harvested and packed within 48 hours."
+        "text": "No middlemen. We source directly from partner farming families in Pampore, J&K, harvested and packed within 48 hours."
       },
       {
         "icon": "🔬",
@@ -131,18 +135,18 @@
       },
       {
         "icon": "🇦🇪",
-        "title": "UAE delivery in 48 Hours",
-        "text": "Order via WhatsApp, receive your saffron within 04 to 06 days anywhere in UAE. Free delivery over USD 150."
+        "title": "UAE Delivery in 48 Hours",
+        "text": "Order via WhatsApp, receive your saffron within 48 hours anywhere in the UAE. Free delivery over AED 120."
       },
       {
         "icon": "🇮🇳",
-        "title": "PAN India Delivery in 02 - 04 Days",
-        "text": "Order via WhatsApp, receive your saffron within 04 to 06 days PAN India. Free delivery over INR 4000."
+        "title": "PAN India Delivery in 3-5 Days",
+        "text": "Order via WhatsApp, receive your saffron within 3-5 days PAN India. Free delivery over INR 4000."
       },
       {
         "icon": "🌐",
-        "title": "International delivery in 04 to 06 Days",
-        "text": "Order via WhatsApp, receive your saffron within 04 to 06 days worldwide. Free delivery over USD 120."
+        "title": "International Delivery in 4-6 Days",
+        "text": "Order via WhatsApp, receive your saffron within 4-6 days worldwide. Free delivery over USD 120."
       }
     ]
   },
@@ -155,21 +159,20 @@
   "products": [
     {
       "id": "royal-1g",
-      "name": "Royal Mongra - 2g",
-      "badge": "2g",
+      "baseName": "Royal Mongra",
+      "size": "2g",
+      "grams": 2,
       "unitLabel": "/ tin",
       "price": 65,
+      "altContext": "saffron tin from Pampore, Kashmir",
+      "descBody": "Pure Kashmiri Mongra saffron. Crimson stigma tips only. ISO 3632 Grade A.",
       "image": "2gm-1.webp",
-      "imageAlt": "Royal Mongra 2g saffron tin from Pampore Kashmir",
-      "homeDesc": "Perfect introduction to genuine Mongra grade. 15–20 servings of tea or rice.",
-      "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Grade A. 15–20 servings.",
-      "schemaName": "Royal Mongra Saffron - 2g",
-      "schemaDesc": "Pure Kashmiri Mongra saffron, 1g tin. Crimson stigma tips only. ISO 3632 Grade A.",
+      "homeDesc": "Perfect introduction to genuine Mongra grade. 15-20 servings of tea or rice.",
+      "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Grade A. 15-20 servings.",
       "category": "saffron",
       "featured": true,
       "status": "available",
       "sale": null,
-      "waText": "Hi! I'd like to order Royal Mongra 1g from Saffron of Kashmir.",
       "specs": [
         {
           "label": "Grade",
@@ -193,33 +196,27 @@
         }
       ],
       "compare": {
-        "label": "Royal Mongra 2g",
-        "grams": 2,
-        "servings": "15 - 20",
+        "servings": "15-20",
         "bestFor": "First-time buyers, trying Mongra grade"
       }
     },
     {
       "id": "collectors-5g",
-      "name": "Collector's Tin - 5g",
-      "badge": "5g",
+      "baseName": "Collector's Tin",
+      "size": "5g",
+      "grams": 5,
       "unitLabel": "/ tin",
       "price": 160,
+      "altContext": "Mongra saffron collector's tin",
+      "descBody": "Pure Kashmiri Mongra saffron. ISO 3632 Grade A.",
+      "valueBlurb": "best value for home chefs",
       "image": "5gm-1.webp",
-      "imageAlt": "Collector's Tin 5g Mongra saffron from Saffron of Kashmir",
-      "homeDesc": "For the serious saffron lover. 80–100 servings. Gift-worthy collector's edition tin.",
-      "pageDesc": "For serious saffron lovers. 80–100 servings. Gift-worthy packaging.",
-      "schemaName": "Collector's Tin Mongra Saffron - 5g",
-      "schemaDesc": "Pure Kashmiri Mongra saffron, 5g collector's tin. ISO 3632 Grade A.",
+      "homeDesc": "For the serious saffron lover. 80-100 servings. Gift-worthy collector's edition tin.",
+      "pageDesc": "For serious saffron lovers. 80-100 servings. Gift-worthy packaging.",
       "category": "saffron",
       "featured": true,
       "status": "available",
-      "sale": {
-        "price": 144,
-        "label": "10% off",
-        "until": ""
-      },
-      "waText": "Hi! I'd like to order Collector's Tin 5g from Saffron of Kashmir.",
+      "sale": null,
       "specs": [
         {
           "label": "Grade",
@@ -236,40 +233,30 @@
         {
           "label": "Storage",
           "value": "Airtight collector's tin. 36-month shelf life."
-        },
-        {
-          "label": "Value",
-          "value": "AED 58/g - best value for home chefs"
         }
       ],
       "compare": {
-        "label": "Collector's Tin 5g",
-        "grams": 5,
-        "servings": "80 - 100",
+        "servings": "80-100",
         "bestFor": "Regular home cooking, gifts"
       }
     },
     {
       "id": "heritage-10g",
-      "name": "Heritage Reserve - 10g",
-      "badge": "10g",
+      "baseName": "Heritage Reserve",
+      "size": "10g",
+      "grams": 10,
       "unitLabel": "/ tin",
-      "price": 320,
-      "image": "10gm -1.webp",
-      "imageAlt": "Heritage Reserve 10g Mongra saffron collector tin",
+      "price": 300,
+      "altContext": "Mongra saffron collector's tin",
+      "descBody": "Pure Kashmiri Mongra saffron. Best per-gram value. ISO 3632 Grade A.",
+      "valueBlurb": "our best per-gram price",
+      "image": "10gm-1.webp",
       "homeDesc": "Our largest tin. Best value for restaurants, gifting, or the dedicated home chef.",
       "pageDesc": "Our largest tin. Best per-gram value. Ideal for restaurants and gifting.",
-      "schemaName": "Heritage Reserve Mongra Saffron - 10g",
-      "schemaDesc": "Pure Kashmiri Mongra saffron, 10g tin. Best per-gram value. ISO 3632 Grade A.",
       "category": "saffron",
       "featured": true,
       "status": "available",
-      "sale": {
-        "price": 288,
-        "label": "10% off",
-        "until": ""
-      },
-      "waText": "Hi! I'd like to order Heritage Reserve 10g from Saffron of Kashmir.",
+      "sale": null,
       "specs": [
         {
           "label": "Grade",
@@ -284,78 +271,69 @@
           "value": "Professional kitchens, bulk orders, corporate gifts"
         },
         {
-          "label": "Value",
-          "value": "AED 52/g - our best per-gram price"
-        },
-        {
           "label": "Delivery",
           "value": "Same-day dispatch, 48hr UAE delivery"
         }
       ],
       "compare": {
-        "label": "Heritage Reserve 10g",
-        "grams": 10,
-        "servings": "160 - 200",
+        "servings": "160-200",
         "bestFor": "Restaurants, bulk, corporate gifting"
       }
     },
     {
       "id": "honey-250g",
-      "name": "Saffron Honey - 500 ml",
-      "badge": "500 ml",
+      "baseName": "Saffron Honey",
+      "size": "500 ml",
+      "grams": null,
       "unitLabel": "/ jar",
       "price": 74,
+      "altContext": "Kashmiri wildflower honey infused with Mongra saffron",
+      "descBody": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
       "image": "honey-sidr-1.webp",
-      "imageAlt": "Kashmiri saffron honey - wildflower honey infused with Mongra saffron",
       "homeDesc": "",
       "pageDesc": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
-      "schemaName": "Saffron Honey - 250g",
-      "schemaDesc": "Raw Kashmiri wildflower honey infused with Mongra saffron stigmas.",
       "category": "gift",
       "featured": false,
       "status": "coming_soon",
       "sale": null,
-      "waText": "Hi! I'd like to order Saffron Honey 250g from Saffron of Kashmir.",
       "specs": [],
       "compare": null
     },
     {
       "id": "oil-15ml",
-      "name": "Saffron Oil - 15ml",
-      "badge": "15ml",
+      "baseName": "Saffron Oil",
+      "size": "15ml",
+      "grams": null,
       "unitLabel": "/ bottle",
       "price": 110,
+      "altContext": "cold-pressed saffron-infused almond oil",
+      "descBody": "Cold-pressed saffron-infused almond oil for skin, hair, and wellness.",
       "image": "saffronoil-1.webp",
-      "imageAlt": "Kashmiri saffron oil - 50 ml cold-pressed saffron-infused almond oil",
       "homeDesc": "",
       "pageDesc": "Cold-pressed saffron-infused almond oil. For skin, hair, and wellness rituals.",
-      "schemaName": "Saffron Oil - 50ml",
-      "schemaDesc": "Cold-pressed saffron-infused almond oil for skin, hair, and wellness.",
       "category": "gift",
       "featured": false,
       "status": "coming_soon",
       "sale": null,
-      "waText": "Hi! I'd like to order Saffron Oil 50ml from Saffron of Kashmir.",
       "specs": [],
       "compare": null
     },
     {
       "id": "kahwa-50g",
-      "name": "Kashmiri Kahwa Blend - 100g",
-      "badge": "100g",
+      "baseName": "Kashmiri Kahwa Blend",
+      "size": "100g",
+      "grams": null,
       "unitLabel": "/ tin",
       "price": 85,
+      "altContext": "saffron tea tin",
+      "descBody": "Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.",
       "image": "kashmirkehwa-1.webp",
-      "imageAlt": "Kashmiri Kahwa saffron tea blend - 100 g tin",
       "homeDesc": "",
       "pageDesc": "Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.",
-      "schemaName": "Kashmiri Kahwa Blend — 50 g",
-      "schemaDesc": "Traditional green tea with Mongra saffron, cardamom, cinnamon, and rose petals.",
       "category": "gift",
       "featured": false,
       "status": "out_of_stock",
       "sale": null,
-      "waText": "Hi! I'd like to order Kashmiri Kahwa Blend from Saffron of Kashmir.",
       "specs": [],
       "compare": null
     }
@@ -366,7 +344,7 @@
     "steps": [
       {
         "title": "Message us on WhatsApp",
-        "text": "Tap any order button — your message is pre-filled with the product name. Tell us your delivery address in the UAE."
+        "text": "Tap any order button. Your message is pre-filled with the product name. Tell us your delivery address in the UAE."
       },
       {
         "title": "We confirm your order",
@@ -388,7 +366,7 @@
     "image": "slider2.webp",
     "imageAlt": "Saffron crocus fields in Pampore, Kashmir at dawn",
     "linkLabel": "Read more on our blog →",
-    "linkHref": "blogs.html"
+    "linkHref": "blogs.html#pampore-legacy"
   },
   "testimonials": {
     "eyebrow": "What Our Customers Say",
@@ -433,22 +411,22 @@
       },
       {
         "q": "How much saffron should I use in a dish?",
-        "a": "8–15 threads is enough for most recipes serving 2 - 4 people. Always bloom the threads in warm (not boiling) liquid for 10–20 minutes first - see [our recipes](recipes.html) for exact amounts."
+        "a": "8-15 threads is enough for most recipes serving 2-4 people. Always bloom the threads in warm (not boiling) liquid for 10-20 minutes first - see [our recipes](recipes.html) for exact amounts."
       }
     ]
   },
   "contact": {
     "heading": "Contact Us",
     "text": "Questions about products, bulk orders for restaurants, or corporate gifting? Reach us directly - we reply fastest on WhatsApp.",
-    "originLine": "Pampore, Jammu & Kashmir, India · Serving everywhere in Middle east"
+    "originLine": "Pampore, Jammu & Kashmir, India · Serving everywhere in the Middle East"
   },
   "footer": {
-    "about": "Established 2004 in Pampore, Kashmir. Supplying the Middle east's finest households and restaurants with certified Mongra grade saffron.",
+    "about": "Established 2004 in Pampore, Kashmir. Supplying the Middle East's finest households and restaurants with certified Mongra grade saffron.",
     "locationLine": "Pampore, J&K, India",
     "bottomRight": "Premium Kashmiri Mongra Saffron - ISO 3632 Grade A"
   },
   "productsPage": {
-    "h1": "Our Products",
+    "h1": "Buy Kashmiri Mongra Saffron, UAE Delivery",
     "sub": "Every product starts with the same ingredient: pure Mongra grade saffron from Pampore. Order on WhatsApp - same-day dispatch, 48hr UAE delivery, free over AED 120.",
     "filters": [
       {
@@ -468,7 +446,7 @@
     "identify": {
       "eyebrow": "Saffron Literacy",
       "heading": "How to Identify Real Saffron",
-      "sub": "85% of saffron sold globally is adulterated. Here's how to know yours is genuine - in three simple tests.",
+      "sub": "Studies consistently find high adulteration rates in commercial saffron worldwide. Here are three simple tests to verify yours.",
       "steps": [
         {
           "title": "The Water Test",
@@ -485,7 +463,7 @@
       ],
       "footerLink": {
         "label": "Read the full purity-testing guide on our blog →",
-        "href": "blogs.html"
+        "href": "blogs.html#purity-tests"
       }
     },
     "delivery": {
@@ -500,7 +478,7 @@
         {
           "icon": "💬",
           "title": "Payment",
-          "text": "Order on WhatsApp — we confirm the total and payment options with you directly before dispatch. No minimum order."
+          "text": "Order on WhatsApp. We confirm the total and payment options with you directly before dispatch. No minimum order."
         },
         {
           "icon": "🏨",
@@ -516,7 +494,7 @@
     "golden": {
       "eyebrow": "The Golden Rule",
       "heading": "Always Bloom Your Saffron First",
-      "sub": "Whatever you're making, bloom your Mongra saffron threads in warm (not boiling) liquid for 10–20 minutes before adding to your dish. This releases the crocin pigment and safranal aroma, giving maximum colour, flavour, and benefit from every thread.",
+      "sub": "Whatever you're making, bloom your Mongra saffron threads in warm (not boiling) liquid for 10-20 minutes before adding to your dish. This releases the crocin pigment and safranal aroma, giving maximum colour, flavour, and benefit from every thread.",
       "primary": {
         "label": "Buy Mongra Saffron →",
         "href": "products.html"
@@ -549,13 +527,13 @@
         "1 small cinnamon stick",
         "4 whole cloves",
         "1 tsp raw honey or sugar",
-        "8–10 almonds, blanched and slivered",
+        "8-10 almonds, blanched and slivered",
         "1 tsp rose water (optional)",
         "2 cups (500ml) water"
       ],
       "steps": [
         "Bring water to a boil in a small saucepan. Add cardamom, cloves, and cinnamon. Simmer 5 minutes until fragrant.",
-        "Add the green tea leaves and saffron threads. Remove from heat and steep for 3 minutes — no longer, or the tea becomes bitter.",
+        "Add the green tea leaves and saffron threads. Remove from heat and steep for 3 minutes, no longer, or the tea becomes bitter.",
         "Strain into small cups. Add honey or sugar to taste.",
         "Garnish with slivered almonds and a few drops of rose water. Serve immediately."
       ],
@@ -602,7 +580,7 @@
       "name": "Kesar Doodh",
       "schemaName": "Kesar Doodh (Saffron Milk)",
       "cardDesc": "Warm saffron milk - the traditional wellness drink, served before sleep for over a thousand years.",
-      "schemaDesc": "Warm saffron milk — the traditional Kashmiri wellness drink.",
+      "schemaDesc": "Warm saffron milk, the traditional Kashmiri wellness drink.",
       "image": "zafran-milk-1.webp",
       "imageAlt": "Kesar Doodh - warm golden saffron milk with pistachios",
       "timeLabel": "10 min",
@@ -633,15 +611,15 @@
       "id": "machboos",
       "name": "Arabic Saffron Machboos",
       "schemaName": "Arabic Saffron Machboos",
-      "cardDesc": "The Gulf's celebrated rice dish — slow-cooked spiced chicken over fragrant rice, finished with saffron and rose water.",
+      "cardDesc": "The Gulf's celebrated rice dish: slow-cooked spiced chicken over fragrant rice, finished with saffron and rose water.",
       "schemaDesc": "Gulf-style spiced chicken and rice finished with saffron and rose water.",
       "image": "arabic-machboos-1.webp",
-      "imageAlt": "Arabic Saffron Machboos — spiced chicken over saffron rice",
+      "imageAlt": "Arabic Saffron Machboos, spiced chicken over saffron rice",
       "timeLabel": "90 min",
       "totalISO": "PT1H30M",
       "cuisineLabel": "Gulf Arabic",
       "cuisine": "Gulf Arabic",
-      "servesLabel": "Serves 4–6",
+      "servesLabel": "Serves 4-6",
       "yield": "4-6 servings",
       "ingredients": [
         "1 whole chicken, cut into pieces (or 1kg thighs)",
@@ -653,7 +631,7 @@
         "4 tbsp vegetable oil or ghee",
         "2 tsp baharat (Arabic 7-spice)",
         "1 tsp turmeric · 1 tsp cumin · ½ tsp black lime powder",
-        "Salt · 1–2 whole dried black limes (loomi)",
+        "Salt · 1-2 whole dried black limes (loomi)",
         "3 cups chicken stock",
         "Fresh coriander and fried onions to serve"
       ],
@@ -666,12 +644,12 @@
         "Place chicken on the rice, drizzle with saffron water and rose water, and steam on very low heat 15 minutes.",
         "Serve on a platter, garnished with coriander and crispy fried onions."
       ],
-      "tip": "**Saffron tip:** Add the saffron bloom and rose water together in the final steaming stage — this preserves the floral top notes that a long simmer would destroy."
+      "tip": "**Saffron tip:** Add the saffron bloom and rose water together in the final steaming stage. This preserves the floral top notes that a long simmer would destroy."
     }
   ],
   "blogPage": {
     "h1": "From the Saffron Journal",
-    "sub": "Buying guides, heritage stories, and research — everything you need to know about Kashmiri saffron.",
+    "sub": "Buying guides, heritage stories, and research. Everything you need to know about Kashmiri saffron.",
     "allLabel": "All Articles",
     "categories": [
       {
@@ -731,7 +709,7 @@
       "dateDisplay": "January 15, 2025",
       "title": "What is Mongra Grade Saffron and Why It Matters",
       "excerpt": "Walk into any spice market from Dubai to Delhi and you'll find saffron priced from AED 10 to AED 300 per gram. The reason lies in a single word: grade.",
-      "body": "Kashmiri saffron is classified into three grades based on which part of the crocus stigma is used. Mongra - the highest - consists entirely of the deep-red stigma tips, separated from the yellow style. Below that is Lachha, which includes the red part plus some yellow style, and Zarda or Gucchi, which includes the entire stigma with the full yellow portion. Each step down in grade means less crocin (the colourant), less picrocrocin (the bitter principle), and less safranal (the aroma compound).\n\nMongra saffron gives 20–30% more colour per gram than Lachha grade. In a Zafrani Pulao or a pot of Kahwa, the difference is immediately visible - a rich golden hue versus a pale yellow tint. In aroma, Mongra releases a deep, honeyed scent that lingers long after cooking; lower grades often smell grassy or of almost nothing at all.\n\nThe labour involved is extreme. Each saffron crocus produces just 3 stigmas. After hand-harvesting the flowers at dawn - the only time they're open - workers separate the three red filaments from the yellow style by hand, one flower at a time. One kilogram of Mongra requires roughly 150,000 flowers and over 100 hours of skilled hand work.\n\nWhen you buy Mongra grade, you're buying the most concentrated, potent form of one of the world's most ancient spices. At Saffron of Kashmir, we source exclusively Mongra grade, tested and certified to ISO 3632 Grade A standards."
+      "body": "Kashmiri saffron is classified into three grades based on which part of the crocus stigma is used. Mongra - the highest - consists entirely of the deep-red stigma tips, separated from the yellow style. Below that is Lachha, which includes the red part plus some yellow style, and Zarda or Gucchi, which includes the entire stigma with the full yellow portion. Each step down in grade means less crocin (the colourant), less picrocrocin (the bitter principle), and less safranal (the aroma compound).\n\nMongra saffron gives 20-30% more colour per gram than Lachha grade. In a Zafrani Pulao or a pot of Kahwa, the difference is immediately visible - a rich golden hue versus a pale yellow tint. In aroma, Mongra releases a deep, honeyed scent that lingers long after cooking; lower grades often smell grassy or of almost nothing at all.\n\nThe labour involved is extreme. Each saffron crocus produces just 3 stigmas. After hand-harvesting the flowers at dawn - the only time they're open - workers separate the three red filaments from the yellow style by hand, one flower at a time. One kilogram of Mongra requires roughly 150,000 flowers and over 100 hours of skilled hand work.\n\nWhen you buy Mongra grade, you're buying the most concentrated, potent form of one of the world's most ancient spices. At Saffron of Kashmir, we source exclusively Mongra grade, tested and certified to ISO 3632 Grade A standards."
     },
     {
       "id": "pampore-legacy",
@@ -749,7 +727,7 @@
       "dateDisplay": "March 5, 2025",
       "title": "How to Test Saffron Purity at Home (3 Methods)",
       "excerpt": "A 2019 study found over 50% of commercially available saffron in the Middle East contained adulterants - dyed corn silk, safflower petals, even coloured paper fibres. Here's how to verify yours.",
-      "body": "## Method 1: The Cold Water Soak\n\nPlace 3–4 threads in a glass of cold water and watch for 10–15 minutes. Real saffron slowly releases a deep golden-yellow colour while the thread itself stays crimson. Fake (dyed) saffron bleaches almost immediately, turning pale while the water goes a harsh orange-red.\n\n## Method 2: The Baking Soda Test\n\nAdd a pinch of baking soda to your saffron water. Real saffron turns the water bright golden-yellow. Adulterated saffron often turns it red, green, or murky brown as the alkaline soda reacts with synthetic pigments.\n\n## Method 3: The Rub Test\n\nRub a single thread between your fingers. Genuine saffron stains your fingers golden-yellow and softens without crumbling. Fake threads bleed colour quickly and disintegrate, often leaving an unnaturally bright orange-red dye.\n\n*Note:* These are consumer tests. Professional testing uses HPLC spectrophotometry to measure crocin concentration and ISO 3632 compliance. All our saffron is batch-tested to Grade A standards - certificate available on request."
+      "body": "## Method 1: The Cold Water Soak\n\nPlace 3-4 threads in a glass of cold water and watch for 10-15 minutes. Real saffron slowly releases a deep golden-yellow colour while the thread itself stays crimson. Fake (dyed) saffron bleaches almost immediately, turning pale while the water goes a harsh orange-red.\n\n## Method 2: The Baking Soda Test\n\nAdd a pinch of baking soda to your saffron water. Real saffron turns the water bright golden-yellow. Adulterated saffron often turns it red, green, or murky brown as the alkaline soda reacts with synthetic pigments.\n\n## Method 3: The Rub Test\n\nRub a single thread between your fingers. Genuine saffron stains your fingers golden-yellow and softens without crumbling. Fake threads bleed colour quickly and disintegrate, often leaving an unnaturally bright orange-red dye.\n\n*Note:* These are consumer tests. Professional testing uses HPLC spectrophotometry to measure crocin concentration and ISO 3632 compliance. All our saffron is batch-tested to Grade A standards - certificate available on request."
     },
     {
       "id": "arabic-cuisine",
@@ -758,7 +736,7 @@
       "dateDisplay": "April 1, 2025",
       "title": "Using Kashmiri Saffron in Arabic Cuisine",
       "excerpt": "Saffron has been part of Arab cuisine for over a thousand years - from celebratory Machboos to saffron-scented Gahwa and the delicate Umm Ali dessert.",
-      "body": "**Machboos (Kabsa):** The Gulf's answer to biryani. Use 8–10 threads of Mongra saffron, bloomed for 20 minutes in 3 tablespoons of warm (not boiling) water, then added with rose water in the final steaming stage. The goal is a subtle golden colour and floral perfume - not an aggressive yellow. [Full Machboos recipe here.](recipes.html)\n\n**Saffron Gahwa:** Traditional Arabic cardamom coffee with a pinch of saffron added to the grounds. Use just 3–4 threads per pot - saffron is a supporting note here, adding warmth and a faint bittersweet edge.\n\n**Saffron Milk (Haleeb Zafaran):** Bloom 8–10 threads in a tablespoon of warm milk, then add to a full warm cup with honey, cardamom, and pistachios - the Arabic equivalent of Kesar Doodh, drunk daily across Emirati households.\n\n**The golden rule:** Always bloom saffron in warm liquid (water, milk, stock - never oil) before adding it to your dish, and never grind Mongra saffron dry - it destroys the delicate aromatic compounds."
+      "body": "**Machboos (Kabsa):** The Gulf's answer to biryani. Use 8-10 threads of Mongra saffron, bloomed for 20 minutes in 3 tablespoons of warm (not boiling) water, then added with rose water in the final steaming stage. The goal is a subtle golden colour and floral perfume - not an aggressive yellow. [Full Machboos recipe here.](recipes.html)\n\n**Saffron Gahwa:** Traditional Arabic cardamom coffee with a pinch of saffron added to the grounds. Use just 3-4 threads per pot - saffron is a supporting note here, adding warmth and a faint bittersweet edge.\n\n**Saffron Milk (Haleeb Zafaran):** Bloom 8-10 threads in a tablespoon of warm milk, then add to a full warm cup with honey, cardamom, and pistachios - the Arabic equivalent of Kesar Doodh, drunk daily across Emirati households.\n\n**The golden rule:** Always bloom saffron in warm liquid (water, milk, stock - never oil) before adding it to your dish, and never grind Mongra saffron dry - it destroys the delicate aromatic compounds."
     },
     {
       "id": "health-benefits",
@@ -767,7 +745,7 @@
       "dateDisplay": "May 12, 2025",
       "title": "Health Benefits of Saffron Backed by Research",
       "excerpt": "Saffron has been used medicinally for over 3,000 years in Persian, Ayurvedic, and Unani traditions. Modern research is catching up.",
-      "body": "## Mood and mental health\n\nA 2014 meta-analysis in *Human Psychopharmacology* reviewed five randomised controlled trials and found saffron supplementation (30mg/day) significantly more effective than placebo for mild-to-moderate depression. The compound responsible appears to be crocin, which influences serotonin, dopamine, and norepinephrine pathways.\n\n## Antioxidant properties\n\nSaffron contains more than 150 compounds, including crocin, crocetin, and safranal - among the most powerful plant antioxidants identified, able to neutralise reactive oxygen species and reduce lipid peroxidation.\n\n## Vision and eye health\n\nStudies from the University of L'Aquila (Italy) found daily saffron supplementation improved vision in patients with age-related macular degeneration. The crocetin in saffron appears to improve oxygen transport to the retina and protect photoreceptor cells.\n\n## Dosage note\n\nResearch doses range from 20–100mg per day; a generous pinch of Mongra saffron (~30mg) in your daily Kahwa or Kesar Doodh falls within this range. This is not medical advice - consult your healthcare provider for therapeutic applications."
+      "body": "## Mood and mental health\n\nA 2014 meta-analysis in *Human Psychopharmacology* reviewed five randomised controlled trials and found saffron supplementation (30mg/day) significantly more effective than placebo for mild-to-moderate depression. The compound responsible appears to be crocin, which influences serotonin, dopamine, and norepinephrine pathways.\n\n## Antioxidant properties\n\nSaffron contains more than 150 compounds, including crocin, crocetin, and safranal - among the most powerful plant antioxidants identified, able to neutralise reactive oxygen species and reduce lipid peroxidation.\n\n## Vision and eye health\n\nStudies from the University of L'Aquila (Italy) found daily saffron supplementation improved vision in patients with age-related macular degeneration. The crocetin in saffron appears to improve oxygen transport to the retina and protect photoreceptor cells.\n\n## Dosage note\n\nResearch doses range from 20-100mg per day; a generous pinch of Mongra saffron (~30mg) in your daily Kahwa or Kesar Doodh falls within this range. This is not medical advice - consult your healthcare provider for therapeutic applications."
     }
   ],
   "notFound": {
@@ -788,7 +766,7 @@
     "text": "Join our list and receive an exclusive discount code for your first Mongra saffron order.",
     "discountText": "10% off your first order",
     "buttonLabel": "Claim My Discount",
-    "successText": "Thank you! Your discount code is on its way — check your inbox.",
+    "successText": "Thank you! Your discount code is on its way. Check your inbox.",
     "image": "",
     "privacyHref": "privacy-policy.html",
     "formEndpoint": "https://saffronofkashmir.us5.list-manage.com/subscribe/post?u=236b4cb10d93993487bd4853a&id=aace8dda1c&f_id=00e8a9e1f0"
