@@ -283,6 +283,13 @@ details.read-more h3 { font-size: 18px; color: var(--burgundy); margin-top: 18px
 .site-footer li { padding: 4px 0; }
 .footer-bottom { border-top: 1px solid #3A2E22; margin-top: 32px; padding-top: 18px; font-size: 13.5px; color: #9A8C79; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
+/* Social profile icons - colour inherited from .site-footer a, no new values */
+.social-links { display: flex; flex-wrap: wrap; gap: 4px; margin: 12px 0 0; padding: 0; list-style: none; }
+.social-links li { padding: 0; }
+.social-links a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; }
+.social-links a:hover, .social-links a:focus-visible { color: var(--white); text-decoration: none; }
+.social-links svg { width: 22px; height: 22px; fill: currentColor; display: block; }
+
 /* Floating WhatsApp */
 .float-wa {
   position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 54px; height: 54px;

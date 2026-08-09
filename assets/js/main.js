@@ -51,6 +51,17 @@
     gtag('event', 'whatsapp_click', { item: h3 ? h3.textContent.trim() : 'general' });
   });
 
+  // Social profile click tracking
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[data-social]');
+    if (!link) return;
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'social_click', {
+      platform: link.getAttribute('data-social'),
+      page_path: location.pathname
+    });
+  });
+
   // Currency switcher
   (function () {
     var PREF = 'sok_currency';

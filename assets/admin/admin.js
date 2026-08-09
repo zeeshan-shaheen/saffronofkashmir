@@ -12,6 +12,19 @@
   const $ = (sel, el) => (el || document).querySelector(sel);
   const $$ = (sel, el) => Array.from((el || document).querySelectorAll(sel));
 
+  /* Platform names that render a footer icon. Source of truth is SOCIAL_ICONS
+     in assets/admin/templates.js; the literal list is only a fallback for the
+     case where templates.js predates the socialIconNames() export. */
+  const SOCIAL_ICON_NAMES = (typeof SOKTemplates.socialIconNames === 'function')
+    ? SOKTemplates.socialIconNames()
+    : ['instagram', 'facebook', 'tiktok', 'pinterest', 'linkedin'];
+  const SOCIAL_NO_ICON_MSG =
+    'No icon available for this platform; it will appear in structured data but not in the footer.';
+  function socialHasIcon(name) {
+    const n = String(name == null ? '' : name).trim().toLowerCase();
+    return n === '' || SOCIAL_ICON_NAMES.indexOf(n) !== -1;
+  }
+
   const LS_CFG = 'sokadmin.cfg';
   const LS_DRAFT = 'sokadmin.draft';
   const DATA_PATH = 'data/site-data.json';
@@ -270,6 +283,11 @@
       label: (it) => (it.name || 'New testimonial'),
       sub: (it) => '★'.repeat(it.stars || 5),
       make: () => ({ _open: true, stars: 5, quote: '', name: '' })
+    },
+    social: {
+      label: (it) => (it.name || 'New profile'),
+      sub: (it) => (socialHasIcon(it.name) ? (it.url || '') : '⚠ no icon'),
+      make: () => ({ _open: true, name: '', url: '' })
     },
     whycard: { label: (it) => (it.title || 'New card'), sub: () => '', make: () => ({ _open: true, icon: '✨', title: 'New card', text: '' }) },
     step: { label: (it) => (it.title || 'New step'), sub: () => '', make: () => ({ _open: true, title: 'New step', text: '' }) },
@@ -587,7 +605,16 @@
           'Add number', { market: '', number: '' }) +
         '<div class="hint">Shown in the contact strip and footer. Each also becomes a ContactPoint in Google schema.</div></div>' +
         f('Default WhatsApp message', 'brand.defaultWaText', { type: 'textarea', rows: 2 }) +
-        '<div class="grid2">' + f('Email', 'brand.email') + f('Instagram username', 'brand.instagramUser', { hint: 'Without the @.' }) + '</div>') +
+        f('Email', 'brand.email')) +
+      card('🔗', 'Social profiles',
+        listEditor('brand.social', 'social', (p, it) =>
+          '<div class="grid2">' +
+          f('Platform', p + '.name', { placeholder: 'Instagram', hint: 'Instagram, Facebook, TikTok, Pinterest or LinkedIn. The footer icon is chosen from this name.' }) +
+          f('Profile URL', p + '.url', { placeholder: 'https://www.instagram.com/yourhandle/' }) +
+          '</div>' +
+          '<div class="err" data-social-warn="' + p + '.name"' +
+          (socialHasIcon(it.name) ? '' : ' style="display:block;"') + '>⚠ ' + A(SOCIAL_NO_ICON_MSG) + '</div>', 'Add profile') +
+        '<div class="hint">Shown as icons in the footer, and sent to Google as the organisation&rsquo;s sameAs links. A platform with no matching icon is skipped in the footer.</div>') +
       card('📈', 'Analytics',
         '<div class="grid2">' +
         f('Google Analytics ID', 'brand.gaId', { placeholder: 'G-XXXXXXXXXX', hint: 'Leave blank to remove Google Analytics.' }) +
@@ -894,6 +921,11 @@
         th.style.backgroundImage = v ? 'url("' + rawUrl(v).replace(/"/g, '\\"') + '")' : '';
         th.textContent = v ? '' : 'no image';
       }
+    }
+    /* keep the "no footer icon" warning truthful while typing */
+    if (/^brand\.social\.\d+\.name$/.test(el.dataset.path)) {
+      const w = $('[data-social-warn="' + el.dataset.path + '"]');
+      if (w) w.style.display = socialHasIcon(el.value) ? '' : 'block';
     }
     markDirty();
   });

@@ -19,7 +19,13 @@
     ],
     "defaultWaText": "Hi! I'd like to order from Saffron of Kashmir.",
     "email": "info@saffronofkashmir.com",
-    "instagramUser": "saffron_of_kashmir",
+    "social": [
+      { "name": "Instagram", "url": "https://www.instagram.com/saffron_of_kashmir/" },
+      { "name": "Facebook",  "url": "https://www.facebook.com/saffronofkashmiir/" },
+      { "name": "TikTok",    "url": "https://www.tiktok.com/@saffronofkashmir/" },
+      { "name": "Pinterest", "url": "https://www.pinterest.com/saffronofkashmir/" },
+      { "name": "LinkedIn",  "url": "https://www.linkedin.com/company/saffron-of-kashmir/" }
+    ],
     "foundingYear": "2026",
     "orgDescription": "Premium Kashmiri Mongra saffron, harvested in Pampore, Kashmir.",
     "gaId": "G-9569ES4LBP",
