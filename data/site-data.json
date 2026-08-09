@@ -769,11 +769,11 @@
     "text": "The page you're looking for doesn't exist or has moved.",
     "primary": {
       "label": "Back to Home",
-      "href": "index.html"
+      "href": "/index.html"
     },
     "secondary": {
       "label": "View Products",
-      "href": "products.html"
+      "href": "/products.html"
     }
   },
   "overlay": {

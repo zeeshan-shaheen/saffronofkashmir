@@ -836,8 +836,8 @@
       '  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
       '  <title>Page Not Found | ' + esc(b.name) + '</title>\n' +
       '  <meta name="robots" content="noindex">\n' +
-      '  <link rel="icon" type="image/webp" href="' + esc(b.favicon) + '">\n' +
-      '  <link rel="stylesheet" href="assets/css/style.css">\n</head>\n<body>\n' +
+      '  <link rel="icon" type="image/webp" href="' + esc('/' + b.favicon) + '">\n' +
+      '  <link rel="stylesheet" href="/assets/css/style.css">\n</head>\n<body>\n' +
       '<main style="min-height:70vh;display:flex;align-items:center;">\n' +
       '  <div class="container center">\n' +
       '    <h1>' + esc(n.title) + '</h1>\n' +
