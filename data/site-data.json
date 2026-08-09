@@ -102,7 +102,7 @@
     "lead": "Only the crimson stigma tips, independently tested to ISO 3632 Category I, packed at origin in Pampore, stocked and dispatched from Dubai, and delivered anywhere in the UAE within 48 hours.",
     "primaryCta": {
       "label": "Shop Saffron - from AED 65",
-      "href": "products.html"
+      "href": "/products"
     },
     "waCtaLabel": "Order on WhatsApp",
     "points": [
@@ -366,7 +366,7 @@
     "image": "slider2.webp",
     "imageAlt": "Saffron crocus fields in Pampore, Kashmir at dawn",
     "linkLabel": "Read more on our blog →",
-    "linkHref": "blogs.html#pampore-legacy"
+    "linkHref": "/blogs#pampore-legacy"
   },
   "testimonials": {
     "eyebrow": "What Our Customers Say",
@@ -403,7 +403,7 @@
       },
       {
         "q": "How do I know the saffron is genuine?",
-        "a": "Our saffron has been independently tested to ISO 3632 Category I for crocin, picrocrocin, and safranal, the three compounds behind saffron's colour, taste, and aroma, at a NABL-accredited laboratory. We send the lab report on request, and you can check the threads yourself with [three simple at-home tests](products.html#identify)."
+        "a": "Our saffron has been independently tested to ISO 3632 Category I for crocin, picrocrocin, and safranal, the three compounds behind saffron's colour, taste, and aroma, at a NABL-accredited laboratory. We send the lab report on request, and you can check the threads yourself with [three simple at-home tests](/products#identify)."
       },
       {
         "q": "How should I store saffron?",
@@ -411,7 +411,7 @@
       },
       {
         "q": "How much saffron should I use in a dish?",
-        "a": "Use 8-15 threads for most dishes serving 2-4 people. Always bloom them first in warm (not boiling) liquid for 10-20 minutes to draw out the colour and aroma. See [our recipes](recipes.html) for exact amounts per dish."
+        "a": "Use 8-15 threads for most dishes serving 2-4 people. Always bloom them first in warm (not boiling) liquid for 10-20 minutes to draw out the colour and aroma. See [our recipes](/recipes) for exact amounts per dish."
       },
       {
         "q": "Do you deliver outside the UAE?",
@@ -475,7 +475,7 @@
       ],
       "footerLink": {
         "label": "Read the full purity-testing guide on our blog →",
-        "href": "blogs.html#purity-tests"
+        "href": "/blogs#purity-tests"
       }
     },
     "delivery": {
@@ -509,11 +509,11 @@
       "sub": "Whatever you're making, bloom your Mongra saffron threads in warm (not boiling) liquid for 10-20 minutes before adding to your dish. This releases the crocin pigment and safranal aroma, giving maximum colour, flavour, and benefit from every thread.",
       "primary": {
         "label": "Buy Mongra Saffron →",
-        "href": "products.html"
+        "href": "/products"
       },
       "secondary": {
         "label": "Read Our Blog",
-        "href": "blogs.html"
+        "href": "/blogs"
       }
     }
   },
@@ -700,19 +700,19 @@
       "links": [
         {
           "label": "→ Saffron Recipes",
-          "href": "recipes.html"
+          "href": "/recipes"
         },
         {
           "label": "→ View All Products",
-          "href": "products.html"
+          "href": "/products"
         },
         {
           "label": "→ How to Spot Real Saffron",
-          "href": "products.html#identify"
+          "href": "/products#identify"
         },
         {
           "label": "→ FAQ",
-          "href": "index.html#faq"
+          "href": "/#faq"
         }
       ]
     }
@@ -752,7 +752,7 @@
       "dateDisplay": "April 1, 2025",
       "title": "Using Kashmiri Saffron in Arabic Cuisine",
       "excerpt": "Saffron has been part of Arab cuisine for over a thousand years - from celebratory Machboos to saffron-scented Gahwa and the delicate Umm Ali dessert.",
-      "body": "**Machboos (Kabsa):** The Gulf's answer to biryani. Use 8-10 threads of Mongra saffron, bloomed for 20 minutes in 3 tablespoons of warm (not boiling) water, then added with rose water in the final steaming stage. The goal is a subtle golden colour and floral perfume - not an aggressive yellow. [Full Machboos recipe here.](recipes.html)\n\n**Saffron Gahwa:** Traditional Arabic cardamom coffee with a pinch of saffron added to the grounds. Use just 3-4 threads per pot - saffron is a supporting note here, adding warmth and a faint bittersweet edge.\n\n**Saffron Milk (Haleeb Zafaran):** Bloom 8-10 threads in a tablespoon of warm milk, then add to a full warm cup with honey, cardamom, and pistachios - the Arabic equivalent of Kesar Doodh, drunk daily across Emirati households.\n\n**The golden rule:** Always bloom saffron in warm liquid (water, milk, stock - never oil) before adding it to your dish, and never grind Mongra saffron dry - it destroys the delicate aromatic compounds."
+      "body": "**Machboos (Kabsa):** The Gulf's answer to biryani. Use 8-10 threads of Mongra saffron, bloomed for 20 minutes in 3 tablespoons of warm (not boiling) water, then added with rose water in the final steaming stage. The goal is a subtle golden colour and floral perfume - not an aggressive yellow. [Full Machboos recipe here.](/recipes)\n\n**Saffron Gahwa:** Traditional Arabic cardamom coffee with a pinch of saffron added to the grounds. Use just 3-4 threads per pot - saffron is a supporting note here, adding warmth and a faint bittersweet edge.\n\n**Saffron Milk (Haleeb Zafaran):** Bloom 8-10 threads in a tablespoon of warm milk, then add to a full warm cup with honey, cardamom, and pistachios - the Arabic equivalent of Kesar Doodh, drunk daily across Emirati households.\n\n**The golden rule:** Always bloom saffron in warm liquid (water, milk, stock - never oil) before adding it to your dish, and never grind Mongra saffron dry - it destroys the delicate aromatic compounds."
     },
     {
       "id": "health-benefits",
@@ -769,11 +769,11 @@
     "text": "The page you're looking for doesn't exist or has moved.",
     "primary": {
       "label": "Back to Home",
-      "href": "/index.html"
+      "href": "/"
     },
     "secondary": {
       "label": "View Products",
-      "href": "/products.html"
+      "href": "/products"
     }
   },
   "overlay": {
@@ -784,7 +784,7 @@
     "buttonLabel": "Claim My Discount",
     "successText": "Thank you! Your discount code is on its way. Check your inbox.",
     "image": "",
-    "privacyHref": "privacy-policy.html",
+    "privacyHref": "/privacy-policy",
     "formEndpoint": "https://saffronofkashmir.us5.list-manage.com/subscribe/post?u=236b4cb10d93993487bd4853a&id=aace8dda1c&f_id=00e8a9e1f0"
   }
 }

@@ -96,8 +96,28 @@
   function productSlug(p) {
     return slugify(p.baseName) + '-' + slugify(String(p.size).replace(/\s+/g, ''));
   }
-  function productPath(p) { return 'products/' + productSlug(p) + '/'; }      // relative to site root
+  function productPath(p) { return 'products/' + productSlug(p) + '/'; }      // output filename key
+  function productHref(p) { return '/' + productPath(p); }                     // root-relative, trailing slash
   function productUrl(b, p) { return b.siteUrl + '/' + productPath(p); }       // absolute, trailing slash
+
+  // Internal URLs are root-relative and extensionless. Root pages carry no
+  // trailing slash; product detail pages keep theirs.
+  var PAGE_PATHS = {
+    'index.html': '/',
+    'products.html': '/products',
+    'recipes.html': '/recipes',
+    'blogs.html': '/blogs',
+    'privacy-policy.html': '/privacy-policy'
+  };
+  // "products.html#identify" -> "/products#identify";  "index.html#faq" -> "/#faq"
+  function pageUrl(ref) {
+    var s = String(ref == null ? '' : ref), hash = '', i = s.indexOf('#');
+    if (i !== -1) { hash = s.slice(i); s = s.slice(0, i); }
+    if (PAGE_PATHS[s] !== undefined) return PAGE_PATHS[s] + hash;
+    return (s.charAt(0) === '/' ? s : '/' + s) + hash;
+  }
+  // Root-relative path for an asset that lives at the site root.
+  function asset(p) { return '/' + String(p == null ? '' : p).replace(/^\/+/, ''); }
 
   function productView(p) {
     var name = (p.baseName || '') + ' ' + (p.size || '');
@@ -136,9 +156,8 @@
 
   const WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
 
-  function renderOverlayHtml(data, base) {
+  function renderOverlayHtml(data) {
     var ov = data.overlay;
-    base = base || '';
     if (!ov || !ov.enabled || !ov.formEndpoint) return '';
     var uM = ov.formEndpoint.match(/[?&]u=([^&]+)/);
     var idM = ov.formEndpoint.match(/[?&]id=([^&]+)/);
@@ -146,7 +165,7 @@
     return '<div id="sok-overlay" class="sok-overlay" role="dialog" aria-modal="true" aria-labelledby="sok-ov-h">\n' +
       '  <div class="sok-overlay-box">\n' +
       '    <button class="sok-overlay-close" aria-label="Close this popup">×</button>\n' +
-      (ov.image ? '    <img src="' + esc(base + ov.image) + '" alt="" class="sok-overlay-img" loading="lazy">\n' : '') +
+      (ov.image ? '    <img src="' + esc(asset(ov.image)) + '" alt="" class="sok-overlay-img" loading="lazy">\n' : '') +
       '    <h2 id="sok-ov-h" class="sok-overlay-heading">' + esc(ov.heading) + '</h2>\n' +
       '    <p class="sok-overlay-text">' + esc(ov.text) + '</p>\n' +
       (ov.discountText ? '    <p class="sok-overlay-discount">' + esc(ov.discountText) + '</p>\n' : '') +
@@ -155,7 +174,7 @@
       (honeypot ? '      <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="' + esc(honeypot) + '" tabindex="-1" value=""></div>\n' : '') +
       '      <label class="sok-overlay-consent"><input type="checkbox" name="consent" required>\n' +
       '        I agree to receive occasional emails from ' + esc(data.brand.name) + '.\n' +
-      '        See our <a href="' + esc(base + (ov.privacyHref || 'privacy-policy.html')) + '">Privacy&nbsp;Policy</a>.\n' +
+      '        See our <a href="' + esc(pageUrl(ov.privacyHref || 'privacy-policy.html')) + '">Privacy&nbsp;Policy</a>.\n' +
       '      </label>\n' +
       '      <button type="submit" class="btn btn-primary">' + esc(ov.buttonLabel || 'Subscribe') + '</button>\n' +
       '      <p class="sok-overlay-msg" role="status" aria-live="polite"></p>\n' +
@@ -168,8 +187,7 @@
 
   function head(data, page, opts) {
     const b = data.brand, s = page.seo || data.seo[page.seoKey];
-    const base = page.base || '';
-    const url = page.url || (b.siteUrl + '/' + (page.file === 'index.html' ? '' : page.file));
+    const url = page.url || (b.siteUrl + pageUrl(page.file));
     const ogImageUrl = b.siteUrl + '/' + (page.ogImage || b.ogImage);
     let out = '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n' +
       '  <meta charset="UTF-8">\n' +
@@ -190,10 +208,10 @@
       '  <meta name="twitter:title" content="' + esc(s.ogTitle) + '">\n' +
       '  <meta name="twitter:description" content="' + esc(s.ogDescription) + '">\n' +
       '  <meta name="twitter:image" content="' + esc(ogImageUrl) + '">\n\n' +
-      '  <link rel="icon" type="image/webp" href="' + esc(base + b.favicon) + '">\n' +
-      (opts && opts.appleIcon ? '  <link rel="apple-touch-icon" href="' + esc(base + b.favicon) + '">\n' : '') +
-      (opts && opts.preload ? '  <link rel="preload" as="image" href="' + esc(base + opts.preload) + '">\n' : '') +
-      '  <link rel="stylesheet" href="' + esc(base) + 'assets/css/style.css">\n\n';
+      '  <link rel="icon" type="image/webp" href="' + esc(asset(b.favicon)) + '">\n' +
+      (opts && opts.appleIcon ? '  <link rel="apple-touch-icon" href="' + esc(asset(b.favicon)) + '">\n' : '') +
+      (opts && opts.preload ? '  <link rel="preload" as="image" href="' + esc(asset(opts.preload)) + '">\n' : '') +
+      '  <link rel="stylesheet" href="/assets/css/style.css">\n\n';
 
     if (b.gaId) {
       out += '  <script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(b.gaId) + '"></script>\n' +
@@ -232,22 +250,21 @@
       opts + '\n    </select>\n';
   }
 
-  function header(data, current, base) {
+  function header(data, current) {
     const b = data.brand;
-    base = base || '';
     const items = [
       ['index.html', 'Home'], ['products.html', 'Products'], ['recipes.html', 'Recipes'],
       ['blogs.html', 'Blog'], ['index.html#faq', 'FAQ'], ['index.html#contact', 'Contact']
     ];
     const links = items.map(function (it) {
       const cur = it[0] === current ? ' aria-current="page"' : '';
-      return '      <a href="' + base + it[0] + '"' + cur + '>' + it[1] + '</a>';
+      return '      <a href="' + pageUrl(it[0]) + '"' + cur + '>' + it[1] + '</a>';
     }).join('\n');
     return '<body>\n<a class="skip-link" href="#main">Skip to content</a>\n\n' +
       '<header class="site-header">\n' +
       '  <nav class="nav-inner" aria-label="Main navigation">\n' +
-      '    <a href="' + base + 'index.html" class="brand" aria-label="' + esc(b.name) + ' - home">\n' +
-      '      <img src="' + esc(base + b.logo) + '" alt="' + esc(b.name) + ' logo" width="40" height="40">\n' +
+      '    <a href="' + pageUrl('index.html') + '" class="brand" aria-label="' + esc(b.name) + ' - home">\n' +
+      '      <img src="' + esc(asset(b.logo)) + '" alt="' + esc(b.name) + ' logo" width="40" height="40">\n' +
       '      <span>\n' +
       '        <span class="brand-name">' + esc(b.name) + '</span>\n' +
       '        <span class="brand-tag">' + esc(b.tagline) + '</span>\n' +
@@ -260,22 +277,21 @@
       '  </nav>\n</header>\n';
   }
 
-  function footer(data, base) {
+  function footer(data) {
     const b = data.brand, f = data.footer;
-    base = base || '';
     const year = new Date().getFullYear();
     return '<footer class="site-footer">\n' +
       '  <div class="container footer-grid">\n' +
       '    <div>\n' +
-      '      <img src="' + esc(base + b.logo) + '" alt="' + esc(b.name) + ' logo" width="120" height="40" loading="lazy">\n' +
+      '      <img src="' + esc(asset(b.logo)) + '" alt="' + esc(b.name) + ' logo" width="120" height="40" loading="lazy">\n' +
       '      <p>' + esc(f.about) + '</p>\n' +
       '    </div>\n' +
       '    <div>\n      <h3>Navigation</h3>\n      <ul>\n' +
-      '        <li><a href="' + base + 'index.html">Home</a></li>\n' +
-      '        <li><a href="' + base + 'products.html">Products</a></li>\n' +
-      '        <li><a href="' + base + 'recipes.html">Recipes</a></li>\n' +
-      '        <li><a href="' + base + 'blogs.html">Blog</a></li>\n' +
-      '        <li><a href="' + base + 'index.html#faq">FAQ</a></li>\n' +
+      '        <li><a href="' + pageUrl('index.html') + '">Home</a></li>\n' +
+      '        <li><a href="' + pageUrl('products.html') + '">Products</a></li>\n' +
+      '        <li><a href="' + pageUrl('recipes.html') + '">Recipes</a></li>\n' +
+      '        <li><a href="' + pageUrl('blogs.html') + '">Blog</a></li>\n' +
+      '        <li><a href="' + pageUrl('index.html#faq') + '">FAQ</a></li>\n' +
       '      </ul>\n    </div>\n' +
       '    <div>\n      <h3>Order &amp; Contact</h3>\n      <ul>\n' +
       '        <li><a href="tel:' + esc(b.phoneTel) + '">' + esc(b.phoneDisplay) + '</a></li>\n' +
@@ -294,18 +310,17 @@
       '<a class="float-wa" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
       '  ' + WA_SVG + '\n</a>\n' +
       '<button class="back-top" aria-label="Back to top">↑</button>\n\n' +
-      renderOverlayHtml(data, base) +
-      '<script src="' + esc(base) + 'assets/js/main.js" defer></script>\n</body>\n</html>\n';
+      renderOverlayHtml(data) +
+      '<script src="/assets/js/main.js" defer></script>\n</body>\n</html>\n';
   }
 
-  function breadcrumbs(label, base, parent) {
-    base = base || '';
+  function breadcrumbs(label, parent) {
     var mid = parent
-      ? '        <li><a href="' + esc(base + parent.href) + '">' + esc(parent.label) + '</a></li>\n'
+      ? '        <li><a href="' + esc(pageUrl(parent.href)) + '">' + esc(parent.label) + '</a></li>\n'
       : '';
     return '  <div class="container">\n' +
       '    <nav class="breadcrumbs" aria-label="Breadcrumb">\n' +
-      '      <ol>\n        <li><a href="' + base + 'index.html">Home</a></li>\n' +
+      '      <ol>\n        <li><a href="' + pageUrl('index.html') + '">Home</a></li>\n' +
       mid +
       '        <li aria-current="page">' + esc(label) + '</li>\n      </ol>\n' +
       '    </nav>\n  </div>\n';
@@ -316,7 +331,7 @@
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: data.brand.siteUrl + '/' },
-        { '@type': 'ListItem', position: 2, name: name, item: data.brand.siteUrl + '/' + file }
+        { '@type': 'ListItem', position: 2, name: name, item: data.brand.siteUrl + pageUrl(file) }
       ]
     };
   }
@@ -363,7 +378,7 @@
       '        <h1>' + esc(h.title) + '</h1>\n' +
       '        <p class="lead">' + esc(h.lead) + '</p>\n' +
       '        <div class="hero-cta">\n' +
-      '          <a class="btn btn-primary" href="' + esc(h.primaryCta.href) + '">' + esc(ctaLabel) + '</a>\n' +
+      '          <a class="btn btn-primary" href="' + esc(pageUrl(h.primaryCta.href)) + '">' + esc(ctaLabel) + '</a>\n' +
       '          <a class="btn btn-whatsapp" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">\n' +
       '            ' + WA_SVG + '\n            ' + esc(h.waCtaLabel) + '\n          </a>\n' +
       '        </div>\n' +
@@ -371,7 +386,7 @@
       h.points.map(function (p) { return '          <li>' + esc(p) + '</li>'; }).join('\n') + '\n' +
       '        </ul>\n      </div>\n' +
       '      <div class="hero-img">\n' +
-      '        <img src="' + esc(h.image) + '" alt="' + esc(h.imageAlt) + '" width="600" height="600" fetchpriority="high">\n' +
+      '        <img src="' + esc(asset(h.image)) + '" alt="' + esc(h.imageAlt) + '" width="600" height="600" fetchpriority="high">\n' +
       '      </div>\n    </div>\n  </section>\n';
 
     const w = data.whyUs;
@@ -395,10 +410,10 @@
       '      <h2>' + esc(hp.heading) + '</h2>\n' +
       '      <p class="section-sub">' + esc(hp.sub) + '</p>\n      <div class="grid-3">\n' +
       featured.map(function (p) {
-        var phref = productPath(p);
+        var phref = productHref(p);
         return '        <article class="card product-card">\n' +
           '          <div class="p-img">\n' +
-          '            <a href="' + esc(phref) + '"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '" loading="lazy" width="400" height="300"></a>\n' +
+          '            <a href="' + esc(phref) + '"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt) + '" loading="lazy" width="400" height="300"></a>\n' +
           '            <span class="weight-badge">' + esc(p.badge) + '</span>\n' +
           statusBadge(p.status) + '\n          </div>\n' +
           '          <div class="p-body">\n' +
@@ -409,7 +424,7 @@
           '          </div>\n        </article>';
       }).join('\n') +
       '\n      </div>\n' +
-      '      <p class="center" style="margin-top:28px;"><a class="btn btn-outline" href="products.html">' + esc(hp.viewAllLabel) + '</a></p>\n' +
+      '      <p class="center" style="margin-top:28px;"><a class="btn btn-outline" href="' + pageUrl('products.html') + '">' + esc(hp.viewAllLabel) + '</a></p>\n' +
       '    </div>\n  </section>\n';
 
     const hw = data.howItWorks;
@@ -429,12 +444,12 @@
     const story =
       '\n  <!-- Story -->\n  <section>\n    <div class="container hero-grid">\n' +
       '      <div class="hero-img">\n' +
-      '        <img src="' + esc(st.image) + '" alt="' + esc(st.imageAlt) + '" loading="lazy" width="600" height="600">\n' +
+      '        <img src="' + esc(asset(st.image)) + '" alt="' + esc(st.imageAlt) + '" loading="lazy" width="600" height="600">\n' +
       '      </div>\n      <div>\n' +
       '        <span class="eyebrow">' + esc(st.eyebrow) + '</span>\n' +
       '        <h2>' + esc(st.heading) + '</h2>\n' +
       st.paragraphs.map(function (p) { return '        <p>' + esc(p) + '</p>'; }).join('\n') + '\n' +
-      '        <p><a href="' + esc(st.linkHref) + '">' + esc(st.linkLabel) + '</a></p>\n' +
+      '        <p><a href="' + esc(pageUrl(st.linkHref)) + '">' + esc(st.linkLabel) + '</a></p>\n' +
       '      </div>\n    </div>\n  </section>\n';
 
     const t = data.testimonials;
@@ -528,10 +543,10 @@
           }).join('\n') +
           '\n              </dl>\n            </details>\n';
       }
-      var href = productPath(p);
+      var href = productHref(p);
       return '        <article class="card product-card" data-category="' + esc(pv.category) + '">\n' +
         '          <div class="p-img">\n' +
-        '            <a href="' + esc(href) + '"><img src="' + esc(pv.image) + '" alt="' + esc(pv.imageAlt) + '" loading="lazy" width="400" height="300"></a>\n' +
+        '            <a href="' + esc(href) + '"><img src="' + esc(asset(pv.image)) + '" alt="' + esc(pv.imageAlt) + '" loading="lazy" width="400" height="300"></a>\n' +
         '            <span class="weight-badge">' + esc(pv.badge) + '</span>\n' +
         statusBadge(pv.status) + '\n          </div>\n' +
         '          <div class="p-body">\n' +
@@ -570,7 +585,7 @@
           '          <h3>' + esc(s.title) + '</h3>\n          <p>' + esc(s.text) + '</p>\n        </div>';
       }).join('\n') +
       '\n      </div>\n' +
-      '      <p style="margin-top:24px;"><a href="' + esc(idn.footerLink.href) + '">' + esc(idn.footerLink.label) + '</a></p>\n' +
+      '      <p style="margin-top:24px;"><a href="' + esc(pageUrl(idn.footerLink.href)) + '">' + esc(idn.footerLink.label) + '</a></p>\n' +
       '    </div>\n  </section>\n';
 
     const del = pp.delivery;
@@ -609,7 +624,7 @@
           '@type': 'BreadcrumbList',
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: b.siteUrl + '/' },
-            { '@type': 'ListItem', position: 2, name: 'Products', item: b.siteUrl + '/products.html' },
+            { '@type': 'ListItem', position: 2, name: 'Products', item: b.siteUrl + pageUrl('products.html') },
             { '@type': 'ListItem', position: 3, name: pv.schemaName, item: url }
           ]
         },
@@ -633,7 +648,7 @@
 
   function renderProductDetail(data, p) {
     var b = data.brand, pv = productView(p);
-    var base = '../../', url = productUrl(b, p);
+    var url = productUrl(b, p);
     var seo = {
       title: 'Buy ' + pv.schemaName + ' | ' + b.name,
       description: (p.descBody || pv.schemaDesc) + ' From AED ' + pv.price + '. Order on WhatsApp.',
@@ -657,7 +672,7 @@
     var hero =
       '\n  <section style="padding-top:24px;">\n    <div class="container product-detail">\n' +
       '      <div class="pd-media">\n' +
-      '        <img src="' + esc(base + pv.image) + '" alt="' + esc(pv.imageAlt) + '" width="600" height="600" fetchpriority="high">\n' +
+      '        <img src="' + esc(asset(pv.image)) + '" alt="' + esc(pv.imageAlt) + '" width="600" height="600" fetchpriority="high">\n' +
       statusBadge(pv.status) + '\n      </div>\n' +
       '      <div class="pd-info">\n' +
       '        <h1>' + esc(pv.name) + '</h1>\n' +
@@ -665,7 +680,7 @@
       '        ' + productPriceHtml(pv) + '\n' +
       '        ' + orderBtn(b, pv) + '\n' +
       specs +
-      '        <p class="pd-links"><a href="' + base + 'products.html#identify">How to spot real saffron</a> · <a href="' + base + 'recipes.html">Saffron recipes</a></p>\n' +
+      '        <p class="pd-links"><a href="' + pageUrl('products.html#identify') + '">How to spot real saffron</a> · <a href="' + pageUrl('recipes.html') + '">Saffron recipes</a></p>\n' +
       '      </div>\n    </div>\n  </section>\n';
 
     var others = data.products.filter(function (x) { return productSlug(x) !== productSlug(p); });
@@ -674,16 +689,16 @@
       '      <h2>More from ' + esc(b.name) + '</h2>\n      <ul class="related-products">\n' +
       others.map(function (x) {
         var xv = productView(x);
-        return '        <li><a href="' + base + productPath(x) + '">' + esc(xv.name) + ' - AED ' + esc(xv.price) + '</a></li>';
+        return '        <li><a href="' + productHref(x) + '">' + esc(xv.name) + ' - AED ' + esc(xv.price) + '</a></li>';
       }).join('\n') +
-      '\n      </ul>\n      <p><a href="' + base + 'products.html">← Back to all products</a></p>\n' +
+      '\n      </ul>\n      <p><a href="' + pageUrl('products.html') + '">← Back to all products</a></p>\n' +
       '    </div>\n  </section>\n';
 
-    return head(data, { seo: seo, url: url, ogImage: p.image, base: base, jsonLd: productDetailLd(data, p) }, { appleIcon: true }) +
-      header(data, 'products.html', base) +
-      '\n<main id="main">\n' + breadcrumbs(pv.name, base, { label: 'Products', href: 'products.html' }) +
+    return head(data, { seo: seo, url: url, ogImage: p.image, jsonLd: productDetailLd(data, p) }, { appleIcon: true }) +
+      header(data, 'products.html') +
+      '\n<main id="main">\n' + breadcrumbs(pv.name, { label: 'Products', href: 'products.html' }) +
       hero + related + '</main>\n\n' +
-      footer(data, base);
+      footer(data);
   }
 
   /* ---------- recipes.html ---------- */
@@ -712,7 +727,7 @@
     const cards = data.recipes.map(function (r, i) {
       return '        <!-- ' + (i + 1) + '. ' + r.name + ' -->\n' +
         '        <article class="card recipe-card">\n' +
-        '          <div class="p-img"><img src="' + esc(r.image) + '" alt="' + esc(r.imageAlt) + '" loading="lazy" width="400" height="250"></div>\n' +
+        '          <div class="p-img"><img src="' + esc(asset(r.image)) + '" alt="' + esc(r.imageAlt) + '" loading="lazy" width="400" height="250"></div>\n' +
         '          <div class="recipe-body">\n' +
         '            <div class="recipe-meta"><span>⏱ ' + esc(r.timeLabel) + '</span><span>' + esc(r.cuisineLabel) + '</span><span>' + esc(r.servesLabel) + '</span></div>\n' +
         '            <h2 style="font-size:22px;margin:0;">' + esc(r.name) + '</h2>\n' +
@@ -735,9 +750,9 @@
       '      <span class="eyebrow">' + esc(g.eyebrow) + '</span>\n' +
       '      <h2>' + esc(g.heading) + '</h2>\n' +
       '      <p class="section-sub">' + esc(g.sub) + '</p>\n      <p>\n' +
-      '        <a class="btn btn-primary" href="' + esc(g.primary.href) + '">' + esc(g.primary.label) + '</a>\n' +
+      '        <a class="btn btn-primary" href="' + esc(pageUrl(g.primary.href)) + '">' + esc(g.primary.label) + '</a>\n' +
       '        &nbsp;\n' +
-      '        <a class="btn btn-outline" href="' + esc(g.secondary.href) + '">' + esc(g.secondary.label) + '</a>\n' +
+      '        <a class="btn btn-outline" href="' + esc(pageUrl(g.secondary.href)) + '">' + esc(g.secondary.label) + '</a>\n' +
       '      </p>\n    </div>\n  </section>\n';
 
     return head(data, { seoKey: 'recipes', file: 'recipes.html', jsonLd: jsonLd }) +
@@ -770,8 +785,8 @@
             articleSection: catLabel[p.categoryKey] || p.categoryKey,
             author: { '@type': 'Organization', name: b.name },
             publisher: { '@type': 'Organization', name: b.name, logo: { '@type': 'ImageObject', url: b.siteUrl + '/' + b.logo } },
-            mainEntityOfPage: b.siteUrl + '/blogs.html#' + p.id,
-            url: b.siteUrl + '/blogs.html#' + p.id
+            mainEntityOfPage: b.siteUrl + pageUrl('blogs.html#' + p.id),
+            url: b.siteUrl + pageUrl('blogs.html#' + p.id)
           };
         })
       )
@@ -786,7 +801,7 @@
 
     const articles = data.posts.map(function (p) {
       return '          <article class="card blog-card" data-category="' + esc(p.categoryKey) + '" id="' + esc(p.id) + '">\n' +
-        (p.image ? '            <div class="blog-img"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></div>\n' : '') +
+        (p.image ? '            <div class="blog-img"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></div>\n' : '') +
         '            <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
         '            <h2>' + esc(p.title) + '</h2>\n' +
         '            <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
@@ -813,7 +828,7 @@
       '          </div>\n' +
       '          <div class="card">\n' +
       '            <h3>' + esc(sb.alsoHeading) + '</h3>\n            <ul>\n' +
-      sb.links.map(function (l) { return '              <li><a href="' + esc(l.href) + '">' + esc(l.label) + '</a></li>'; }).join('\n') +
+      sb.links.map(function (l) { return '              <li><a href="' + esc(pageUrl(l.href)) + '">' + esc(l.label) + '</a></li>'; }).join('\n') +
       '\n            </ul>\n          </div>\n        </aside>\n';
 
     return head(data, { seoKey: 'blog', file: 'blogs.html', jsonLd: jsonLd }) +
@@ -836,20 +851,20 @@
       '  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
       '  <title>Page Not Found | ' + esc(b.name) + '</title>\n' +
       '  <meta name="robots" content="noindex">\n' +
-      '  <link rel="icon" type="image/webp" href="' + esc('/' + b.favicon) + '">\n' +
+      '  <link rel="icon" type="image/webp" href="' + esc(asset(b.favicon)) + '">\n' +
       '  <link rel="stylesheet" href="/assets/css/style.css">\n</head>\n<body>\n' +
       '<main style="min-height:70vh;display:flex;align-items:center;">\n' +
       '  <div class="container center">\n' +
       '    <h1>' + esc(n.title) + '</h1>\n' +
       '    <p class="section-sub" style="margin:0 auto 24px;">' + esc(n.text) + '</p>\n' +
-      '    <p>\n      <a class="btn btn-primary" href="' + esc(n.primary.href) + '">' + esc(n.primary.label) + '</a>\n' +
-      '      &nbsp;\n      <a class="btn btn-outline" href="' + esc(n.secondary.href) + '">' + esc(n.secondary.label) + '</a>\n' +
+      '    <p>\n      <a class="btn btn-primary" href="' + esc(pageUrl(n.primary.href)) + '">' + esc(n.primary.label) + '</a>\n' +
+      '      &nbsp;\n      <a class="btn btn-outline" href="' + esc(pageUrl(n.secondary.href)) + '">' + esc(n.secondary.label) + '</a>\n' +
       '    </p>\n  </div>\n</main>\n</body>\n</html>\n';
   }
 
   function renderPrivacyPolicy(data) {
     var b = data.brand;
-    var url = b.siteUrl + '/privacy-policy.html';
+    var url = b.siteUrl + pageUrl('privacy-policy.html');
     var year = new Date().getFullYear();
     var jsonLd = ld({ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: url, publisher: { '@type': 'Organization', name: b.name } });
     var gaBlock = b.gaId
@@ -866,8 +881,8 @@
       '  <meta property="og:type" content="website">\n' +
       '  <meta property="og:title" content="Privacy Policy | ' + esc(b.name) + '">\n' +
       '  <meta property="og:url" content="' + esc(url) + '">\n' +
-      '  <link rel="icon" type="image/webp" href="' + esc(b.favicon) + '">\n' +
-      '  <link rel="stylesheet" href="assets/css/style.css">\n' +
+      '  <link rel="icon" type="image/webp" href="' + esc(asset(b.favicon)) + '">\n' +
+      '  <link rel="stylesheet" href="/assets/css/style.css">\n' +
       gaBlock +
       jsonLd + '\n</head>\n' +
       header(data, '') +
@@ -895,7 +910,12 @@
   }
 
   function renderSitemap(data, dateStr) {
-    const d = dateStr || new Date().toISOString().slice(0, 10);
+    // lastmod tracks the content, not the build clock, so a rebuild on any
+    // later day does not churn the sitemap.
+    const published = String((data.meta && data.meta.lastPublished) || '');
+    const d = dateStr || (/^\d{4}-\d{2}-\d{2}/.test(published)
+      ? published.slice(0, 10)
+      : new Date(published || Date.now()).toISOString().slice(0, 10));
     const u = data.brand.siteUrl;
     function url(loc, freq, pri) {
       return '  <url>\n    <loc>' + loc + '</loc>\n    <lastmod>' + d + '</lastmod>\n' +
@@ -903,12 +923,12 @@
     }
     return '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-      url(u + '/', 'weekly', '1.0') + '\n' +
-      url(u + '/products.html', 'weekly', '0.9') + '\n' +
+      url(u + pageUrl('index.html'), 'weekly', '1.0') + '\n' +
+      url(u + pageUrl('products.html'), 'weekly', '0.9') + '\n' +
       data.products.map(function (p) { return url(productUrl(data.brand, p), 'monthly', '0.8'); }).join('\n') + '\n' +
-      url(u + '/recipes.html', 'monthly', '0.8') + '\n' +
-      url(u + '/blogs.html', 'monthly', '0.8') + '\n' +
-      url(u + '/privacy-policy.html', 'yearly', '0.3') + '\n' +
+      url(u + pageUrl('recipes.html'), 'monthly', '0.8') + '\n' +
+      url(u + pageUrl('blogs.html'), 'monthly', '0.8') + '\n' +
+      url(u + pageUrl('privacy-policy.html'), 'yearly', '0.3') + '\n' +
       '</urlset>\n';
   }
 
@@ -918,10 +938,10 @@
     return '# ' + b.name + '\n\n' +
       '> ' + b.orgDescription + '\n\n' +
       '## Pages\n\n' +
-      '- [Home](' + u + '/): Products, ordering information, FAQ, and the brand story.\n' +
-      '- [Products](' + u + '/products.html): Full product catalogue: Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
-      '- [Recipes](' + u + '/recipes.html): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.\n' +
-      '- [Blog](' + u + '/blogs.html): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
+      '- [Home](' + u + pageUrl('index.html') + '): Products, ordering information, FAQ, and the brand story.\n' +
+      '- [Products](' + u + pageUrl('products.html') + '): Full product catalogue: Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
+      '- [Recipes](' + u + pageUrl('recipes.html') + '): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.\n' +
+      '- [Blog](' + u + pageUrl('blogs.html') + '): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
   }
 
   /* ---------- public API ---------- */
