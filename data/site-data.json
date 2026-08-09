@@ -24,7 +24,9 @@
       { "name": "Facebook",  "url": "https://www.facebook.com/saffronofkashmiir/" },
       { "name": "TikTok",    "url": "https://www.tiktok.com/@saffronofkashmir/" },
       { "name": "Pinterest", "url": "https://www.pinterest.com/saffronofkashmir/" },
-      { "name": "LinkedIn",  "url": "https://www.linkedin.com/company/saffron-of-kashmir/" }
+      { "name": "LinkedIn",  "url": "https://www.linkedin.com/company/saffron-of-kashmir/" },
+      { "name": "YouTube",   "url": "https://www.youtube.com/@Saffronofkashmir" },
+      { "name": "Threads",   "url": "https://www.threads.net/@saffron_of_kashmir" }
     ],
     "foundingYear": "2026",
     "orgDescription": "Premium Kashmiri Mongra saffron, harvested in Pampore, Kashmir.",
