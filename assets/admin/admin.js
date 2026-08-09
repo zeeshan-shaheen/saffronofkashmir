@@ -25,6 +25,17 @@
     return n === '' || SOCIAL_ICON_NAMES.indexOf(n) !== -1;
   }
 
+  /* Publish route. 'atomic' = one commit via the Git Data API (default).
+     'contents' = the original one-PUT-per-file path, kept as a fallback. */
+  const LS_PUBMODE = 'sokadmin.publishMode';
+  function publishMode() {
+    try { return localStorage.getItem(LS_PUBMODE) === 'contents' ? 'contents' : 'atomic'; }
+    catch (e) { return 'atomic'; }
+  }
+  function setPublishMode(m) {
+    try { localStorage.setItem(LS_PUBMODE, m === 'contents' ? 'contents' : 'atomic'); } catch (e) { /* ignore */ }
+  }
+
   const LS_CFG = 'sokadmin.cfg';
   const LS_DRAFT = 'sokadmin.draft';
   const DATA_PATH = 'data/site-data.json';
@@ -146,6 +157,41 @@
       }
       throw e;
     }
+  }
+
+  /* ---------- Git Data API (atomic publish) ----------
+     The Contents API writes one commit per file. These endpoints build a
+     single commit off-line and only then move the branch, so a failure at
+     any point before the ref update leaves the branch untouched. */
+
+  function gitPath(sub) { return '/repos/' + S.cfg.owner + '/' + S.cfg.repo + '/git/' + sub; }
+  function refSuffix() {
+    /* keep slashes in branch names like feature/x, encode each segment */
+    return 'heads/' + String(S.cfg.branch).split('/').map(encodeURIComponent).join('/');
+  }
+  function ghJson(path, method, body) {
+    return gh(path, { method: method, body: JSON.stringify(body) });
+  }
+
+  function apiGetRef() { return gh(gitPath('ref/' + refSuffix())); }
+  function apiGetCommit(sha) { return gh(gitPath('commits/' + sha)); }
+  function apiGetTree(sha) { return gh(gitPath('trees/' + sha + '?recursive=1')); }
+  function apiCreateBlob(b64) { return ghJson(gitPath('blobs'), 'POST', { content: b64, encoding: 'base64' }); }
+  function apiCreateTree(baseTree, entries) { return ghJson(gitPath('trees'), 'POST', { base_tree: baseTree, tree: entries }); }
+  function apiCreateCommit(message, tree, parent) { return ghJson(gitPath('commits'), 'POST', { message: message, tree: tree, parents: [parent] }); }
+  function apiUpdateRef(sha) { return ghJson(gitPath('refs/' + refSuffix()), 'PATCH', { sha: sha, force: false }); }
+
+  /* git blob id = sha1("blob <bytelen>\0" + bytes). Lets us skip unchanged
+     files by comparing against the base tree without downloading every file. */
+  async function gitBlobSha(text) {
+    const subtle = (typeof crypto !== 'undefined') && crypto.subtle && crypto.subtle.digest;
+    if (!subtle) return null;                       // caller then uploads everything
+    const bytes = new TextEncoder().encode(text);
+    const head = new TextEncoder().encode('blob ' + bytes.length + '\0');
+    const buf = new Uint8Array(head.length + bytes.length);
+    buf.set(head, 0); buf.set(bytes, head.length);
+    const digest = await crypto.subtle.digest('SHA-1', buf);
+    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
   async function deleteFile(path, sha, message) {
@@ -718,6 +764,15 @@
             '<button class="btn btn-outline btn-sm" data-action="backup" type="button">⬇ Download content backup</button>' +
             '<button class="btn btn-danger btn-sm" data-action="disconnect" type="button">Disconnect</button>' +
             '</div>') +
+      card('📤', 'Publish method',
+        '<div class="f"><label for="pubmode">How changes are committed</label>' +
+        '<select id="pubmode" data-action="set-pubmode">' +
+        '<option value="atomic"' + (publishMode() === 'atomic' ? ' selected' : '') + '>Single commit (recommended)</option>' +
+        '<option value="contents"' + (publishMode() === 'contents' ? ' selected' : '') + '>One commit per file (legacy)</option>' +
+        '</select></div>' +
+        '<div class="hint">Single commit builds everything first and only then moves the branch, so a failure ' +
+        'part-way through leaves the live site completely untouched. The legacy route writes each file ' +
+        'separately and can leave the site half-updated if it fails; use it only if the new route misbehaves.</div>') +
       card('🛡️', 'Security notes',
         '<ul style="margin:6px 0 0 18px;padding:0;font-size:14px;line-height:1.7;color:#4d4136;">' +
         '<li>Your token is saved only in this browser (localStorage), never sent anywhere except api.github.com.</li>' +
@@ -932,6 +987,11 @@
 
   document.addEventListener('change', e => {        // tidy line-lists on blur
     const el = e.target;
+    if (el && el.dataset && el.dataset.action === 'set-pubmode') {
+      setPublishMode(el.value);
+      toast(el.value === 'atomic' ? 'Publishing as a single commit.' : 'Publishing one commit per file (legacy).');
+      return;
+    }
     if (!el.dataset || !el.dataset.path || S.data == null) return;
     if (el.dataset.coerce === 'lines') {
       const arr = el.value.split('\n').map(s => s.trim()).filter(Boolean);
@@ -1156,6 +1216,23 @@
     if (r) { r.textContent = txt; r.className = 'st ' + (cls || ''); }
   }
 
+  /* stage list for the atomic route: one commit, so per-file rows would lie */
+  const PUB_STAGES = [
+    ['read', 'Reading current state'],
+    ['blobs', 'Uploading files'],
+    ['commit', 'Creating commit'],
+    ['ref', 'Updating branch']
+  ];
+  function pubStagesHtml() {
+    return PUB_STAGES.map(s =>
+      '<div class="pub-row" data-stage="' + s[0] + '"><span>' + s[1] + '</span><span class="st">waiting</span></div>'
+    ).join('');
+  }
+  function setStage(key, txt, cls) {
+    const r = $('.pub-row[data-stage="' + key + '"] .st');
+    if (r) { r.textContent = txt; r.className = 'st ' + (cls || ''); }
+  }
+
   let publishing = false;
 
   function openPublish() {
@@ -1163,11 +1240,102 @@
     const err = validate();
     if (err) { toast(err, 6000); return; }
     const files = SOKTemplates.renderAll(S.data);
-    $('#pub-rows').innerHTML = pubRowsHtml(Object.assign({}, files, { [DATA_PATH]: 1 }));
+    $('#pub-rows').innerHTML = publishMode() === 'atomic'
+      ? pubStagesHtml()
+      : pubRowsHtml(Object.assign({}, files, { [DATA_PATH]: 1 }));
     $('#pub-note').style.display = 'none';
     $('#pub-go').disabled = false;
     $('#pub-go').textContent = 'Publish now';
     $('#pub-overlay').classList.add('open');
+  }
+
+  /* Atomic route. Steps a-e touch nothing the branch can see; only step f
+     moves it. Any failure before f returns early, so the branch is never
+     left half-updated. Returns { ok, written, note } or { ok:false, ... }. */
+  async function publishAtomic(files) {
+    const paths = Object.keys(files);
+
+    /* (a) ref -> base commit, (b) base commit -> base tree, plus the tree
+       listing used to skip unchanged files */
+    setStage('read', 'working…', 'run');
+    let headSha, baseTreeSha, baseBlobs = null;
+    try {
+      const ref = await apiGetRef();                     // a
+      headSha = ref.object.sha;
+      const commit = await apiGetCommit(headSha);        // b
+      baseTreeSha = commit.tree.sha;
+      const tree = await apiGetTree(baseTreeSha);
+      if (!tree.truncated) {
+        baseBlobs = {};
+        (tree.tree || []).forEach(e => { if (e.type === 'blob') baseBlobs[e.path] = e.sha; });
+      }
+    } catch (err) {
+      setStage('read', 'failed', 'err');
+      return { ok: false, stage: 'Reading current state', err: err };
+    }
+    setStage('read', 'done', 'ok');
+
+    /* work out which files actually differ from the base tree */
+    let changed;
+    if (baseBlobs) {
+      const keep = [];
+      let canHash = true;
+      for (const p of paths) {
+        const sha = await gitBlobSha(files[p]);
+        if (sha === null) { canHash = false; break; }   // no SubtleCrypto: send everything
+        if (baseBlobs[p] !== sha) keep.push(p);
+      }
+      changed = canHash ? keep : paths;
+    } else {
+      changed = paths;                                  // tree truncated: cannot diff safely
+    }
+
+    if (!changed.length) {
+      setStage('blobs', 'nothing changed', 'skip');
+      setStage('commit', 'skipped', 'skip');
+      setStage('ref', 'skipped', 'skip');
+      return { ok: true, written: 0, noop: true };
+    }
+
+    /* (c) one blob per changed file */
+    const entries = [];
+    for (let i = 0; i < changed.length; i++) {
+      setStage('blobs', 'uploading ' + (i + 1) + ' of ' + changed.length + '…', 'run');
+      try {
+        const blob = await apiCreateBlob(b64encode(files[changed[i]]));   // c
+        entries.push({ path: changed[i], mode: '100644', type: 'blob', sha: blob.sha });
+      } catch (err) {
+        setStage('blobs', 'failed', 'err');
+        return { ok: false, stage: 'Uploading files', err: err };
+      }
+    }
+    setStage('blobs', changed.length + ' of ' + changed.length + ' uploaded', 'ok');
+
+    /* (d) tree + (e) commit */
+    setStage('commit', 'working…', 'run');
+    let newCommit;
+    try {
+      const tree = await apiCreateTree(baseTreeSha, entries);             // d
+      newCommit = await apiCreateCommit(
+        'Update site content via admin (' + changed.length + ' file' + (changed.length === 1 ? '' : 's') + ')',
+        tree.sha, headSha);                                              // e
+    } catch (err) {
+      setStage('commit', 'failed', 'err');
+      return { ok: false, stage: 'Creating commit', err: err };
+    }
+    setStage('commit', 'done', 'ok');
+
+    /* (f) the only step that mutates the branch */
+    setStage('ref', 'working…', 'run');
+    try {
+      await apiUpdateRef(newCommit.sha);                                 // f
+    } catch (err) {
+      setStage('ref', 'failed', 'err');
+      const moved = err.status === 422 || err.status === 409;
+      return { ok: false, stage: 'Updating branch', err: err, moved: moved };
+    }
+    setStage('ref', 'done', 'ok');
+    return { ok: true, written: changed.length, commit: newCommit.sha };
   }
 
   async function runPublish() {
@@ -1182,6 +1350,38 @@
 
     const files = SOKTemplates.renderAll(S.data);
     files[DATA_PATH] = cleanJson(S.data, 2) + '\n';
+
+    if (publishMode() === 'atomic') {
+      const res = await publishAtomic(files);
+      const note = $('#pub-note');
+      note.style.display = 'block';
+      if (res.ok) {
+        S.baseline = cleanJson(S.data);
+        clearDraft();
+        updateStatus();
+        note.innerHTML = res.noop
+          ? 'Everything was already up to date — nothing to publish.'
+          : '<strong>Done!</strong> ' + res.written + ' file(s) committed as one commit ' +
+            '<code>' + A(String(res.commit).slice(0, 7)) + '</code>. GitHub Pages is now redeploying ' +
+            '(usually under a minute). If the live site still shows old content, your Cloudflare cache ' +
+            'may need a few minutes — or purge it in the Cloudflare dashboard (Caching → Purge Everything).';
+      } else if (res.moved) {
+        note.innerHTML = '<strong style="color:var(--danger);">Nothing was published.</strong> ' +
+          'The <em>' + A(S.cfg.branch) + '</em> branch moved while this publish was being prepared, ' +
+          'so the update was refused rather than overwriting someone else&rsquo;s commit. ' +
+          'Go to Settings → Reload from GitHub, re-apply your edits, then publish again.';
+      } else {
+        note.innerHTML = '<strong style="color:var(--danger);">Nothing was published.</strong> ' +
+          'Failed at: <em>' + A(res.stage) + '</em> — ' + A(res.err && res.err.message ? res.err.message : 'unknown error') + '. ' +
+          'The live site is unchanged. Check that your token has <em>Contents: Read &amp; write</em> ' +
+          'for this repository, then press Publish again.';
+      }
+      $('#pub-go').disabled = false;
+      $('#pub-go').textContent = 'Publish again';
+      $('#pub-cancel').disabled = false;
+      publishing = false;
+      return;
+    }
 
     let failed = 0, written = 0;
     for (const path of Object.keys(files)) {
