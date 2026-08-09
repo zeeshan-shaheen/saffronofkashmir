@@ -1,5 +1,6 @@
 .claude/
 _archive/
+evidence/
 .url-baseline.json
 *.log
 .DS_Store

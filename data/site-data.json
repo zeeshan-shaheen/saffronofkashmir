@@ -5,7 +5,7 @@
   },
   "brand": {
     "name": "Saffron of Kashmir",
-    "tagline": "Pampore · Est. 2004",
+    "tagline": "Pampore, Kashmir",
     "siteUrl": "https://saffronofkashmir.com",
     "logo": "logo-1.webp",
     "favicon": "logoback-1.webp",
@@ -20,8 +20,8 @@
     "defaultWaText": "Hi! I'd like to order from Saffron of Kashmir.",
     "email": "info@saffronofkashmir.com",
     "instagramUser": "saffron_of_kashmir",
-    "foundingYear": "2004",
-    "orgDescription": "Premium Kashmiri Mongra saffron harvested in Pampore, Kashmir. Supplying worldwide since 2004.",
+    "foundingYear": "2026",
+    "orgDescription": "Premium Kashmiri Mongra saffron, harvested in Pampore, Kashmir.",
     "gaId": "G-9569ES4LBP",
     "fbPixelId": "1140202034977517",
     "baseCurrency": "AED",
@@ -73,15 +73,15 @@
   "seo": {
     "home": {
       "title": "Saffron of Kashmir | Buy Pure Mongra Saffron from Pampore - UAE Delivery",
-      "description": "Buy authentic Kashmiri Mongra saffron direct from Pampore. ISO 3632 Grade A, lab-tested. Est. 2004. Order on WhatsApp - 48hr UAE delivery, from AED 65.",
+      "description": "Buy authentic Kashmiri Mongra saffron direct from Pampore. ISO 3632 Category I, NABL-accredited lab report. Order on WhatsApp - 48hr UAE delivery, from AED 65.",
       "ogTitle": "Saffron of Kashmir | Pure Mongra Saffron from Pampore",
-      "ogDescription": "Authentic Kashmiri Mongra saffron since 2004. ISO 3632 Grade A. 48hr UAE delivery via WhatsApp."
+      "ogDescription": "Authentic Kashmiri Mongra saffron. ISO 3632 Category I. 48hr UAE delivery via WhatsApp."
     },
     "products": {
       "title": "Products - Pure Mongra Saffron, Honey, Oil & Kahwa | Saffron of Kashmir",
-      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Grade A. 48hr UAE delivery.",
+      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Category I. 48hr UAE delivery.",
       "ogTitle": "Products - Pure Mongra Saffron | Saffron of Kashmir",
-      "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Grade A. UAE delivery in 48 hours."
+      "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Category I. UAE delivery in 48 hours."
     },
     "recipes": {
       "title": "Saffron Recipes - Kahwa, Zafrani Pulao, Machboos & More | Saffron of Kashmir",
@@ -97,16 +97,16 @@
     }
   },
   "hero": {
-    "eyebrow": "Established 2004 · Pampore, Kashmir",
+    "eyebrow": "Pampore, Kashmir · Three generations of saffron farming",
     "title": "Pure Mongra Saffron, Direct from Pampore to Your Door",
-    "lead": "Only the crimson stigma tips, lab-tested to ISO 3632 Grade A, packed at origin, and delivered anywhere in the UAE within 48 hours.",
+    "lead": "Only the crimson stigma tips, independently tested to ISO 3632 Category I, packed at origin in Pampore, stocked and dispatched from Dubai, and delivered anywhere in the UAE within 48 hours.",
     "primaryCta": {
       "label": "Shop Saffron - from AED 65",
       "href": "products.html"
     },
     "waCtaLabel": "Order on WhatsApp",
     "points": [
-      "ISO 3632 Grade A",
+      "ISO 3632 Category I",
       "48hr UAE delivery",
       "Free delivery over AED 120",
       "No minimum order"
@@ -126,12 +126,12 @@
       {
         "icon": "⛰️",
         "title": "Direct from Pampore",
-        "text": "No middlemen. We source directly from partner farming families in Pampore, J&K, harvested and packed within 48 hours."
+        "text": "No middlemen. The saffron comes from our own family's fields in Pampore, J&K, harvested and packed within 48 hours."
       },
       {
         "icon": "🔬",
-        "title": "Lab-Tested Purity",
-        "text": "Every batch tested for crocin, picrocrocin, and safranal per ISO 3632 Grade A. Certificate available on request."
+        "title": "Independently Tested Purity",
+        "text": "Independently tested to ISO 3632 by the India International Kashmir Saffron Trading Centre (IIKSTC), Pampore - NABL TC-9209. Report available on request."
       },
       {
         "icon": "🇦🇪",
@@ -165,10 +165,10 @@
       "unitLabel": "/ tin",
       "price": 65,
       "altContext": "saffron tin from Pampore, Kashmir",
-      "descBody": "Pure Kashmiri Mongra saffron. Crimson stigma tips only. ISO 3632 Grade A.",
+      "descBody": "Pure Kashmiri Mongra saffron. Crimson stigma tips only. ISO 3632 Category I.",
       "image": "2gm-1.webp",
       "homeDesc": "Perfect introduction to genuine Mongra grade. 15-20 servings of tea or rice.",
-      "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Grade A. 15-20 servings.",
+      "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Category I. 15-20 servings.",
       "category": "saffron",
       "featured": true,
       "status": "available",
@@ -176,7 +176,7 @@
       "specs": [
         {
           "label": "Grade",
-          "value": "ISO 3632 Grade A (Mongra) - red stigma tips only"
+          "value": "ISO 3632 Category I (Mongra) - red stigma tips only"
         },
         {
           "label": "Origin",
@@ -184,7 +184,7 @@
         },
         {
           "label": "Colour",
-          "value": ">250 USP units (Grade A minimum: 190)"
+          "value": "Crocin 203.48 (ISO 3632 Category I minimum: 200)"
         },
         {
           "label": "Storage",
@@ -192,7 +192,7 @@
         },
         {
           "label": "Certified",
-          "value": "FSSAI | ISO 3632 Grade A | Lab report on request"
+          "value": "FSSAI registered | ISO 3632 Category I | Lab report on request"
         }
       ],
       "compare": {
@@ -208,7 +208,7 @@
       "unitLabel": "/ tin",
       "price": 160,
       "altContext": "Mongra saffron collector's tin",
-      "descBody": "Pure Kashmiri Mongra saffron. ISO 3632 Grade A.",
+      "descBody": "Pure Kashmiri Mongra saffron. ISO 3632 Category I.",
       "valueBlurb": "best value for home chefs",
       "image": "5gm-1.webp",
       "homeDesc": "For the serious saffron lover. 80-100 servings. Gift-worthy collector's edition tin.",
@@ -220,7 +220,7 @@
       "specs": [
         {
           "label": "Grade",
-          "value": "ISO 3632 Grade A - Mongra (stigma tips only)"
+          "value": "ISO 3632 Category I - Mongra (stigma tips only)"
         },
         {
           "label": "Origin",
@@ -248,7 +248,7 @@
       "unitLabel": "/ tin",
       "price": 300,
       "altContext": "Mongra saffron collector's tin",
-      "descBody": "Pure Kashmiri Mongra saffron. Best per-gram value. ISO 3632 Grade A.",
+      "descBody": "Pure Kashmiri Mongra saffron. Best per-gram value. ISO 3632 Category I.",
       "valueBlurb": "our best per-gram price",
       "image": "10gm-1.webp",
       "homeDesc": "Our largest tin. Best value for restaurants, gifting, or the dedicated home chef.",
@@ -260,7 +260,7 @@
       "specs": [
         {
           "label": "Grade",
-          "value": "ISO 3632 Grade A - Mongra (stigma tips only)"
+          "value": "ISO 3632 Category I - Mongra (stigma tips only)"
         },
         {
           "label": "Origin",
@@ -272,7 +272,7 @@
         },
         {
           "label": "Delivery",
-          "value": "Same-day dispatch, 48hr UAE delivery"
+          "value": "48hr UAE delivery"
         }
       ],
       "compare": {
@@ -348,7 +348,7 @@
       },
       {
         "title": "We confirm your order",
-        "text": "We confirm availability, total price, and payment details on WhatsApp, then dispatch the same day."
+        "text": "We confirm availability, total price, and payment details on WhatsApp, then dispatch your order."
       },
       {
         "title": "Delivered within 48 hours",
@@ -361,7 +361,7 @@
     "heading": "The Story of Mongra",
     "paragraphs": [
       "Deep in the Karewa plateau of Pampore - just south of Srinagar - the saffron crocus has bloomed every October for over 700 years. Pampore produces 90% of India's saffron, and its terroir is irreplaceable: clay-rich, well-drained soil, sharp autumn nights, and dawn mists from Dal Lake.",
-      "Mongra is the highest grade of Kashmiri saffron - only the deep-red stigma tips, separated by hand from the yellow style. Just 3 stigmas per flower; roughly 150,000 flowers for one kilogram. We have sourced Mongra grade exclusively since 2004, working directly with farming families who have tended these fields for generations."
+      "Our family has farmed saffron in Pampore for three generations. We source Mongra grade exclusively - only the deep-red stigma tips, separated by hand from the yellow style."
     ],
     "image": "slider2.webp",
     "imageAlt": "Saffron crocus fields in Pampore, Kashmir at dawn",
@@ -395,7 +395,7 @@
     "items": [
       {
         "q": "How fast is delivery in the UAE?",
-        "a": "Delivery anywhere in the UAE takes up to 48 hours. We dispatch your order the same day you confirm it on WhatsApp, and delivery is free on orders over AED 120. There is no minimum order."
+        "a": "Delivery anywhere in the UAE takes up to 48 hours. We dispatch your order after you confirm it on WhatsApp, and delivery is free on orders over AED 120. There is no minimum order."
       },
       {
         "q": "How do I place an order?",
@@ -403,7 +403,7 @@
       },
       {
         "q": "How do I know the saffron is genuine?",
-        "a": "Every batch is lab-tested to ISO 3632 Grade A for crocin, picrocrocin, and safranal, the three compounds behind saffron's colour, taste, and aroma. We send the lab certificate on request, and you can check the threads yourself with [three simple at-home tests](products.html#identify)."
+        "a": "Our saffron has been independently tested to ISO 3632 Category I for crocin, picrocrocin, and safranal, the three compounds behind saffron's colour, taste, and aroma, at a NABL-accredited laboratory. We send the lab report on request, and you can check the threads yourself with [three simple at-home tests](products.html#identify)."
       },
       {
         "q": "How should I store saffron?",
@@ -419,11 +419,11 @@
       },
       {
         "q": "Where does your saffron come from?",
-        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district, which produces around 90% of India's saffron. We have worked directly with Pampore farming families since 2004, buying only the deep-red stigma tips."
+        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district, which produces around 90% of India's saffron. We work directly with Pampore farming families, buying only the deep-red stigma tips. The saffron comes from our own family's farming in Pampore."
       },
       {
         "q": "How much does Kashmiri Mongra saffron cost?",
-        "a": "Our Mongra saffron starts at AED 65 for a 2g tin, AED 160 for 5g, and AED 300 for 10g. Every tin is the same ISO 3632 Grade A saffron; the larger tins give the best price per gram. Prices show in your local currency on the site."
+        "a": "Our Mongra saffron starts at AED 65 for a 2g tin, AED 160 for 5g, and AED 300 for 10g. Every tin is the same ISO 3632 Category I saffron; the larger tins give the best price per gram. Prices show in your local currency on the site."
       }
     ]
   },
@@ -433,13 +433,13 @@
     "originLine": "Pampore, Jammu & Kashmir, India · Serving everywhere in the Middle East"
   },
   "footer": {
-    "about": "Established 2004 in Pampore, Kashmir. Supplying the Middle East's finest households and restaurants with certified Mongra grade saffron.",
+    "about": "Kashmiri Mongra saffron from Pampore, tested to ISO 3632 Category I. FSSAI registered.",
     "locationLine": "Pampore, J&K, India",
-    "bottomRight": "Premium Kashmiri Mongra Saffron - ISO 3632 Grade A"
+    "bottomRight": "Premium Kashmiri Mongra Saffron - ISO 3632 Category I"
   },
   "productsPage": {
     "h1": "Buy Kashmiri Mongra Saffron, UAE Delivery",
-    "sub": "Every product starts with the same ingredient: pure Mongra grade saffron from Pampore. Order on WhatsApp - same-day dispatch, 48hr UAE delivery, free over AED 120.",
+    "sub": "Every product starts with the same ingredient: pure Mongra grade saffron from Pampore. Order on WhatsApp - 48hr UAE delivery, free over AED 120.",
     "filters": [
       {
         "key": "saffron",
@@ -485,7 +485,7 @@
         {
           "icon": "🚚",
           "title": "Delivery",
-          "text": "Same-day dispatch. Delivered anywhere in the UAE within 48 hours. Free delivery on orders over AED 120."
+          "text": "Delivered anywhere in the UAE within 48 hours. Free delivery on orders over AED 120."
         },
         {
           "icon": "💬",
@@ -691,7 +691,7 @@
     ],
     "sidebar": {
       "orderHeading": "Order Mongra Saffron",
-      "orderText": "Pure Kashmiri Mongra grade. ISO 3632 Grade A. 48hr UAE delivery.",
+      "orderText": "Pure Kashmiri Mongra grade. ISO 3632 Category I. 48hr UAE delivery.",
       "priceAmount": 65,
       "priceUnit": "/ 1g tin",
       "waLabel": "Order on WhatsApp",
@@ -725,7 +725,7 @@
       "dateDisplay": "January 15, 2025",
       "title": "What is Mongra Grade Saffron and Why It Matters",
       "excerpt": "Walk into any spice market from Dubai to Delhi and you'll find saffron priced from AED 10 to AED 300 per gram. The reason lies in a single word: grade.",
-      "body": "Kashmiri saffron is classified into three grades based on which part of the crocus stigma is used. Mongra - the highest - consists entirely of the deep-red stigma tips, separated from the yellow style. Below that is Lachha, which includes the red part plus some yellow style, and Zarda or Gucchi, which includes the entire stigma with the full yellow portion. Each step down in grade means less crocin (the colourant), less picrocrocin (the bitter principle), and less safranal (the aroma compound).\n\nMongra saffron gives 20-30% more colour per gram than Lachha grade. In a Zafrani Pulao or a pot of Kahwa, the difference is immediately visible - a rich golden hue versus a pale yellow tint. In aroma, Mongra releases a deep, honeyed scent that lingers long after cooking; lower grades often smell grassy or of almost nothing at all.\n\nThe labour involved is extreme. Each saffron crocus produces just 3 stigmas. After hand-harvesting the flowers at dawn - the only time they're open - workers separate the three red filaments from the yellow style by hand, one flower at a time. One kilogram of Mongra requires roughly 150,000 flowers and over 100 hours of skilled hand work.\n\nWhen you buy Mongra grade, you're buying the most concentrated, potent form of one of the world's most ancient spices. At Saffron of Kashmir, we source exclusively Mongra grade, tested and certified to ISO 3632 Grade A standards."
+      "body": "Kashmiri saffron is classified into three grades based on which part of the crocus stigma is used. Mongra - the highest - consists entirely of the deep-red stigma tips, separated from the yellow style. Below that is Lachha, which includes the red part plus some yellow style, and Zarda or Gucchi, which includes the entire stigma with the full yellow portion. Each step down in grade means less crocin (the colourant), less picrocrocin (the bitter principle), and less safranal (the aroma compound).\n\nMongra saffron gives 20-30% more colour per gram than Lachha grade. In a Zafrani Pulao or a pot of Kahwa, the difference is immediately visible - a rich golden hue versus a pale yellow tint. In aroma, Mongra releases a deep, honeyed scent that lingers long after cooking; lower grades often smell grassy or of almost nothing at all.\n\nThe labour involved is extreme. Each saffron crocus produces just 3 stigmas. After hand-harvesting the flowers at dawn - the only time they're open - workers separate the three red filaments from the yellow style by hand, one flower at a time. One kilogram of Mongra requires roughly 150,000 flowers and over 100 hours of skilled hand work.\n\nWhen you buy Mongra grade, you're buying the most concentrated, potent form of one of the world's most ancient spices. At Saffron of Kashmir, we source exclusively Mongra grade, tested to ISO 3632 Category I."
     },
     {
       "id": "pampore-legacy",
@@ -734,7 +734,7 @@
       "dateDisplay": "February 10, 2025",
       "title": "The Saffron Fields of Pampore: A 700-Year Legacy",
       "excerpt": "Twenty kilometres south of Srinagar lies Pampore - the \"Saffron Town of India\" - whose Karewa plateau produces 90% of India's saffron and some of the finest on earth.",
-      "body": "Saffron cultivation in Kashmir stretches back to at least the 14th century, when Persian traders are believed to have introduced the crocus to the Valley. The Mughal emperors were among the most ardent patrons of Kashmiri saffron - Akbar reportedly ordered saffron planted in royal gardens across the subcontinent, but only the Pampore variety produced the quality he sought. The reason is the soil: the Karewa formation is a rare geological deposit of glacial silt, mineral-rich, with perfect drainage for the moisture-sensitive crocus.\n\nThe harvest happens in a dramatic 15-to-20-day window in October and November, when the purple flowers emerge almost overnight. Entire farming families move into the fields before dawn, picking flowers by hand before the sun opens them fully. Delay even an hour, and the petals wilt and the stigmas lose potency - one of the most time-pressured harvests in the world.\n\nBy the early 2000s, the industry was in crisis: declining groundwater, erratic snowfall, and competition from cheaper Iranian saffron pushed many farmers to abandon the crop. The area under cultivation fell from 5,700 hectares in the 1990s to under 2,500 by 2010.\n\nSaffron of Kashmir was founded in 2004 precisely to address this - establishing direct partnerships with Pampore farming families at fair prices, giving them the economic incentive to keep growing what the Mughals prized above all spices. Every tin of our saffron represents a direct line from these ancient fields to your kitchen."
+      "body": "Saffron cultivation in Kashmir stretches back to at least the 14th century, when Persian traders are believed to have introduced the crocus to the Valley. The Mughal emperors were among the most ardent patrons of Kashmiri saffron - Akbar reportedly ordered saffron planted in royal gardens across the subcontinent, but only the Pampore variety produced the quality he sought. The reason is the soil: the Karewa formation is a rare geological deposit of glacial silt, mineral-rich, with perfect drainage for the moisture-sensitive crocus.\n\nThe harvest happens in a dramatic 15-to-20-day window in October and November, when the purple flowers emerge almost overnight. Entire farming families move into the fields before dawn, picking flowers by hand before the sun opens them fully. Delay even an hour, and the petals wilt and the stigmas lose potency - one of the most time-pressured harvests in the world.\n\nBy the early 2000s, the industry was in crisis: declining groundwater, erratic snowfall, and competition from cheaper Iranian saffron pushed many farmers to abandon the crop. The area under cultivation fell from 5,700 hectares in the 1990s to under 2,500 by 2010.\n\nSome families stayed. Saffron of Kashmir grows out of three generations of family saffron farming in Pampore. We work the same fields, sell direct, and keep the Mongra grade the Mughals prized above all spices. Every tin of our saffron represents a direct line from these ancient fields to your kitchen."
     },
     {
       "id": "purity-tests",
@@ -743,7 +743,7 @@
       "dateDisplay": "March 5, 2025",
       "title": "How to Test Saffron Purity at Home (3 Methods)",
       "excerpt": "A 2019 study found over 50% of commercially available saffron in the Middle East contained adulterants - dyed corn silk, safflower petals, even coloured paper fibres. Here's how to verify yours.",
-      "body": "## Method 1: The Cold Water Soak\n\nPlace 3-4 threads in a glass of cold water and watch for 10-15 minutes. Real saffron slowly releases a deep golden-yellow colour while the thread itself stays crimson. Fake (dyed) saffron bleaches almost immediately, turning pale while the water goes a harsh orange-red.\n\n## Method 2: The Baking Soda Test\n\nAdd a pinch of baking soda to your saffron water. Real saffron turns the water bright golden-yellow. Adulterated saffron often turns it red, green, or murky brown as the alkaline soda reacts with synthetic pigments.\n\n## Method 3: The Rub Test\n\nRub a single thread between your fingers. Genuine saffron stains your fingers golden-yellow and softens without crumbling. Fake threads bleed colour quickly and disintegrate, often leaving an unnaturally bright orange-red dye.\n\n*Note:* These are consumer tests. Professional testing uses HPLC spectrophotometry to measure crocin concentration and ISO 3632 compliance. All our saffron is batch-tested to Grade A standards - certificate available on request."
+      "body": "## Method 1: The Cold Water Soak\n\nPlace 3-4 threads in a glass of cold water and watch for 10-15 minutes. Real saffron slowly releases a deep golden-yellow colour while the thread itself stays crimson. Fake (dyed) saffron bleaches almost immediately, turning pale while the water goes a harsh orange-red.\n\n## Method 2: The Baking Soda Test\n\nAdd a pinch of baking soda to your saffron water. Real saffron turns the water bright golden-yellow. Adulterated saffron often turns it red, green, or murky brown as the alkaline soda reacts with synthetic pigments.\n\n## Method 3: The Rub Test\n\nRub a single thread between your fingers. Genuine saffron stains your fingers golden-yellow and softens without crumbling. Fake threads bleed colour quickly and disintegrate, often leaving an unnaturally bright orange-red dye.\n\n*Note:* These are consumer tests. Professional testing uses HPLC spectrophotometry to measure crocin concentration and ISO 3632 compliance. All our saffron is tested to ISO 3632 Category I - report available on request."
     },
     {
       "id": "arabic-cuisine",

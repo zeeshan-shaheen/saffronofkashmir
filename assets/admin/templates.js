@@ -115,10 +115,9 @@
   }
 
   function orderBtn(brand, pv) {
-    var label = pv.status === 'out_of_stock' ? 'Ask about restock'
-      : pv.status === 'coming_soon' ? 'Notify me when available'
-      : 'Order on WhatsApp';
-    var text = pv.status === 'coming_soon' ? pv.notifyWaText : pv.waText;
+    var available = pv.status === 'available';
+    var label = available ? 'Order on WhatsApp' : 'Notify me when available';
+    var text = available ? pv.waText : pv.notifyWaText;
     return '<a class="btn btn-whatsapp" href="' + esc(waUrl(brand, text)) + '" target="_blank" rel="noopener">' + label + '</a>';
   }
 
