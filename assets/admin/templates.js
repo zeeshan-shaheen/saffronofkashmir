@@ -119,6 +119,19 @@
   // Root-relative path for an asset that lives at the site root.
   function asset(p) { return '/' + String(p == null ? '' : p).replace(/^\/+/, ''); }
 
+  // Static so the build is deterministic. Bump deliberately, not by clock.
+  var COPYRIGHT_YEAR = '2026';
+
+  // "2026-08-09" -> "August 9, 2026". Hand-rolled rather than toLocaleDateString
+  // so output never varies by locale, timezone or ICU build.
+  var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  function longDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso == null ? '' : iso).trim());
+    if (!m) return String(iso == null ? '' : iso);
+    return MONTH_NAMES[Number(m[2]) - 1] + ' ' + Number(m[3]) + ', ' + m[1];
+  }
+
   /* ---------- social profiles ---------- */
 
   // brand.social is the single source for every profile URL on the site.
@@ -328,7 +341,7 @@
 
   function footer(data) {
     const b = data.brand, f = data.footer;
-    const year = new Date().getFullYear();
+    const year = COPYRIGHT_YEAR;
     return '<footer class="site-footer">\n' +
       '  <div class="container footer-grid">\n' +
       '    <div>\n' +
@@ -917,7 +930,7 @@
   function renderPrivacyPolicy(data) {
     var b = data.brand;
     var url = b.siteUrl + pageUrl('privacy-policy.html');
-    var year = new Date().getFullYear();
+    var lastUpdated = longDate(data.seo && data.seo.privacyLastUpdated);
     var jsonLd = ld({ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: url, publisher: { '@type': 'Organization', name: b.name } });
     var gaBlock = b.gaId
       ? '  <script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(b.gaId) + '"></script>\n' +
@@ -941,7 +954,7 @@
       '\n<main id="main">\n' + breadcrumbs('Privacy Policy') +
       '\n  <section style="padding-top:24px;">\n    <div class="container" style="max-width:760px;">\n' +
       '      <h1>Privacy Policy</h1>\n' +
-      '      <p style="color:var(--muted);font-size:14px;">Last updated: ' + year + '</p>\n\n' +
+      '      <p style="color:var(--muted);font-size:14px;">Last updated: ' + esc(lastUpdated) + '</p>\n\n' +
       '      <h2>Who we are</h2>\n' +
       '      <p>' + esc(b.name) + ' sells premium Kashmiri Mongra saffron and related products online. Our website is <a href="' + esc(b.siteUrl) + '">' + esc(b.siteUrl) + '</a>.</p>\n\n' +
       '      <h2>What information we collect</h2>\n' +

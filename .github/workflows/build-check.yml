@@ -1,0 +1,14 @@
+name: Build check
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rebuild from source
+        run: node build.js
+      - name: Fail if output differs from committed files
+        run: git add -A && git diff --cached --exit-code
