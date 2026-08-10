@@ -279,15 +279,28 @@
       el.classList.remove('sok-overlay-open');
       sessionStorage.setItem(SEEN, '1');
     }
+    // Config is written into the markup by the build from data/site-data.json.
+    // Defaults here cover a page built before those keys existed.
+    var delayMs = parseInt(el.getAttribute('data-delay'), 10);
+    if (isNaN(delayMs)) delayMs = 15000;
+    var minWidth = parseInt(el.getAttribute('data-min-width'), 10);
+    if (isNaN(minWidth)) minWidth = 768;
+
+    // Read at trigger time, never at load, so a rotate or a resize between the
+    // two is respected. Phone-width viewports never open it at all.
+    function wideEnough() {
+      if (window.matchMedia) return window.matchMedia('(min-width: ' + minWidth + 'px)').matches;
+      return (window.innerWidth || document.documentElement.clientWidth || 0) >= minWidth;
+    }
     var fired = false;
     function trigger() {
       if (fired) return;
+      if (!wideEnough()) return;
       fired = true;
       sessionStorage.setItem(SEEN, '1');
       open();
     }
-    var t = setTimeout(trigger, 4000);
-    window.addEventListener('scroll', function () { clearTimeout(t); trigger(); }, { passive: true, once: true });
+    setTimeout(trigger, delayMs);   // timer is the only trigger, no scroll listener
     el.querySelector('.sok-overlay-close').addEventListener('click', close);
     el.addEventListener('click', function (e) { if (e.target === el) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });

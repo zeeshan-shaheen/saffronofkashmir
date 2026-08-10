@@ -814,6 +814,9 @@
   },
   "overlay": {
     "enabled": true,
+    "delayMs": 15000,
+    "minViewportWidth": 768,
+    "homepageOnly": true,
     "heading": "Welcome - 10% Off Your First Order",
     "text": "Join our list and receive an exclusive discount code for your first Mongra saffron order.",
     "discountText": "10% off your first order",

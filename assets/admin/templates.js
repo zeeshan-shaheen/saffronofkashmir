@@ -223,13 +223,20 @@
 
   const WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
 
-  function renderOverlayHtml(data) {
+  function renderOverlayHtml(data, page) {
     var ov = data.overlay;
     if (!ov || !ov.enabled || !ov.formEndpoint) return '';
+    // Homepage restriction is decided here, at build time, from the page key the
+    // template is rendering. Nothing to sniff in main.js, and the markup simply
+    // does not exist on any page the overlay must not fire on.
+    if (ov.homepageOnly !== false && page !== 'index') return '';
+    var delayMs = ov.delayMs != null ? ov.delayMs : 15000;
+    var minWidth = ov.minViewportWidth != null ? ov.minViewportWidth : 768;
     var uM = ov.formEndpoint.match(/[?&]u=([^&]+)/);
     var idM = ov.formEndpoint.match(/[?&]id=([^&]+)/);
     var honeypot = (uM && idM) ? 'b_' + uM[1] + '_' + idM[1] : '';
-    return '<div id="sok-overlay" class="sok-overlay" role="dialog" aria-modal="true" aria-labelledby="sok-ov-h">\n' +
+    return '<div id="sok-overlay" class="sok-overlay" role="dialog" aria-modal="true" aria-labelledby="sok-ov-h"' +
+      ' data-delay="' + esc(delayMs) + '" data-min-width="' + esc(minWidth) + '">\n' +
       '  <div class="sok-overlay-box">\n' +
       '    <button class="sok-overlay-close" aria-label="Close this popup">×</button>\n' +
       (ov.image ? '    <img src="' + esc(asset(ov.image)) + '" alt="" class="sok-overlay-img" loading="lazy">\n' : '') +
@@ -344,7 +351,7 @@
       '  </nav>\n</header>\n';
   }
 
-  function footer(data) {
+  function footer(data, page) {
     const b = data.brand, f = data.footer;
     const year = COPYRIGHT_YEAR;
     return '<footer class="site-footer">\n' +
@@ -378,7 +385,7 @@
       '<a class="float-wa" href="' + esc(waUrl(b)) + '" data-wa-pos="float" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
       '  ' + WA_SVG + '\n</a>\n' +
       '<button class="back-top" aria-label="Back to top">↑</button>\n\n' +
-      renderOverlayHtml(data) +
+      renderOverlayHtml(data, page) +
       '<script src="/assets/js/main.js" defer></script>\n</body>\n</html>\n';
   }
 
@@ -569,7 +576,7 @@
     return head(data, { seoKey: 'home', file: 'index.html', jsonLd: jsonLd }, { appleIcon: true, preload: h.image }) +
       header(data, 'index.html') +
       '\n<main id="main">\n\n' + hero + why + teaser + how + story + testi + faq + contact + '\n</main>\n\n' +
-      footer(data);
+      footer(data, 'index');
   }
 
   /* ---------- products.html ---------- */
@@ -680,7 +687,7 @@
       filterBtns + '\n      <div class="grid-3" id="products-grid">\n' + cards + '\n      </div>\n' +
       '    </div>\n  </section>\n' +
       compare + identify + delivery + '</main>\n\n' +
-      footer(data);
+      footer(data, 'products');
   }
 
   /* ---------- product detail pages (products/<slug>/) ---------- */
@@ -768,7 +775,7 @@
       header(data, 'products.html') +
       '\n<main id="main">\n' + breadcrumbs(pv.name, { label: 'Products', href: 'products.html' }) +
       hero + related + '</main>\n\n' +
-      footer(data);
+      footer(data, 'product-detail');
   }
 
   /* ---------- recipes.html ---------- */
@@ -833,7 +840,7 @@
       '      <p class="section-sub">' + esc(rp.sub) + '</p>\n\n      <div class="grid-3">\n\n' +
       cards + '\n\n      </div>\n    </div>\n  </section>\n' +
       golden + '</main>\n\n' +
-      footer(data);
+      footer(data, 'recipes');
   }
 
   /* ---------- blogs.html ---------- */
@@ -910,7 +917,7 @@
       filterBtns + '\n      <div class="blog-layout">\n        <div id="blog-list">\n\n' +
       articles + '\n\n        </div>\n\n' + sidebar +
       '      </div>\n    </div>\n  </section>\n</main>\n\n' +
-      footer(data);
+      footer(data, 'blogs');
   }
 
   /* ---------- 404.html & sitemap.xml ---------- */
@@ -976,7 +983,7 @@
       '      <h2>Contact</h2>\n' +
       '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a href="' + esc(waUrl(b)) + '" data-wa-pos="contact" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
       '    </div>\n  </section>\n</main>\n\n' +
-      footer(data);
+      footer(data, 'privacy-policy');
   }
 
   function renderSitemap(data, dateStr) {
