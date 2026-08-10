@@ -41,6 +41,128 @@
     });
   });
 
+  // Order attribution.
+  // First touch wins: the source that brought a visitor here is recorded once
+  // and never overwritten, so a repeat buyer keeps one ref across sessions.
+  // Stores only a source label, landing path, timestamp and random code, in
+  // this browser. No IP, no fingerprint, no third-party request.
+  var SOK_ATTR = (function () {
+    var KEY = 'sok_attr';
+
+    // Extend here. Matched case-insensitively as a substring, first hit wins,
+    // against the utm_source value and then the referrer hostname.
+    var SOURCE_RULES = [
+      ['IG', ['instagram']],
+      ['FB', ['facebook', 'fb']],
+      ['TT', ['tiktok']],
+      ['PN', ['pinterest']],
+      ['LI', ['linkedin', 'lnkd.in']],
+      ['YT', ['youtube', 'youtu.be']],
+      ['TH', ['threads']],
+      ['GO', ['google']],
+      ['SE', ['bing', 'duckduckgo', 'yahoo']]
+    ];
+
+    // Deliberately excludes 0 O 1 I L so a code read aloud is unambiguous.
+    var ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
+    function lookup(needle) {
+      if (!needle) return null;
+      var s = String(needle).toLowerCase();
+      for (var i = 0; i < SOURCE_RULES.length; i++) {
+        var toks = SOURCE_RULES[i][1];
+        for (var j = 0; j < toks.length; j++) {
+          if (s.indexOf(toks[j]) !== -1) return SOURCE_RULES[i][0];
+        }
+      }
+      return null;
+    }
+
+    function resolveSource() {
+      var utm = null;
+      try { utm = new URLSearchParams(location.search).get('utm_source'); } catch (e) { /* ignore */ }
+      if (utm) return lookup(utm) || 'RF';            // tagged but unmapped = referral
+      var host = '';
+      try { host = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) { /* ignore */ }
+      if (!host || host === location.hostname) return 'DR';
+      return lookup(host) || 'RF';
+    }
+
+    // No CSPRNG: omit the ref rather than risk a colliding Math.random code.
+    function randomCode(len) {
+      if (typeof crypto === 'undefined' || !crypto.getRandomValues) return null;
+      var out = '', buf = new Uint8Array(1);
+      var limit = 256 - (256 % ALPHABET.length);     // reject above this to stay unbiased
+      while (out.length < len) {
+        crypto.getRandomValues(buf);
+        if (buf[0] >= limit) continue;
+        out += ALPHABET.charAt(buf[0] % ALPHABET.length);
+      }
+      return out;
+    }
+
+    function read() {
+      try {
+        var raw = localStorage.getItem(KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) { return null; }
+    }
+
+    function init() {
+      var existing = read();
+      if (existing) return existing;                 // first touch wins
+      var src = resolveSource();
+      var rec = { src: src, landing: location.pathname, ts: Date.now() };
+      var code = randomCode(4);
+      if (code) rec.ref = src + '-' + code;
+      try { localStorage.setItem(KEY, JSON.stringify(rec)); } catch (e) { /* private mode */ }
+      return rec;
+    }
+
+    // Append the ref to a wa.me link's message. Idempotent, and rebuilt with
+    // encodeURIComponent so encoding matches what templates.js emits.
+    function stampLink(a, ref) {
+      if (!a || !ref) return false;
+      var href = a.getAttribute('href') || '';
+      if (href.indexOf('https://wa.me/') !== 0) return false;
+      var q = href.indexOf('?text=');
+      var base = q === -1 ? href : href.slice(0, q);
+      var text = '';
+      if (q !== -1) {
+        try { text = decodeURIComponent(href.slice(q + 6).replace(/\+/g, '%20')); }
+        catch (e) { return false; }
+      }
+      // Links with no message of their own (the contact-strip numbers) would
+      // otherwise open with two blank lines before the ref.
+      var suffix = (text ? '\n\n' : '') + 'Ref: ' + ref;
+      if (text.indexOf('Ref: ' + ref) !== -1) return false; // already stamped
+      a.setAttribute('href', base + '?text=' + encodeURIComponent(text + suffix));
+      return true;
+    }
+
+    function stampAll(ref) {
+      if (!ref) return 0;
+      var n = 0;
+      document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function (a) {
+        if (stampLink(a, ref)) n++;
+      });
+      return n;
+    }
+
+    var attr = init();
+    stampAll(attr && attr.ref);
+
+    // Safety net for anything rendered after load. Capture phase, so the href
+    // is corrected before the browser acts on the click.
+    document.addEventListener('click', function (e) {
+      if (!attr || !attr.ref || !e.target.closest) return;
+      var a = e.target.closest('a[href^="https://wa.me/"]');
+      if (a) stampLink(a, attr.ref);
+    }, true);
+
+    return { get: function () { return attr; }, stampAll: stampAll };
+  })();
+
   // WhatsApp conversion tracking
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a[href*="wa.me"]');
@@ -48,7 +170,15 @@
     if (typeof gtag !== 'function') return;
     var card = link.closest('article') || link.closest('.card');
     var h3 = card && card.querySelector('h3');
-    gtag('event', 'whatsapp_click', { item: h3 ? h3.textContent.trim() : 'general' });
+    var attr = SOK_ATTR.get() || {};
+    gtag('event', 'whatsapp_click', {
+      item: h3 ? h3.textContent.trim() : 'general',   // kept: existing reports depend on it
+      ref: attr.ref || '',
+      src: attr.src || '',
+      product: link.getAttribute('data-wa-product') || (h3 ? h3.textContent.trim() : ''),
+      page_path: location.pathname,
+      position: link.getAttribute('data-wa-pos') || 'other'
+    });
   });
 
   // Social profile click tracking

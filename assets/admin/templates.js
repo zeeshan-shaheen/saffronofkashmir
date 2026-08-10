@@ -33,7 +33,7 @@
       let attrs = '';
       if (href.toLowerCase().startsWith('wa:')) {
         href = waUrl(brand, href.slice(3));
-        attrs = ' target="_blank" rel="noopener"';
+        attrs = ' data-wa-pos="prose" target="_blank" rel="noopener"';
       } else if (/^https?:\/\//i.test(href)) {
         attrs = ' target="_blank" rel="noopener"';
       }
@@ -196,11 +196,16 @@
     });
   }
 
-  function orderBtn(brand, pv) {
+  /* data-wa-pos / data-wa-product are read by main.js at runtime: it stamps a
+     visitor ref into the message and reports the click to GA4. Emitting plain
+     attributes keeps this file DOM-free. */
+  function orderBtn(brand, pv, pos) {
     var available = pv.status === 'available';
     var label = available ? 'Order on WhatsApp' : 'Notify me when available';
     var text = available ? pv.waText : pv.notifyWaText;
-    return '<a class="btn btn-whatsapp" href="' + esc(waUrl(brand, text)) + '" target="_blank" rel="noopener">' + label + '</a>';
+    return '<a class="btn btn-whatsapp" href="' + esc(waUrl(brand, text)) + '"' +
+      ' data-wa-pos="' + esc(pos || 'card') + '" data-wa-product="' + esc(pv.id || '') + '"' +
+      ' target="_blank" rel="noopener">' + label + '</a>';
   }
 
   function productPriceHtml(p) {
@@ -335,7 +340,7 @@
       '    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>\n' +
       '    <div class="nav-links" id="nav-links">\n' + links + '\n    </div>\n' +
       currencySelect(b) +
-      '    <a class="btn btn-whatsapp nav-cta-desktop" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">Order Now</a>\n' +
+      '    <a class="btn btn-whatsapp nav-cta-desktop" href="' + esc(waUrl(b)) + '" data-wa-pos="nav" target="_blank" rel="noopener">Order Now</a>\n' +
       '  </nav>\n</header>\n';
   }
 
@@ -361,16 +366,16 @@
       '        <li><a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a></li>\n' +
       ((b.whatsappNumbers && b.whatsappNumbers.length)
         ? b.whatsappNumbers.map(function(wn) {
-            return '        <li><a href="https://wa.me/' + esc(wn.number) + '?text=' + encodeURIComponent(b.defaultWaText || '') + '" target="_blank" rel="noopener">WhatsApp (' + esc(wn.market) + ')</a></li>';
+            return '        <li><a href="https://wa.me/' + esc(wn.number) + '?text=' + encodeURIComponent(b.defaultWaText || '') + '" data-wa-pos="footer" target="_blank" rel="noopener">WhatsApp (' + esc(wn.market) + ')</a></li>';
           }).join('\n') + '\n'
-        : '        <li><a href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">Order on WhatsApp</a></li>\n') +
+        : '        <li><a href="' + esc(waUrl(b)) + '" data-wa-pos="footer" target="_blank" rel="noopener">Order on WhatsApp</a></li>\n') +
       '      </ul>\n    </div>\n' +
       '  </div>\n' +
       '  <div class="container footer-bottom">\n' +
       '    <span>© ' + year + ' ' + esc(b.name) + '. All rights reserved. · ' + esc(f.locationLine) + '</span>\n' +
       '    <span>' + esc(f.bottomRight) + '</span>\n' +
       '  </div>\n</footer>\n\n' +
-      '<a class="float-wa" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
+      '<a class="float-wa" href="' + esc(waUrl(b)) + '" data-wa-pos="float" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
       '  ' + WA_SVG + '\n</a>\n' +
       '<button class="back-top" aria-label="Back to top">↑</button>\n\n' +
       renderOverlayHtml(data) +
@@ -442,7 +447,7 @@
       '        <p class="lead">' + esc(h.lead) + '</p>\n' +
       '        <div class="hero-cta">\n' +
       '          <a class="btn btn-primary" href="' + esc(pageUrl(h.primaryCta.href)) + '">' + esc(ctaLabel) + '</a>\n' +
-      '          <a class="btn btn-whatsapp" href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">\n' +
+      '          <a class="btn btn-whatsapp" href="' + esc(waUrl(b)) + '" data-wa-pos="hero" target="_blank" rel="noopener">\n' +
       '            ' + WA_SVG + '\n            ' + esc(h.waCtaLabel) + '\n          </a>\n' +
       '        </div>\n' +
       '        <ul class="hero-points">\n' +
@@ -483,7 +488,7 @@
           '            <h3><a href="' + esc(phref) + '">' + esc(p.name) + '</a></h3>\n' +
           '            <p class="p-desc">' + esc(p.homeDesc || p.pageDesc) + '</p>\n' +
           productPriceHtml(p) + '\n' +
-          '            ' + orderBtn(b, p) + '\n' +
+          '            ' + orderBtn(b, p, 'card') + '\n' +
           '          </div>\n        </article>';
       }).join('\n') +
       '\n      </div>\n' +
@@ -544,7 +549,7 @@
     const c = data.contact;
     const waContactLines = (b.whatsappNumbers && b.whatsappNumbers.length)
       ? b.whatsappNumbers.map(function(wn) {
-          return '        <li>💬 WhatsApp (' + esc(wn.market) + '): <a href="https://wa.me/' + esc(wn.number) + '" target="_blank" rel="noopener">+' + esc(wn.number) + '</a></li>';
+          return '        <li>💬 WhatsApp (' + esc(wn.market) + '): <a href="https://wa.me/' + esc(wn.number) + '" data-wa-pos="contact" target="_blank" rel="noopener">+' + esc(wn.number) + '</a></li>';
         }).join('\n') + '\n'
       : '';
     const contact =
@@ -618,7 +623,7 @@
         '            <h3><a href="' + esc(href) + '">' + esc(pv.name) + '</a></h3>\n' +
         '            <p class="p-desc">' + esc(pv.pageDesc) + '</p>\n' +
         productPriceHtml(pv) + '\n' +
-        '            ' + orderBtn(b, pv) + '\n' +
+        '            ' + orderBtn(b, pv, 'card') + '\n' +
         '            <a class="p-detail-link" href="' + esc(href) + '">View details →</a>\n' +
         specs +
         '          </div>\n        </article>';
@@ -743,7 +748,7 @@
       '        <h1>' + esc(pv.name) + '</h1>\n' +
       '        <p class="pd-desc">' + esc(p.descBody || pv.pageDesc) + '</p>\n' +
       '        ' + productPriceHtml(pv) + '\n' +
-      '        ' + orderBtn(b, pv) + '\n' +
+      '        ' + orderBtn(b, pv, 'detail') + '\n' +
       specs +
       '        <p class="pd-links"><a href="' + pageUrl('products.html#identify') + '">How to spot real saffron</a> · <a href="' + pageUrl('recipes.html') + '">Saffron recipes</a></p>\n' +
       '      </div>\n    </div>\n  </section>\n';
@@ -889,7 +894,7 @@
       '            <h3>' + esc(sb.orderHeading) + '</h3>\n' +
       '            <p style="color:var(--muted);font-size:15px;margin:8px 0 4px;">' + esc(sb.orderText) + '</p>\n' +
       '            <div class="p-price" style="margin-bottom:12px;">' + sbPriceHtml + '</div>\n' +
-      '            <a class="btn btn-whatsapp" style="width:100%;" href="' + esc(waUrl(b, sb.waText)) + '" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
+      '            <a class="btn btn-whatsapp" style="width:100%;" href="' + esc(waUrl(b, sb.waText)) + '" data-wa-pos="sidebar" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
       '          </div>\n' +
       '          <div class="card">\n' +
       '            <h3>' + esc(sb.alsoHeading) + '</h3>\n            <ul>\n' +
@@ -958,7 +963,7 @@
       '      <h2>Who we are</h2>\n' +
       '      <p>' + esc(b.name) + ' sells premium Kashmiri Mongra saffron and related products online. Our website is <a href="' + esc(b.siteUrl) + '">' + esc(b.siteUrl) + '</a>.</p>\n\n' +
       '      <h2>What information we collect</h2>\n' +
-      '      <p>We collect your <strong>email address</strong> only if you voluntarily subscribe through the opt-in form on this website. We do not collect any other personal data through the site. Orders placed via WhatsApp are handled through WhatsApp\'s own platform.</p>\n\n' +
+      '      <p>We collect your <strong>email address</strong> only if you voluntarily subscribe through the opt-in form on this website. We also store a short random reference code in your browser, for example IG-K4M2. It tells us which page or channel an order came from and lets us recognise a repeat order. It holds no name, no email address and no location, and it reaches us only inside a WhatsApp message that you choose to send. Orders placed via WhatsApp are handled through WhatsApp\'s own platform.</p>\n\n' +
       '      <h2>How we use your information</h2>\n' +
       '      <p>Your email address is used solely to send you occasional promotional emails: discount offers, new product announcements, and saffron guides. We will never sell, rent, or share your email address with third parties for their own marketing.</p>\n\n' +
       '      <h2>Email service provider</h2>\n' +
@@ -969,7 +974,7 @@
         ? '      <h2>Analytics</h2>\n      <p>We use Google Analytics to understand how visitors use this site. It uses cookies to collect anonymous usage data. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out add-on</a>.</p>\n\n'
         : '') +
       '      <h2>Contact</h2>\n' +
-      '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a href="' + esc(waUrl(b)) + '" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
+      '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a href="' + esc(waUrl(b)) + '" data-wa-pos="contact" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
       '    </div>\n  </section>\n</main>\n\n' +
       footer(data);
   }
