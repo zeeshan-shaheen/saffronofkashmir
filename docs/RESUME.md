@@ -121,6 +121,10 @@ purchase rate, AOV by product, whether the overlay converts.
 - /products (file) and /products/ (directory) coexist. GitHub Pages
   resolves the file. NEVER create products/index.html.
 - Prose prices in site-data.json do not convert currency.
+- Commit 3b7619e failed CI - sitemap.xml was committed alone by the
+  legacy per-file publish route without its matching site-data.json.
+  The next commit made it consistent. Left in history deliberately;
+  it is the failure the CI check exists to catch.
 
 ## Verification lessons
 - For browser-loaded assets, verify the DEPLOYED bytes, not the
@@ -133,6 +137,8 @@ purchase rate, AOV by product, whether the overlay converts.
   silently. Always use curl.exe -sI to inspect status codes.
 
 ## Open Cloudflare task
-Cache rule: bypass cache for /assets/admin/*, /admin.html and /admin.
-Not yet created. Without it the next admin.js change repeats the
-4-hour cache problem.
+Cloudflare cache rule CREATED BUT NOT WORKING - cf-cache-status
+still HIT on /assets/admin/admin.js (Age: 179 on test). Check the
+rule expression (URI Path contains "/assets/admin/") and rule
+ordering, first match wins. Purge Everything before retesting.
+Workaround: Ctrl+Shift+R on /admin after any panel change.
