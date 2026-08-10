@@ -1012,12 +1012,37 @@
   function renderLlms(data) {
     var b = data.brand;
     var u = b.siteUrl;
+
+    // Product and recipe names come from the data, not a hardcoded list, so this
+    // file cannot drift out of step with the catalogue the way it had.
+    function commaList(items) {
+      if (items.length < 2) return items.join('');
+      return items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
+    }
+    var names = (data.products || []).map(function (p) { return productView(p); });
+    function withStatus(s) {
+      return names.filter(function (p) {
+        // Same convention as statusAvailability: anything else counts as in stock.
+        return s === 'available'
+          ? (p.status !== 'out_of_stock' && p.status !== 'coming_soon')
+          : p.status === s;
+      }).map(function (p) { return p.name; });
+    }
+    var inStock = withStatus('available');
+    var outOfStock = withStatus('out_of_stock');
+    var comingSoon = withStatus('coming_soon');
+    var catalogue = 'Full product catalogue.';
+    if (inStock.length) catalogue += ' In stock: ' + commaList(inStock) + '.';
+    if (outOfStock.length) catalogue += ' Out of stock: ' + commaList(outOfStock) + '.';
+    if (comingSoon.length) catalogue += ' Coming soon: ' + commaList(comingSoon) + '.';
+    var recipeNames = commaList((data.recipes || []).map(function (r) { return r.name; }));
+
     return '# ' + b.name + '\n\n' +
       '> ' + b.orgDescription + '\n\n' +
       '## Pages\n\n' +
       '- [Home](' + u + pageUrl('index.html') + '): Products, ordering information, FAQ, and the brand story.\n' +
-      '- [Products](' + u + pageUrl('products.html') + '): Full product catalogue: Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend.\n' +
-      '- [Recipes](' + u + pageUrl('recipes.html') + '): Tested saffron recipes including Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, and Saffron Lemonade.\n' +
+      '- [Products](' + u + pageUrl('products.html') + '): ' + catalogue + '\n' +
+      '- [Recipes](' + u + pageUrl('recipes.html') + '): Tested saffron recipes: ' + recipeNames + '.\n' +
       '- [Blog](' + u + pageUrl('blogs.html') + '): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
   }
 
