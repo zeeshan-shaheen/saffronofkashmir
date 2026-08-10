@@ -125,18 +125,17 @@
       if (!a || !ref) return false;
       var href = a.getAttribute('href') || '';
       if (href.indexOf('https://wa.me/') !== 0) return false;
+      // Links carrying no message of their own (the contact-strip numbers) are
+      // left untouched. Stamping them opens WhatsApp with a bare code and no
+      // greeting, which reads as a mistake to the customer.
       var q = href.indexOf('?text=');
-      var base = q === -1 ? href : href.slice(0, q);
+      if (q === -1) return false;
       var text = '';
-      if (q !== -1) {
-        try { text = decodeURIComponent(href.slice(q + 6).replace(/\+/g, '%20')); }
-        catch (e) { return false; }
-      }
-      // Links with no message of their own (the contact-strip numbers) would
-      // otherwise open with two blank lines before the ref.
-      var suffix = (text ? '\n\n' : '') + 'Ref: ' + ref;
-      if (text.indexOf('Ref: ' + ref) !== -1) return false; // already stamped
-      a.setAttribute('href', base + '?text=' + encodeURIComponent(text + suffix));
+      try { text = decodeURIComponent(href.slice(q + 6).replace(/\+/g, '%20')); }
+      catch (e) { return false; }
+      if (!text) return false;                               // ?text= with nothing after it
+      if (text.indexOf('Ref: ' + ref) !== -1) return false;  // already stamped
+      a.setAttribute('href', href.slice(0, q) + '?text=' + encodeURIComponent(text + '\n\nRef: ' + ref));
       return true;
     }
 
