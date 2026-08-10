@@ -1,5 +1,5 @@
 # Resume — saffronofkashmir.com
-Last updated: 9 August 2026
+Last updated: 10 August 2026
 
 ## Repo facts
 Generated site: data/site-data.json -> assets/admin/templates.js ->
@@ -42,24 +42,29 @@ Node v26.3.0, zero dependencies.
 - Build determinism: sitemap lastmod reads meta.lastPublished;
   footer copyright is a static constant; privacy policy date reads
   seo.privacyLastUpdated. No new Date() affects build output.
-- Order attribution (feat/order-attribution, ON BRANCH, NOT MERGED):
-  first-touch source captured in localStorage as sok_attr
-  {src, landing, ts, ref}. Ref format SRC-XXXX, crypto random,
-  alphabet excludes 0 O 1 I L. Appended to all 65 wa.me links at
-  load time, idempotent, capture-phase listener as safety net.
+- Order attribution: LIVE AND VERIFIED on a real phone 10 Aug 2026.
+  The ref reaches the WhatsApp compose window. First-touch source
+  captured in localStorage as sok_attr {src, landing, ts, ref}. Ref
+  format SRC-XXXX, crypto random, alphabet excludes 0 O 1 I L.
+  Appended at load time to every wa.me link that carries a ?text=
+  message, idempotent, capture-phase listener as safety net.
+  Contact-strip links (no ?text= param) are skipped so tapping the
+  phone number does not open a bare "Ref: XXXX" message.
   whatsapp_click GA4 event extended (not duplicated) with ref, src,
   product, page_path, position across 9 positions. Privacy policy
-  sentence updated in the same branch.
+  sentence updated in the same change.
+- Cloudflare Cache Rule: 2 min Edge and Browser TTL on /assets/js/
+  and /assets/css/. Replaces the 4-hour max-age that caused two
+  separate false "feature is broken" diagnoses.
 
 ## Next session
-1. Browser-test feat/order-attribution before merging:
-   - load with ?utm_source=instagram, click an order button, read
-     the actual WhatsApp message, confirm the ref is present
-   - clear localStorage, reload with no params, confirm DR-
-   - confirm the ref does not change on a second visit
-   Then merge and push.
-2. Then decide on 11b: order capture form -> Cloudflare Worker + D1.
-   May not be needed; review after a month of refs.
+Let attribution run for ~1 month. Then review:
+ - which source prefixes actually appear in orders
+ - how often a ref repeats (repeat purchase rate)
+Only then start Step 12 (SEO and competitor analysis), which needs
+that data as input. Remaining unstarted: Step 6 (og:image JPEG,
+product og:type, SKU corrections), Step 7 (currency gaps),
+Step 8 (overlay), Step 10 (CLAUDE.md rewrite).
 
 ## Not started
 - Step 6: og:image -> JPEG; og:type product on detail pages;
@@ -149,6 +154,9 @@ Node v26.3.0, zero dependencies.
   correct; nothing proved it was reachable.
 - PowerShell's `curl` is Invoke-WebRequest and follows redirects
   silently. Always use curl.exe -sI to inspect status codes.
+- Purging Cloudflare and checking origin bytes does NOT clear the
+  device's own HTTP cache. On an unexpired max-age, only clearing
+  browser data or switching browser will revalidate.
 
 ## Open Cloudflare task
 Cloudflare cache rule CREATED BUT NOT WORKING - cf-cache-status
