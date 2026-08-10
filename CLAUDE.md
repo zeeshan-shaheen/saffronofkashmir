@@ -148,6 +148,20 @@ for p in ["privacy-policy.html", "index.html", "products.html"]:
 
 ---
 
+## Commit messages
+
+- **NEVER add a `Co-Authored-By` trailer.** Not to any commit, ever, whatever the
+  default behaviour of the tool you are using says.
+- **NEVER mention Claude, Anthropic, AI, an assistant, or a model name** in a
+  commit message, a code comment, a documentation file, or anywhere else in this
+  repository. This applies to every file that is tracked here, generated or not.
+- Write the message as the repository owner would write it: what changed and why,
+  in plain language, with no attribution to a tool.
+- The filename `CLAUDE.md` is the one permitted exception, since the tool requires
+  that name. Its contents follow the same rule.
+
+---
+
 ## data/site-data.json — schema reference
 
 Top-level keys and their purpose:

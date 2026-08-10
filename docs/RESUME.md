@@ -116,6 +116,13 @@ without a backend.
   Under UK/EU PECR this generally requires prior consent. Pre-
   existing for GA and the Pixel; the ref does not add a new category
   but does raise the stakes. Step 2 of the original plan, still open.
+- covercgpt-1.webp is the og:image on four pages and publicly
+  served. Rename it when the "EST. 2004" burn-in is fixed - the
+  filename reads as an AI tool name.
+- Cloudflare serves a Managed robots.txt blocking ClaudeBot,
+  GPTBot, CCBot, Google-Extended and others, prepended to the repo
+  file. This conflicts with llms.txt, which exists to help those
+  crawlers. Decide one way or the other.
 
 ## Accepted risks - do not re-litigate
 - Admin panel is publicly reachable at /admin and /admin.html.
@@ -129,6 +136,12 @@ without a backend.
 - CI is advisory, not blocking, because Repository admin bypasses
   the ruleset. A red check does not stop a publish - Actions must be
   checked manually after publishing.
+- 30 commits in history carry a Co-Authored-By trailer, and three
+  April 2026 commit subjects name an assistant. Left in place
+  deliberately: removing them requires rewriting all 161 SHAs,
+  which invalidates the restore points cited in this file. Not
+  visible on the live site. CLAUDE.md now forbids the trailer
+  going forward.
 
 ## Known limitations
 - seo.privacyLastUpdated has no admin editor. Deliberate: it is a
