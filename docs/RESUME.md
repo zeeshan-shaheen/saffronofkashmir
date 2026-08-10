@@ -53,9 +53,13 @@ Node v26.3.0, zero dependencies.
   whatsapp_click GA4 event extended (not duplicated) with ref, src,
   product, page_path, position across 9 positions. Privacy policy
   sentence updated in the same change.
-- Cloudflare Cache Rule: 2 min Edge and Browser TTL on /assets/js/
-  and /assets/css/. Replaces the 4-hour max-age that caused two
-  separate false "feature is broken" diagnoses.
+- Cloudflare Cache Rule for /assets/js/ and /assets/css/: CREATED
+  BUT NOT TAKING EFFECT. max-age=14400 still served as of
+  10 Aug 2026, verified on a fresh MISS for style.css, so not a
+  stale object. Likely Browser TTL left on "Respect origin" rather
+  than "Override origin", or rule ordering. Workaround: test JS and
+  CSS changes in a private window or an unused browser. Two false
+  "broken feature" diagnoses have already come from this.
 
 ## Next session
 Let attribution run for ~1 month. Then review:
@@ -65,6 +69,11 @@ Only then start Step 12 (SEO and competitor analysis), which needs
 that data as input. Remaining unstarted: Step 6 (og:image JPEG,
 product og:type, SKU corrections), Step 7 (currency gaps),
 Step 8 (overlay), Step 10 (CLAUDE.md rewrite).
+
+Step 11b (order capture form -> Cloudflare Worker + D1) remains
+parked. Decide after ~1 month of ref data whether it is needed at
+all - the ref codes may already answer the attribution question
+without a backend.
 
 ## Not started
 - Step 6: og:image -> JPEG; og:type product on detail pages;
