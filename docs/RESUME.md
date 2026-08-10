@@ -42,24 +42,24 @@ Node v26.3.0, zero dependencies.
 - Build determinism: sitemap lastmod reads meta.lastPublished;
   footer copyright is a static constant; privacy policy date reads
   seo.privacyLastUpdated. No new Date() affects build output.
+- Order attribution (feat/order-attribution, ON BRANCH, NOT MERGED):
+  first-touch source captured in localStorage as sok_attr
+  {src, landing, ts, ref}. Ref format SRC-XXXX, crypto random,
+  alphabet excludes 0 O 1 I L. Appended to all 65 wa.me links at
+  load time, idempotent, capture-phase listener as safety net.
+  whatsapp_click GA4 event extended (not duplicated) with ref, src,
+  product, page_path, position across 9 positions. Privacy policy
+  sentence updated in the same branch.
 
-## Next session — Step 11, order capture
-The only remaining item that changes revenue. Nothing shipped so far
-has changed what a visitor does or what the owner can measure.
-Still true today: not a single order can be attributed to a page,
-post, or channel.
-
-Scope:
-1. GA4 event on every WhatsApp click, tagged with product, page,
-   position
-2. UTM handling so social traffic is distinguishable from direct
-   (seven channels are being posted to via a social media manager)
-3. Order capture form -> datastore -> order ID -> pre-filled WhatsApp
-   message
-4. Cloudflare Worker + D1 for the endpoint. GitHub Pages cannot host
-   it; Cloudflare is already in the request path.
-Then run 2-4 weeks and measure: which pages produce orders, repeat
-purchase rate, AOV by product, whether the overlay converts.
+## Next session
+1. Browser-test feat/order-attribution before merging:
+   - load with ?utm_source=instagram, click an order button, read
+     the actual WhatsApp message, confirm the ref is present
+   - clear localStorage, reload with no params, confirm DR-
+   - confirm the ref does not change on a second visit
+   Then merge and push.
+2. Then decide on 11b: order capture form -> Cloudflare Worker + D1.
+   May not be needed; review after a month of refs.
 
 ## Not started
 - Step 6: og:image -> JPEG; og:type product on detail pages;
@@ -98,6 +98,10 @@ purchase rate, AOV by product, whether the overlay converts.
   discussed but not commissioned.
 - Image provenance: 15 root .webp files confirmed as owner's own
   photography, 9 Aug 2026
+- No consent gate for GA, Meta Pixel, or the sok_attr identifier.
+  Under UK/EU PECR this generally requires prior consent. Pre-
+  existing for GA and the Pixel; the ref does not add a new category
+  but does raise the stakes. Step 2 of the original plan, still open.
 
 ## Accepted risks - do not re-litigate
 - Admin panel is publicly reachable at /admin and /admin.html.
@@ -125,6 +129,16 @@ purchase rate, AOV by product, whether the overlay converts.
   legacy per-file publish route without its matching site-data.json.
   The next commit made it consistent. Left in history deliberately;
   it is the failure the CI check exists to catch.
+- UTM params are dropped on every internal navigation. 278 internal
+  links across 12 pages, none carry a query string. GA4 keeps the
+  campaign for the session via its own state, so session reports
+  survive; per-page and cross-session attribution degrade. sok_attr
+  is unaffected. Fixing it means rewriting every internal href on
+  load, which risks duplicate-URL noise in Search Console. Not done
+  deliberately.
+- An unmapped utm_source resolves to RF, not DR. A same-host
+  referrer resolves to DR so internal navigation cannot overwrite a
+  first touch.
 
 ## Verification lessons
 - For browser-loaded assets, verify the DEPLOYED bytes, not the
