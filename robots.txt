@@ -1,3 +1,12 @@
+# The content signal below sets out how this site's content may be used.
+#   search:   building a search index and returning links and short excerpts.
+#   ai-input: supplying content to an AI model at answer time, for example
+#             retrieval augmented generation or grounding a generated answer.
+#   ai-train: training or fine-tuning an AI model.
+# "yes" grants permission for that use, "no" withholds it. Any restriction
+# expressed here is an express reservation of rights under Article 4 of
+# EU Directive 2019/790 on copyright in the Digital Single Market.
+
 User-agent: *
 Content-Signal: search=yes,ai-input=yes,ai-train=no
 Allow: /
