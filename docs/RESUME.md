@@ -70,18 +70,17 @@ Node v26.3.0, zero dependencies.
   "broken feature" diagnoses have already come from this.
 
 ## Next session
-Let attribution run for ~1 month. Then review:
- - which source prefixes actually appear in orders
- - how often a ref repeats (repeat purchase rate)
-Only then start Step 12 (SEO and competitor analysis), which needs
-that data as input. Remaining unstarted: Step 6 (og:image JPEG,
-product og:type, SKU corrections), Step 7 (currency gaps),
-Step 8 (overlay), Step 10 (CLAUDE.md rewrite).
-
-Step 11b (order capture form -> Cloudflare Worker + D1) remains
-parked. Decide after ~1 month of ref data whether it is needed at
-all - the ref codes may already answer the attribution question
-without a backend.
+1. Cloudflare AI Crawl Control: disable the managed AI blocking so
+   GPTBot, ClaudeBot, Google-Extended and PerplexityBot can read
+   the site. Keep the repo robots.txt Disallow lines for /admin,
+   /assets/admin/ and /data/. NOT DONE - this is the only open
+   item with consequences outside the repo. llms.txt is now
+   correct but unreadable while the block is on.
+2. Cloudflare Cache Rule for /assets/js/ and /assets/css/ still not
+   taking effect despite Edge and Browser TTL both set to override
+   at 2 minutes. Check the rule expression and ordering. Workaround
+   in place: test JS changes in a private window.
+3. Then let order attribution run ~1 month before Step 12.
 
 ## Not started
 - Step 6: og:image -> JPEG; og:type product on detail pages;
@@ -105,28 +104,13 @@ without a backend.
   JSON-LD pointing at fragments), and product page depth.
 
 ## Carried forward - unresolved claims
-- og:image (covercgpt-1.webp) has "EST. 2004" burnt into the artwork.
-  Last live instance of the false founding claim. Cached on Facebook,
-  WhatsApp and LinkedIn. Deferred by owner 9 Aug 2026.
-- Testimonials (3) - real customers per owner, order references not
-  yet mapped
+- Testimonial order references unmapped (needs owner, not code)
+- covercgpt-1.webp: "EST. 2004" burnt into the artwork, filename
+  reads as an AI tool name, serves as og:image on four pages.
+  One re-export fixes both: new JPEG, new filename, no 2004.
 - FSSAI number and trade licence not filed in evidence/
-- Lab report is issued under the owner's other food company, not
-  Saffron of Kashmir. A fresh test under the retail brand name was
-  discussed but not commissioned.
-- Image provenance: 15 root .webp files confirmed as owner's own
-  photography, 9 Aug 2026
-- No consent gate for GA, Meta Pixel, or the sok_attr identifier.
-  Under UK/EU PECR this generally requires prior consent. Pre-
-  existing for GA and the Pixel; the ref does not add a new category
-  but does raise the stakes. Step 2 of the original plan, still open.
-- covercgpt-1.webp is the og:image on four pages and publicly
-  served. Rename it when the "EST. 2004" burn-in is fixed - the
-  filename reads as an AI tool name.
-- Cloudflare serves a Managed robots.txt blocking ClaudeBot,
-  GPTBot, CCBot, Google-Extended and others, prepended to the repo
-  file. This conflicts with llms.txt, which exists to help those
-  crawlers. Decide one way or the other.
+- Lab report issued under the owner's other food company
+- No consent gate for GA, Meta Pixel or the sok_attr identifier
 
 ## Accepted risks - do not re-litigate
 - Admin panel is publicly reachable at /admin and /admin.html.
@@ -170,6 +154,9 @@ without a backend.
 - An unmapped utm_source resolves to RF, not DR. A same-host
   referrer resolves to DR so internal navigation cannot overwrite a
   first touch.
+- The 90% figure now appears in three slightly different framings
+  across story.paragraphs[0], faq.items[6].a and posts[1].excerpt.
+  All correct, none contradictory. Worth a consistency pass.
 
 ## Verification lessons
 - For browser-loaded assets, verify the DEPLOYED bytes, not the
