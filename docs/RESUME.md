@@ -20,6 +20,14 @@ Node v26.3.0, zero dependencies.
   farming, no dates; same-day dispatch deleted (5 places); hero.lead
   now says packed in Pampore, dispatched from Dubai; order buttons
   read "Notify me when available" for non-available status
+- 700-year heritage claim removed from all three locations
+  (posts[1].title, story.paragraphs[0], seo.blog.description),
+  10 Aug 2026. Replaced with undated wording.
+- 90% of India's saffron figure reattributed to Kashmir rather than
+  Pampore in all three locations (story.paragraphs[0],
+  posts[1].excerpt, faq.items[6].a), 10 Aug 2026. Pampore is now
+  named as the centre of the Kashmir crop, not the producer of the
+  whole figure.
 - 404 page: root-relative paths, renders styled at any depth
 - Extensionless URLs: root-relative internal links, canonicals,
   og:url, sitemap. base/'../../' prefix system replaced by pageUrl()
@@ -100,10 +108,6 @@ without a backend.
 - og:image (covercgpt-1.webp) has "EST. 2004" burnt into the artwork.
   Last live instance of the false founding claim. Cached on Facebook,
   WhatsApp and LinkedIn. Deferred by owner 9 Aug 2026.
-- "700-Year Legacy" in posts[1].title and story.paragraphs[0] - no
-  source
-- "Pampore produces 90% of India's saffron" in 3 locations - the
-  figure is normally cited for Kashmir as a whole
 - Testimonials (3) - real customers per owner, order references not
   yet mapped
 - FSSAI number and trade licence not filed in evidence/

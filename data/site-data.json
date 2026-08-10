@@ -127,7 +127,7 @@
     },
     "blog": {
       "title": "Blog - Saffron Guides, Heritage & Health | Saffron of Kashmir",
-      "description": "Guides on Mongra saffron grades, testing purity at home, Pampore's 700-year saffron heritage, cooking with saffron in Arabic cuisine, and research-backed health benefits.",
+      "description": "Guides on Mongra saffron grades, testing purity at home, Pampore's saffron heritage, cooking with saffron in Arabic cuisine, and research-backed health benefits.",
       "ogTitle": "Blog | Saffron of Kashmir",
       "ogDescription": "Saffron guides, Kashmir heritage stories, purity tests, and health research."
     }
@@ -319,7 +319,7 @@
     {
       "id": "honey-250g",
       "baseName": "Saffron Honey",
-      "size": "500 ml",
+      "size": "500ml",
       "grams": null,
       "unitLabel": "/ jar",
       "price": 74,
@@ -396,7 +396,7 @@
     "eyebrow": "Our Heritage",
     "heading": "The Story of Mongra",
     "paragraphs": [
-      "Deep in the Karewa plateau of Pampore - just south of Srinagar - the saffron crocus has bloomed every October for over 700 years. Pampore produces 90% of India's saffron, and its terroir is irreplaceable: clay-rich, well-drained soil, sharp autumn nights, and dawn mists from Dal Lake.",
+      "Deep in the Karewa plateau of Pampore - just south of Srinagar - the saffron crocus has bloomed every October for centuries. Kashmir produces around 90% of India's saffron, and Pampore is its centre. Its terroir is irreplaceable: clay-rich, well-drained soil, sharp autumn nights, and dawn mists from Dal Lake.",
       "Our family has farmed saffron in Pampore for three generations. We source Mongra grade exclusively - only the deep-red stigma tips, separated by hand from the yellow style."
     ],
     "image": "slider2.webp",
@@ -455,7 +455,7 @@
       },
       {
         "q": "Where does your saffron come from?",
-        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district, which produces around 90% of India's saffron. We work directly with Pampore farming families, buying only the deep-red stigma tips. The saffron comes from our own family's farming in Pampore."
+        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district. Kashmir produces around 90% of India's saffron. We work directly with Pampore farming families, buying only the deep-red stigma tips. The saffron comes from our own family's farming in Pampore."
       },
       {
         "q": "How much does Kashmiri Mongra saffron cost?",
@@ -768,8 +768,8 @@
       "categoryKey": "heritage",
       "dateISO": "2025-02-10",
       "dateDisplay": "February 10, 2025",
-      "title": "The Saffron Fields of Pampore: A 700-Year Legacy",
-      "excerpt": "Twenty kilometres south of Srinagar lies Pampore - the \"Saffron Town of India\" - whose Karewa plateau produces 90% of India's saffron and some of the finest on earth.",
+      "title": "The Saffron Fields of Pampore: A Centuries-Old Legacy",
+      "excerpt": "Kashmir grows around 90% of India's saffron. Its heart is the Karewa plateau at Pampore - the \"Saffron Town of India\", twenty kilometres south of Srinagar - where some of the finest saffron on earth is grown.",
       "body": "Saffron cultivation in Kashmir stretches back to at least the 14th century, when Persian traders are believed to have introduced the crocus to the Valley. The Mughal emperors were among the most ardent patrons of Kashmiri saffron - Akbar reportedly ordered saffron planted in royal gardens across the subcontinent, but only the Pampore variety produced the quality he sought. The reason is the soil: the Karewa formation is a rare geological deposit of glacial silt, mineral-rich, with perfect drainage for the moisture-sensitive crocus.\n\nThe harvest happens in a dramatic 15-to-20-day window in October and November, when the purple flowers emerge almost overnight. Entire farming families move into the fields before dawn, picking flowers by hand before the sun opens them fully. Delay even an hour, and the petals wilt and the stigmas lose potency - one of the most time-pressured harvests in the world.\n\nBy the early 2000s, the industry was in crisis: declining groundwater, erratic snowfall, and competition from cheaper Iranian saffron pushed many farmers to abandon the crop. The area under cultivation fell from 5,700 hectares in the 1990s to under 2,500 by 2010.\n\nSome families stayed. Saffron of Kashmir grows out of three generations of family saffron farming in Pampore. We work the same fields, sell direct, and keep the Mongra grade the Mughals prized above all spices. Every tin of our saffron represents a direct line from these ancient fields to your kitchen."
     },
     {

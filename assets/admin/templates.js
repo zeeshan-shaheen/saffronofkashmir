@@ -1036,6 +1036,7 @@
     if (outOfStock.length) catalogue += ' Out of stock: ' + commaList(outOfStock) + '.';
     if (comingSoon.length) catalogue += ' Coming soon: ' + commaList(comingSoon) + '.';
     var recipeNames = commaList((data.recipes || []).map(function (r) { return r.name; }));
+    var postTitles = commaList((data.posts || []).map(function (p) { return p.title; }));
 
     return '# ' + b.name + '\n\n' +
       '> ' + b.orgDescription + '\n\n' +
@@ -1043,7 +1044,7 @@
       '- [Home](' + u + pageUrl('index.html') + '): Products, ordering information, FAQ, and the brand story.\n' +
       '- [Products](' + u + pageUrl('products.html') + '): ' + catalogue + '\n' +
       '- [Recipes](' + u + pageUrl('recipes.html') + '): Tested saffron recipes: ' + recipeNames + '.\n' +
-      '- [Blog](' + u + pageUrl('blogs.html') + '): Guides on Mongra saffron grades, purity testing, Pampore heritage, Arabic cuisine, and research-backed health benefits.\n';
+      '- [Blog](' + u + pageUrl('blogs.html') + '): Guides: ' + postTitles + '.\n';
   }
 
   /* ---------- public API ---------- */
