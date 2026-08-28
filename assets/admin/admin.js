@@ -289,6 +289,11 @@
   /* ---------- generic list editors ---------- */
 
   const KINDS = {
+    policySection: {
+      label: (it) => (it.heading || 'Untitled section'),
+      sub: (it) => String(it.body || '').replace(/\s+/g, ' ').slice(0, 70),
+      make: () => ({ _open: true, heading: 'New section', body: '' })
+    },
     product: {
       label: (it) => (it.baseName && it.size ? it.baseName + ' ' + it.size : it.baseName || 'Untitled product'),
       sub: (it) => 'AED ' + (it.price || 0) + ' · ' + (it.category || '') + (it.featured ? ' · ★ featured' : ''),
@@ -877,6 +882,31 @@
       quickLinks + statsHtml + qa;
   }
 
+  function secPolicies() {
+    const pols = S.data.policies || {};
+    const warn = '<p style="background:#fdf6e7;border:1px solid #e8c96a;border-radius:6px;padding:10px 14px;font-size:13.5px;color:#7c5a12;margin:0 0 16px;">' +
+      '⚠ These are legal pages. Do not add a business address, and do not say where parcels are sent from. ' +
+      'Both are deliberate. Have a lawyer read the Terms page before changing it.</p>';
+    const cards = Object.keys(pols).map(function (k) {
+      const p = pols[k];
+      return card('📄', A(p.title || k),
+        '<div class="grid2">' +
+        f('Page title (the H1)', 'policies.' + k + '.title') +
+        f('Last updated', 'policies.' + k + '.lastUpdated', { placeholder: '29 August 2026', hint: 'Shown under the heading. Plain text, not a date picker.' }) +
+        '</div>' +
+        f('File name', 'policies.' + k + '.slug', { hint: 'Changing this moves a live URL. Do not change it without a redirect.' }) +
+        f('Browser tab title', 'policies.' + k + '.metaTitle') +
+        f('Search description', 'policies.' + k + '.metaDescription', { type: 'textarea', rows: 2 }) +
+        '<div class="subgrp"><div class="lbl">Sections</div>' +
+        listEditor('policies.' + k + '.sections', 'policySection', (path) =>
+          f('Heading', path + '.heading', { hint: 'Leave blank for an intro paragraph with no heading.' }) +
+          f('Body', path + '.body', { type: 'textarea', rows: 8, hint: 'Blank line starts a new paragraph. A block of lines each starting "- " becomes a bullet list. **bold**, *italic*, [link](url) and `code` all work.' }),
+          'Add section') +
+        '</div>');
+    }).join('');
+    return warn + cards;
+  }
+
   function secOverlay() {
     const ov = S.data.overlay || {};
     const enabled = ov.enabled;
@@ -944,7 +974,8 @@
     dashboard: secDashboard,
     home: secHome, products: secProducts, recipes: secRecipes, posts: secPosts,
     faq: secFaq, testimonials: secTestimonials, brand: secBrand, seo: secSeo,
-    media: secMedia, settings: secSettings, overlay: secOverlay, currencies: secCurrencies
+    media: secMedia, settings: secSettings, overlay: secOverlay, currencies: secCurrencies,
+    policies: secPolicies
   };
 
   function render(sec) {
@@ -1174,9 +1205,12 @@
     const map = {
       'index.html': SOKTemplates.renderIndex, 'products.html': SOKTemplates.renderProducts,
       'recipes.html': SOKTemplates.renderRecipes, 'blogs.html': SOKTemplates.renderBlogs,
-      '404.html': SOKTemplates.render404,
-      'privacy-policy.html': SOKTemplates.renderPrivacyPolicy
+      '404.html': SOKTemplates.render404
     };
+    // Every policy page previews through the one shared renderer.
+    Object.keys(S.data.policies || {}).forEach(function (k) {
+      map[S.data.policies[k].slug] = function (d) { return SOKTemplates.renderPolicyPage(d, k); };
+    });
     try {
       let html = map[file](S.data);
       const base = (S.demo && location.protocol !== 'file:') ? location.href.replace(/admin\.html.*$/, '') : siteUrl() + '/';

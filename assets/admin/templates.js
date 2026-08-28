@@ -69,6 +69,9 @@
     });
     out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     out = out.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+    // `code` for literal names such as browser storage keys. Additive: no
+    // existing copy contains a backtick, so no current output changes.
+    out = out.replace(/`([^`\n]+)`/g, '<code>$1</code>');
     return out;
   }
 
@@ -142,7 +145,9 @@
     var s = String(ref == null ? '' : ref), hash = '', i = s.indexOf('#');
     if (i !== -1) { hash = s.slice(i); s = s.slice(0, i); }
     if (PAGE_PATHS[s] !== undefined) return PAGE_PATHS[s] + hash;
-    return (s.charAt(0) === '/' ? s : '/' + s) + hash;
+    // Any other root-level .html resolves extensionless too, so a page added
+    // through the data (a policy) matches the scheme with no map entry.
+    return (s.charAt(0) === '/' ? s : '/' + s).replace(/\.html$/, '') + hash;
   }
   // Root-relative path for an asset that lives at the site root.
   function asset(p) { return '/' + String(p == null ? '' : p).replace(/^\/+/, ''); }
@@ -395,6 +400,10 @@
       '        <li><a href="' + pageUrl('recipes.html') + '">Recipes</a></li>\n' +
       '        <li><a href="' + pageUrl('blogs.html') + '">Blog</a></li>\n' +
       '        <li><a href="' + pageUrl('index.html#faq') + '">FAQ</a></li>\n' +
+      Object.keys(data.policies || {}).map(function (k) {
+        var pol = data.policies[k];
+        return '        <li><a href="' + pageUrl(pol.slug) + '">' + esc(pol.title) + '</a></li>';
+      }).join('\n') + (Object.keys(data.policies || {}).length ? '\n' : '') +
       '      </ul>\n    </div>\n' +
       '    <div>\n      <h3>Order &amp; Contact</h3>\n      <ul>\n' +
       '        <li><a href="tel:' + esc(b.phoneTel) + '">' + esc(b.phoneDisplay) + '</a></li>\n' +
@@ -979,11 +988,32 @@
       footer(data, '404');
   }
 
-  function renderPrivacyPolicy(data) {
+  // Body for one policy section. Blank lines separate paragraphs; a block whose
+  // every line starts with "- " becomes a list. Kept separate from bodyToHtml so
+  // blog rendering is untouched.
+  function policyBody(brand, body) {
+    var blocks = String(body || '').replace(/\r\n/g, '\n').split(/\n\s*\n/);
+    return blocks.map(function (blk) {
+      blk = blk.trim();
+      if (!blk) return '';
+      var lines = blk.split('\n');
+      var allBullets = lines.every(function (l) { return /^-\s+/.test(l.trim()); });
+      if (allBullets) {
+        return '      <ul>\n' + lines.map(function (l) {
+          return '        <li>' + inlineMd(brand, l.trim().replace(/^-\s+/, '')) + '</li>';
+        }).join('\n') + '\n      </ul>';
+      }
+      return '      <p>' + inlineMd(brand, blk.replace(/\n/g, ' ')) + '</p>';
+    }).filter(Boolean).join('\n');
+  }
+
+  // One renderer for every policy page, driven entirely by data.policies[key].
+  function renderPolicyPage(data, key) {
     var b = data.brand;
-    var url = b.siteUrl + pageUrl('privacy-policy.html');
-    var lastUpdated = longDate(data.seo && data.seo.privacyLastUpdated);
-    var jsonLd = ld({ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: url, publisher: { '@type': 'Organization', name: b.name } });
+    var p = (data.policies || {})[key];
+    if (!p) return '';
+    var url = b.siteUrl + pageUrl(p.slug);
+    var jsonLd = ld({ '@context': 'https://schema.org', '@type': 'WebPage', name: p.title, url: url, publisher: { '@type': 'Organization', name: b.name } });
     var gaBlock = b.gaId
       ? '  <script async src="https://www.googletagmanager.com/gtag/js?id=' + esc(b.gaId) + '"></script>\n' +
         '  <script>\n    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}\n' +
@@ -991,39 +1021,33 @@
       : '';
     return '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n' +
       '  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
-      '  <title>Privacy Policy | ' + esc(b.name) + '</title>\n' +
-      '  <meta name="description" content="Privacy policy for ' + esc(b.name) + '. How we collect, use and protect your information.">\n' +
+      '  <title>' + esc(p.metaTitle || (p.title + ' | ' + b.name)) + '</title>\n' +
+      '  <meta name="description" content="' + esc(p.metaDescription || '') + '">\n' +
       '  <meta name="robots" content="index, follow">\n' +
       '  <link rel="canonical" href="' + esc(url) + '">\n' +
       '  <meta property="og:type" content="website">\n' +
-      '  <meta property="og:title" content="Privacy Policy | ' + esc(b.name) + '">\n' +
+      '  <meta property="og:title" content="' + esc(p.metaTitle || p.title) + '">\n' +
+      '  <meta property="og:description" content="' + esc(p.metaDescription || '') + '">\n' +
       '  <meta property="og:url" content="' + esc(url) + '">\n' +
       '  <link rel="icon" type="image/webp" href="' + esc(asset(b.favicon)) + '">\n' +
       '  <link rel="stylesheet" href="/assets/css/style.css">\n' +
       gaBlock +
       jsonLd + '\n</head>\n' +
       header(data, '') +
-      '\n<main id="main">\n' + breadcrumbs('Privacy Policy') +
+      '\n<main id="main">\n' + breadcrumbs(p.title) +
       '\n  <section style="padding-top:24px;">\n    <div class="container" style="max-width:760px;">\n' +
-      '      <h1>Privacy Policy</h1>\n' +
-      '      <p style="color:var(--muted);font-size:14px;">Last updated: ' + esc(lastUpdated) + '</p>\n\n' +
-      '      <h2>Who we are</h2>\n' +
-      '      <p>' + esc(b.name) + ' sells premium Kashmiri Mongra saffron and related products online. Our website is <a href="' + esc(b.siteUrl) + '">' + esc(b.siteUrl) + '</a>.</p>\n\n' +
-      '      <h2>What information we collect</h2>\n' +
-      '      <p>We collect your <strong>email address</strong> only if you voluntarily subscribe through the opt-in form on this website. We also store a short random reference code in your browser, for example IG-K4M2. It tells us which page or channel an order came from and lets us recognise a repeat order. It holds no name, no email address and no location, and it reaches us only inside a WhatsApp message that you choose to send. Orders placed via WhatsApp are handled through WhatsApp\'s own platform.</p>\n\n' +
-      '      <h2>How we use your information</h2>\n' +
-      '      <p>Your email address is used solely to send you occasional promotional emails: discount offers, new product announcements, and saffron guides. We will never sell, rent, or share your email address with third parties for their own marketing.</p>\n\n' +
-      '      <h2>Email service provider</h2>\n' +
-      '      <p>We use <strong>Mailchimp</strong> (The Rocket Science Group LLC, USA) to manage our mailing list and send emails. Your email address is stored on Mailchimp\'s servers. You can read <a href="https://mailchimp.com/legal/privacy/" target="_blank" rel="noopener">Mailchimp\'s privacy policy</a>.</p>\n\n' +
-      '      <h2>Your rights</h2>\n' +
-      '      <p>You may <strong>unsubscribe at any time</strong> via the link in any email we send. To request access to, correction of, or deletion of your data, email us at <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a>.</p>\n\n' +
-      (b.gaId
-        ? '      <h2>Analytics</h2>\n      <p>We use Google Analytics to understand how visitors use this site. It uses cookies to collect anonymous usage data. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out add-on</a>.</p>\n\n'
-        : '') +
-      '      <h2>Contact</h2>\n' +
-      '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a' + waAttrs(b) + ' data-wa-pos="contact" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
+      '      <h1>' + esc(p.title) + '</h1>\n' +
+      '      <p style="color:var(--muted);font-size:14px;">Last updated: ' + esc(p.lastUpdated) + '</p>\n\n' +
+      (p.sections || []).map(function (sec) {
+        return (sec.heading ? '      <h2>' + esc(sec.heading) + '</h2>\n' : '') + policyBody(b, sec.body);
+      }).join('\n\n') + '\n' +
       '    </div>\n  </section>\n</main>\n\n' +
-      footer(data, 'privacy-policy');
+      footer(data, key);
+  }
+
+  // Named entry point kept because the admin preview map calls it.
+  function renderPrivacyPolicy(data) {
+    return renderPolicyPage(data, 'privacy');
   }
 
   function renderSitemap(data, dateStr) {
@@ -1045,7 +1069,9 @@
       data.products.map(function (p) { return url(productUrl(data.brand, p), 'monthly', '0.8'); }).join('\n') + '\n' +
       url(u + pageUrl('recipes.html'), 'monthly', '0.8') + '\n' +
       url(u + pageUrl('blogs.html'), 'monthly', '0.8') + '\n' +
-      url(u + pageUrl('privacy-policy.html'), 'yearly', '0.3') + '\n' +
+      Object.keys(data.policies || {}).map(function (k) {
+        return url(u + pageUrl(data.policies[k].slug), 'yearly', '0.3');
+      }).join('\n') + '\n' +
       '</urlset>\n';
   }
 
@@ -1084,7 +1110,11 @@
       '- [Home](' + u + pageUrl('index.html') + '): Products, ordering information, FAQ, and the brand story.\n' +
       '- [Products](' + u + pageUrl('products.html') + '): ' + catalogue + '\n' +
       '- [Recipes](' + u + pageUrl('recipes.html') + '): Tested saffron recipes: ' + recipeNames + '.\n' +
-      '- [Blog](' + u + pageUrl('blogs.html') + '): Guides: ' + postTitles + '.\n';
+      '- [Blog](' + u + pageUrl('blogs.html') + '): Guides: ' + postTitles + '.\n' +
+      Object.keys(data.policies || {}).map(function (k) {
+        var pol = data.policies[k];
+        return '- [' + pol.title + '](' + u + pageUrl(pol.slug) + '): ' + pol.metaDescription;
+      }).join('\n') + '\n';
   }
 
   /* ---------- public API ---------- */
@@ -1097,9 +1127,12 @@
       'blogs.html': renderBlogs(data),
       '404.html': render404(data),
       'sitemap.xml': renderSitemap(data),
-      'llms.txt': renderLlms(data),
-      'privacy-policy.html': renderPrivacyPolicy(data)
+      'llms.txt': renderLlms(data)
     };
+    // Every policy page comes from the same renderer, keyed by its slug.
+    Object.keys(data.policies || {}).forEach(function (k) {
+      out[data.policies[k].slug] = renderPolicyPage(data, k);
+    });
     (data.products || []).forEach(function (p) {
       out[productPath(p) + 'index.html'] = renderProductDetail(data, p);
     });
@@ -1114,6 +1147,7 @@
     renderRecipes: renderRecipes, renderBlogs: renderBlogs,
     render404: render404, renderSitemap: renderSitemap,
     renderLlms: renderLlms, renderPrivacyPolicy: renderPrivacyPolicy,
+    renderPolicyPage: renderPolicyPage,
     renderOverlayHtml: renderOverlayHtml, renderAll: renderAll,
     socialIconNames: socialIconNames
   };

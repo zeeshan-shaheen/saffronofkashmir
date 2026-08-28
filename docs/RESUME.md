@@ -32,6 +32,10 @@ Read this section before touching any copy.
   28 Aug 2026 for exactly this reason: it sat beside the FSSAI
   number in the footer bottom and the two read together as a
   registered business address.
+- **The site publishes no business address, deliberately. Do not add
+  one, and do not infer one from the FSSAI registration.** The Terms
+  page Seller Details block carries name, FSSAI number, email and
+  phone only. This has been decided and reversed once already.
 - **Not published, deliberately:** brand.legalName and
   brand.registeredAddress were removed from site-data.json and are
   absent from JSON-LD. Organization.name stays "Saffron of Kashmir"
@@ -117,6 +121,26 @@ nothing visibly breaks.
   saffron in Pampore for three generations, and Saffron of Kashmir
   was founded in 2026. brand.foundingYear 2026 also renders as
   JSON-LD foundingDate. No copy implies the brand itself is older.
+- Four policy pages, 29 Aug 2026: Terms and Conditions (/terms),
+  Shipping Policy (/shipping-policy), Returns Policy
+  (/returns-policy) and Privacy Policy (/privacy-policy). All four
+  share one renderPolicyPage(data, key) driven by the policies
+  object in site-data.json. renderPrivacyPolicy() is now a thin
+  delegate kept only because the admin preview map calls it by name.
+  Do not add a second way to render a policy page.
+  Editable in the admin under "Policy pages". Build now writes 17
+  files, not 14.
+  - **There is no GDPR page on purpose.** The Terms exclude the
+    European Union and the United Kingdom, so the GDPR does not
+    apply and a GDPR page would imply a market we do not serve.
+  - The Privacy Policy is written to the Digital Personal Data
+    Protection Act 2023 and the DPDP Rules 2025, with a named
+    Grievance Officer.
+  - Policy contact is care@saffronofkashmir.com, which is NOT
+    brand.email (info@). See open items.
+  - pageUrl() now strips .html from any root-level page not in
+    PAGE_PATHS, so a policy added through the admin gets an
+    extensionless URL without a code change.
 - **404 now calls footer(data, '404').** It previously had no footer
   at all: no navigation, no contact details, no copyright, no FSSAI
   line, no WhatsApp links. It went from 794 bytes to ~11.5 KB.
@@ -216,6 +240,18 @@ nothing visibly breaks.
   orders/enquiries distinction, although routing treats that line as
   support. One admin field edit if wanted.
 - Confirm 2026 is the correct registration year for foundingDate.
+- The policy pages give care@saffronofkashmir.com as the contact,
+  but brand.email is info@saffronofkashmir.com and that is what the
+  footer, contact strip and JSON-LD use. Two addresses are now
+  published. Decide which is correct and align them.
+- The Terms page has not been read by a lawyer or CA in India. It
+  was drafted to supplied facts and is not legal advice.
+- footer.about says "Kashmiri Mongra saffron from Pampore" and
+  renders in the footer on every page; brand.tagline says "Pampore,
+  Kashmir" beside the logo in the header. Both are product-origin
+  copy, not an address, but they do put Pampore in site chrome
+  rather than in product and story copy alone. Flagged 29 Aug 2026,
+  not changed.
 
 ## Accepted risks - do not re-litigate
 - Admin panel is publicly reachable at /admin and /admin.html.
