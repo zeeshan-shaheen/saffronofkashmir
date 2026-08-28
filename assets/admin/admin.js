@@ -437,7 +437,6 @@
       card('🦶', 'Footer',
         f('About text', 'footer.about', { type: 'textarea' }) +
         '<div class="grid2">' +
-        f('Location line', 'footer.locationLine', { hint: 'Shown as “© YEAR ' + A(d.brand.name) + ' … · location”. The year updates automatically.' }) +
         f('Right-hand line', 'footer.bottomRight') +
         '</div>');
   }

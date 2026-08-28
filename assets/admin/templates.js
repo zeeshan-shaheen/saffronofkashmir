@@ -407,7 +407,7 @@
       '      </ul>\n    </div>\n' +
       '  </div>\n' +
       '  <div class="container footer-bottom">\n' +
-      '    <span>© ' + year + ' ' + esc(b.name) + '. All rights reserved. · ' + esc(f.locationLine) +
+      '    <span>© ' + year + ' ' + esc(b.name) + '. All rights reserved.' +
       // Empty values render nothing at all, rather than a stranded label.
       (b.fssaiNumber ? ' · FSSAI Registration No. ' + esc(b.fssaiNumber) : '') + '</span>\n' +
       '    <span>' + esc(f.bottomRight) + '</span>\n' +
@@ -975,7 +975,8 @@
       '    <p class="section-sub" style="margin:0 auto 24px;">' + esc(n.text) + '</p>\n' +
       '    <p>\n      <a class="btn btn-primary" href="' + esc(pageUrl(n.primary.href)) + '">' + esc(n.primary.label) + '</a>\n' +
       '      &nbsp;\n      <a class="btn btn-outline" href="' + esc(pageUrl(n.secondary.href)) + '">' + esc(n.secondary.label) + '</a>\n' +
-      '    </p>\n  </div>\n</main>\n</body>\n</html>\n';
+      '    </p>\n  </div>\n</main>\n\n' +
+      footer(data, '404');
   }
 
   function renderPrivacyPolicy(data) {
