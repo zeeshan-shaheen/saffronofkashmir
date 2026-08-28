@@ -13,6 +13,8 @@
     "phoneDisplay": "+91 7006 603060",
     "phoneTel": "+917006603060",
     "whatsappNumber": "971522613060",
+    "whatsappIndia": "917006603060",
+    "whatsappUae": "971522613060",
     "whatsappNumbers": [
       {
         "market": "UAE & Middle East",
@@ -55,6 +57,7 @@
         "url": "https://www.threads.net/@saffron_of_kashmir"
       }
     ],
+    "fssaiNumber": "21026111000535",
     "foundingYear": "2026",
     "orgDescription": "Premium Kashmiri Mongra saffron, harvested in Pampore, Kashmir.",
     "gaId": "G-9569ES4LBP",
@@ -108,16 +111,16 @@
   "seo": {
     "privacyLastUpdated": "2026-08-09",
     "home": {
-      "title": "Saffron of Kashmir | Buy Pure Mongra Saffron from Pampore - UAE Delivery",
-      "description": "Buy authentic Kashmiri Mongra saffron direct from Pampore. ISO 3632 Category I, NABL-accredited lab report. Order on WhatsApp - 48hr UAE delivery, from AED 65.",
+      "title": "Saffron of Kashmir | Buy Pure Mongra Saffron from Pampore",
+      "description": "Buy authentic Kashmiri Mongra saffron direct from Pampore. ISO 3632 Category I, NABL-accredited lab report. Order on WhatsApp, from AED 65.",
       "ogTitle": "Saffron of Kashmir | Pure Mongra Saffron from Pampore",
-      "ogDescription": "Authentic Kashmiri Mongra saffron. ISO 3632 Category I. 48hr UAE delivery via WhatsApp."
+      "ogDescription": "Authentic Kashmiri Mongra saffron, grown and packed in Pampore. ISO 3632 Category I. Order on WhatsApp."
     },
     "products": {
       "title": "Products - Pure Mongra Saffron, Honey, Oil & Kahwa | Saffron of Kashmir",
-      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Category I. 48hr UAE delivery.",
+      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Category I. Order on WhatsApp.",
       "ogTitle": "Products - Pure Mongra Saffron | Saffron of Kashmir",
-      "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Category I. UAE delivery in 48 hours."
+      "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Category I. Grown and packed in Pampore."
     },
     "recipes": {
       "title": "Saffron Recipes - Kahwa, Zafrani Pulao, Machboos & More | Saffron of Kashmir",
@@ -135,7 +138,7 @@
   "hero": {
     "eyebrow": "Pampore, Kashmir · Three generations of saffron farming",
     "title": "Pure Mongra Saffron, Direct from Pampore to Your Door",
-    "lead": "Only the crimson stigma tips, independently tested to ISO 3632 Category I, packed at origin in Pampore, stocked and dispatched from Dubai, and delivered anywhere in the UAE within 48 hours.",
+    "lead": "Only the crimson stigma tips, independently tested to ISO 3632 Category I, grown, harvested and packed in Pampore.",
     "primaryCta": {
       "label": "Shop Saffron - from AED 65",
       "href": "/products"
@@ -143,8 +146,8 @@
     "waCtaLabel": "Order on WhatsApp",
     "points": [
       "ISO 3632 Category I",
-      "48hr UAE delivery",
-      "Free delivery over AED 120",
+      "Grown and packed in Pampore",
+      "Free delivery in India over INR 4000",
       "No minimum order"
     ],
     "image": "slider4-1.webp",
@@ -162,7 +165,7 @@
       {
         "icon": "⛰️",
         "title": "Direct from Pampore",
-        "text": "No middlemen. The saffron comes from our own family's fields in Pampore, J&K, harvested and packed within 48 hours."
+        "text": "No middlemen. The saffron comes from our own family's fields in Pampore, J&K."
       },
       {
         "icon": "🔬",
@@ -170,19 +173,19 @@
         "text": "Independently tested to ISO 3632 by the India International Kashmir Saffron Trading Centre (IIKSTC), Pampore - NABL TC-9209. Report available on request."
       },
       {
-        "icon": "🇦🇪",
-        "title": "UAE Delivery in 48 Hours",
-        "text": "Order via WhatsApp, receive your saffron within 48 hours anywhere in the UAE. Free delivery over AED 120."
+        "icon": "🇮🇳",
+        "title": "India Delivery in 3-5 Days",
+        "text": "Order via WhatsApp. Delivery takes 3-5 business days across India. Free delivery on orders over INR 4000."
       },
       {
-        "icon": "🇮🇳",
-        "title": "PAN India Delivery in 3-5 Days",
-        "text": "Order via WhatsApp, receive your saffron within 3-5 days PAN India. Free delivery over INR 4000."
+        "icon": "🇦🇪",
+        "title": "UAE and Middle East Delivery in 4-6 Days",
+        "text": "4-6 days in transit. Customs clearance times vary by country and are outside our control."
       },
       {
         "icon": "🌐",
-        "title": "International Delivery in 4-6 Days",
-        "text": "Order via WhatsApp, receive your saffron within 4-6 days worldwide. Free delivery over USD 120."
+        "title": "Rest of World Delivery in 4-6 Days",
+        "text": "4-6 days in transit. Customs clearance times vary by country and are outside our control."
       }
     ]
   },
@@ -308,7 +311,7 @@
         },
         {
           "label": "Delivery",
-          "value": "48hr UAE delivery"
+          "value": "3-5 days India, 4-6 days international"
         }
       ],
       "compare": {
@@ -380,15 +383,15 @@
     "steps": [
       {
         "title": "Message us on WhatsApp",
-        "text": "Tap any order button. Your message is pre-filled with the product name. Tell us your delivery address in the UAE."
+        "text": "Tap any order button. Your message is pre-filled with the product name. Tell us your delivery address."
       },
       {
         "title": "We confirm your order",
         "text": "We confirm availability, total price, and payment details on WhatsApp, then dispatch your order."
       },
       {
-        "title": "Delivered within 48 hours",
-        "text": "Your saffron arrives sealed in its airtight tin, anywhere in the UAE. Free delivery on orders over AED 120."
+        "title": "Delivered to your door",
+        "text": "Your saffron arrives sealed in its airtight tin. Delivery takes 3-5 business days in India and 4-6 days elsewhere."
       }
     ]
   },
@@ -397,7 +400,7 @@
     "heading": "The Story of Mongra",
     "paragraphs": [
       "Deep in the Karewa plateau of Pampore - just south of Srinagar - the saffron crocus has bloomed every October for centuries. Kashmir produces around 90% of India's saffron, and Pampore is its centre. Its terroir is irreplaceable: clay-rich, well-drained soil, sharp autumn nights, and dawn mists from Dal Lake.",
-      "Our family has farmed saffron in Pampore for three generations. We source Mongra grade exclusively - only the deep-red stigma tips, separated by hand from the yellow style."
+      "Our family has farmed saffron in Pampore for three generations. Saffron of Kashmir was founded in 2026 to sell that saffron direct. We sell Mongra grade exclusively - only the deep-red stigma tips, separated by hand from the yellow style."
     ],
     "image": "slider2.webp",
     "imageAlt": "Saffron crocus fields in Pampore, Kashmir at dawn",
@@ -415,11 +418,6 @@
       },
       {
         "stars": 5,
-        "quote": "“Ordered at 9pm, arrived next day. The aroma filled my kitchen from across the room. I will never go back to supermarket saffron.”",
-        "name": "Omer Nimer , Dubai"
-      },
-      {
-        "stars": 5,
         "quote": "“I use it in our restaurant's biryani. Our guests specifically ask what saffron we use. Worth every dirham.”",
         "name": "Rajesh Nair, Sharjah"
       }
@@ -430,8 +428,8 @@
     "heading": "Frequently Asked Questions",
     "items": [
       {
-        "q": "How fast is delivery in the UAE?",
-        "a": "Delivery anywhere in the UAE takes up to 48 hours. We dispatch your order after you confirm it on WhatsApp, and delivery is free on orders over AED 120. There is no minimum order."
+        "q": "How fast is delivery?",
+        "a": "Delivery takes 3-5 business days in India, and 4-6 days for the UAE, the Middle East and the rest of the world. We send your order once you confirm it on WhatsApp. Delivery is free in India on orders over INR 4000. There is no minimum order. Customs duties or import charges, where they apply, are payable by the recipient."
       },
       {
         "q": "How do I place an order?",
@@ -450,12 +448,12 @@
         "a": "Use 8-15 threads for most dishes serving 2-4 people. Always bloom them first in warm (not boiling) liquid for 10-20 minutes to draw out the colour and aroma. See [our recipes](/recipes) for exact amounts per dish."
       },
       {
-        "q": "Do you deliver outside the UAE?",
-        "a": "Yes. We ship worldwide from Kashmir. Across the Middle East and the UAE within 48 hours, PAN India in 3-5 days (free over INR 4000), and the rest of the world in 4-6 days (free over USD 120). Message us on WhatsApp with your location for the rate."
+        "q": "Do you deliver internationally?",
+        "a": "Yes. Delivery takes 3-5 business days in India, and 4-6 days for the UAE, the Middle East and the rest of the world. Message us on WhatsApp with your location for the rate. Customs duties or import charges, where they apply, are payable by the recipient."
       },
       {
         "q": "Where does your saffron come from?",
-        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district. Kashmir produces around 90% of India's saffron. We work directly with Pampore farming families, buying only the deep-red stigma tips. The saffron comes from our own family's farming in Pampore."
+        "a": "All our saffron is Mongra grade grown in Pampore, in Kashmir's Pulwama district. Kashmir produces around 90% of India's saffron. The saffron comes from our own family's fields in Pampore, and we take only the deep-red stigma tips."
       },
       {
         "q": "How much does Kashmiri Mongra saffron cost?",
@@ -474,8 +472,8 @@
     "bottomRight": "Premium Kashmiri Mongra Saffron - ISO 3632 Category I"
   },
   "productsPage": {
-    "h1": "Buy Kashmiri Mongra Saffron, UAE Delivery",
-    "sub": "Every product starts with the same ingredient: pure Mongra grade saffron from Pampore. Order on WhatsApp - 48hr UAE delivery, free over AED 120.",
+    "h1": "Buy Kashmiri Mongra Saffron from Pampore",
+    "sub": "Every product starts with the same ingredient: pure Mongra grade saffron from Pampore. Order on WhatsApp.",
     "filters": [
       {
         "key": "saffron",
@@ -521,7 +519,7 @@
         {
           "icon": "🚚",
           "title": "Delivery",
-          "text": "Delivered anywhere in the UAE within 48 hours. Free delivery on orders over AED 120."
+          "text": "India: 3-5 business days, free over INR 4000. UAE and Middle East: 4-6 days in transit. Rest of world: 4-6 days in transit. Customs clearance times vary by country and are outside our control. Customs duties or import charges, where they apply, are payable by the recipient."
         },
         {
           "icon": "💬",
@@ -727,7 +725,7 @@
     ],
     "sidebar": {
       "orderHeading": "Order Mongra Saffron",
-      "orderText": "Pure Kashmiri Mongra grade. ISO 3632 Category I. 48hr UAE delivery.",
+      "orderText": "Pure Kashmiri Mongra grade. ISO 3632 Category I. Grown and packed in Pampore.",
       "priceAmount": 65,
       "priceUnit": "/ 1g tin",
       "waLabel": "Order on WhatsApp",

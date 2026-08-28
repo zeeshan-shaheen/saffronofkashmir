@@ -638,13 +638,20 @@
         imgField('Favicon (browser-tab icon)', 'brand.favicon') +
         imgField('Social-share image', 'brand.ogImage', { hint: 'Shown when the site is shared on WhatsApp, Facebook, etc. Ideal size 1200×630.' }) +
         f('Founding year', 'brand.foundingYear') +
+        f('FSSAI registration number', 'brand.fssaiNumber', { placeholder: '21026111000535', hint: 'Shown in the footer as “FSSAI Registration No. …”. Leave blank to hide the line entirely.' }) +
         f('Company description for Google', 'brand.orgDescription', { type: 'textarea', rows: 2 })) +
       card('📞', 'Contact details',
         '<div class="grid2">' +
         f('Phone as displayed', 'brand.phoneDisplay', { placeholder: '+91 7006 603060' }) +
         f('Phone for tap-to-call', 'brand.phoneTel', { placeholder: '+917006603060', hint: 'Digits with country code, no spaces.' }) +
         '</div>' +
-        f('WhatsApp number (primary, used in all order buttons)', 'brand.whatsappNumber', { placeholder: '917006603060', hint: 'Country code + number, digits only — used in every WhatsApp button.' }) +
+        '<div class="subgrp"><div class="lbl">WhatsApp order routing</div>' +
+        '<div class="grid2">' +
+        f('India number (orders and support)', 'brand.whatsappIndia', { placeholder: '917006603060', hint: 'Digits with country code, no spaces. This is the link everyone gets before JavaScript runs.' }) +
+        f('UAE and Middle East number (enquiries and support)', 'brand.whatsappUae', { placeholder: '971522613060', hint: 'Digits with country code, no spaces. Used for visitors detected outside India.' }) +
+        '</div>' +
+        '<div class="hint">Order buttons load with the India number. Visitors detected in the UAE, Saudi, Qatar, Oman, Kuwait or Bahrain, or who pick AED, SAR, QAR or OMR in the currency menu, get the UAE number instead.</div></div>' +
+        f('WhatsApp number (fallback if the two above are blank)', 'brand.whatsappNumber', { placeholder: '917006603060', hint: 'Country code + number, digits only.' }) +
         '<div class="subgrp"><div class="lbl">WhatsApp numbers for contact display</div>' +
         rowsEditor('brand.whatsappNumbers',
           [{ key: 'market', label: 'Market label', w: '200px', placeholder: 'UAE & Middle East' }, { key: 'number', label: 'Number (digits only)', placeholder: '971522613060' }],

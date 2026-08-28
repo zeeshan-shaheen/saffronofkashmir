@@ -20,8 +20,35 @@
       .replace(/"/g, '&quot;');
   }
 
+  // Resolve the two routing numbers. Explicit brand fields win; the
+  // whatsappNumbers list is the fallback so an older data file still works.
+  function waNumbers(brand) {
+    var list = brand.whatsappNumbers || [];
+    function byMarket(re) {
+      for (var i = 0; i < list.length; i++) {
+        if (re.test(list[i].market || '')) return list[i].number;
+      }
+      return null;
+    }
+    return {
+      india: brand.whatsappIndia || byMarket(/india/i) || brand.whatsappNumber,
+      uae: brand.whatsappUae || byMarket(/uae|middle east|gulf/i) || brand.whatsappNumber
+    };
+  }
+
+  // India is the static href so the link works with JavaScript disabled.
   function waUrl(brand, text) {
-    return 'https://wa.me/' + brand.whatsappNumber + '?text=' + encodeURIComponent(text || brand.defaultWaText);
+    return 'https://wa.me/' + waNumbers(brand).india + '?text=' + encodeURIComponent(text || brand.defaultWaText);
+  }
+
+  // href plus both routed URLs as data attributes, for main.js to swap between.
+  // Pure: no DOM, no branching on browser state.
+  function waAttrs(brand, text) {
+    var n = waNumbers(brand);
+    var msg = encodeURIComponent(text || brand.defaultWaText);
+    var inUrl = 'https://wa.me/' + n.india + '?text=' + msg;
+    var aeUrl = 'https://wa.me/' + n.uae + '?text=' + msg;
+    return ' href="' + esc(inUrl) + '" data-wa-in="' + esc(inUrl) + '" data-wa-ae="' + esc(aeUrl) + '"';
   }
 
   // Inline mini-markdown: [label](url), **bold**, *em*.
@@ -32,8 +59,9 @@
       href = href.trim();
       let attrs = '';
       if (href.toLowerCase().startsWith('wa:')) {
-        href = waUrl(brand, href.slice(3));
-        attrs = ' data-wa-pos="prose" target="_blank" rel="noopener"';
+        // Routed like every other WhatsApp link: India href, both numbers as data attrs.
+        return '<a' + waAttrs(brand, href.slice(3)) +
+          ' data-wa-pos="prose" target="_blank" rel="noopener">' + label + '</a>';
       } else if (/^https?:\/\//i.test(href)) {
         attrs = ' target="_blank" rel="noopener"';
       }
@@ -203,7 +231,7 @@
     var available = pv.status === 'available';
     var label = available ? 'Order on WhatsApp' : 'Notify me when available';
     var text = available ? pv.waText : pv.notifyWaText;
-    return '<a class="btn btn-whatsapp" href="' + esc(waUrl(brand, text)) + '"' +
+    return '<a class="btn btn-whatsapp"' + waAttrs(brand, text) + +
       ' data-wa-pos="' + esc(pos || 'card') + '" data-wa-product="' + esc(pv.id || '') + '"' +
       ' target="_blank" rel="noopener">' + label + '</a>';
   }
@@ -347,7 +375,7 @@
       '    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>\n' +
       '    <div class="nav-links" id="nav-links">\n' + links + '\n    </div>\n' +
       currencySelect(b) +
-      '    <a class="btn btn-whatsapp nav-cta-desktop" href="' + esc(waUrl(b)) + '" data-wa-pos="nav" target="_blank" rel="noopener">Order Now</a>\n' +
+      '    <a class="btn btn-whatsapp nav-cta-desktop"' + waAttrs(b) + ' data-wa-pos="nav" target="_blank" rel="noopener">Order Now</a>\n' +
       '  </nav>\n</header>\n';
   }
 
@@ -375,14 +403,16 @@
         ? b.whatsappNumbers.map(function(wn) {
             return '        <li><a href="https://wa.me/' + esc(wn.number) + '?text=' + encodeURIComponent(b.defaultWaText || '') + '" data-wa-pos="footer" target="_blank" rel="noopener">WhatsApp (' + esc(wn.market) + ')</a></li>';
           }).join('\n') + '\n'
-        : '        <li><a href="' + esc(waUrl(b)) + '" data-wa-pos="footer" target="_blank" rel="noopener">Order on WhatsApp</a></li>\n') +
+        : '        <li><a' + waAttrs(b) + ' data-wa-pos="footer" target="_blank" rel="noopener">Order on WhatsApp</a></li>\n') +
       '      </ul>\n    </div>\n' +
       '  </div>\n' +
       '  <div class="container footer-bottom">\n' +
-      '    <span>© ' + year + ' ' + esc(b.name) + '. All rights reserved. · ' + esc(f.locationLine) + '</span>\n' +
+      '    <span>© ' + year + ' ' + esc(b.name) + '. All rights reserved. · ' + esc(f.locationLine) +
+      // Empty values render nothing at all, rather than a stranded label.
+      (b.fssaiNumber ? ' · FSSAI Registration No. ' + esc(b.fssaiNumber) : '') + '</span>\n' +
       '    <span>' + esc(f.bottomRight) + '</span>\n' +
       '  </div>\n</footer>\n\n' +
-      '<a class="float-wa" href="' + esc(waUrl(b)) + '" data-wa-pos="float" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
+      '<a class="float-wa"' + waAttrs(b) + ' data-wa-pos="float" target="_blank" rel="noopener" aria-label="Chat to order on WhatsApp">\n' +
       '  ' + WA_SVG + '\n</a>\n' +
       '<button class="back-top" aria-label="Back to top">↑</button>\n\n' +
       renderOverlayHtml(data, page) +
@@ -426,7 +456,16 @@
           address: { '@type': 'PostalAddress', addressCountry: 'IN', addressRegion: 'Jammu & Kashmir' },
           contactPoint: (b.whatsappNumbers && b.whatsappNumbers.length)
             ? b.whatsappNumbers.map(function(wn, i) {
-                var cp = { '@type': 'ContactPoint', contactType: 'sales', telephone: '+' + wn.number };
+                var n = waNumbers(b);
+                var isUae = wn.number === n.uae;
+                var cp = {
+                  '@type': 'ContactPoint',
+                  // The UAE line takes enquiries and support; India takes orders too.
+                  contactType: isUae ? 'customer support' : 'sales',
+                  telephone: '+' + wn.number,
+                  // Mirrors the routing lists in main.js so schema and behaviour agree.
+                  areaServed: isUae ? ['AE', 'SA', 'QA', 'OM', 'KW', 'BH'] : 'IN'
+                };
                 if (i === 0) cp.email = b.email;
                 return cp;
               })
@@ -454,7 +493,7 @@
       '        <p class="lead">' + esc(h.lead) + '</p>\n' +
       '        <div class="hero-cta">\n' +
       '          <a class="btn btn-primary" href="' + esc(pageUrl(h.primaryCta.href)) + '">' + esc(ctaLabel) + '</a>\n' +
-      '          <a class="btn btn-whatsapp" href="' + esc(waUrl(b)) + '" data-wa-pos="hero" target="_blank" rel="noopener">\n' +
+      '          <a class="btn btn-whatsapp"' + waAttrs(b) + ' data-wa-pos="hero" target="_blank" rel="noopener">\n' +
       '            ' + WA_SVG + '\n            ' + esc(h.waCtaLabel) + '\n          </a>\n' +
       '        </div>\n' +
       '        <ul class="hero-points">\n' +
@@ -901,7 +940,7 @@
       '            <h3>' + esc(sb.orderHeading) + '</h3>\n' +
       '            <p style="color:var(--muted);font-size:15px;margin:8px 0 4px;">' + esc(sb.orderText) + '</p>\n' +
       '            <div class="p-price" style="margin-bottom:12px;">' + sbPriceHtml + '</div>\n' +
-      '            <a class="btn btn-whatsapp" style="width:100%;" href="' + esc(waUrl(b, sb.waText)) + '" data-wa-pos="sidebar" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
+      '            <a class="btn btn-whatsapp" style="width:100%;"' + waAttrs(b, sb.waText) + ' data-wa-pos="sidebar" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
       '          </div>\n' +
       '          <div class="card">\n' +
       '            <h3>' + esc(sb.alsoHeading) + '</h3>\n            <ul>\n' +
@@ -981,7 +1020,7 @@
         ? '      <h2>Analytics</h2>\n      <p>We use Google Analytics to understand how visitors use this site. It uses cookies to collect anonymous usage data. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out add-on</a>.</p>\n\n'
         : '') +
       '      <h2>Contact</h2>\n' +
-      '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a href="' + esc(waUrl(b)) + '" data-wa-pos="contact" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
+      '      <p>Questions? Email <a href="mailto:' + esc(b.email) + '">' + esc(b.email) + '</a> or message us on <a' + waAttrs(b) + ' data-wa-pos="contact" target="_blank" rel="noopener">WhatsApp</a>.</p>\n' +
       '    </div>\n  </section>\n</main>\n\n' +
       footer(data, 'privacy-policy');
   }
@@ -1067,7 +1106,7 @@
   }
 
   return {
-    esc: esc, waUrl: waUrl, inlineMd: inlineMd, plainMd: plainMd,
+    esc: esc, waUrl: waUrl, waAttrs: waAttrs, waNumbers: waNumbers, inlineMd: inlineMd, plainMd: plainMd,
     productView: productView, productSlug: productSlug, productUrl: productUrl,
     renderIndex: renderIndex, renderProducts: renderProducts,
     renderProductDetail: renderProductDetail,

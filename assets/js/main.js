@@ -176,7 +176,8 @@
       src: attr.src || '',
       product: link.getAttribute('data-wa-product') || (h3 ? h3.textContent.trim() : ''),
       page_path: location.pathname,
-      position: link.getAttribute('data-wa-pos') || 'other'
+      position: link.getAttribute('data-wa-pos') || 'other',
+      wa_number: (link.getAttribute('href').match(/wa\.me\/(\d+)/) || [])[1] || ''
     });
   });
 
@@ -191,11 +192,13 @@
     });
   });
 
-  // Currency switcher
+  // Currency switcher and WhatsApp routing.
+  // One geo lookup serves both. Currency goes to sok_currency, country to
+  // sok_country. There is deliberately no second geolocation call.
   (function () {
     var PREF = 'sok_currency';
+    var COUNTRY = 'sok_country';
     var sel = document.getElementById('sok-curr');
-    if (!sel) return;
 
     var COUNTRY_MAP = {
       AE: 'AED', IN: 'INR', US: 'USD', SA: 'SAR', QA: 'QAR', OM: 'OMR',
@@ -204,7 +207,55 @@
       JO: 'USD', EG: 'USD', TR: 'USD', DE: 'USD', FR: 'USD'
     };
 
+    // The only countries routed to the UAE line. Everything else, including GB
+    // and US, goes to India. One list drives every path so they cannot disagree.
+    var UAE_COUNTRIES = { AE: 1, SA: 1, QA: 1, OM: 1, KW: 1, BH: 1 };
+
+    // Currency choice maps back to a country. USD is absent on purpose: it is
+    // the catch-all, so picking it leaves the current routing alone.
+    var CURRENCY_COUNTRY = { INR: 'IN', AED: 'AE', SAR: 'SA', QAR: 'QA', OMR: 'OM' };
+
+    // Timezone fallback for when ipapi is unreachable or over its daily cap.
+    // Resolves to real country codes so currency and routing both stay correct.
+    var TZ_COUNTRY = {
+      'Asia/Kolkata': 'IN', 'Asia/Calcutta': 'IN',
+      'Asia/Dubai': 'AE', 'Asia/Riyadh': 'SA', 'Asia/Qatar': 'QA',
+      'Asia/Muscat': 'OM', 'Asia/Kuwait': 'KW', 'Asia/Bahrain': 'BH'
+    };
+
+    function countryFromTimezone() {
+      try {
+        return TZ_COUNTRY[Intl.DateTimeFormat().resolvedOptions().timeZone] || null;
+      } catch (e) { return null; }
+    }
+
+    // Swap every routed WhatsApp href to the number for this country. Links
+    // without the data attributes (the per-market ones in the footer and the
+    // contact strip) are left alone, so both numbers stay reachable.
+    function routeWhatsApp(country) {
+      var key = UAE_COUNTRIES[country] ? 'data-wa-ae' : 'data-wa-in';
+      var n = 0;
+      document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+        var url = a.getAttribute(key);
+        if (!url) return;
+        a.setAttribute('href', url);
+        n++;
+      });
+      // The swap replaces the whole href, which drops the attribution ref.
+      // Re-stamp from the record SOK_ATTR already resolved at load.
+      var attr = SOK_ATTR.get();
+      if (attr && attr.ref) SOK_ATTR.stampAll(attr.ref);
+      return n;
+    }
+
+    function setCountry(code) {
+      if (!code) return;
+      try { localStorage.setItem(COUNTRY, code); } catch (e) { /* private mode */ }
+      routeWhatsApp(code);
+    }
+
     function getCurrData(code) {
+      if (!sel) return null;
       var opt = sel.querySelector('option[value="' + code + '"]');
       if (!opt) return null;
       return {
@@ -238,29 +289,49 @@
 
     function setAndSave(code) {
       applyRate(code);
-      localStorage.setItem(PREF, code);
+      try { localStorage.setItem(PREF, code); } catch (e) { /* private mode */ }
+    }
+
+    function resolved(country) {
+      setCountry(country);
+      if (sel) setAndSave(COUNTRY_MAP[country] || 'USD');
     }
 
     function geoDetect() {
+      var done = false;
+      function fallback() {
+        if (done) return;
+        done = true;
+        var c = countryFromTimezone();
+        if (c) resolved(c);          // otherwise fall through to the existing default
+      }
+      var timer = setTimeout(fallback, 3000);   // ipapi hung, blocked, or over its cap
       fetch('https://ipapi.co/json/')
         .then(function (r) { return r.json(); })
         .then(function (d) {
-          var code = COUNTRY_MAP[d.country_code] || 'USD';
-          setAndSave(code);
+          if (done) return;
+          if (!d || !d.country_code) throw new Error('no country in response');
+          done = true;
+          clearTimeout(timer);
+          resolved(d.country_code);
         })
-        .catch(function () { /* stay on AED default */ });
+        .catch(function () { clearTimeout(timer); fallback(); });
     }
 
-    var saved = localStorage.getItem(PREF);
-    if (saved && sel.querySelector('option[value="' + saved + '"]')) {
-      applyRate(saved);
-    } else {
-      geoDetect();
-    }
+    var savedCountry = localStorage.getItem(COUNTRY);
+    var savedCurr = localStorage.getItem(PREF);
+    if (savedCountry) routeWhatsApp(savedCountry);
+    if (savedCurr && sel && sel.querySelector('option[value="' + savedCurr + '"]')) applyRate(savedCurr);
+    if (!savedCountry || !savedCurr) geoDetect();
 
-    sel.addEventListener('change', function () {
-      setAndSave(sel.value);
-    });
+    // Manual override, reusing the control the visitor already has.
+    if (sel) {
+      sel.addEventListener('change', function () {
+        setAndSave(sel.value);
+        var c = CURRENCY_COUNTRY[sel.value];
+        if (c) setCountry(c);          // USD is unmapped, so it leaves routing as it is
+      });
+    }
   })();
 
   // First-visit discount overlay
