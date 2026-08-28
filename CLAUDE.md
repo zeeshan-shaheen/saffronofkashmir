@@ -207,7 +207,7 @@ Core site identity. Key fields:
   "phoneTel": "+917006603060",
   "whatsappNumber": "971522613060",
   "defaultWaText": "Hi! I'd like to order from Saffron of Kashmir.",
-  "email": "info@saffronofkashmir.com",
+  "email": "care@saffronofkashmir.com",
   "instagramUser": "saffron_of_kashmir",
   "foundingYear": "2004",
   "orgDescription": "...",

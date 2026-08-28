@@ -32,10 +32,13 @@ Read this section before touching any copy.
   28 Aug 2026 for exactly this reason: it sat beside the FSSAI
   number in the footer bottom and the two read together as a
   registered business address.
-- **The site publishes no business address, deliberately. Do not add
-  one, and do not infer one from the FSSAI registration.** The Terms
-  page Seller Details block carries name, FSSAI number, email and
-  phone only. This has been decided and reversed once already.
+- **No place name in the footer bottom bar, the Terms Seller Details
+  block, or any contact block.** Pampore in descriptive product or
+  brand copy is fine and expected. footer.about and brand.tagline are
+  known and accepted. The site publishes no business address
+  anywhere, deliberately. Do not add one and do not infer one from
+  the FSSAI registration. This has been decided and reversed once
+  already.
 - **Not published, deliberately:** brand.legalName and
   brand.registeredAddress were removed from site-data.json and are
   absent from JSON-LD. Organization.name stays "Saffron of Kashmir"
@@ -136,8 +139,9 @@ nothing visibly breaks.
   - The Privacy Policy is written to the Digital Personal Data
     Protection Act 2023 and the DPDP Rules 2025, with a named
     Grievance Officer.
-  - Policy contact is care@saffronofkashmir.com, which is NOT
-    brand.email (info@). See open items.
+  - brand.email was changed from info@ to care@saffronofkashmir.com
+    on 29 Aug 2026 so the footer, contact strip and JSON-LD match the
+    policy pages. One published address, not two.
   - pageUrl() now strips .html from any root-level page not in
     PAGE_PATHS, so a policy added through the admin gets an
     extensionless URL without a code change.
@@ -240,18 +244,8 @@ nothing visibly breaks.
   orders/enquiries distinction, although routing treats that line as
   support. One admin field edit if wanted.
 - Confirm 2026 is the correct registration year for foundingDate.
-- The policy pages give care@saffronofkashmir.com as the contact,
-  but brand.email is info@saffronofkashmir.com and that is what the
-  footer, contact strip and JSON-LD use. Two addresses are now
-  published. Decide which is correct and align them.
 - The Terms page has not been read by a lawyer or CA in India. It
   was drafted to supplied facts and is not legal advice.
-- footer.about says "Kashmiri Mongra saffron from Pampore" and
-  renders in the footer on every page; brand.tagline says "Pampore,
-  Kashmir" beside the logo in the header. Both are product-origin
-  copy, not an address, but they do put Pampore in site chrome
-  rather than in product and story copy alone. Flagged 29 Aug 2026,
-  not changed.
 
 ## Accepted risks - do not re-litigate
 - Admin panel is publicly reachable at /admin and /admin.html.
