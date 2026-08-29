@@ -139,9 +139,11 @@ nothing visibly breaks.
   - The Privacy Policy is written to the Digital Personal Data
     Protection Act 2023 and the DPDP Rules 2025, with a named
     Grievance Officer.
-  - brand.email was changed from info@ to care@saffronofkashmir.com
-    on 29 Aug 2026 so the footer, contact strip and JSON-LD match the
-    policy pages. One published address, not two.
+  - Contact address is info@saffronofkashmir.com throughout:
+    brand.email drives the footer, contact strip and JSON-LD, and all
+    four policy pages use the same address. One published address,
+    not two. It was briefly switched to care@ on 29 Aug 2026 and
+    reverted the same day.
   - pageUrl() now strips .html from any root-level page not in
     PAGE_PATHS, so a policy added through the admin gets an
     extensionless URL without a code change.
