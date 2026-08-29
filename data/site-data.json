@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-08-29T01:56:26.064Z"
+    "lastPublished": "2026-08-29T01:58:51.876Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -83,7 +83,7 @@
         "symbol": "₹",
         "rate": 26.02,
         "decimals": 0,
-        "markup": -40
+        "markup": -50
       },
       "SAR": {
         "name": "Saudi Riyal",
