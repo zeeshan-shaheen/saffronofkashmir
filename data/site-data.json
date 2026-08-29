@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "lastPublished": "2026-08-09T21:28:04.921Z"
+    "lastPublished": "2026-08-29T01:54:57.996Z"
   },
   "brand": {
     "name": "Saffron of Kashmir",
@@ -81,9 +81,9 @@
       "INR": {
         "name": "Indian Rupee",
         "symbol": "₹",
-        "rate": 22.73,
+        "rate": 26.02,
         "decimals": 0,
-        "markup": 0
+        "markup": -30
       },
       "SAR": {
         "name": "Saudi Riyal",
@@ -906,196 +906,196 @@
       "href": "/products"
     }
   },
-    "policies": {
-      "terms": {
-        "title": "Terms and Conditions",
-        "slug": "terms.html",
-        "lastUpdated": "29 August 2026",
-        "metaTitle": "Terms and Conditions | Saffron of Kashmir",
-        "metaDescription": "Terms of sale for Saffron of Kashmir: how orders are made, prices, liability and governing law.",
-        "sections": [
-          {
-            "heading": "",
-            "body": "These terms apply to every order placed with Saffron of Kashmir. By placing an order you agree to them."
-          },
-          {
-            "heading": "Seller details",
-            "body": "Saffron of Kashmir is a trading name. The business is operated by an individual proprietor and is not a registered company.\n\n- FSSAI Registration No. 21026111000535\n- Email: [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com)\n- WhatsApp: +91 7006603060 (India), +971 52 261 3060 (UAE and Middle East)"
-          },
-          {
-            "heading": "Grievance Officer",
-            "body": "- Name: Zeeshan\n- Email: [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com)\n\nWe acknowledge every complaint within 48 hours of receiving it, and work to resolve it within one month."
-          },
-          {
-            "heading": "What we sell",
-            "body": "Kashmiri Mongra saffron, graded ISO 3632 Category I, grown on our family's fields in Pampore, Jammu and Kashmir. We sell whole stigmas only. We do not sell powdered saffron, blends, or saffron from any other origin."
-          },
-          {
-            "heading": "Where we sell",
-            "body": "We accept orders from India, the UAE and the wider Middle East, and most other countries.\n\n**We do not sell to customers in the European Union or the United Kingdom.** Orders from those regions will be declined. If you place one and we do not notice before dispatch, we will cancel it and return your money in full."
-          },
-          {
-            "heading": "How an order is made",
-            "body": "Orders are placed over WhatsApp. Prices shown on this site are an invitation to order, not a binding offer. A contract is formed only when we confirm your order in writing and accept payment. Until then we may decline any order, for example if a size is out of stock or we cannot deliver to your address."
-          },
-          {
-            "heading": "Prices and currency",
-            "body": "Prices are set in AED and converted to other currencies on the site for convenience. Converted figures are indicative. The amount you pay is the amount we confirm to you when we accept your order. Prices can change at any time before an order is confirmed."
-          },
-          {
-            "heading": "The product",
-            "body": "Saffron is a natural agricultural product. Colour, thread length and aroma vary between harvests and between tins. This is normal and is not a defect.\n\nStore the tin sealed, away from light, heat and moisture. Saffron kept badly loses aroma quickly, and we cannot replace product that has degraded in storage after delivery."
-          },
-          {
-            "heading": "No health claims",
-            "body": "Nothing on this site is medical advice. We make no claim that saffron treats, prevents or cures any condition. Speak to a doctor before using saffron medicinally, particularly if you are pregnant or taking medication."
-          },
-          {
-            "heading": "Intellectual property",
-            "body": "The text, photographs, recipes and design on this site belong to us. You may not copy or republish them without written permission."
-          },
-          {
-            "heading": "Liability",
-            "body": "Our liability for any order is limited to the value of that order. We are not liable for indirect or consequential loss.\n\nNothing in these terms limits any right you have under the Consumer Protection Act 2019 or other law that cannot be excluded by agreement."
-          },
-          {
-            "heading": "Governing law",
-            "body": "These terms are governed by the laws of India. Courts in Jammu and Kashmir have jurisdiction over any dispute."
-          },
-          {
-            "heading": "Changes",
-            "body": "We may update these terms. The version in force is the one published here when your order is confirmed."
-          }
-        ]
-      },
-      "shipping": {
-        "title": "Shipping Policy",
-        "slug": "shipping-policy.html",
-        "lastUpdated": "29 August 2026",
-        "metaTitle": "Shipping Policy | Saffron of Kashmir",
-        "metaDescription": "Where we ship, transit times, shipping charges, and who pays customs duties on international orders.",
-        "sections": [
-          {
-            "heading": "Where we ship",
-            "body": "- India\n- UAE, Saudi Arabia, Qatar, Oman, Kuwait, Bahrain\n- Most other countries on request\n\nWe do not ship to the European Union or the United Kingdom."
-          },
-          {
-            "heading": "Processing",
-            "body": "Orders are confirmed over WhatsApp and dispatched within 2 working days of payment clearing. We send tracking details as soon as the parcel is collected."
-          },
-          {
-            "heading": "Transit times",
-            "body": "- India: 3-5 business days. Free delivery on orders over INR 4000.\n- UAE and Middle East: 4-6 days in transit.\n- Rest of world: 4-6 days in transit.\n\nTransit time is the courier's time on the road. It does not include customs clearance, which varies by country and is outside our control. Some countries hold food and plant products for inspection. Ask us before you order and we will tell you what we know about your destination."
-          },
-          {
-            "heading": "Customs, duties and taxes",
-            "body": "For orders outside India, you are the importer. Import duties, taxes and clearance charges, where they apply, are payable by you and are not included in the price you pay us.\n\nWe declare every parcel accurately. We will not under-declare the value of a shipment or describe it as a gift."
-          },
-          {
-            "heading": "Shipping charges",
-            "body": "- India: free over INR 4000, otherwise quoted at the time of order.\n- All other destinations: quoted at the time of order, based on weight and destination. We do not offer free international shipping."
-          },
-          {
-            "heading": "Your address",
-            "body": "Give us a complete address and a phone number that works in the destination country. Couriers will not deliver food shipments without a contactable recipient. If a delivery fails because the address was wrong or nobody could be reached, we will contact you to arrange a resend, and the second shipping cost is yours."
-          },
-          {
-            "heading": "Lost or damaged in transit",
-            "body": "**If a parcel is lost or damaged in transit, that is on us.** We will send a replacement at our cost. See the [Returns Policy](/returns-policy) for how to tell us."
-          }
-        ]
-      },
-      "returns": {
-        "title": "Returns Policy",
-        "slug": "returns-policy.html",
-        "lastUpdated": "29 August 2026",
-        "metaTitle": "Returns Policy | Saffron of Kashmir",
-        "metaDescription": "Returns for unopened tins within 7 days, replacements for parcels lost or damaged in transit, and what is not a defect.",
-        "sections": [
-          {
-            "heading": "",
-            "body": "Saffron is a sealed food product. What we can and cannot take back is set by food safety, not by preference."
-          },
-          {
-            "heading": "Unopened tins",
-            "body": "You may return an unopened tin with its seal intact within **7 days of delivery**.\n\nWe will send a replacement. **We do not give cash refunds.** Return shipping to us is your cost. Once we have the tin back and confirm the seal is unbroken, we dispatch the replacement at our cost."
-          },
-          {
-            "heading": "Opened tins",
-            "body": "We cannot accept a return once the seal is broken. This is a food safety rule and we do not make exceptions."
-          },
-          {
-            "heading": "Damaged in transit, or never arrived",
-            "body": "This is our problem, not yours.\n\nTell us within **48 hours of delivery** for a damaged parcel, or as soon as tracking shows a delivery that did not happen. Message [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com) or either WhatsApp number with:\n\n- your order reference\n- photographs of the outer packaging and the tin, if it arrived\n\nWe will send a replacement at our cost. We will not ask you to return a damaged tin."
-          },
-          {
-            "heading": "What is not a defect",
-            "body": "Saffron varies between harvests. Differences in colour, thread length, aroma strength and the number of threads in a given weight are normal for a natural product and are not grounds for a return.\n\nSaffron that has lost aroma after being stored open, warm, or in the light is not a defect either."
-          },
-          {
-            "heading": "Cancellations",
-            "body": "You can cancel any order before it is dispatched. Once a parcel is with the courier it cannot be cancelled."
-          },
-          {
-            "heading": "Customers outside India",
-            "body": "We do not arrange reverse pickup internationally. If you are returning an unopened tin from outside India, return shipping and any duties are yours. Tell us before you send anything back so we can confirm where to send it."
-          }
-        ]
-      },
-      "privacy": {
-        "title": "Privacy Policy",
-        "slug": "privacy-policy.html",
-        "lastUpdated": "29 August 2026",
-        "metaTitle": "Privacy Policy | Saffron of Kashmir",
-        "metaDescription": "What personal data we collect, who processes it, how long we keep it, and your rights under the DPDP Act 2023.",
-        "sections": [
-          {
-            "heading": "",
-            "body": "This policy explains what personal data we collect, why, and what you can do about it. It is written to the Digital Personal Data Protection Act 2023 and the DPDP Rules 2025.\n\nWe are the Data Fiduciary for the data described here."
-          },
-          {
-            "heading": "Who to contact",
-            "body": "- Grievance Officer: Zeeshan\n- Email: [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com)\n\nWe acknowledge every request within 48 hours and respond within 30 days."
-          },
-          {
-            "heading": "What we collect",
-            "body": "**When you order.** Your name, phone number and delivery address, given to us over WhatsApp. We need these to send you saffron. WhatsApp is operated by Meta and your messages are governed by their own privacy terms as well as this one.\n\n**When you subscribe.** Your email address, if you sign up for our discount offer. Held by Mailchimp.\n\n**When you browse.** Your approximate country, taken from your IP address by ipapi.co so we can show prices in your currency and route you to the right WhatsApp number. Plus the usual analytics on which pages you visit, how you arrived, and what device you use.\n\nWe do not collect payment card details. We do not run a checkout."
-          },
-          {
-            "heading": "Who processes it",
-            "body": "- **Google Analytics** (Google LLC): site usage statistics\n- **Meta Pixel** (Meta Platforms): advertising measurement\n- **Mailchimp** (Intuit): email list\n- **ipapi.co**: country lookup from IP address\n- **GitHub Pages and Cloudflare**: hosting and delivery, including server logs\n\nSome of these store or process data outside India."
-          },
-          {
-            "heading": "What we store in your browser",
-            "body": "Not cookies, but browser storage that does the same job:\n\n- `sok_currency` and `sok_country`: your currency and region\n- `sok_overlay_seen` and `sok_overlay_done`: whether you have seen the discount popup\n- an order reference code, generated in your browser so we can tell which orders came from where\n\nClearing your browser data removes all of these."
-          },
-          {
-            "heading": "Why we use it",
-            "body": "- To take, pack and deliver your order\n- To answer your questions\n- To send you offers, if you asked for them\n- To understand which pages and sources bring people to the site"
-          },
-          {
-            "heading": "How long we keep it",
-            "body": "- Order details: 3 years, for tax and dispute purposes\n- Email subscriptions: until you unsubscribe\n- Analytics: as long as Google and Meta retain it under their own policies"
-          },
-          {
-            "heading": "Your rights",
-            "body": "Under the DPDP Act you can:\n\n- **Access** the personal data we hold about you\n- **Correct** anything wrong or out of date\n- **Erase** your data, unless we are required by law to keep it\n- **Nominate** someone to exercise these rights if you die or become incapacitated\n- **Complain** to our Grievance Officer, and after that to the Data Protection Board of India\n\nEmail [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com) to use any of these. We will ask you to confirm who you are before we act.\n\nTo stop marketing email, use the unsubscribe link in any message we send. That works immediately and you do not need to contact us."
-          },
-          {
-            "heading": "Children",
-            "body": "This site is not intended for anyone under 18 and we do not knowingly collect data from children. If you believe we have, tell us and we will delete it."
-          },
-          {
-            "heading": "Not for EU or UK customers",
-            "body": "We do not sell to customers in the European Union or the United Kingdom, and this policy is not written to the GDPR. If you are in the EU or UK, please do not order from us."
-          },
-          {
-            "heading": "Changes",
-            "body": "We will update this page when our practices change, and change the date at the top."
-          }
-        ]
-      }
+  "policies": {
+    "terms": {
+      "title": "Terms and Conditions",
+      "slug": "terms.html",
+      "lastUpdated": "29 August 2026",
+      "metaTitle": "Terms and Conditions | Saffron of Kashmir",
+      "metaDescription": "Terms of sale for Saffron of Kashmir: how orders are made, prices, liability and governing law.",
+      "sections": [
+        {
+          "heading": "",
+          "body": "These terms apply to every order placed with Saffron of Kashmir. By placing an order you agree to them."
+        },
+        {
+          "heading": "Seller details",
+          "body": "Saffron of Kashmir is a trading name. The business is operated by an individual proprietor and is not a registered company.\n\n- FSSAI Registration No. 21026111000535\n- Email: [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com)\n- WhatsApp: +91 7006603060 (India), +971 52 261 3060 (UAE and Middle East)"
+        },
+        {
+          "heading": "Grievance Officer",
+          "body": "- Name: Zeeshan\n- Email: [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com)\n\nWe acknowledge every complaint within 48 hours of receiving it, and work to resolve it within one month."
+        },
+        {
+          "heading": "What we sell",
+          "body": "Kashmiri Mongra saffron, graded ISO 3632 Category I, grown on our family's fields in Pampore, Jammu and Kashmir. We sell whole stigmas only. We do not sell powdered saffron, blends, or saffron from any other origin."
+        },
+        {
+          "heading": "Where we sell",
+          "body": "We accept orders from India, the UAE and the wider Middle East, and most other countries.\n\n**We do not sell to customers in the European Union or the United Kingdom.** Orders from those regions will be declined. If you place one and we do not notice before dispatch, we will cancel it and return your money in full."
+        },
+        {
+          "heading": "How an order is made",
+          "body": "Orders are placed over WhatsApp. Prices shown on this site are an invitation to order, not a binding offer. A contract is formed only when we confirm your order in writing and accept payment. Until then we may decline any order, for example if a size is out of stock or we cannot deliver to your address."
+        },
+        {
+          "heading": "Prices and currency",
+          "body": "Prices are set in AED and converted to other currencies on the site for convenience. Converted figures are indicative. The amount you pay is the amount we confirm to you when we accept your order. Prices can change at any time before an order is confirmed."
+        },
+        {
+          "heading": "The product",
+          "body": "Saffron is a natural agricultural product. Colour, thread length and aroma vary between harvests and between tins. This is normal and is not a defect.\n\nStore the tin sealed, away from light, heat and moisture. Saffron kept badly loses aroma quickly, and we cannot replace product that has degraded in storage after delivery."
+        },
+        {
+          "heading": "No health claims",
+          "body": "Nothing on this site is medical advice. We make no claim that saffron treats, prevents or cures any condition. Speak to a doctor before using saffron medicinally, particularly if you are pregnant or taking medication."
+        },
+        {
+          "heading": "Intellectual property",
+          "body": "The text, photographs, recipes and design on this site belong to us. You may not copy or republish them without written permission."
+        },
+        {
+          "heading": "Liability",
+          "body": "Our liability for any order is limited to the value of that order. We are not liable for indirect or consequential loss.\n\nNothing in these terms limits any right you have under the Consumer Protection Act 2019 or other law that cannot be excluded by agreement."
+        },
+        {
+          "heading": "Governing law",
+          "body": "These terms are governed by the laws of India. Courts in Jammu and Kashmir have jurisdiction over any dispute."
+        },
+        {
+          "heading": "Changes",
+          "body": "We may update these terms. The version in force is the one published here when your order is confirmed."
+        }
+      ]
     },
+    "shipping": {
+      "title": "Shipping Policy",
+      "slug": "shipping-policy.html",
+      "lastUpdated": "29 August 2026",
+      "metaTitle": "Shipping Policy | Saffron of Kashmir",
+      "metaDescription": "Where we ship, transit times, shipping charges, and who pays customs duties on international orders.",
+      "sections": [
+        {
+          "heading": "Where we ship",
+          "body": "- India\n- UAE, Saudi Arabia, Qatar, Oman, Kuwait, Bahrain\n- Most other countries on request\n\nWe do not ship to the European Union or the United Kingdom."
+        },
+        {
+          "heading": "Processing",
+          "body": "Orders are confirmed over WhatsApp and dispatched within 2 working days of payment clearing. We send tracking details as soon as the parcel is collected."
+        },
+        {
+          "heading": "Transit times",
+          "body": "- India: 3-5 business days. Free delivery on orders over INR 4000.\n- UAE and Middle East: 4-6 days in transit.\n- Rest of world: 4-6 days in transit.\n\nTransit time is the courier's time on the road. It does not include customs clearance, which varies by country and is outside our control. Some countries hold food and plant products for inspection. Ask us before you order and we will tell you what we know about your destination."
+        },
+        {
+          "heading": "Customs, duties and taxes",
+          "body": "For orders outside India, you are the importer. Import duties, taxes and clearance charges, where they apply, are payable by you and are not included in the price you pay us.\n\nWe declare every parcel accurately. We will not under-declare the value of a shipment or describe it as a gift."
+        },
+        {
+          "heading": "Shipping charges",
+          "body": "- India: free over INR 4000, otherwise quoted at the time of order.\n- All other destinations: quoted at the time of order, based on weight and destination. We do not offer free international shipping."
+        },
+        {
+          "heading": "Your address",
+          "body": "Give us a complete address and a phone number that works in the destination country. Couriers will not deliver food shipments without a contactable recipient. If a delivery fails because the address was wrong or nobody could be reached, we will contact you to arrange a resend, and the second shipping cost is yours."
+        },
+        {
+          "heading": "Lost or damaged in transit",
+          "body": "**If a parcel is lost or damaged in transit, that is on us.** We will send a replacement at our cost. See the [Returns Policy](/returns-policy) for how to tell us."
+        }
+      ]
+    },
+    "returns": {
+      "title": "Returns Policy",
+      "slug": "returns-policy.html",
+      "lastUpdated": "29 August 2026",
+      "metaTitle": "Returns Policy | Saffron of Kashmir",
+      "metaDescription": "Returns for unopened tins within 7 days, replacements for parcels lost or damaged in transit, and what is not a defect.",
+      "sections": [
+        {
+          "heading": "",
+          "body": "Saffron is a sealed food product. What we can and cannot take back is set by food safety, not by preference."
+        },
+        {
+          "heading": "Unopened tins",
+          "body": "You may return an unopened tin with its seal intact within **7 days of delivery**.\n\nWe will send a replacement. **We do not give cash refunds.** Return shipping to us is your cost. Once we have the tin back and confirm the seal is unbroken, we dispatch the replacement at our cost."
+        },
+        {
+          "heading": "Opened tins",
+          "body": "We cannot accept a return once the seal is broken. This is a food safety rule and we do not make exceptions."
+        },
+        {
+          "heading": "Damaged in transit, or never arrived",
+          "body": "This is our problem, not yours.\n\nTell us within **48 hours of delivery** for a damaged parcel, or as soon as tracking shows a delivery that did not happen. Message [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com) or either WhatsApp number with:\n\n- your order reference\n- photographs of the outer packaging and the tin, if it arrived\n\nWe will send a replacement at our cost. We will not ask you to return a damaged tin."
+        },
+        {
+          "heading": "What is not a defect",
+          "body": "Saffron varies between harvests. Differences in colour, thread length, aroma strength and the number of threads in a given weight are normal for a natural product and are not grounds for a return.\n\nSaffron that has lost aroma after being stored open, warm, or in the light is not a defect either."
+        },
+        {
+          "heading": "Cancellations",
+          "body": "You can cancel any order before it is dispatched. Once a parcel is with the courier it cannot be cancelled."
+        },
+        {
+          "heading": "Customers outside India",
+          "body": "We do not arrange reverse pickup internationally. If you are returning an unopened tin from outside India, return shipping and any duties are yours. Tell us before you send anything back so we can confirm where to send it."
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "slug": "privacy-policy.html",
+      "lastUpdated": "29 August 2026",
+      "metaTitle": "Privacy Policy | Saffron of Kashmir",
+      "metaDescription": "What personal data we collect, who processes it, how long we keep it, and your rights under the DPDP Act 2023.",
+      "sections": [
+        {
+          "heading": "",
+          "body": "This policy explains what personal data we collect, why, and what you can do about it. It is written to the Digital Personal Data Protection Act 2023 and the DPDP Rules 2025.\n\nWe are the Data Fiduciary for the data described here."
+        },
+        {
+          "heading": "Who to contact",
+          "body": "- Grievance Officer: Zeeshan\n- Email: [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com)\n\nWe acknowledge every request within 48 hours and respond within 30 days."
+        },
+        {
+          "heading": "What we collect",
+          "body": "**When you order.** Your name, phone number and delivery address, given to us over WhatsApp. We need these to send you saffron. WhatsApp is operated by Meta and your messages are governed by their own privacy terms as well as this one.\n\n**When you subscribe.** Your email address, if you sign up for our discount offer. Held by Mailchimp.\n\n**When you browse.** Your approximate country, taken from your IP address by ipapi.co so we can show prices in your currency and route you to the right WhatsApp number. Plus the usual analytics on which pages you visit, how you arrived, and what device you use.\n\nWe do not collect payment card details. We do not run a checkout."
+        },
+        {
+          "heading": "Who processes it",
+          "body": "- **Google Analytics** (Google LLC): site usage statistics\n- **Meta Pixel** (Meta Platforms): advertising measurement\n- **Mailchimp** (Intuit): email list\n- **ipapi.co**: country lookup from IP address\n- **GitHub Pages and Cloudflare**: hosting and delivery, including server logs\n\nSome of these store or process data outside India."
+        },
+        {
+          "heading": "What we store in your browser",
+          "body": "Not cookies, but browser storage that does the same job:\n\n- `sok_currency` and `sok_country`: your currency and region\n- `sok_overlay_seen` and `sok_overlay_done`: whether you have seen the discount popup\n- an order reference code, generated in your browser so we can tell which orders came from where\n\nClearing your browser data removes all of these."
+        },
+        {
+          "heading": "Why we use it",
+          "body": "- To take, pack and deliver your order\n- To answer your questions\n- To send you offers, if you asked for them\n- To understand which pages and sources bring people to the site"
+        },
+        {
+          "heading": "How long we keep it",
+          "body": "- Order details: 3 years, for tax and dispute purposes\n- Email subscriptions: until you unsubscribe\n- Analytics: as long as Google and Meta retain it under their own policies"
+        },
+        {
+          "heading": "Your rights",
+          "body": "Under the DPDP Act you can:\n\n- **Access** the personal data we hold about you\n- **Correct** anything wrong or out of date\n- **Erase** your data, unless we are required by law to keep it\n- **Nominate** someone to exercise these rights if you die or become incapacitated\n- **Complain** to our Grievance Officer, and after that to the Data Protection Board of India\n\nEmail [info@saffronofkashmir.com](mailto:info@saffronofkashmir.com) to use any of these. We will ask you to confirm who you are before we act.\n\nTo stop marketing email, use the unsubscribe link in any message we send. That works immediately and you do not need to contact us."
+        },
+        {
+          "heading": "Children",
+          "body": "This site is not intended for anyone under 18 and we do not knowingly collect data from children. If you believe we have, tell us and we will delete it."
+        },
+        {
+          "heading": "Not for EU or UK customers",
+          "body": "We do not sell to customers in the European Union or the United Kingdom, and this policy is not written to the GDPR. If you are in the EU or UK, please do not order from us."
+        },
+        {
+          "heading": "Changes",
+          "body": "We will update this page when our practices change, and change the date at the top."
+        }
+      ]
+    }
+  },
   "overlay": {
     "enabled": true,
     "delayMs": 15000,
