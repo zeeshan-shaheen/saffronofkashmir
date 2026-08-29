@@ -45,11 +45,26 @@ saffronofkashmir/
     └── <product-slug>/index.html   one per product, slug from productSlug(p)
 ```
 
-**The build writes 14 files, not 6:** the six above, plus `sitemap.xml`, `llms.txt`,
-and one `products/<slug>/index.html` per product (currently six). The product
-subpage slug comes from `productSlug(p)` in `templates.js`, which is built from
-`baseName` + `size` with whitespace stripped, so editing either field can move a
-live URL. Check before changing them.
+**The build writes 30 files, not 6:** the six above, plus `sitemap.xml`,
+`llms.txt`, the four policy pages, one `products/<slug>/index.html` per product
+(currently six), and one `blog/<slug>/index.html` per published post (currently
+13). The product subpage slug comes from `productSlug(p)`, built from `baseName`
++ `size` with whitespace stripped. The post slug comes from `postSlug(p)`, which
+is `slugify(p.id)`. Editing either source field moves a live URL. Check first.
+
+**Posts used to be fragments and are not any more.** Until 29 Aug 2026 every post
+rendered inside a `<details>` block on `blogs.html` and was addressed as
+`/blogs#<id>`. Each post now has its own page at `/blog/<slug>/` and `blogs.html`
+is an excerpt index. **The `id="<slug>"` attribute is deliberately retained on
+each index card** so old `/blogs#<id>` links still land in the right place. Do not
+remove those ids, and do not try to add edge redirects for them: a URL fragment
+is never sent to the server, so Cloudflare cannot see or redirect it. The index
+card is the only redirect that can exist.
+
+**Drafts.** A post with `draft: true` is written but not published. `livePosts()`
+in `templates.js` is the single gate, used by the page-emission loop, the index
+cards, the index JSON-LD, the sitemap and `llms.txt`. Add any new consumer to
+that helper rather than filtering again.
 
 `/products` (the file) and `/products/` (the directory) coexist; GitHub Pages
 serves the file. NEVER create `products/index.html`.
@@ -318,9 +333,14 @@ All functions are pure (data → HTML string). No DOM, no fetch, no side effects
 | `renderIndex(data)` | index.html |
 | `renderProducts(data)` | products.html |
 | `renderRecipes(data)` | recipes.html |
-| `renderBlogs(data)` | blogs.html |
+| `renderBlogs(data)` | blogs.html, an excerpt index |
+| `renderPostPage(data, p)` | `blog/<slug>/index.html`, one per published post |
+| `livePosts(data)` | posts with `draft: true` filtered out. Single gate |
+| `blogSidebar(data)` | sidebar shared by the index and every post page |
+| `postSlug/postPath/postHref/postUrl` | post URL helpers, mirror the product ones |
 | `render404(data)` | 404.html |
-| `renderPrivacyPolicy(data)` | privacy-policy.html |
+| `renderPolicyPage(data, key)` | one policy page, driven by `data.policies[key]` |
+| `renderPrivacyPolicy(data)` | thin delegate to `renderPolicyPage(data, 'privacy')` |
 | `renderSitemap(data, dateStr)` | sitemap.xml |
 | `renderLlms(data)` | llms.txt |
 | `renderAll(data)` | Returns `{ filename: html, ... }` for all pages — both `build.js` and the admin publish loop iterate this |

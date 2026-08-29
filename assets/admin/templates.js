@@ -139,6 +139,14 @@
   function productHref(p) { return '/' + productPath(p); }                     // root-relative, trailing slash
   function productUrl(b, p) { return b.siteUrl + '/' + productPath(p); }       // absolute, trailing slash
 
+  // Post ids were written as slugs already, so this is close to a pass-through.
+  // It also stays the fragment id on the blog index, which is why old
+  // /blogs#<id> links keep landing in the right place.
+  function postSlug(p) { return slugify(p.id); }
+  function postPath(p) { return 'blog/' + postSlug(p) + '/'; }                 // output filename key
+  function postHref(p) { return '/' + postPath(p); }                           // root-relative, trailing slash
+  function postUrl(b, p) { return b.siteUrl + '/' + postPath(p); }             // absolute, trailing slash
+
   // Internal URLs are root-relative and extensionless. Root pages carry no
   // trailing slash; product detail pages keep theirs.
   var PAGE_PATHS = {
@@ -902,8 +910,32 @@
   /* ---------- blogs.html ---------- */
 
   // Published posts only. draft:true keeps a post in the data but off the site.
+  // Single gate for the index cards, the post pages, the sitemap and llms.txt.
   function livePosts(data) {
     return (data.posts || []).filter(function (p) { return !p.draft; });
+  }
+
+  // Shared by the blog index and every post page.
+  function blogSidebar(data) {
+    var b = data.brand, sb = data.blogPage.sidebar;
+    var raw = data.products.find(function (p) { return p.id === 'royal-1g'; }) ||
+      data.products.filter(function (p) { return p.category === 'saffron' && p.status === 'available'; })
+        .sort(function (x, y) { return x.price - y.price; })[0];
+    var pv = raw ? productView(raw) : null;
+    var priceHtml = pv
+      ? '<span data-price="' + esc(pv.price) + '">AED ' + esc(pv.price) + '</span> <span>/ ' + esc(pv.size) + ' tin</span>'
+      : 'AED ' + esc(sb.priceAmount) + ' <span>' + esc(sb.priceUnit) + '</span>';
+    return '        <aside class="sidebar" aria-label="Blog sidebar">\n' +
+      '          <div class="card">\n' +
+      '            <h3>' + esc(sb.orderHeading) + '</h3>\n' +
+      '            <p style="color:var(--muted);font-size:15px;margin:8px 0 4px;">' + esc(sb.orderText) + '</p>\n' +
+      '            <div class="p-price" style="margin-bottom:12px;">' + priceHtml + '</div>\n' +
+      '            <a class="btn btn-whatsapp" style="width:100%;"' + waAttrs(b, sb.waText) + ' data-wa-pos="sidebar" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
+      '          </div>\n' +
+      '          <div class="card">\n' +
+      '            <h3>' + esc(sb.alsoHeading) + '</h3>\n            <ul>\n' +
+      sb.links.map(function (l) { return '              <li><a href="' + esc(pageUrl(l.href)) + '">' + esc(l.label) + '</a></li>'; }).join('\n') +
+      '\n            </ul>\n          </div>\n        </aside>\n';
   }
 
   function renderBlogs(data) {
@@ -914,23 +946,23 @@
     // JSON-LD, no llms.txt entry. Seasonal posts sit here until their window.
     const posts = livePosts(data);
 
+    // The index is now a listing. Each post carries its own BlogPosting on its
+    // own page, so this is a Blog with an item list rather than 13 postings.
     const jsonLd = ld({
       '@context': 'https://schema.org',
-      '@graph': [breadcrumbLd(data, 'Blog', 'blogs.html')].concat(
-        posts.map(function (p) {
-          return {
-            '@type': 'BlogPosting', headline: p.title,
-            image: p.image ? b.siteUrl + '/' + p.image : undefined,
-            datePublished: p.dateISO, dateModified: p.dateModified || p.dateISO,
-            description: p.excerpt, inLanguage: 'en',
-            articleSection: catLabel[p.categoryKey] || p.categoryKey,
-            author: { '@type': 'Organization', name: b.name },
-            publisher: { '@type': 'Organization', name: b.name, logo: { '@type': 'ImageObject', url: b.siteUrl + '/' + b.logo } },
-            mainEntityOfPage: b.siteUrl + pageUrl('blogs.html#' + p.id),
-            url: b.siteUrl + pageUrl('blogs.html#' + p.id)
-          };
-        })
-      )
+      '@graph': [
+        breadcrumbLd(data, 'Blog', 'blogs.html'),
+        {
+          '@type': 'Blog', name: bp.h1, url: b.siteUrl + pageUrl('blogs.html'),
+          publisher: { '@type': 'Organization', name: b.name },
+          // Links only. Every post carries its own full BlogPosting on its own
+          // page, so repeating headline, date and description here is weight
+          // for nothing.
+          blogPost: posts.map(function (p) {
+            return { '@type': 'BlogPosting', headline: p.title, url: postUrl(b, p) };
+          })
+        }
+      ]
     });
 
     const filterBtns =
@@ -941,36 +973,19 @@
       }).join('\n') + '\n      </div>\n';
 
     const articles = posts.map(function (p) {
+      // id kept on the card on purpose: old /blogs#<slug> links still land here.
+      // Fragments never reach the server, so an edge redirect for them is
+      // impossible. This is the redirect.
       return '          <article class="card blog-card" data-category="' + esc(p.categoryKey) + '" id="' + esc(p.id) + '">\n' +
-        (p.image ? '            <div class="blog-img"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></div>\n' : '') +
+        (p.image ? '            <div class="blog-img"><a href="' + esc(postHref(p)) + '"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></a></div>\n' : '') +
         '            <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
-        '            <h2>' + esc(p.title) + '</h2>\n' +
+        '            <h2><a href="' + esc(postHref(p)) + '">' + esc(p.title) + '</a></h2>\n' +
         '            <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
-        '            <details class="read-more">\n' +
-        '              <summary>Read full article</summary>\n' +
-        bodyToHtml(b, p.body) + '\n' +
-        '            </details>\n          </article>';
+        '            <p class="read-more"><a href="' + esc(postHref(p)) + '">Read full article</a></p>\n' +
+        '          </article>';
     }).join('\n\n');
 
-    const sb = bp.sidebar;
-    const sbRawProduct = data.products.find(function (p) { return p.id === 'royal-1g'; }) ||
-      data.products.filter(function (p) { return p.category === 'saffron' && p.status === 'available'; }).sort(function (a, b) { return a.price - b.price; })[0];
-    const sbPv = sbRawProduct ? productView(sbRawProduct) : null;
-    const sbPriceHtml = sbPv
-      ? '<span data-price="' + esc(sbPv.price) + '">AED ' + esc(sbPv.price) + '</span> <span>/ ' + esc(sbPv.size) + ' tin</span>'
-      : 'AED ' + esc(sb.priceAmount) + ' <span>' + esc(sb.priceUnit) + '</span>';
-    const sidebar =
-      '        <aside class="sidebar" aria-label="Blog sidebar">\n' +
-      '          <div class="card">\n' +
-      '            <h3>' + esc(sb.orderHeading) + '</h3>\n' +
-      '            <p style="color:var(--muted);font-size:15px;margin:8px 0 4px;">' + esc(sb.orderText) + '</p>\n' +
-      '            <div class="p-price" style="margin-bottom:12px;">' + sbPriceHtml + '</div>\n' +
-      '            <a class="btn btn-whatsapp" style="width:100%;"' + waAttrs(b, sb.waText) + ' data-wa-pos="sidebar" target="_blank" rel="noopener">' + esc(sb.waLabel) + '</a>\n' +
-      '          </div>\n' +
-      '          <div class="card">\n' +
-      '            <h3>' + esc(sb.alsoHeading) + '</h3>\n            <ul>\n' +
-      sb.links.map(function (l) { return '              <li><a href="' + esc(pageUrl(l.href)) + '">' + esc(l.label) + '</a></li>'; }).join('\n') +
-      '\n            </ul>\n          </div>\n        </aside>\n';
+    const sidebar = blogSidebar(data);
 
     return head(data, { seoKey: 'blog', file: 'blogs.html', jsonLd: jsonLd }) +
       header(data, 'blogs.html') +
@@ -982,6 +997,59 @@
       articles + '\n\n        </div>\n\n' + sidebar +
       '      </div>\n    </div>\n  </section>\n</main>\n\n' +
       footer(data, 'blogs');
+  }
+
+  // One page per post at /blog/<slug>/, built on the renderProductDetail shape.
+  function renderPostPage(data, p) {
+    var b = data.brand, bp = data.blogPage;
+    var url = postUrl(b, p);
+    var catLabel = {};
+    bp.categories.forEach(function (c) { catLabel[c.key] = c.postLabel || c.label; });
+    var seo = {
+      title: p.metaTitle || (p.title + ' | ' + b.name),
+      description: p.metaDescription || p.excerpt,
+      ogTitle: p.metaTitle || p.title,
+      ogDescription: p.metaDescription || p.excerpt
+    };
+    var jsonLd = ld({
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumbLd(data, p.title, postPath(p)),
+        {
+          '@type': 'BlogPosting', headline: p.title,
+          image: p.image ? b.siteUrl + '/' + p.image : undefined,
+          datePublished: p.dateISO, dateModified: p.dateModified || p.dateISO,
+          description: p.excerpt, inLanguage: 'en',
+          articleSection: catLabel[p.categoryKey] || p.categoryKey,
+          author: { '@type': 'Organization', name: b.name },
+          publisher: { '@type': 'Organization', name: b.name, logo: { '@type': 'ImageObject', url: b.siteUrl + '/' + b.logo } },
+          mainEntityOfPage: url, url: url
+        }
+      ]
+    });
+    var others = livePosts(data).filter(function (x) { return postSlug(x) !== postSlug(p); }).slice(0, 4);
+    var more = others.length
+      ? '\n  <section class="section-alt">\n    <div class="container">\n' +
+        '      <h2>More from the blog</h2>\n      <ul class="related-products">\n' +
+        others.map(function (x) {
+          return '        <li><a href="' + esc(postHref(x)) + '">' + esc(x.title) + '</a></li>';
+        }).join('\n') +
+        '\n      </ul>\n    </div>\n  </section>\n'
+      : '';
+    return head(data, { seo: seo, url: url, ogImage: p.image, jsonLd: jsonLd }, { appleIcon: true }) +
+      header(data, 'blogs.html') +
+      '\n<main id="main">\n' + breadcrumbs(p.title, { label: 'Blog', href: 'blogs.html' }) +
+      '\n  <section style="padding-top:24px;">\n    <div class="container">\n' +
+      '      <div class="blog-layout">\n        <article class="blog-post">\n' +
+      (p.image ? '          <div class="blog-img"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" width="800" height="450" fetchpriority="high"></div>\n' : '') +
+      '          <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
+      '          <h1>' + esc(p.title) + '</h1>\n' +
+      '          <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
+      bodyToHtml(b, p.body) + '\n' +
+      '          <p class="pd-links"><a href="' + pageUrl('blogs.html') + '">All articles</a></p>\n' +
+      '        </article>\n\n' + blogSidebar(data) +
+      '      </div>\n    </div>\n  </section>\n' + more + '</main>\n\n' +
+      footer(data, 'blog-post');
   }
 
   /* ---------- 404.html & sitemap.xml ---------- */
@@ -1085,6 +1153,7 @@
       data.products.map(function (p) { return url(productUrl(data.brand, p), 'monthly', '0.8'); }).join('\n') + '\n' +
       url(u + pageUrl('recipes.html'), 'monthly', '0.8') + '\n' +
       url(u + pageUrl('blogs.html'), 'monthly', '0.8') + '\n' +
+      livePosts(data).map(function (p) { return url(postUrl(data.brand, p), 'monthly', '0.6'); }).join('\n') + '\n' +
       Object.keys(data.policies || {}).map(function (k) {
         return url(u + pageUrl(data.policies[k].slug), 'yearly', '0.3');
       }).join('\n') + '\n' +
@@ -1118,7 +1187,9 @@
     if (outOfStock.length) catalogue += ' Out of stock: ' + commaList(outOfStock) + '.';
     if (comingSoon.length) catalogue += ' Coming soon: ' + commaList(comingSoon) + '.';
     var recipeNames = commaList((data.recipes || []).map(function (r) { return r.name; }));
-    var postTitles = commaList(livePosts(data).map(function (p) { return p.title; }));
+    var postLines = livePosts(data).map(function (p) {
+      return '- [' + p.title + '](' + postUrl(b, p) + '): ' + (p.metaDescription || p.excerpt);
+    }).join('\n');
 
     return '# ' + b.name + '\n\n' +
       '> ' + b.orgDescription + '\n\n' +
@@ -1126,11 +1197,12 @@
       '- [Home](' + u + pageUrl('index.html') + '): Products, ordering information, FAQ, and the brand story.\n' +
       '- [Products](' + u + pageUrl('products.html') + '): ' + catalogue + '\n' +
       '- [Recipes](' + u + pageUrl('recipes.html') + '): Tested saffron recipes: ' + recipeNames + '.\n' +
-      '- [Blog](' + u + pageUrl('blogs.html') + '): Guides: ' + postTitles + '.\n' +
+      '- [Blog](' + u + pageUrl('blogs.html') + '): Index of every article below.\n' +
       Object.keys(data.policies || {}).map(function (k) {
         var pol = data.policies[k];
         return '- [' + pol.title + '](' + u + pageUrl(pol.slug) + '): ' + pol.metaDescription;
-      }).join('\n') + '\n';
+      }).join('\n') + '\n' +
+      (postLines ? '\n## Articles\n\n' + postLines + '\n' : '');
   }
 
   /* ---------- public API ---------- */
@@ -1152,6 +1224,10 @@
     (data.products || []).forEach(function (p) {
       out[productPath(p) + 'index.html'] = renderProductDetail(data, p);
     });
+    // Drafts emit no page at all, same gate as the index and the sitemap.
+    livePosts(data).forEach(function (p) {
+      out[postPath(p) + 'index.html'] = renderPostPage(data, p);
+    });
     return out;
   }
 
@@ -1161,6 +1237,7 @@
     renderIndex: renderIndex, renderProducts: renderProducts,
     renderProductDetail: renderProductDetail,
     renderRecipes: renderRecipes, renderBlogs: renderBlogs,
+    renderPostPage: renderPostPage, postSlug: postSlug, postUrl: postUrl,
     render404: render404, renderSitemap: renderSitemap,
     renderLlms: renderLlms, renderPrivacyPolicy: renderPrivacyPolicy,
     renderPolicyPage: renderPolicyPage,

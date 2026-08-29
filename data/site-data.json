@@ -405,7 +405,7 @@
     "image": "slider2.webp",
     "imageAlt": "Saffron crocus fields in Pampore, Kashmir at dawn",
     "linkLabel": "Read more on our blog →",
-    "linkHref": "/blogs#pampore-legacy"
+    "linkHref": "/blog/pampore-legacy/"
   },
   "testimonials": {
     "eyebrow": "What Our Customers Say",
@@ -626,7 +626,7 @@
       "id": "kesar-doodh",
       "name": "Kesar Doodh",
       "schemaName": "Kesar Doodh (Saffron Milk)",
-      "cardDesc": "Warm saffron milk - the traditional wellness drink, served before sleep for over a thousand years.",
+      "cardDesc": "Warm saffron milk - the traditional Kashmiri evening drink, made with milk, saffron and a little sugar.",
       "schemaDesc": "Warm saffron milk, the traditional Kashmiri wellness drink.",
       "image": "zafran-milk-1.webp",
       "imageAlt": "Kesar Doodh - warm golden saffron milk with pistachios",

@@ -155,6 +155,33 @@ nothing visibly breaks.
   - Still open: the Terms page has not been read by a lawyer or CA
     in India, and the 2 working day processing time and the 4-6 day
     transit figures are owner-supplied and unmeasured.
+- Blog rebuilt as individual pages, 29 Aug 2026. Every published post
+  now has its own page at /blog/<slug>/ with its own head, canonical,
+  og: tags and a single BlogPosting. blogs.html is an excerpt index.
+  Build went from 17 files to 30; blogs.html fell from about 100 KB to
+  29 KB.
+  - **Fragment anchors are retained on the index cards on purpose.**
+    Old links of the form /blogs#<id> still land on the index at the
+    right card. **Edge redirects for those are impossible**: a URL
+    fragment is never sent to the server, so Cloudflare never sees it.
+    The retained id is the only redirect that can exist. Do not remove
+    the ids and do not raise a Cloudflare rule for them.
+  - postSlug(p) is slugify(p.id), so the post id is both the page slug
+    and the index anchor. Changing an id moves a live URL.
+  - livePosts(data) is the single draft gate, used by the page
+    emission loop, index cards, index JSON-LD, sitemap and llms.txt.
+  - llms.txt now lists each article with its own URL under an
+    Articles heading, rather than one comma-joined line.
+  - story.linkHref repointed from /blogs#pampore-legacy to
+    /blog/pampore-legacy/.
+- Nine new blog posts, 29 Aug 2026, plus one seasonal harvest diary
+  held as draft:true until the bloom. Posts carry metaTitle and
+  metaDescription, which now render because posts are real pages.
+- Health benefits post and the health category deleted 29 Aug 2026.
+  The post made explicit clinical claims. seo.blog description and
+  ogDescription were reworded to match. The only "health" string left
+  in the data is the Terms page heading "No health claims", which is
+  the disclaimer and must stay.
 - **404 now calls footer(data, '404').** It previously had no footer
   at all: no navigation, no contact details, no copyright, no FSSAI
   line, no WhatsApp links. It went from 794 bytes to ~11.5 KB.
@@ -224,9 +251,8 @@ nothing visibly breaks.
   waAttrs(), waNumbers() and the current product field names
   (baseName/size, not name).
 - Step 12: SEO and competitor analysis. Do after attribution has
-  produced data. Expect it to reopen URL structure, blog
-  architecture (posts live at /blogs#id inside <details> with
-  BlogPosting JSON-LD pointing at fragments), and product page depth.
+  produced data. Blog architecture is now resolved, see below.
+  Expect Step 12 to reopen product page depth.
 
 ## Carried forward - unresolved
 - **Testimonials: two remain, provenance unconfirmed.** The
@@ -256,6 +282,19 @@ nothing visibly breaks.
 - Confirm 2026 is the correct registration year for foundingDate.
 - The Terms page has not been read by a lawyer or CA in India. It
   was drafted to supplied facts and is not legal advice.
+- Saffron Oil product copy still reads "For skin, hair, and wellness
+  rituals" on products.html and the oil detail page. That is a
+  cosmetic and wellness claim on a product page, and it sits against
+  the no-health-claims rule applied everywhere else. Left alone
+  pending an owner decision, 29 Aug 2026. The product is
+  coming_soon, so there is time.
+- posts[3] arabic-cuisine excerpt still says Arab cuisine has used
+  saffron "for over a thousand years", which is unsourced. The same
+  claim was removed from the Kesar Doodh recipe card on 29 Aug 2026
+  but left here because it was outside that instruction.
+- Four [NEEDS SOURCE] markers are live in blog copy: market price per
+  gram, a Negin definition, a shelf life figure, and threads per
+  serving. Each sits in a sentence that explains the gap.
 
 ## Accepted risks - do not re-litigate
 - Admin panel is publicly reachable at /admin and /admin.html.

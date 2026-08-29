@@ -563,7 +563,7 @@
 
   function secPosts() {
     const catOpts = S.data.blogPage.categories.map(c => ({ v: c.key, l: c.label + ' (' + c.key + ')' }));
-    return '<div class="page-h"><div><h2>Blog posts</h2><p>Articles open in place on the blog page; each gets its own share link and Google article data.</p></div></div>' +
+    return '<div class="page-h"><div><h2>Blog posts</h2><p>Each article gets its own page at /blog/&lt;id&gt;/, listed as an excerpt on the blog index.</p></div></div>' +
 
       card('📃', 'Page heading & categories',
         f('Page title (H1)', 'blogPage.h1') +
@@ -583,8 +583,15 @@
           '<div class="f"><label>Link id (slug)</label><div style="display:flex;gap:8px;">' +
           '<input data-path="' + p + '.id" value="' + A(it.id) + '" style="flex:1;">' +
           '<button class="btn btn-outline btn-sm" type="button" data-action="slugify" data-idx="' + i + '">From title</button></div>' +
-          '<div class="hint">Share link: ' + A(siteUrl()) + '/blogs.html#' + A(it.id) + '</div></div>' +
+          '<div class="hint">Page: ' + A(siteUrl()) + '/blog/' + A(it.id) + '/ &nbsp; ' +
+          '<button class="btn btn-outline btn-sm" type="button" data-preview="blog/' + A(it.id) + '/index.html">Preview page</button>' +
+          '<br>Changing the id moves a live URL. The old /blogs#' + A(it.id) + ' anchor stays on the index.</div></div>' +
           f('Category', p + '.categoryKey', { type: 'select', options: catOpts }) +
+          '</div>' +
+          f('Draft (written but not published)', p + '.draft', { type: 'checkbox', hint: 'A draft produces no page, no index card, no sitemap entry and no llms.txt line.' }) +
+          '<div class="grid2">' +
+          f('Browser tab title', p + '.metaTitle', { hint: 'Under 60 characters.' }) +
+          f('Search description', p + '.metaDescription', { hint: 'Under 155 characters.' }) +
           '</div>' +
           '<div class="grid2">' +
           '<div class="f"><label>Date</label><div style="display:flex;gap:8px;">' +
@@ -1210,6 +1217,11 @@
     // Every policy page previews through the one shared renderer.
     Object.keys(S.data.policies || {}).forEach(function (k) {
       map[S.data.policies[k].slug] = function (d) { return SOKTemplates.renderPolicyPage(d, k); };
+    });
+    // Post pages, drafts included, so a draft can be previewed before it ships.
+    (S.data.posts || []).forEach(function (p) {
+      map['blog/' + SOKTemplates.postSlug(p) + '/index.html'] =
+        function (d) { return SOKTemplates.renderPostPage(d, p); };
     });
     try {
       let html = map[file](S.data);
