@@ -90,6 +90,14 @@
       b = b.trim();
       if (!b) return '';
       if (b.startsWith('## ')) return '              <h3>' + esc(b.slice(3).trim()) + '</h3>';
+      // A block whose every line starts "- " becomes a list. Additive: no
+      // existing post body contains one, so no current output changes.
+      var lines = b.split('\n');
+      if (lines.every(function (l) { return /^-\s+/.test(l.trim()); })) {
+        return '              <ul>\n' + lines.map(function (l) {
+          return '                <li>' + inlineMd(brand, l.trim().replace(/^-\s+/, '')) + '</li>';
+        }).join('\n') + '\n              </ul>';
+      }
       return '              <p>' + inlineMd(brand, b.replace(/\n/g, ' ')) + '</p>';
     }).filter(Boolean).join('\n');
   }
@@ -893,15 +901,23 @@
 
   /* ---------- blogs.html ---------- */
 
+  // Published posts only. draft:true keeps a post in the data but off the site.
+  function livePosts(data) {
+    return (data.posts || []).filter(function (p) { return !p.draft; });
+  }
+
   function renderBlogs(data) {
     const b = data.brand, bp = data.blogPage;
     const catLabel = {};
     bp.categories.forEach(function (c) { catLabel[c.key] = c.postLabel || c.label; });
+    // A post with draft:true is written but not published: no card, no
+    // JSON-LD, no llms.txt entry. Seasonal posts sit here until their window.
+    const posts = livePosts(data);
 
     const jsonLd = ld({
       '@context': 'https://schema.org',
       '@graph': [breadcrumbLd(data, 'Blog', 'blogs.html')].concat(
-        data.posts.map(function (p) {
+        posts.map(function (p) {
           return {
             '@type': 'BlogPosting', headline: p.title,
             image: p.image ? b.siteUrl + '/' + p.image : undefined,
@@ -924,7 +940,7 @@
         return '        <button class="filter-btn" data-filter="' + esc(c.key) + '" aria-pressed="false">' + esc(c.label) + '</button>';
       }).join('\n') + '\n      </div>\n';
 
-    const articles = data.posts.map(function (p) {
+    const articles = posts.map(function (p) {
       return '          <article class="card blog-card" data-category="' + esc(p.categoryKey) + '" id="' + esc(p.id) + '">\n' +
         (p.image ? '            <div class="blog-img"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></div>\n' : '') +
         '            <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
@@ -1102,7 +1118,7 @@
     if (outOfStock.length) catalogue += ' Out of stock: ' + commaList(outOfStock) + '.';
     if (comingSoon.length) catalogue += ' Coming soon: ' + commaList(comingSoon) + '.';
     var recipeNames = commaList((data.recipes || []).map(function (r) { return r.name; }));
-    var postTitles = commaList((data.posts || []).map(function (p) { return p.title; }));
+    var postTitles = commaList(livePosts(data).map(function (p) { return p.title; }));
 
     return '# ' + b.name + '\n\n' +
       '> ' + b.orgDescription + '\n\n' +
