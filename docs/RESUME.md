@@ -1,402 +1,272 @@
 # Resume — saffronofkashmir.com
 Last updated: 29 August 2026
 
+Written as instructions to whoever picks this up next, not as a description.
+Read the constraints section before touching any copy.
+
 ## Repo facts
 Generated site: data/site-data.json -> assets/admin/templates.js ->
-build.js -> 14 output files. NEVER edit generated .html.
+build.js -> 30 output files. NEVER edit generated .html.
 Hosting: GitHub Pages behind Cloudflare. NOT Cloudflare Pages.
 No _redirects file. Redirects and headers are set in the Cloudflare
-dashboard.
+dashboard, outside this repo.
 Publishing: the admin panel at /admin is the primary route.
 Node v26.3.0, zero dependencies.
 
-## Business model and standing constraints
-Read this section before touching any copy.
+## Architecture
 
-- The selling entity is India-registered. The saffron is grown,
-  harvested and packed in Pampore, Jammu and Kashmir, from the
-  family's own fields. That is the only sourcing story. Do not
-  reintroduce any wording about buying from other Pampore farming
-  families; it describes a different business.
-- **No per-parcel dispatch-origin claim appears anywhere on the site,
-  and that is deliberate.** Not in copy, not in a meta description,
-  not in JSON-LD. Parcels do not all leave from one place, so
-  "ships from India" on every order would be untrue. Saying nothing
-  is accurate. A future session must not "helpfully" add an origin
-  sentence back. The previous version claimed stock was held and
-  dispatched from Dubai; that was false and is gone.
-- **Origin is not registration location.** The saffron's origin is
-  Pampore and is published. The business registration location is
-  NOT published. Never write copy that lets one be read as the
-  other. footer.locationLine ("Pampore, J&K, India") was removed on
-  28 Aug 2026 for exactly this reason: it sat beside the FSSAI
-  number in the footer bottom and the two read together as a
-  registered business address.
-- **No place name in the footer bottom bar, the Terms Seller Details
-  block, or any contact block.** Pampore in descriptive product or
-  brand copy is fine and expected. footer.about and brand.tagline are
-  known and accepted. The site publishes no business address
-  anywhere, deliberately. Do not add one and do not infer one from
-  the FSSAI registration. This has been decided and reversed once
-  already.
-- **Not published, deliberately:** brand.legalName and
-  brand.registeredAddress were removed from site-data.json and are
-  absent from JSON-LD. Organization.name stays "Saffron of Kashmir"
-  as a trading name. There is no legalName property in the schema.
-  Do not reintroduce either field. Organization.address stays the
-  minimal { addressCountry: 'IN', addressRegion: 'Jammu & Kashmir' }
-  with no street, locality or postal code.
-- **FSSAI:** basic registration 21026111000535, verified against the
-  certificate by the owner 28 Aug 2026. Renders as footer text only,
-  as "FSSAI Registration No. 21026111000535". The word is
-  Registration, not Licence. It is NOT in JSON-LD and must not be:
-  no schema.org property means "FSSAI registration", so there is
-  nowhere correct to put it. Blank the brand.fssaiNumber field and
-  the whole footer segment disappears rather than leaving a label.
-- No copy claims export authorisation, a Central licence, or that
-  the business is registered in Pampore. Swept 28 Aug 2026, zero
-  hits.
+- **Blog posts are individual pages** at /blog/<slug>/, one per
+  published post, built by renderPostPage(data, p) on the same shape
+  as renderProductDetail. Own head, canonical, og: tags, one h1, one
+  BlogPosting with its own mainEntityOfPage, breadcrumbs Home > Blog >
+  Post, the shared sidebar, footer.
+- blogs.html is an excerpt index. Cards link out; no article bodies.
+- **Fragment anchors are retained on the index cards deliberately.**
+  Each card keeps id="<slug>", so an old /blogs#<id> link still lands
+  on the right card. **Do not attempt Cloudflare redirects for these.
+  A URL fragment is never sent to the server, so no edge rule can ever
+  see one.** The retained id is the only redirect that can exist.
+- postSlug(p) is slugify(p.id). The post id is both the page slug and
+  the index anchor, so changing an id moves a live URL.
+- **livePosts(data) is the single draft gate.** Four consumers: page
+  emission in renderAll, index cards, sitemap.xml, llms.txt. Add any
+  new consumer to that helper rather than filtering again.
+- **renderPolicyPage(data, key) serves all four policy pages**, driven
+  by the policies object. renderPrivacyPolicy is a thin delegate kept
+  only because the admin preview map calls it by name. Do not add a
+  second way to render a policy page.
+- pageUrl() strips .html for any root-level page not in PAGE_PATHS, so
+  a page added through the data gets an extensionless URL with no code
+  change.
+- Build writes **30 files**. sitemap.xml carries **27 URLs**.
+- blogSidebar(data) is shared by the index and every post page.
+- bodyToHtml and policyBody both turn a block whose every line starts
+  "- " into a list. inlineMd supports **bold**, *em*, [link](url),
+  wa: links and `code`.
 
-## Delivery copy as it now stands
-- India: 3-5 business days, free over INR 4000.
-- UAE and Middle East: 4-6 days in transit.
-- Rest of world: 4-6 days in transit.
-- International cards carry "Customs clearance times vary by country
-  and are outside our control." The FAQ separately says customs
-  duties and import charges are payable by the recipient.
-- The 48-hour UAE delivery promise, the AED 120 and USD 120 free
-  delivery thresholds, and all Dubai fulfilment wording are gone.
-- **The 4-6 day figures are owner-supplied and unmeasured.** Correct
-  them after the first real international shipment.
+## Standing constraints
 
-## WhatsApp routing
-- Two numbers: India 917006603060, UAE and Middle East 971522613060.
-  Both are admin-editable as brand.whatsappIndia and
-  brand.whatsappUae, and both render in the served HTML. No cloaking.
-- **UAE_COUNTRIES = AE, SA, QA, OM, KW, BH routes to the UAE number.
-  Everything else, including GB and US, routes to India.** That one
-  list at main.js:212 drives routing, the timezone fallback and the
-  currency override, so the three cannot drift apart. An earlier
-  version had ipapi and the timezone fallback disagreeing about GB.
-- The static href in the HTML is always the India number, so order
-  buttons work with JavaScript disabled. templates.js waAttrs()
-  emits href plus data-wa-in and data-wa-ae; main.js swaps the href.
-- Country cached in localStorage as sok_country beside sok_currency.
-  One ipapi call serves both. On fetch failure or a 3 second timeout
-  it falls back to Intl.DateTimeFormat().resolvedOptions().timeZone.
-  This also fixed the currency switcher's previously silent failure
-  past ipapi's 1000/day cap.
-- The #sok-curr select doubles as the manual override. No second UI.
-- **Routing is independent of #sok-curr being present.** That is what
-  makes it work on 404, which has no nav and therefore no select. Do
-  not reintroduce an early return on a missing select.
-- The four per-market links in the footer and contact strip are left
-  unrouted on purpose and each carries a visible market label, so
-  nobody messages the wrong line by accident.
+### No health, medical, therapeutic or wellness claims. Anywhere.
+Not in body copy, not in a heading, not in a meta description, not in
+JSON-LD, not in a category label. This is a hard rule and it has been
+broken twice already: a "Health Benefits" post and category were
+deleted 29 Aug 2026, and a dosage note survived in a recipe tip after
+that and had to be removed separately.
 
-## The SOK_ATTR trap
-Rewriting a wa.me href wipes the order-attribution "Ref:" code,
-because the data-wa-in and data-wa-ae attributes carry the plain URL
-and SOK_ATTR stamps the href earlier in the file. Routing therefore
-re-stamps by calling SOK_ATTR.stampAll(attr.ref) immediately after
-the swap. **Any future code that touches those hrefs must do the
-same**, or every routed order silently loses its attribution and
-nothing visibly breaks.
+Grep this list over every generated page before shipping copy:
 
-## Shipped and live
-- gitignore, gitattributes, nojekyll; _archive/ untracked and moved
-  off-repo (files at d:\SOK git clone\_archive-saffronofkashmir\)
-- Claims cleanup: ISO 3632 "Grade A" -> "Category I" (22 strings,
-  zero "Grade A" remain); crocin spec corrected to 203.48; "every
-  batch tested" -> single independent test with IIKSTC named;
-  founding year 2004 removed
-- 700-year heritage claim removed from all three locations
-  (posts[1].title, story.paragraphs[0], seo.blog.description),
-  10 Aug 2026. Replaced with undated wording.
-- 90% of India's saffron figure reattributed to Kashmir rather than
-  Pampore in all three locations (story.paragraphs[0],
-  posts[1].excerpt, faq.items[6].a), 10 Aug 2026.
-- India entity migration, 28 Aug 2026. UAE fulfilment claims removed,
-  sourcing contradiction fixed, dual WhatsApp routing added, FSSAI
-  footer line added. PR #6, merged to main, deployed and verified in
-  production.
-- Story copy now states both facts plainly: the family has farmed
-  saffron in Pampore for three generations, and Saffron of Kashmir
-  was founded in 2026. brand.foundingYear 2026 also renders as
-  JSON-LD foundingDate. No copy implies the brand itself is older.
-- Four policy pages, LIVE AND VERIFIED IN PRODUCTION 29 Aug 2026:
-  Terms and Conditions (/terms), Shipping Policy
-  (/shipping-policy), Returns Policy (/returns-policy) and Privacy
-  Policy (/privacy-policy). All four return 200, each canonical is
-  the extensionless URL, all four links render in the footer on
-  every page including 404, and sitemap.xml serves 14 URLs. All
-  share one renderPolicyPage(data, key) driven by the policies
-  object in site-data.json. renderPrivacyPolicy() is now a thin
-  delegate kept only because the admin preview map calls it by name.
-  Do not add a second way to render a policy page.
-  Editable in the admin under "Policy pages". Build now writes 17
-  files, not 14.
-  - **There is no GDPR page on purpose.** The Terms exclude the
-    European Union and the United Kingdom, so the GDPR does not
-    apply and a GDPR page would imply a market we do not serve.
-  - The Privacy Policy is written to the Digital Personal Data
-    Protection Act 2023 and the DPDP Rules 2025, with a named
-    Grievance Officer.
-  - Contact address is info@saffronofkashmir.com throughout:
-    brand.email drives the footer, contact strip and JSON-LD, and all
-    four policy pages use the same address. One published address,
-    not two. It was briefly switched to care@ on 29 Aug 2026 and
-    reverted the same day.
-  - pageUrl() now strips .html from any root-level page not in
-    PAGE_PATHS, so a policy added through the admin gets an
-    extensionless URL without a code change. Without this the new
-    pages built as /terms.html and the canonical, og:url and sitemap
-    were all wrong. Parity and the canonical check caught it.
-  - Still open: the Terms page has not been read by a lawyer or CA
-    in India, and the 2 working day processing time and the 4-6 day
-    transit figures are owner-supplied and unmeasured.
-- Blog rebuilt as individual pages, 29 Aug 2026. Every published post
-  now has its own page at /blog/<slug>/ with its own head, canonical,
-  og: tags and a single BlogPosting. blogs.html is an excerpt index.
-  Build went from 17 files to 30; blogs.html fell from about 100 KB to
-  29 KB.
-  - **Fragment anchors are retained on the index cards on purpose.**
-    Old links of the form /blogs#<id> still land on the index at the
-    right card. **Edge redirects for those are impossible**: a URL
-    fragment is never sent to the server, so Cloudflare never sees it.
-    The retained id is the only redirect that can exist. Do not remove
-    the ids and do not raise a Cloudflare rule for them.
-  - postSlug(p) is slugify(p.id), so the post id is both the page slug
-    and the index anchor. Changing an id moves a live URL.
-  - livePosts(data) is the single draft gate, used by the page
-    emission loop, index cards, index JSON-LD, sitemap and llms.txt.
-  - llms.txt now lists each article with its own URL under an
-    Articles heading, rather than one comma-joined line.
-  - story.linkHref repointed from /blogs#pampore-legacy to
-    /blog/pampore-legacy/.
-- Nine new blog posts, 29 Aug 2026, plus one seasonal harvest diary
-  held as draft:true until the bloom. Posts carry metaTitle and
-  metaDescription, which now render because posts are real pages.
-- Health benefits post and the health category deleted 29 Aug 2026.
-  The post made explicit clinical claims. seo.blog description and
-  ogDescription were reworded to match. The only "health" string left
-  in the data is the Terms page heading "No health claims", which is
-  the disclaimer and must stay.
-- **404 now calls footer(data, '404').** It previously had no footer
-  at all: no navigation, no contact details, no copyright, no FSSAI
-  line, no WhatsApp links. It went from 794 bytes to ~11.5 KB.
-  Verified live: a nonexistent path returns HTTP 404 with the full
-  footer and keeps its noindex.
-- Organization contactPoint carries areaServed built from the same
-  UAE_COUNTRIES list main.js routes on. UAE line is
-  contactType "customer support", India is "sales".
-- First-visit overlay restricted, 10 Aug 2026: homepage only
-  (enforced at build time, markup absent from the other 11 outputs),
-  desktop only via matchMedia at trigger time, 15 second timer, no
-  scroll trigger. delayMs, minViewportWidth and homepageOnly live in
-  the overlay object. This closed what was Step 8.
-- Extensionless URLs: root-relative internal links, canonicals,
-  og:url, sitemap. pageUrl() and asset() helpers.
-- Cloudflare Bulk Redirects: 5 x 301 from old .html URLs. Verified.
-- Social: 7 platforms in footer, sameAs, social_click GA4 event.
-- CI: .github/workflows/build-check.yml runs
-  `git add -A && git diff --cached --exit-code` on push and PR.
-- Ruleset on main: restrict deletions, block force pushes, require
-  "Build check". Repository admin is on the bypass list, which is
-  what lets the panel publish.
-- Atomic publish via Git Data API (blob -> tree -> commit -> ref).
-  Legacy per-file Contents API path retained, switchable in
-  Settings > Publish method.
-- Build determinism: sitemap lastmod reads meta.lastPublished;
-  footer copyright is a static constant; privacy policy date reads
-  seo.privacyLastUpdated. No new Date() affects build output.
-- Order attribution: live and verified on a real phone 10 Aug 2026.
-  First-touch source in localStorage as sok_attr {src, landing, ts,
-  ref}. Ref format SRC-XXXX, crypto random, alphabet excludes
-  0 O 1 I L. Appended to every wa.me link that carries a ?text=
-  message. Contact-strip links without a message are skipped.
-  whatsapp_click GA4 event carries ref, src, product, page_path,
-  position and wa_number.
-- Image provenance: 15 root .webp files confirmed as the owner's own
-  photography, 9 Aug 2026.
-- Cloudflare Managed robots.txt disabled, 10 Aug 2026. Live
-  robots.txt is the repo file only, hand-maintained, not generated
-  by build.js.
-- Content-Signal: search=yes,ai-input=yes,ai-train=no in robots.txt
-  with an explanatory preamble. Declaration only, not enforced.
+    depression, anxiety, sleep, weight loss, skin, pregnancy,
+    medicinal, cures, treats, heals, remedy, therapeutic,
+    benefits your, wellness, dose, dosage, mg, daily,
+    published research, antioxidant, immunity
 
-## Next session
-1. Cloudflare cache rules still not taking effect on /assets/js/,
-   /assets/css/ or /assets/admin/. Check the rule expression and
-   ordering. Workaround in place: test in a private window.
-2. Correct the 4-6 day transit figures once a real international
-   shipment has been timed.
-3. Then let order attribution run ~1 month before Step 12.
+Use word boundaries and strip HTML tags first, or you will drown in
+false positives: "mg" matches every <img>, "skin" matches "asking",
+"treats" and "heals" match ordinary verbs.
 
-## Not started
-- Step 6: og:image -> JPEG; og:type product on detail pages; product
-  ids ship as schema.org sku and three contradict the product
-  (royal-1g is 2g, honey-250g is 500ml, kahwa-50g is 100g).
-  templates.js:931 hardcodes p.id === 'royal-1g' for the blog
-  sidebar - must change together.
-- Step 7: currency switcher misses several locations (compare table,
-  per-gram spec rows, related-products list, hero CTA, blog sidebar
-  fallback, product meta description). Prose AED amounts in
-  site-data.json can never convert.
-- Step 10: CLAUDE.md rewrite, PARTIALLY DONE 28 Aug 2026. The
-  repository layout now shows product subpages and the 14-file
-  count, and the verification section now states correctly that the
-  two scripts are not in the repo. Still stale: the schema reference
-  section and the templates.js function table, which predate
-  waAttrs(), waNumbers() and the current product field names
-  (baseName/size, not name).
-- Step 12: SEO and competitor analysis. Do after attribution has
-  produced data. Blog architecture is now resolved, see below.
-  Expect Step 12 to reopen product page depth.
+**The only acceptable survivors are in terms.html**, where the words
+sit inside their own negation: "We make no claim that saffron treats,
+prevents or cures any condition."
 
-## Carried forward - unresolved
-- **Testimonials: two remain, provenance unconfirmed.** The
-  "Ordered at 9pm, arrived next day" testimonial was removed 28 Aug
-  2026 because it promised next-day delivery, contradicting the
-  4-6 day transit copy. The two survivors (Ashraf - Dubai, Rajesh
-  Nair - Sharjah) make no delivery claim. Both were added in the
-  initial bulk upload 8ee9734 on 12 Jun 2026 and nothing in the repo
-  distinguishes real from placeholder.
-  **No ref-code mapping is possible for them.** Ref codes are
-  generated in the visitor's browser and stored only in their
-  localStorage; there is no server and no database. Attribution
-  shipped 10 Aug 2026, two months after these testimonials were
-  written, so no ref ever existed for either customer. Any mapping
-  would be invented. Future testimonials can be mapped, because new
-  order messages carry a ref.
-- covercgpt-1.webp: "EST. 2004" burnt into the artwork, filename
-  reads as an AI tool name, serves as og:image on four pages. One
-  re-export fixes both: new JPEG, new filename, no 2004.
-- Trade licence not filed in evidence/. The FSSAI registration
-  number is now published in the footer and verified.
-- Lab report issued under the owner's other food company.
+Known harmless collisions left in place, all ordinary English, none a
+health claim: "drunk daily across Emirati households" in the Arabic
+cuisine post, "deals with them daily" in the GI post, "Best for Daily
+cooking" in a product spec row.
+
+### No business address anywhere
+Decided, reversed once, and decided again. Do not add one and do not
+infer one from the FSSAI registration. No place name in the footer
+bottom bar, the Terms Seller Details block, or any contact block.
+Pampore in descriptive product or brand copy is fine and expected;
+footer.about and brand.tagline are known and accepted.
+brand.legalName and brand.registeredAddress were removed from the JSON
+and must not come back. Organization.address stays the minimal
+{ addressCountry: 'IN', addressRegion: 'Jammu & Kashmir' }.
+
+### No per-parcel dispatch-origin claim
+Pampore is where the saffron grows. It is not a stated departure
+point. Parcels do not all leave from one place, so "ships from India"
+on every order would be untrue. Saying nothing is accurate. A future
+session must not helpfully add an origin sentence back. The site
+previously claimed stock was held and dispatched from Dubai; that was
+false and is gone.
+
+### brand.email is info@saffronofkashmir.com
+Used by the footer, contact strip, Organization JSON-LD contactPoint
+and all four policy pages. It was briefly switched to care@ on 29 Aug
+2026 and reverted the same day.
+**A raw grep for info@ on a live page returns ZERO.** Cloudflare email
+obfuscation rewrites every address to "[email protected]" plus a
+cdn-cgi/l/email-protection link whose hex payload is XOR encoded with
+its own first byte as the key. Decode it rather than reporting a false
+failure: bytes.fromhex(h), key = b[0], then chr(c ^ key) for the rest.
+
+### FSSAI
+Basic registration 21026111000535, verified against the certificate by
+the owner 28 Aug 2026. Footer text only, worded "FSSAI Registration
+No. ...". The word is Registration, not Licence. **Never in JSON-LD**:
+no schema.org property means FSSAI registration, so there is nowhere
+correct to put it. Blank brand.fssaiNumber and the whole footer
+segment disappears rather than leaving a stranded label.
+
+### WhatsApp routing and the SOK_ATTR trap
+UAE_COUNTRIES = AE, SA, QA, OM, KW, BH routes to the UAE number.
+Everything else, including GB and US, routes to India. One list drives
+routing, the timezone fallback and the currency override so they
+cannot drift. The static href is always India, so buttons work with
+JavaScript off. Routing is independent of #sok-curr being present,
+which is what makes it work on 404.
+**Rewriting a wa.me href wipes the order-attribution Ref: code.**
+Routing re-stamps via SOK_ATTR.stampAll(). Any future code touching
+those hrefs must do the same, or every routed order silently loses
+attribution and nothing visibly breaks.
+
+### Writing style
+No em dashes, no en dashes, plain hyphens for ranges. No AI-tell
+vocabulary. Short concrete sentences. Straight punctuation except the
+curly quotes inside testimonials.
+
+## Verification
+
+Run the CLAUDE.md block, then check: 30 files built, sitemap 27 URLs,
+draft absent from all four consumers, one h1 per page, JSON-LD valid,
+the 21-term health grep, no bracketed placeholders in served HTML,
+every internal link resolves, the category filter still works.
+
+_parity_check.py and _check_jsonld.py live in the working scratch
+directory, OUTSIDE the repo, and are not committed. .nojekyll
+publishes underscore directories, so a _parity_baseline/ at repo root
+would ship plain-text duplicates of every page. Both listings are in
+CLAUDE.md so they can be recreated.
+**Baseline BEFORE editing, from a clean tree.** A baseline captured
+after the edits proves nothing. This was got wrong once: a stale
+baseline reported nonsense until it was recaptured from the real
+branch point via a stash.
+
+## Open items
+
+- **harvest-diary-2026 is a draft** with a placeholder dateISO of
+  2026-11-01 and six [YOUR PHOTO] / [YOUR FIELD] markers still in it.
+  It needs the real publication date and the owner's photographs
+  before it ships. Intended for the October or November bloom, written
+  during the actual harvest, not before.
+- **Blog posts have gaps where owner material belongs.** Sections were
+  cut rather than filled with invention when the material did not
+  exist. Specifically:
+  - gi-635 says the fields are in Pampore inside the GI area, but
+    shows nothing. A field photograph belongs here.
+  - read-lab-report has an "Our report" section that states the saffron
+    is tested by IIKSTC, NABL TC-9209, and that the report is sent on
+    request. **The ISO 3632 certificate itself is not published.**
+    Publishing it is the strongest single trust signal available.
+  - five-fakes lost its whole comparison section, which was to hold a
+    photograph of adulterated market samples beside ours.
+  - production-figures has no own-yield figure.
+- Terms page has not been read by a lawyer or CA in India.
+- Transit times (4-6 days) and processing time (2 working days) are
+  owner-supplied and unmeasured. Correct after the first real
+  international shipment.
+- Testimonial provenance unconfirmed for the two remaining
+  testimonials. Both were added in the initial bulk upload 8ee9734 on
+  12 Jun 2026 and nothing in the repo distinguishes real from
+  placeholder. No ref-code mapping is possible: attribution shipped
+  10 Aug 2026, two months later, so no ref ever existed for them.
+- **Three Cloudflare Bulk Redirects are missing** for /terms.html,
+  /shipping-policy.html and /returns-policy.html, which serve 200
+  rather than redirecting to the extensionless form. The five legacy
+  pages have redirects; these three do not. Canonical, sitemap,
+  llms.txt and every internal link point at the extensionless URL, so
+  this is a consistency gap rather than an SEO fault. Outside this
+  repo.
+- **Saffron Oil copy is now descriptive only.** It reads "Cold-pressed
+  almond oil infused with Kashmiri saffron threads" with no claimed
+  use, benefit or application. Whether it can be sold at all under an
+  FSSAI registration covering food category 12 is an unresolved
+  regulatory question, not a website one. The product is coming_soon.
+- covercgpt-1.webp: "EST. 2004" burnt into the artwork, filename reads
+  as an AI tool name, serves as og:image on four pages. One re-export
+  fixes both.
+- Trade licence not filed in evidence/.
+- Lab report is issued under the owner's other food company.
 - No consent gate for GA, Meta Pixel or the sok_attr identifier.
 - brand.whatsappNumbers[0].market reads "UAE & Middle East" with no
   orders/enquiries distinction, although routing treats that line as
-  support. One admin field edit if wanted.
+  support only.
 - Confirm 2026 is the correct registration year for foundingDate.
-- The Terms page has not been read by a lawyer or CA in India. It
-  was drafted to supplied facts and is not legal advice.
-- **Kesar Doodh recipe tip still carries a health claim with a dose.**
-  recipes[2].tip reads "Wellness note: About 8 - 10 Mongra threads
-  (~30mg) is the amount used in most published research on saffron's
-  benefits". The ~30mg figure is a leftover of the health post
-  deleted 29 Aug 2026. Its schemaDesc also says "wellness drink",
-  which ships in the Recipe JSON-LD. The 13-term grep misses both
-  because they use "wellness" and "benefits", not "benefits your".
-  Needs an owner decision, and it is the most exposed of the
-  remaining items.
-- Saffron Oil product copy still reads "For skin, hair, and wellness
-  rituals" on products.html and the oil detail page. That is a
-  cosmetic and wellness claim on a product page, and it sits against
-  the no-health-claims rule applied everywhere else. Left alone
-  pending an owner decision, 29 Aug 2026. The product is
-  coming_soon, so there is time.
-- posts[3] arabic-cuisine excerpt still says Arab cuisine has used
-  saffron "for over a thousand years", which is unsourced. The same
-  claim was removed from the Kesar Doodh recipe card on 29 Aug 2026
-  but left here because it was outside that instruction.
-- Four [NEEDS SOURCE] markers are live in blog copy: market price per
-  gram, a Negin definition, a shelf life figure, and threads per
-  serving. Each sits in a sentence that explains the gap.
-
-## Accepted risks - do not re-litigate
-- Admin panel is publicly reachable at /admin and /admin.html.
-  GitHub PAT stored plaintext in localStorage on the same origin as
-  public pages that load Meta Pixel and GTM. Any XSS on the origin
-  yields repo write plus CI code execution via workflows:write.
-  Owner accepted 9 Aug 2026. The fix is recoverable:
-  git checkout -b security/admin-offline 2f57ca4
-- Token permissions are broader than needed. Owner accepted.
-- CI is advisory, not blocking, because Repository admin bypasses
-  the ruleset. A red check does not stop a publish - Actions must be
-  checked manually after publishing.
-- 30 commits in history carry a Co-Authored-By trailer, and three
-  April 2026 commit subjects name an assistant. Left in place
-  deliberately: removing them requires rewriting every SHA, which
-  invalidates the restore points cited in this file. Not visible on
-  the live site. CLAUDE.md now forbids the trailer going forward.
 
 ## Known limitations
-- **main.js is still served max-age=14400.** The Cloudflare cache
-  rule is created but ineffective on /assets/js/, /assets/css/ and
-  /assets/admin/, verified on a fresh MISS for style.css so it is
-  not a stale object. Returning visitors keep the old script for up
-  to 4 hours, which means new HTML can pair with old JS. Test JS and
-  CSS changes in a private window or an unused browser;
-  Ctrl+Shift+R on /admin after a panel change. Two false "broken
-  feature" diagnoses have already come from this.
-- Verification scripts _parity_check.py and _check_jsonld.py live in
-  the working scratch directory, OUTSIDE the repo, and are not
-  committed. .nojekyll publishes underscore-prefixed directories, so
-  a _parity_baseline/ at repo root would ship plain-text duplicate
-  copies of every page, which CLAUDE.md forbids. Both listings are
-  preserved in CLAUDE.md so they can be recreated.
-  **Parity must be baselined BEFORE editing, from a clean tree.** A
-  baseline captured after the edits proves nothing. Cover all 12
-  generated pages, not the five CLAUDE.md used to name.
-- /terms.html, /shipping-policy.html and /returns-policy.html serve
-  200 rather than redirecting to the extensionless form. The five
-  legacy pages have Cloudflare Bulk Redirects; these three do not.
-  Canonical, sitemap, llms.txt and every internal link point at the
-  extensionless URL, so this is a consistency gap rather than an SEO
-  fault. Fixing it means three redirect rules in the Cloudflare
-  dashboard, outside this repo.
-- **Cloudflare email obfuscation rewrites every address on the live
-  site.** A raw grep for info@saffronofkashmir.com on a fetched page
-  returns ZERO, because the address is replaced by
-  "[email protected]" plus a cdn-cgi/l/email-protection link whose
-  hex payload is XOR encoded with its own first byte as the key. Any
-  future verification must decode those tokens rather than treat
-  zero as a failure. Decode: bytes.fromhex(h), key = b[0], then
-  chr(c ^ key) for the rest. Verified 29 Aug 2026, every token on
-  every page decodes to info@saffronofkashmir.com.
-- seo.privacyLastUpdated has no admin editor. Deliberate: it is a
-  legal document date and should require a considered edit. Note the
-  privacy page no longer reads it; the date now comes from
+
+- **blogs.html is 28,953 bytes and that is accepted.** Do not chase a
+  25 KB target: the floor with zero JSON-LD is 25,501 bytes, so
+  reaching it means stripping structured data off the index or
+  truncating excerpts. Both were considered and rejected 29 Aug 2026.
+  Breakdown: chrome 17,763, thirteen excerpt cards 7,738, JSON-LD
+  3,452. The index JSON-LD was already trimmed from 7,275 by cutting
+  each blogPost entry to headline plus URL, since every post carries a
+  full BlogPosting on its own page.
+- **main.js is still served max-age=14400.** The Cloudflare cache rule
+  is created but ineffective on /assets/js/, /assets/css/ and
+  /assets/admin/, verified on a fresh MISS for style.css so it is not
+  a stale object. Returning visitors keep the old script for up to 4
+  hours, so new HTML can pair with old JS. Test JS and CSS changes in
+  a private window. Two false "broken feature" diagnoses have already
+  come from this.
+- seo.privacyLastUpdated has no admin editor and is no longer read by
+  the privacy page; that date now comes from
   policies.privacy.lastUpdated.
-- Adding a new social platform icon still requires a SOCIAL_ICONS
-  entry in templates.js. The admin can add the profile but not the
-  icon.
+- Adding a new social platform icon still needs a SOCIAL_ICONS entry
+  in templates.js.
 - /products (file) and /products/ (directory) coexist. GitHub Pages
-  resolves the file. NEVER create products/index.html.
+  serves the file. NEVER create products/index.html.
 - productSlug(p) is built from baseName + size with whitespace
   stripped, so editing either field can move a live product URL.
-  Check before changing them.
 - Prose prices in site-data.json do not convert currency.
-- Commit 3b7619e failed CI - sitemap.xml was committed alone by the
-  legacy per-file publish route without its matching site-data.json.
-  Left in history deliberately; it is the failure CI exists to catch.
 - UTM params are dropped on every internal navigation. GA4 keeps the
-  campaign for the session via its own state, so session reports
-  survive; per-page and cross-session attribution degrade. sok_attr
-  is unaffected. Not fixed deliberately.
-- An unmapped utm_source resolves to RF, not DR. A same-host
-  referrer resolves to DR so internal navigation cannot overwrite a
-  first touch.
+  campaign for the session; per-page and cross-session attribution
+  degrade. sok_attr is unaffected. Not fixed deliberately.
+- An unmapped utm_source resolves to RF, not DR. A same-host referrer
+  resolves to DR so internal navigation cannot overwrite a first
+  touch.
 - The 90% figure appears in three slightly different framings across
   story.paragraphs[0], faq.items[6].a and posts[1].excerpt. All
-  correct, none contradictory. Worth a consistency pass.
+  correct, none contradictory.
+- Commit 3b7619e failed CI: sitemap.xml was committed alone by the
+  legacy per-file publish route. Left in history deliberately; it is
+  the failure CI exists to catch.
+
+## Accepted risks - do not re-litigate
+
+- Admin panel is publicly reachable at /admin and /admin.html. GitHub
+  PAT stored plaintext in localStorage on the same origin as public
+  pages that load Meta Pixel and GTM. Any XSS on the origin yields
+  repo write plus CI code execution via workflows:write. Owner
+  accepted 9 Aug 2026. Recoverable fix:
+  git checkout -b security/admin-offline 2f57ca4
+- Token permissions are broader than needed. Owner accepted.
+- CI is advisory, not blocking, because Repository admin bypasses the
+  ruleset. A red check does not stop a publish; check Actions manually
+  after publishing.
+- 30 commits in history carry a Co-Authored-By trailer and three April
+  2026 commit subjects name an assistant. Removing them means
+  rewriting every SHA, which invalidates the restore points cited in
+  this file. Not visible on the live site. CLAUDE.md forbids the
+  trailer going forward.
 
 ## Verification lessons
+
 - For browser-loaded assets, verify the DEPLOYED bytes, not the
-  committed ones. A 4-hour Cloudflare cache on admin.js made a
-  working feature look broken. Static checks cannot see a cache.
+  committed ones.
 - "Verified" must include "and I saw it run".
-- PowerShell's `curl` is Invoke-WebRequest and follows redirects
-  silently. Always use curl.exe -sI to inspect status codes.
-- Purging Cloudflare and checking origin bytes does NOT clear the
-  device's own HTTP cache. On an unexpired max-age, only clearing
-  browser data or switching browser will revalidate.
-- Parity catches things a diff review misses. Reordering the whyUs
-  cards left the flag emojis behind on the wrong cards; only the
-  before/after text comparison surfaced it.
+- PowerShell's curl is Invoke-WebRequest and follows redirects
+  silently. Use curl.exe -sI to inspect status codes.
+- Purging Cloudflare does NOT clear the device's own HTTP cache. On an
+  unexpired max-age, only clearing browser data or switching browser
+  will revalidate.
+- Parity catches what a diff review misses. Reordering the whyUs cards
+  left the flag emojis on the wrong cards; only the before/after text
+  comparison surfaced it.
 - A field that renders but has no admin editor is as broken as one
-  that is editable but renders nowhere. brand.fssaiNumber shipped
-  render-only at first and had to be added to admin.js. Check both
-  files, both directions.
+  that is editable but renders nowhere. Check both files, both
+  directions.
+- Substring greps lie. Word-boundary the pattern and strip HTML tags
+  before believing a hit count.

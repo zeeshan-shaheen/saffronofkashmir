@@ -880,7 +880,7 @@
         '\n              </ul>\n              <h4>Method</h4>\n              <ol>\n' +
         r.steps.map(function (x) { return '                <li>' + inlineMd(b, x) + '</li>'; }).join('\n') +
         '\n              </ol>\n' +
-        '              <p class="recipe-tip">' + inlineMd(b, r.tip) + '</p>\n' +
+        (r.tip ? '              <p class="recipe-tip">' + inlineMd(b, r.tip) + '</p>\n' : '') +
         '              <button class="print-btn" type="button">🖨 Print recipe</button>\n' +
         '            </details>\n          </div>\n        </article>';
     }).join('\n\n');
