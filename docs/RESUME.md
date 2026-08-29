@@ -124,9 +124,12 @@ nothing visibly breaks.
   saffron in Pampore for three generations, and Saffron of Kashmir
   was founded in 2026. brand.foundingYear 2026 also renders as
   JSON-LD foundingDate. No copy implies the brand itself is older.
-- Four policy pages, 29 Aug 2026: Terms and Conditions (/terms),
-  Shipping Policy (/shipping-policy), Returns Policy
-  (/returns-policy) and Privacy Policy (/privacy-policy). All four
+- Four policy pages, LIVE AND VERIFIED IN PRODUCTION 29 Aug 2026:
+  Terms and Conditions (/terms), Shipping Policy
+  (/shipping-policy), Returns Policy (/returns-policy) and Privacy
+  Policy (/privacy-policy). All four return 200, each canonical is
+  the extensionless URL, all four links render in the footer on
+  every page including 404, and sitemap.xml serves 14 URLs. All
   share one renderPolicyPage(data, key) driven by the policies
   object in site-data.json. renderPrivacyPolicy() is now a thin
   delegate kept only because the admin preview map calls it by name.
@@ -146,7 +149,12 @@ nothing visibly breaks.
     reverted the same day.
   - pageUrl() now strips .html from any root-level page not in
     PAGE_PATHS, so a policy added through the admin gets an
-    extensionless URL without a code change.
+    extensionless URL without a code change. Without this the new
+    pages built as /terms.html and the canonical, og:url and sitemap
+    were all wrong. Parity and the canonical check caught it.
+  - Still open: the Terms page has not been read by a lawyer or CA
+    in India, and the 2 working day processing time and the 4-6 day
+    transit figures are owner-supplied and unmeasured.
 - **404 now calls footer(data, '404').** It previously had no footer
   at all: no navigation, no contact details, no copyright, no FSSAI
   line, no WhatsApp links. It went from 794 bytes to ~11.5 KB.
@@ -284,8 +292,26 @@ nothing visibly breaks.
   **Parity must be baselined BEFORE editing, from a clean tree.** A
   baseline captured after the edits proves nothing. Cover all 12
   generated pages, not the five CLAUDE.md used to name.
+- /terms.html, /shipping-policy.html and /returns-policy.html serve
+  200 rather than redirecting to the extensionless form. The five
+  legacy pages have Cloudflare Bulk Redirects; these three do not.
+  Canonical, sitemap, llms.txt and every internal link point at the
+  extensionless URL, so this is a consistency gap rather than an SEO
+  fault. Fixing it means three redirect rules in the Cloudflare
+  dashboard, outside this repo.
+- **Cloudflare email obfuscation rewrites every address on the live
+  site.** A raw grep for info@saffronofkashmir.com on a fetched page
+  returns ZERO, because the address is replaced by
+  "[email protected]" plus a cdn-cgi/l/email-protection link whose
+  hex payload is XOR encoded with its own first byte as the key. Any
+  future verification must decode those tokens rather than treat
+  zero as a failure. Decode: bytes.fromhex(h), key = b[0], then
+  chr(c ^ key) for the rest. Verified 29 Aug 2026, every token on
+  every page decodes to info@saffronofkashmir.com.
 - seo.privacyLastUpdated has no admin editor. Deliberate: it is a
-  legal document date and should require a considered edit.
+  legal document date and should require a considered edit. Note the
+  privacy page no longer reads it; the date now comes from
+  policies.privacy.lastUpdated.
 - Adding a new social platform icon still requires a SOCIAL_ICONS
   entry in templates.js. The admin can add the profile but not the
   icon.
