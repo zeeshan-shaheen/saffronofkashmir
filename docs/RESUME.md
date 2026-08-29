@@ -282,6 +282,15 @@ nothing visibly breaks.
 - Confirm 2026 is the correct registration year for foundingDate.
 - The Terms page has not been read by a lawyer or CA in India. It
   was drafted to supplied facts and is not legal advice.
+- **Kesar Doodh recipe tip still carries a health claim with a dose.**
+  recipes[2].tip reads "Wellness note: About 8 - 10 Mongra threads
+  (~30mg) is the amount used in most published research on saffron's
+  benefits". The ~30mg figure is a leftover of the health post
+  deleted 29 Aug 2026. Its schemaDesc also says "wellness drink",
+  which ships in the Recipe JSON-LD. The 13-term grep misses both
+  because they use "wellness" and "benefits", not "benefits your".
+  Needs an owner decision, and it is the most exposed of the
+  remaining items.
 - Saffron Oil product copy still reads "For skin, hair, and wellness
   rituals" on products.html and the oil detail page. That is a
   cosmetic and wellness claim on a product page, and it sits against
