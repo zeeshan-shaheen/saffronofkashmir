@@ -100,9 +100,32 @@ not a control. Two mechanisms replaced it on 30 Aug 2026:
   the live build-id.json before committing, and refuses the publish on
   a mismatch, naming both ids.
 
-The guard does NOT block when the live id is unreachable, 404s or is
-empty. A network problem is not evidence of staleness. It also skips
-on an unstamped 'dev' build so a local checkout works.
+The guard does NOT block when the live id is unreachable, 404s, is
+unparseable or is empty. A network problem is not evidence of
+staleness. It also skips on an unstamped 'dev' build and when
+SOKTemplates is absent entirely. **Every one of those six fail-open
+paths logs a console.warn naming why the check was skipped and stating
+that the publish is unguarded.** A guard that quietly does nothing is
+worse than no guard, because it reads as protection that is not there.
+The match and block paths log nothing; block returns a message.
+
+### Never edit templates.js through the GitHub web editor
+Or through any route that commits without running node build.js.
+
+Only build.js restamps BUILD_ID. A direct web edit deploys immediately
+carrying the OLD id, so the served templates and the served
+build-id.json disagree, and **the guard locks the admin panel out of
+publishing**. The panel is then correct to refuse: it cannot tell a
+hand-edit from the 29 Aug staleness it exists to catch.
+
+Recovery, in order:
+1. git pull
+2. node build.js   (restamps templates.js and rewrites build-id.json)
+3. commit the restamped templates.js and build-id.json, push
+
+**CI catches this only on the next push.** The Build check runs
+node build.js and fails on drift, but nothing runs between pushes, so
+the lockout persists for as long as nobody pushes. There is no alert.
 
 **The main.js 4-hour max-age and the ineffective Cloudflare cache rule
 are both still open.** They still affect visitors and still mean JS and

@@ -1403,20 +1403,48 @@
      this returns a message on mismatch and only publishes on a clean match or
      an explicit "cannot tell" with the user's consent. */
   async function templatesAreCurrent() {
-    const loaded = (window.SOKTemplates && SOKTemplates.BUILD_ID) || '';
+    /* Every fail-open path warns. A guard that quietly does nothing is worse
+       than no guard, because it reads as protection that is not there. */
+    const SKIP = 'Publish version guard SKIPPED: ';
+    const UNGUARDED = ' Publishing UNGUARDED.';
+
+    if (!window.SOKTemplates) {
+      console.warn(SKIP + 'SOKTemplates is not loaded, so there is no build id to compare against.' + UNGUARDED);
+      return { ok: true, note: 'SOKTemplates absent, guard skipped' };
+    }
+    const loaded = SOKTemplates.BUILD_ID || '';
     if (!loaded || loaded === 'dev') {
+      console.warn(SKIP + 'templates carry an unstamped build id (' + (loaded || 'none') +
+        '). Run node build.js to stamp one.' + UNGUARDED);
       return { ok: true, note: 'unstamped build, guard skipped' };
     }
-    let live;
+
+    let res;
     try {
-      const r = await fetch(siteUrl() + '/build-id.json?cb=' + Date.now(), { cache: 'no-store' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      live = (await r.json()).buildId || '';
+      res = await fetch(siteUrl() + '/build-id.json?cb=' + Date.now(), { cache: 'no-store' });
     } catch (err) {
-      // Cannot reach the live id. Do not block on a network problem alone.
-      return { ok: true, note: 'live build id unreachable (' + err.message + '), guard skipped' };
+      console.warn(SKIP + 'could not fetch build-id.json (' + err.message +
+        '). A network problem is not evidence of staleness.' + UNGUARDED);
+      return { ok: true, note: 'fetch failed, guard skipped' };
     }
-    if (!live) return { ok: true, note: 'live build id empty, guard skipped' };
+    if (!res.ok) {
+      console.warn(SKIP + 'build-id.json returned HTTP ' + res.status +
+        '. If this is 404 the live site predates the guard.' + UNGUARDED);
+      return { ok: true, note: 'build-id.json HTTP ' + res.status + ', guard skipped' };
+    }
+
+    let live = '';
+    try {
+      live = (await res.json()).buildId || '';
+    } catch (err) {
+      console.warn(SKIP + 'build-id.json did not parse as JSON (' + err.message + ').' + UNGUARDED);
+      return { ok: true, note: 'build-id.json unparseable, guard skipped' };
+    }
+    if (!live) {
+      console.warn(SKIP + 'live build-id.json carries no buildId value.' + UNGUARDED);
+      return { ok: true, note: 'live build id empty, guard skipped' };
+    }
+
     if (live === loaded) return { ok: true, note: 'build id matches (' + live + ')' };
     return {
       ok: false,

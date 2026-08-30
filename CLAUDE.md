@@ -124,6 +124,7 @@ site.
 4. **NEVER commit secrets.** No GitHub token, no API keys, no service-account files. The owner's token lives only in their browser.
 5. **Never put real images into any package/zip.** Images live in the repo.
 6. Apostrophes/quotes: data uses real `'` and `'`; testimonials use curly quotes. Keep them.
+7. **NEVER edit `assets/admin/templates.js` through the GitHub web editor**, or through any route that commits without running `node build.js`. A direct edit deploys immediately carrying the OLD `BUILD_ID`, because only `build.js` restamps it. The live `build-id.json` then disagrees with the templates actually being served, and the pre-publish guard **locks the admin panel out of publishing** until someone rebuilds. Recovery: pull, run `node build.js`, commit the restamped file, push. CI only catches the drift on the next push, so the lockout can persist for as long as nobody pushes.
 
 ---
 ## Writing style — write like a person, not an AI
