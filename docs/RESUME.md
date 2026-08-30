@@ -73,6 +73,25 @@ health claim: "drunk daily across Emirati households" in the Arabic
 cuisine post, "deals with them daily" in the GI post, "Best for Daily
 cooking" in a product spec row.
 
+### Structured data: three fields are deliberately absent
+Google Search Console reports these as missing non-critical items on
+all four recipes. **That is expected and accepted. Do not "fix" it.**
+The same note is in the Recipe schema builder in templates.js.
+
+- **aggregateRating.** We have no real reviews. Fabricated rating
+  markup risks a Google manual action, and CLAUDE.md already forbids
+  review markup outright. Add only if real, displayed customer reviews
+  ever exist.
+- **nutrition.** Estimated calorie figures presented as structured
+  data would be invented data. Add only after a real per-recipe
+  calculation, not from a generic table.
+- **video, and per-step image.** The media does not exist. Do not
+  substitute stock or placeholder assets to satisfy a validator.
+
+Recipes carry HowToStep objects with name, text and a url anchoring to
+a real id on the rendered step, plus keywords. Those were the three
+flagged issues worth fixing, and they are done.
+
 ### No business address anywhere
 Decided, reversed once, and decided again. Do not add one and do not
 infer one from the FSSAI registration. No place name in the footer

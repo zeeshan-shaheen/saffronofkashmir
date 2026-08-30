@@ -550,6 +550,7 @@
           f('Tip box', p + '.tip', { type: 'textarea', rows: 2, hint: MD_HINT }) +
           '<div class="subgrp"><div class="lbl">Search listing (Google)</div>' +
           '<div class="grid2">' + f('Recipe name for Google', p + '.schemaName') + f('Total time (ISO)', p + '.totalISO', { placeholder: 'PT50M', hint: 'PT15M = 15 min · PT1H30M = 1 hr 30 min.' }) + '</div>' +
+          f('Keywords', p + '.keywords', { placeholder: 'kesar doodh, saffron milk, cardamom', hint: 'Comma separated. The dish name and its main ingredients. Do not stuff; a short honest list beats a long one.' }) +
           '<div class="grid2">' + f('Cuisine for Google', p + '.cuisine') + f('Yield', p + '.yield', { placeholder: '4 servings' }) + '</div>' +
           f('Short description for Google', p + '.schemaDesc', { type: 'textarea', rows: 2 }) + '</div>',
           'Add recipe')) +

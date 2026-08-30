@@ -844,6 +844,23 @@
 
   /* ---------- recipes.html ---------- */
 
+  // Short name for a HowToStep, summarised from the step's own opening clause.
+  // Nothing is invented: it is the first sentence, shortened at a comma when
+  // that sentence runs long. Never cut mid-phrase.
+  function stepName(s) {
+    var t = plainMd(String(s || '')).trim();
+    var m = t.match(/^[^.;]+/);
+    t = (m ? m[0] : t).trim();
+    if (t.split(/\s+/).length > 9) {
+      var c = t.split(',')[0].trim();
+      if (c.split(/\s+/).length >= 3) t = c;
+    }
+    return t.replace(/[\s,;:-]+$/, '');
+  }
+
+  // Anchor for one step, so the HowToStep url resolves to real markup.
+  function stepAnchor(r, i) { return r.id + '-step-' + (i + 1); }
+
   function renderRecipes(data) {
     const b = data.brand, rp = data.recipesPage;
     const jsonLd = ld({
@@ -858,7 +875,25 @@
             recipeCategory: r.recipeCategory || undefined,
             totalTime: r.totalISO, recipeYield: r.yield, recipeCuisine: r.cuisine,
             recipeIngredient: r.ingredients.map(plainMd),
-            recipeInstructions: r.steps.map(function (s) { return { '@type': 'HowToStep', text: plainMd(s) }; }),
+            keywords: r.keywords || undefined,
+            recipeInstructions: r.steps.map(function (s, i) {
+              return {
+                '@type': 'HowToStep',
+                name: stepName(s),
+                text: plainMd(s),
+                url: b.siteUrl + pageUrl('recipes.html') + '#' + stepAnchor(r, i)
+              };
+            }),
+            // DELIBERATELY ABSENT, do not "fix" these:
+            //   aggregateRating - we have no real reviews. Fabricated rating
+            //     markup risks a Google manual action and CLAUDE.md forbids it.
+            //   nutrition - estimated calorie figures presented as structured
+            //     data would be invented. Add only after real per-recipe
+            //     calculation.
+            //   video, and per-step image - the media does not exist. Do not
+            //     substitute stock or placeholder assets.
+            // Google reports all three as "missing" non-critical items. That is
+            // expected and accepted.
             author: { '@type': 'Organization', name: b.name }
           };
         })
@@ -878,7 +913,10 @@
         '              <h4>Ingredients</h4>\n              <ul>\n' +
         r.ingredients.map(function (x) { return '                <li>' + inlineMd(b, x) + '</li>'; }).join('\n') +
         '\n              </ul>\n              <h4>Method</h4>\n              <ol>\n' +
-        r.steps.map(function (x) { return '                <li>' + inlineMd(b, x) + '</li>'; }).join('\n') +
+        r.steps.map(function (x, i) {
+          // id matches the HowToStep url in the Recipe JSON-LD above.
+          return '                <li id="' + esc(stepAnchor(r, i)) + '">' + inlineMd(b, x) + '</li>';
+        }).join('\n') +
         '\n              </ol>\n' +
         (r.tip ? '              <p class="recipe-tip">' + inlineMd(b, r.tip) + '</p>\n' : '') +
         '              <button class="print-btn" type="button">🖨 Print recipe</button>\n' +
