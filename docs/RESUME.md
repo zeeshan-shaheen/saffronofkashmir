@@ -87,12 +87,21 @@ reason it was caught was a rejected push.
 "Hard refresh before publishing" was the control at the time. It is
 not a control. Two mechanisms replaced it on 30 Aug 2026:
 
-- build.js stamps a build id into templates.js: sha256 of the file
-  with the BUILD_ID line normalised out and line endings normalised to
-  LF, first 12 hex. Idempotent, so a no-op rebuild does not churn it,
-  and identical on Windows and Linux checkouts. **Hash LF-normalised
-  content or CI on Linux will disagree with a Windows checkout and the
-  build guard will fail on every run.** renderAll emits build-id.json.
+- build.js stamps a build id into templates.js: sha256 of **both panel
+  scripts, templates.js and admin.js**, each with its BUILD_ID line
+  normalised out and line endings normalised to LF, first 12 hex.
+  Idempotent, so a no-op rebuild does not churn it, and identical on
+  Windows and Linux checkouts. **Hash LF-normalised content or CI on
+  Linux will disagree with a Windows checkout and the build guard will
+  fail on every run.** renderAll emits build-id.json.
+  **Both files are hashed because admin.html loads both under ?v=.**
+  The first version hashed templates.js alone, which meant an
+  admin.js-only change did not move the URL and a cached admin.js kept
+  being served: the console.warn work shipped on 30 Aug would not have
+  reached anyone with a warm cache. Only templates.js carries the
+  stamp, because that is where the panel reads BUILD_ID from. admin.js
+  has no BUILD_ID line, but the normalisation is applied to both so
+  adding one later cannot create a circular hash.
 - admin.html fetches build-id.json with cache: 'no-store' and loads
   templates.js?v=<id> and admin.js?v=<id>. A stale cached copy cannot
   be served because the URL moves with the templates.
@@ -109,14 +118,15 @@ that the publish is unguarded.** A guard that quietly does nothing is
 worse than no guard, because it reads as protection that is not there.
 The match and block paths log nothing; block returns a message.
 
-### Never edit templates.js through the GitHub web editor
+### Never edit templates.js or admin.js through the GitHub web editor
 Or through any route that commits without running node build.js.
 
-Only build.js restamps BUILD_ID. A direct web edit deploys immediately
-carrying the OLD id, so the served templates and the served
-build-id.json disagree, and **the guard locks the admin panel out of
-publishing**. The panel is then correct to refuse: it cannot tell a
-hand-edit from the 29 Aug staleness it exists to catch.
+The build id is the hash of both files and only build.js restamps it.
+A direct web edit to either deploys immediately carrying the OLD id, so
+the served scripts and the served build-id.json disagree, and **the
+guard locks the admin panel out of publishing**. The panel is then
+correct to refuse: it cannot tell a hand-edit from the 29 Aug
+staleness it exists to catch.
 
 Recovery, in order:
 1. git pull

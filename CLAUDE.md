@@ -93,10 +93,15 @@ page was orphaned for about a day. Nothing failed loudly. Two mechanisms now
 prevent it, and both must stay.
 
 1. **`build.js` stamps a build id into `templates.js`** on every build. The id
-   is the sha256 of `templates.js` with the `var BUILD_ID = '...'` line
-   normalised out, LF-normalised first, truncated to 12 hex. It is idempotent,
-   so a no-op rebuild does not churn it, and it is identical on Windows and
-   Linux checkouts. `renderAll` emits it as `build-id.json`.
+   is the sha256 of **both panel scripts, `templates.js` and `admin.js`**, each
+   with its `var BUILD_ID = '...'` line normalised out and line endings
+   normalised to LF, truncated to 12 hex. Both files are hashed because
+   `admin.html` loads both under `?v=`; hashing `templates.js` alone meant an
+   `admin.js`-only change did not move the URL and a cached `admin.js` kept
+   being served. It is idempotent, so a no-op rebuild does not churn it, and it
+   is identical on Windows and Linux checkouts. `renderAll` emits it as
+   `build-id.json`. Only `templates.js` carries the stamp, because that is the
+   file the panel reads `BUILD_ID` from.
 2. **`admin.html` loads its scripts as `templates.js?v=<build id>`**, after
    fetching `build-id.json` with `cache: 'no-store'`. A stale cached copy can
    no longer be served, because the URL changes whenever the templates change.
@@ -124,7 +129,7 @@ site.
 4. **NEVER commit secrets.** No GitHub token, no API keys, no service-account files. The owner's token lives only in their browser.
 5. **Never put real images into any package/zip.** Images live in the repo.
 6. Apostrophes/quotes: data uses real `'` and `'`; testimonials use curly quotes. Keep them.
-7. **NEVER edit `assets/admin/templates.js` through the GitHub web editor**, or through any route that commits without running `node build.js`. A direct edit deploys immediately carrying the OLD `BUILD_ID`, because only `build.js` restamps it. The live `build-id.json` then disagrees with the templates actually being served, and the pre-publish guard **locks the admin panel out of publishing** until someone rebuilds. Recovery: pull, run `node build.js`, commit the restamped file, push. CI only catches the drift on the next push, so the lockout can persist for as long as nobody pushes.
+7. **NEVER edit `assets/admin/templates.js` or `assets/admin/admin.js` through the GitHub web editor**, or through any route that commits without running `node build.js`. The build id is the hash of both files, and only `build.js` restamps it, so a direct edit to either deploys immediately carrying the OLD `BUILD_ID`. The live `build-id.json` then disagrees with the scripts actually being served, and the pre-publish guard **locks the admin panel out of publishing** until someone rebuilds. Recovery: pull, run `node build.js`, commit the restamped `templates.js` and `build-id.json`, push. CI only catches the drift on the next push, so the lockout can persist for as long as nobody pushes.
 
 ---
 ## Writing style — write like a person, not an AI
