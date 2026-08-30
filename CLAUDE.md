@@ -83,6 +83,39 @@ serves the file. NEVER create `products/index.html`.
 
 ---
 
+## The publish path is version-guarded — do not weaken this
+
+On 29 Aug 2026 three admin publishes silently reverted 14 generated files.
+The panel's browser had a `templates.js` cached from before the policy pages
+and the blog restructure, so publishing regenerated the site with old
+templates: `sitemap.xml` fell from 27 URLs to 11 and every blog post and policy
+page was orphaned for about a day. Nothing failed loudly. Two mechanisms now
+prevent it, and both must stay.
+
+1. **`build.js` stamps a build id into `templates.js`** on every build. The id
+   is the sha256 of `templates.js` with the `var BUILD_ID = '...'` line
+   normalised out, LF-normalised first, truncated to 12 hex. It is idempotent,
+   so a no-op rebuild does not churn it, and it is identical on Windows and
+   Linux checkouts. `renderAll` emits it as `build-id.json`.
+2. **`admin.html` loads its scripts as `templates.js?v=<build id>`**, after
+   fetching `build-id.json` with `cache: 'no-store'`. A stale cached copy can
+   no longer be served, because the URL changes whenever the templates change.
+3. **`admin.js` blocks the publish on a version mismatch.** Before committing,
+   `templatesAreCurrent()` compares `SOKTemplates.BUILD_ID` against the live
+   `build-id.json`. Different means the site was rebuilt after the panel
+   opened; the publish is refused with a message naming both ids.
+
+The guard deliberately does NOT block when the live id cannot be read (network
+error, 404, empty). A network problem is not evidence of staleness, and
+blocking every publish on a failed fetch would be its own outage. It also skips
+on an unstamped `dev` build so a local checkout still works.
+
+**Never** replace the guard with a warning, and never remove the `?v=` from
+`admin.html`. Blocking a publish is always preferable to silently reverting the
+site.
+
+---
+
 ## Hard rules — do not break
 
 1. `templates.js` must stay **dual-environment (UMD)**: pure functions only. No `document`, `window`, `fetch`, DOM, or browser-only APIs inside it. It runs under Node (via `build.js`) AND in the browser (the admin).

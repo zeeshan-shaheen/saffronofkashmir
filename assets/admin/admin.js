@@ -1391,8 +1391,58 @@
     return { ok: true, written: changed.length, commit: newCommit.sha };
   }
 
+  /* Pre-publish version guard.
+
+     Compares the build id of the templates this panel actually loaded against
+     the id on the live site. A mismatch means the site was rebuilt after this
+     panel opened, so publishing now would regenerate every page with older
+     templates and silently revert them. That happened on 29 Aug 2026 and cost
+     a day of orphaned blog and policy pages.
+
+     Blocking a publish is always preferable to silently reverting the site, so
+     this returns a message on mismatch and only publishes on a clean match or
+     an explicit "cannot tell" with the user's consent. */
+  async function templatesAreCurrent() {
+    const loaded = (window.SOKTemplates && SOKTemplates.BUILD_ID) || '';
+    if (!loaded || loaded === 'dev') {
+      return { ok: true, note: 'unstamped build, guard skipped' };
+    }
+    let live;
+    try {
+      const r = await fetch(siteUrl() + '/build-id.json?cb=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      live = (await r.json()).buildId || '';
+    } catch (err) {
+      // Cannot reach the live id. Do not block on a network problem alone.
+      return { ok: true, note: 'live build id unreachable (' + err.message + '), guard skipped' };
+    }
+    if (!live) return { ok: true, note: 'live build id empty, guard skipped' };
+    if (live === loaded) return { ok: true, note: 'build id matches (' + live + ')' };
+    return {
+      ok: false,
+      loaded: loaded,
+      live: live,
+      msg: 'Publish blocked. This panel loaded templates ' + loaded +
+           ' but the live site is on ' + live + '. Someone rebuilt the site after you opened this page. ' +
+           'Publishing now would overwrite every page using the older templates. ' +
+           'Reload the panel (Ctrl+Shift+R) and try again.'
+    };
+  }
+
   async function runPublish() {
     if (publishing) return;
+
+    const guard = await templatesAreCurrent();
+    if (!guard.ok) {
+      const note = $('#pub-note');
+      note.style.display = 'block';
+      note.className = 'err';
+      note.textContent = guard.msg;
+      $('#pub-go').disabled = true;
+      toast('Publish blocked: stale templates. Reload the panel.', 9000);
+      return;
+    }
+
     publishing = true;
     $('#pub-go').disabled = true;
     $('#pub-go').textContent = 'Publishing…';

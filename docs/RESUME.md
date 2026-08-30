@@ -73,6 +73,42 @@ health claim: "drunk daily across Emirati households" in the Arabic
 cuisine post, "deals with them daily" in the GI post, "Best for Daily
 cooking" in a product spec row.
 
+### The publish path is version-guarded. Do not weaken it.
+**The 29 Aug 2026 incident:** three admin publishes silently reverted 14
+generated files. The panel's browser had a templates.js cached from
+before the policy pages and the blog restructure, so publishing
+regenerated everything with old templates. sitemap.xml fell from 27
+URLs to 11, blogs.html reverted to the 104 KB details page, llms.txt
+lost its Articles section, index.html lost the four footer policy
+links, and every blog post and policy page sat orphaned for about a
+day. The data was never damaged. Nothing failed loudly, and the only
+reason it was caught was a rejected push.
+
+"Hard refresh before publishing" was the control at the time. It is
+not a control. Two mechanisms replaced it on 30 Aug 2026:
+
+- build.js stamps a build id into templates.js: sha256 of the file
+  with the BUILD_ID line normalised out and line endings normalised to
+  LF, first 12 hex. Idempotent, so a no-op rebuild does not churn it,
+  and identical on Windows and Linux checkouts. **Hash LF-normalised
+  content or CI on Linux will disagree with a Windows checkout and the
+  build guard will fail on every run.** renderAll emits build-id.json.
+- admin.html fetches build-id.json with cache: 'no-store' and loads
+  templates.js?v=<id> and admin.js?v=<id>. A stale cached copy cannot
+  be served because the URL moves with the templates.
+- admin.js templatesAreCurrent() compares SOKTemplates.BUILD_ID with
+  the live build-id.json before committing, and refuses the publish on
+  a mismatch, naming both ids.
+
+The guard does NOT block when the live id is unreachable, 404s or is
+empty. A network problem is not evidence of staleness. It also skips
+on an unstamped 'dev' build so a local checkout works.
+
+**The main.js 4-hour max-age and the ineffective Cloudflare cache rule
+are both still open.** They still affect visitors and still mean JS and
+CSS changes need a private window to test. What has changed is that the
+publish path no longer depends on either being fixed.
+
 ### Structured data: three fields are deliberately absent
 Google Search Console reports these as missing non-critical items on
 all four recipes. **That is expected and accepted. Do not "fix" it.**

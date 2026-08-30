@@ -10,6 +10,17 @@
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  /* Build identifier. REWRITTEN BY build.js on every build: it is the content
+     hash of this file with this line normalised, so stamping is idempotent and
+     a no-op rebuild does not churn it. Do not edit by hand.
+
+     Two things depend on it. admin.html loads this file as
+     templates.js?v=<BUILD_ID>, so a stale cached copy cannot be served. And
+     admin.js compares this value against the build-id.json on the live site
+     before publishing, and blocks the publish if they differ. See the 29 Aug
+     2026 incident in docs/RESUME.md. */
+  var BUILD_ID = 'd67784580999';
+
   /* ---------- helpers ---------- */
 
   function esc(s) {
@@ -1253,7 +1264,11 @@
       'blogs.html': renderBlogs(data),
       '404.html': render404(data),
       'sitemap.xml': renderSitemap(data),
-      'llms.txt': renderLlms(data)
+      'llms.txt': renderLlms(data),
+      // Published alongside everything else, so the live id always matches the
+      // templates that produced the live pages. The admin reads this back
+      // before publishing.
+      'build-id.json': JSON.stringify({ buildId: BUILD_ID }) + '\n'
     };
     // Every policy page comes from the same renderer, keyed by its slug.
     Object.keys(data.policies || {}).forEach(function (k) {
@@ -1270,6 +1285,7 @@
   }
 
   return {
+    BUILD_ID: BUILD_ID,
     esc: esc, waUrl: waUrl, waAttrs: waAttrs, waNumbers: waNumbers, inlineMd: inlineMd, plainMd: plainMd,
     productView: productView, productSlug: productSlug, productUrl: productUrl,
     renderIndex: renderIndex, renderProducts: renderProducts,

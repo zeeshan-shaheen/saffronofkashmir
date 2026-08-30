@@ -252,7 +252,40 @@
 <input type="file" id="file-input" accept="image/*" style="display:none;">
 <div class="toast" id="toast"></div>
 
-<script src="assets/admin/templates.js"></script>
-<script src="assets/admin/admin.js"></script>
+<script>
+/* Load the panel's scripts under the current build id.
+
+   templates.js and admin.js are served with a long max-age, and on 29 Aug 2026
+   a browser-cached templates.js from before the policy pages and the blog
+   restructure was used to publish, which silently reverted 14 generated files.
+   Fetching build-id.json with no-store and appending the id to each script URL
+   means a stale cached copy can no longer be served: the URL changes whenever
+   the templates change.
+
+   If the id cannot be fetched we fall back to a timestamp, which is worse for
+   caching but never stale. Loading nothing at all would be worse still. */
+(function () {
+  function fail(msg) {
+    document.body.innerHTML = '<p style="font:16px/1.5 system-ui;padding:40px;color:#9d2235;">' +
+      msg + '</p>';
+  }
+  function inject(src, next) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = next || null;
+    s.onerror = function () { fail('Could not load the admin panel (' + src + '). Check your connection and reload.'); };
+    document.head.appendChild(s);
+  }
+  fetch('build-id.json?cb=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : {}; })
+    .catch(function () { return {}; })
+    .then(function (j) {
+      var v = j && j.buildId ? '?v=' + encodeURIComponent(j.buildId) : '?cb=' + Date.now();
+      inject('assets/admin/templates.js' + v, function () {
+        inject('assets/admin/admin.js' + v);
+      });
+    });
+})();
+</script>
 </body>
 </html>
