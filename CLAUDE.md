@@ -161,6 +161,13 @@ node build.js
 # 4. JSON-LD check — python _check_jsonld.py
 ```
 
+**A dirty `git status` straight after a build is expected, not a problem.**
+`core.autocrlf=true` plus `.gitattributes` `* text=auto` means git checks files
+out with CRLF, while `build.js` writes LF. Every generated file therefore looks
+modified after a rebuild even when nothing changed. Check with
+`git diff --numstat`: an empty result means zero content difference and there is
+nothing to commit. Never commit a line-ending-only change.
+
 **These two scripts are NOT in the repo.** They are deliberately kept outside it.
 `.nojekyll` means an underscore-prefixed directory at the repo root is published,
 so a `_parity_baseline/` of extracted page text would ship as plain-text duplicate
@@ -172,31 +179,78 @@ Parity is only meaningful against a baseline captured BEFORE your edits, from a
 clean tree. Capture first, edit second, compare third. Cover all generated pages,
 not just the five top-level ones.
 
+**What parity does and does not compare.** It compares **visible text plus
+`<title>` text**. Tags are stripped whole, so attribute values (`data-wa-pos`,
+`meta` content, `href`) and `<script>` contents (including JSON-LD) are **not**
+compared. Verify those with targeted greps. A green parity run means no
+unintended change to visible copy. It is not evidence that a fix landed.
+
+It reports **every** changed block on a page, not just the first. An earlier
+version stopped at the first difference, which hid a real body change on a page
+that also had a title change: the run reported the same result before and after
+the fix. Blocks come from `difflib` opcodes, so a title change of a different
+word count does not cascade into false diffs down the rest of the page.
+
 Parity script (recreate outside the repo):
 ```python
-import re, html, os
+import re, html, os, sys, glob, difflib
+try: sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # page copy has emoji
+except Exception: pass
+REPO = r"d:\SOK git clone\saffronofkashmir"
+BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_parity_baseline")
+CONTEXT = 6
+
 def textof(p):
     s = open(p, encoding="utf-8").read()
     s = re.sub(r"<script.*?</script>", " ", s, flags=re.S)
     s = re.sub(r"<[^>]+>", " ", s)
     s = html.unescape(s)
     return re.sub(r"\s+", " ", s).strip()
-pages = ["index.html","products.html","recipes.html","blogs.html","404.html"]
-for p in pages:
-    baseline = os.path.join("_parity_baseline", p + ".txt")
-    if not os.path.exists(baseline): print("NO BASELINE: " + p); continue
-    old = open(baseline, encoding="utf-8").read().strip()
-    new = textof(p)
-    if old == new: print("OK  " + p)
-    else:
-        ow = old.split(); nw = new.split()
-        for i in range(min(len(ow),len(nw))):
-            if ow[i] != nw[i]:
-                print("DIFF " + p + " at word " + str(i))
-                print("  old: " + " ".join(ow[max(0,i-3):i+8]))
-                print("  new: " + " ".join(nw[max(0,i-3):i+8]))
-                break
+
+def pages():
+    out = [os.path.basename(p) for p in sorted(glob.glob(os.path.join(REPO, "*.html")))
+           if os.path.basename(p) != "admin.html"]
+    for sub in ("products", "blog"):
+        for p in sorted(glob.glob(os.path.join(REPO, sub, "*", "index.html"))):
+            out.append(os.path.relpath(p, REPO).replace("\\", "/"))
+    return out
+
+def capture():
+    os.makedirs(BASE, exist_ok=True)
+    for rel in pages():
+        open(os.path.join(BASE, rel.replace("/", "__") + ".txt"), "w",
+             encoding="utf-8").write(textof(os.path.join(REPO, rel)))
+    print("captured " + str(len(pages())) + " pages")
+
+def compare():
+    ok = changed = missing = total = 0
+    for rel in pages():
+        b = os.path.join(BASE, rel.replace("/", "__") + ".txt")
+        if not os.path.exists(b):
+            print("NO BASELINE: " + rel); missing += 1; continue
+        old = open(b, encoding="utf-8").read().strip()
+        new = textof(os.path.join(REPO, rel))
+        if old == new:
+            ok += 1; continue
+        ow, nw = old.split(), new.split()
+        blocks = [o for o in difflib.SequenceMatcher(None, ow, nw, autojunk=False)
+                  .get_opcodes() if o[0] != "equal"]
+        changed += 1; total += len(blocks)
+        print(rel + "  (" + str(len(blocks)) + " changed blocks)")
+        for n, (tag, i1, i2, j1, j2) in enumerate(blocks, 1):
+            print("  [" + str(n) + "] " + tag + " at word " + str(i1))
+            before = " ".join(ow[max(0, i1 - CONTEXT):i1])
+            if before: print("      after: ..." + before)
+            print("      old: " + (" ".join(ow[i1:i2]) or "(nothing)"))
+            print("      new: " + (" ".join(nw[j1:j2]) or "(nothing)"))
+        print("")
+    print("PAGES OK " + str(ok) + "   PAGES CHANGED " + str(changed) +
+          "   CHANGED BLOCKS " + str(total) + "   MISSING BASELINE " + str(missing))
+
+capture() if len(sys.argv) > 1 and sys.argv[1] == "capture" else compare()
 ```
+Run `python _parity_check.py capture` from a clean tree first, then
+`python _parity_check.py` after editing.
 
 **Important:** Intentional new visible content (e.g. a badge, a new nav element) WILL show in the parity diff — that is expected. Read the diff and confirm only your intended text changed.
 
