@@ -117,19 +117,19 @@
       "ogDescription": "Authentic Kashmiri Mongra saffron, grown and packed in Pampore. ISO 3632 Category I. Order on WhatsApp."
     },
     "products": {
-      "title": "Products - Pure Mongra Saffron, Honey, Oil & Kahwa | Saffron of Kashmir",
+      "title": "Mongra Saffron, Honey, Oil & Kahwa | Saffron of Kashmir",
       "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Category I. Order on WhatsApp.",
       "ogTitle": "Products - Pure Mongra Saffron | Saffron of Kashmir",
       "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Category I. Grown and packed in Pampore."
     },
     "recipes": {
-      "title": "Saffron Recipes - Kahwa, Zafrani Pulao, Machboos & More | Saffron of Kashmir",
-      "description": "Six authentic saffron recipes with full ingredients and steps: Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Saffron Panna Cotta, Saffron Lemonade.",
+      "title": "Kashmiri Saffron Recipes | Saffron of Kashmir",
+      "description": "Four tested saffron recipes with full ingredients and steps: Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh and Arabic Saffron Machboos.",
       "ogTitle": "Saffron Recipes | Saffron of Kashmir",
-      "ogDescription": "Authentic saffron recipes: Kahwa, Zafrani Pulao, Kesar Doodh, Arabic Machboos, Panna Cotta, Saffron Lemonade."
+      "ogDescription": "Four tested saffron recipes: Kashmiri Kahwa, Zafrani Pulao, Kesar Doodh and Arabic Saffron Machboos."
     },
     "blog": {
-      "title": "Blog - Saffron Guides, Heritage & Health | Saffron of Kashmir",
+      "title": "Saffron Guides & Kashmir Heritage | Saffron of Kashmir",
       "description": "Guides on Mongra saffron grades, testing purity at home, reading a lab report, Pampore's saffron heritage, and cooking with saffron.",
       "ogTitle": "Blog | Saffron of Kashmir",
       "ogDescription": "Saffron guides, Kashmir heritage stories, purity tests, and how to read a lab report."
@@ -535,7 +535,7 @@
   },
   "recipesPage": {
     "h1": "Saffron Recipes",
-    "sub": "Six tested recipes with full ingredients and step-by-step methods - from Kashmiri classics to UAE favourites. Every recipe is print-friendly.",
+    "sub": "Four tested recipes with full ingredients and step-by-step methods - from Kashmiri classics to UAE favourites. Every recipe is print-friendly.",
     "golden": {
       "eyebrow": "The Golden Rule",
       "heading": "Always Bloom Your Saffron First",
@@ -766,6 +766,7 @@
       "dateDisplay": "February 10, 2025",
       "title": "The Saffron Fields of Pampore: A Centuries-Old Legacy",
       "excerpt": "Kashmir grows around 90% of India's saffron. Its heart is the Karewa plateau at Pampore - the \"Saffron Town of India\", twenty kilometres south of Srinagar - where some of the finest saffron on earth is grown.",
+      "metaDescription": "Kashmir grows around 90% of India's saffron. Its heart is the Karewa plateau at Pampore, twenty kilometres south of Srinagar.",
       "body": "Saffron cultivation in Kashmir stretches back to at least the 14th century, when Persian traders are believed to have introduced the crocus to the Valley. The Mughal emperors were among the most ardent patrons of Kashmiri saffron - Akbar reportedly ordered saffron planted in royal gardens across the subcontinent, but only the Pampore variety produced the quality he sought. The reason is the soil: the Karewa formation is a rare geological deposit of glacial silt, mineral-rich, with perfect drainage for the moisture-sensitive crocus.\n\nThe harvest happens in a dramatic 15-to-20-day window in October and November, when the purple flowers emerge almost overnight. Entire farming families move into the fields before dawn, picking flowers by hand before the sun opens them fully. Delay even an hour, and the petals wilt and the stigmas lose potency - one of the most time-pressured harvests in the world.\n\nBy the early 2000s, the industry was in crisis: declining groundwater, erratic snowfall, and competition from cheaper Iranian saffron pushed many farmers to abandon the crop. The area under cultivation fell from 5,700 hectares in the 1990s to under 2,500 by 2010.\n\nSome families stayed. Saffron of Kashmir grows out of three generations of family saffron farming in Pampore. We work the same fields, sell direct, and keep the Mongra grade the Mughals prized above all spices. Every tin of our saffron represents a direct line from these ancient fields to your kitchen."
     },
     {
@@ -775,6 +776,7 @@
       "dateDisplay": "March 5, 2025",
       "title": "How to Test Saffron Purity at Home (3 Methods)",
       "excerpt": "A 2019 study found over 50% of commercially available saffron in the Middle East contained adulterants - dyed corn silk, safflower petals, even coloured paper fibres. Here's how to verify yours.",
+      "metaDescription": "A 2019 study found over 50% of saffron sold in the Middle East contained adulterants. Three ways to test what you have at home.",
       "body": "## Method 1: The Cold Water Soak\n\nPlace 3-4 threads in a glass of cold water and watch for 10-15 minutes. Real saffron slowly releases a deep golden-yellow colour while the thread itself stays crimson. Fake (dyed) saffron bleaches almost immediately, turning pale while the water goes a harsh orange-red.\n\n## Method 2: The Baking Soda Test\n\nAdd a pinch of baking soda to your saffron water. Real saffron turns the water bright golden-yellow. Adulterated saffron often turns it red, green, or murky brown as the alkaline soda reacts with synthetic pigments.\n\n## Method 3: The Rub Test\n\nRub a single thread between your fingers. Genuine saffron stains your fingers golden-yellow and softens without crumbling. Fake threads bleed colour quickly and disintegrate, often leaving an unnaturally bright orange-red dye.\n\n*Note:* These are consumer tests. Professional testing uses HPLC spectrophotometry to measure crocin concentration and ISO 3632 compliance. All our saffron is tested to ISO 3632 Category I - report available on request."
     },
     {
