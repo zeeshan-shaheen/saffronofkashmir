@@ -159,7 +159,18 @@ node build.js
 
 # 3. Parity check — python _parity_check.py
 # 4. JSON-LD check — python _check_jsonld.py
+
+# 5. Junk-token check — python tools/check_output.py
 ```
+
+**`tools/check_output.py` fails on JavaScript coercion artefacts in generated
+output**: `NaN`, `undefined`, `[object Object]`, `Infinity`, `-Infinity` and
+`null`. It exists because `node --check` accepts `x + + y` as valid JavaScript,
+so the 29 Aug 2026 unary-plus bug shipped `NaNcard` into 15 order buttons and
+neither the syntax check, `JSON.parse`, nor the CI output-drift check could see
+it. It covers all 31 generated files and runs in the Build check workflow. It
+has no allowlist and no bypass: if a page ever legitimately needs one of those
+words, change the check deliberately in a reviewable commit.
 
 **A dirty `git status` straight after a build is expected, not a problem.**
 `core.autocrlf=true` plus `.gitattributes` `* text=auto` means git checks files

@@ -15,5 +15,6 @@ Disallow: /admin.html
 Disallow: /assets/admin/
 Disallow: /data/
 Disallow: /_archive/
+Disallow: /tools/
 
 Sitemap: https://saffronofkashmir.com/sitemap.xml
