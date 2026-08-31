@@ -161,6 +161,13 @@ node build.js
 # 4. JSON-LD check — python _check_jsonld.py
 ```
 
+**A dirty `git status` straight after a build is expected, not a problem.**
+`core.autocrlf=true` plus `.gitattributes` `* text=auto` means git checks files
+out with CRLF, while `build.js` writes LF. Every generated file therefore looks
+modified after a rebuild even when nothing changed. Check with
+`git diff --numstat`: an empty result means zero content difference and there is
+nothing to commit. Never commit a line-ending-only change.
+
 **These two scripts are NOT in the repo.** They are deliberately kept outside it.
 `.nojekyll` means an underscore-prefixed directory at the repo root is published,
 so a `_parity_baseline/` of extracted page text would ship as plain-text duplicate
