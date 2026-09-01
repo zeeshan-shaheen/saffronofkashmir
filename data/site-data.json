@@ -197,7 +197,7 @@
   },
   "products": [
     {
-      "id": "royal-1g",
+      "id": "royal-mongra-2g",
       "baseName": "Royal Mongra",
       "size": "2g",
       "grams": 2,
@@ -240,7 +240,7 @@
       }
     },
     {
-      "id": "collectors-5g",
+      "id": "collectors-tin-5g",
       "baseName": "Collector's Tin",
       "size": "5g",
       "grams": 5,
@@ -280,7 +280,7 @@
       }
     },
     {
-      "id": "heritage-10g",
+      "id": "heritage-reserve-10g",
       "baseName": "Heritage Reserve",
       "size": "10g",
       "grams": 10,
@@ -320,7 +320,7 @@
       }
     },
     {
-      "id": "honey-250g",
+      "id": "saffron-honey-500ml",
       "baseName": "Saffron Honey",
       "size": "500ml",
       "grams": null,
@@ -339,7 +339,7 @@
       "compare": null
     },
     {
-      "id": "oil-15ml",
+      "id": "saffron-oil-15ml",
       "baseName": "Saffron Oil",
       "size": "15ml",
       "grams": null,
@@ -358,7 +358,7 @@
       "compare": null
     },
     {
-      "id": "kahwa-50g",
+      "id": "kashmiri-kahwa-blend-100g",
       "baseName": "Kashmiri Kahwa Blend",
       "size": "100g",
       "grams": null,

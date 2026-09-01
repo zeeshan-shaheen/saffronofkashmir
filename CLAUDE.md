@@ -185,7 +185,23 @@ python tools/check_jsonld.py
 
 # 5. Junk-token check
 python tools/check_output.py
+
+# 6. Product id check
+python tools/check_product_ids.py
 ```
+
+**`tools/check_product_ids.py` fails when a product's `id` is not the last path
+segment of its own URL.** `sku` and `data-wa-product` are both emitted from
+`p.id`, and three of six ids had drifted from the product they name (`royal-1g`
+on a 2g tin, `honey-250g` on a 500ml jar, `kahwa-50g` on a 100g tin). Nothing
+computes from those strings, so nothing broke loudly; they just published wrong
+values into Product schema and GA4. Ids are now the URL slug, and this keeps
+them that way. It reads generated output rather than recomputing the slug, so it
+cannot drift from the real slug logic in `templates.js`.
+
+**Renaming a product id changes its GA4 `data-wa-product` value.** Historical
+`whatsapp_click` rows keyed on the old id will not join to the new one. Note the
+change date when reading any report that spans it.
 
 **`tools/check_output.py` fails on JavaScript coercion artefacts in generated
 output**: `NaN`, `undefined`, `[object Object]`, `Infinity`, `-Infinity` and
