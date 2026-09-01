@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = '9aa06ae10bc7';
+  var BUILD_ID = 'a1f3cc99f870';
 
   /* ---------- helpers ---------- */
 
@@ -702,6 +702,92 @@
       footer(data, 'index');
   }
 
+  /* Countries the shipping policy names as routine destinations. Everywhere
+     else is served on request, which schema has no way to express, so the list
+     stays as the policy states it rather than claiming worldwide coverage. */
+  var SHIP_COUNTRIES = ['IN', 'AE', 'SA', 'QA', 'OM', 'KW', 'BH'];
+
+  /* Encodes the RETURNS POLICY, not the purity guarantee. They are different
+     instruments: the policy is the general right of return, the guarantee is a
+     conditional warranty triggered by a failed lab test. MerchantReturnPolicy
+     describes the former. Do not encode the guarantee here, and do not widen
+     these values to match it.
+
+     The policy's "unopened tins only" condition has no field in
+     MerchantReturnPolicy, so merchantReturnLink carries the reader to the full
+     terms rather than leaving the restriction unstated. */
+  function merchantReturnPolicy(b) {
+    return {
+      '@type': 'MerchantReturnPolicy',
+      applicableCountry: SHIP_COUNTRIES,
+      returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+      merchantReturnDays: 7,                                  // "within 7 days of delivery"
+      returnMethod: 'https://schema.org/ReturnByMail',
+      returnFees: 'https://schema.org/ReturnShippingFees',     // "return shipping to us is your cost"
+      refundType: 'https://schema.org/ExchangeRefund',         // "we do not give cash refunds"
+      merchantReturnLink: b.siteUrl + '/returns-policy'
+    };
+  }
+
+  /* Transit times from the shipping policy. shippingRate is deliberately
+     omitted: the policy quotes rates on request except for free delivery in
+     India over a threshold, and a made-up number would be worse than an absent
+     one. Handling time is the policy's "dispatched within 2 working days". */
+  function shippingDetails(b) {
+    function leg(countries, minDays, maxDays) {
+      return {
+        '@type': 'OfferShippingDetails',
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY' },
+          transitTime: { '@type': 'QuantitativeValue', minValue: minDays, maxValue: maxDays, unitCode: 'DAY' }
+        }
+      };
+    }
+    return [leg('IN', 3, 5), leg(['AE', 'SA', 'QA', 'OM', 'KW', 'BH'], 4, 6)];
+  }
+
+  /* The three saffron tins are one product at three weights, not three
+     products. Stating that stops them competing with each other for the same
+     query. The gift products are genuinely separate items and are not grouped.
+     Returns [] rather than a node when there are fewer than two tins, so the
+     group is never emitted with a single variant. */
+  function mongraGroupLd(data) {
+    var b = data.brand;
+    var tins = (data.products || []).filter(function (p) { return p.category === 'saffron'; });
+    if (tins.length < 2) return [];
+    return [{
+      '@type': 'ProductGroup',
+      name: 'Kashmiri Mongra Saffron',
+      description: 'Pure Kashmiri Mongra saffron, lab tested to ISO 3632 Category I, in three tin sizes.',
+      brand: { '@type': 'Brand', name: b.name },
+      productGroupID: 'mongra-tins',
+      variesBy: ['https://schema.org/size'],
+      hasVariant: tins.map(function (p) {
+        var pv = productView(p);
+        return {
+          '@type': 'Product',
+          name: pv.schemaName,
+          sku: pv.id,
+          size: pv.size,
+          image: b.siteUrl + '/' + pv.image,
+          url: productUrl(b, p),
+          offers: {
+            '@type': 'Offer', priceCurrency: 'AED',
+            price: String(pv.sale && typeof pv.sale.price === 'number' ? pv.sale.price : pv.price),
+            priceValidUntil: (pv.sale && pv.sale.until) ? pv.sale.until : b.priceValidUntil,
+            itemCondition: 'https://schema.org/NewCondition',
+            availability: statusAvailability(pv.status),
+            url: productUrl(b, p),
+            shippingDetails: shippingDetails(b),
+            hasMerchantReturnPolicy: merchantReturnPolicy(b)
+          }
+        };
+      })
+    }];
+  }
+
   /* ---------- products.html ---------- */
 
   function renderProducts(data) {
@@ -719,7 +805,7 @@
             return { '@type': 'ListItem', position: i + 1, name: productView(p).schemaName, url: productUrl(b, p) };
           })
         }
-      ]
+      ].concat(mongraGroupLd(data) || [])
     });
 
     const filterBtns =
@@ -837,9 +923,14 @@
           offers: {
             '@type': 'Offer', priceCurrency: 'AED',
             price: String(pv.sale && typeof pv.sale.price === 'number' ? pv.sale.price : pv.price),
-            priceValidUntil: (pv.sale && pv.sale.until) ? pv.sale.until : undefined,
+            // A sale end date wins; otherwise the standing date from brand.
+            // Never compute this: a rolling date would change every build and
+            // break the output-drift check.
+            priceValidUntil: (pv.sale && pv.sale.until) ? pv.sale.until : b.priceValidUntil,
             itemCondition: 'https://schema.org/NewCondition',
-            availability: statusAvailability(pv.status), url: url
+            availability: statusAvailability(pv.status), url: url,
+            shippingDetails: shippingDetails(b),
+            hasMerchantReturnPolicy: merchantReturnPolicy(b)
           }
         }
       ]

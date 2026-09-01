@@ -82,9 +82,81 @@
           "@type": "Offer",
           "priceCurrency": "AED",
           "price": "85",
+          "priceValidUntil": "2027-09-01",
           "itemCondition": "https://schema.org/NewCondition",
           "availability": "https://schema.org/OutOfStock",
-          "url": "https://saffronofkashmir.com/products/kashmiri-kahwa-blend-100g/"
+          "url": "https://saffronofkashmir.com/products/kashmiri-kahwa-blend-100g/",
+          "shippingDetails": [
+            {
+              "@type": "OfferShippingDetails",
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": "IN"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 0,
+                  "maxValue": 2,
+                  "unitCode": "DAY"
+                },
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 3,
+                  "maxValue": 5,
+                  "unitCode": "DAY"
+                }
+              }
+            },
+            {
+              "@type": "OfferShippingDetails",
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "addressCountry": [
+                  "AE",
+                  "SA",
+                  "QA",
+                  "OM",
+                  "KW",
+                  "BH"
+                ]
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 0,
+                  "maxValue": 2,
+                  "unitCode": "DAY"
+                },
+                "transitTime": {
+                  "@type": "QuantitativeValue",
+                  "minValue": 4,
+                  "maxValue": 6,
+                  "unitCode": "DAY"
+                }
+              }
+            }
+          ],
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": [
+              "IN",
+              "AE",
+              "SA",
+              "QA",
+              "OM",
+              "KW",
+              "BH"
+            ],
+            "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+            "merchantReturnDays": 7,
+            "returnMethod": "https://schema.org/ReturnByMail",
+            "returnFees": "https://schema.org/ReturnShippingFees",
+            "refundType": "https://schema.org/ExchangeRefund",
+            "merchantReturnLink": "https://saffronofkashmir.com/returns-policy"
+          }
         }
       }
     ]
