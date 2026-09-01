@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = 'deefdd883949';
+  var BUILD_ID = '9aa06ae10bc7';
 
   /* ---------- helpers ---------- */
 
@@ -1026,13 +1026,47 @@
      the related-posts fallback fills from it. sitemap.xml, llms.txt and the
      page-emission loop are unaffected beyond the order their entries appear
      in; each emits one entry per post either way. */
+  /* The date a post last said something new. Sorting on this puts a rewritten
+     post back at the top of the index instead of leaving it at its original
+     publication position, which is where a 1,000-word merge would otherwise
+     sit below the thinnest pages on the site. */
+  function postDate(p) { return p.dateModified || p.dateISO; }
+
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'];
+
+  /* ISO to "September 1, 2026", without toLocaleDateString: that depends on the
+     host's ICU data and would render differently under Node and the browser,
+     and templates.js has to produce identical output in both. */
+  function fmtDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    if (!m) return String(iso || '');
+    return MONTHS[parseInt(m[2], 10) - 1] + ' ' + parseInt(m[3], 10) + ', ' + m[1];
+  }
+
+  /* The meta line. A post that has been revised shows the revision date, since
+     that is what the reader is looking at. The post page also keeps the
+     original publication date, so neither is hidden. Structured data is
+     untouched: datePublished stays dateISO and dateModified stays dateModified,
+     so nothing here becomes a claim the schema does not make. */
+  function postMeta(p, catLabel, withPublished) {
+    var cat = '<span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span>';
+    var published = '<time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time>';
+    if (!p.dateModified) return '<div class="blog-meta">' + cat + published + '</div>';
+    var updated = '<time datetime="' + esc(p.dateModified) + '">Updated ' +
+      esc(fmtDate(p.dateModified)) + '</time>';
+    return '<div class="blog-meta">' + cat +
+      (withPublished ? published + updated : updated) + '</div>';
+  }
+
   function livePosts(data) {
     return (data.posts || [])
       .filter(function (p) { return !p.draft; })
       .map(function (p, i) { return { post: p, seq: i }; })
       .sort(function (a, b) {
-        if (a.post.dateISO === b.post.dateISO) return a.seq - b.seq;
-        return a.post.dateISO < b.post.dateISO ? 1 : -1;
+        var ka = postDate(a.post), kb = postDate(b.post);
+        if (ka === kb) return a.seq - b.seq;
+        return ka < kb ? 1 : -1;
       })
       .map(function (x) { return x.post; });
   }
@@ -1129,7 +1163,7 @@
       // impossible. This is the redirect.
       return '          <article class="card blog-card" data-category="' + esc(p.categoryKey) + '" id="' + esc(p.id) + '">\n' +
         (p.image ? '            <div class="blog-img"><a href="' + esc(postHref(p)) + '"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" loading="lazy" width="800" height="450"></a></div>\n' : '') +
-        '            <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
+        '            ' + postMeta(p, catLabel, false) + '\n' +
         '            <h2><a href="' + esc(postHref(p)) + '">' + esc(p.title) + '</a></h2>\n' +
         '            <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
         '            <p class="read-more"><a href="' + esc(postHref(p)) + '">Read full article</a></p>\n' +
@@ -1193,7 +1227,7 @@
       '\n  <section style="padding-top:24px;">\n    <div class="container">\n' +
       '      <div class="blog-layout">\n        <article class="blog-post">\n' +
       (p.image ? '          <div class="blog-img"><img src="' + esc(asset(p.image)) + '" alt="' + esc(p.imageAlt || p.title) + '" width="800" height="450" fetchpriority="high"></div>\n' : '') +
-      '          <div class="blog-meta"><span class="cat">' + esc(catLabel[p.categoryKey] || p.categoryKey) + '</span><time datetime="' + esc(p.dateISO) + '">' + esc(p.dateDisplay) + '</time></div>\n' +
+      '          ' + postMeta(p, catLabel, true) + '\n' +
       '          <h1>' + esc(p.title) + '</h1>\n' +
       '          <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
       bodyToHtml(b, p.body) + '\n' +
