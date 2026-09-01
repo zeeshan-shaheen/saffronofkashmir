@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = 'fe6fef5c6cfc';
+  var BUILD_ID = '9bc904048f48';
 
   /* ---------- helpers ---------- */
 
@@ -990,8 +990,50 @@
 
   // Published posts only. draft:true keeps a post in the data but off the site.
   // Single gate for the index cards, the post pages, the sitemap and llms.txt.
+  /* Newest first. Nine posts share 2026-08-29, so the tiebreak is explicit:
+     posts with the same date keep their order in the data file. The decorate
+     and undecorate around the sort makes that deliberate rather than relying
+     on the engine's sort being stable.
+
+     Order matters to two consumers. blogs.html lists posts in this order, and
+     the related-posts fallback fills from it. sitemap.xml, llms.txt and the
+     page-emission loop are unaffected beyond the order their entries appear
+     in; each emits one entry per post either way. */
   function livePosts(data) {
-    return (data.posts || []).filter(function (p) { return !p.draft; });
+    return (data.posts || [])
+      .filter(function (p) { return !p.draft; })
+      .map(function (p, i) { return { post: p, seq: i }; })
+      .sort(function (a, b) {
+        if (a.post.dateISO === b.post.dateISO) return a.seq - b.seq;
+        return a.post.dateISO < b.post.dateISO ? 1 : -1;
+      })
+      .map(function (x) { return x.post; });
+  }
+
+  var RELATED_COUNT = 3;
+
+  /* Curated `related` ids first, in the order given. If a post has none, or
+     too few, fill from the same category and then from anything else, both
+     newest first because livePosts is sorted. Never array order, never empty,
+     never the post itself. tools/check_related.py fails the build on a
+     reference that does not resolve to a live post, on a self-reference, and
+     on a reference to a draft. */
+  function relatedPosts(data, p) {
+    var live = livePosts(data);
+    var self = postSlug(p);
+    var byId = {};
+    live.forEach(function (x) { byId[x.id] = x; });
+
+    var out = [];
+    function add(x) {
+      if (!x || postSlug(x) === self) return;
+      if (out.indexOf(x) !== -1) return;
+      if (out.length < RELATED_COUNT) out.push(x);
+    }
+    (p.related || []).forEach(function (id) { add(byId[id]); });
+    live.forEach(function (x) { if (x.categoryKey === p.categoryKey) add(x); });
+    live.forEach(add);
+    return out;
   }
 
   // Shared by the blog index and every post page.
@@ -1109,7 +1151,7 @@
         }
       ]
     });
-    var others = livePosts(data).filter(function (x) { return postSlug(x) !== postSlug(p); }).slice(0, 4);
+    var others = relatedPosts(data, p);
     var more = others.length
       ? '\n  <section class="section-alt">\n    <div class="container">\n' +
         '      <h2>More from the blog</h2>\n      <ul class="related-products">\n' +
