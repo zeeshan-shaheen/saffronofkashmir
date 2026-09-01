@@ -14,3 +14,5 @@ jobs:
         run: git add -A && git diff --cached --exit-code
       - name: Fail on junk tokens in generated output
         run: python3 tools/check_output.py
+      - name: Fail if a product id does not match its URL segment
+        run: python3 tools/check_product_ids.py

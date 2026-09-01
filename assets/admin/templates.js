@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = 'dd1960b99b25';
+  var BUILD_ID = 'f6a88553c8de';
 
   /* ---------- helpers ---------- */
 
@@ -967,9 +967,12 @@
   // Shared by the blog index and every post page.
   function blogSidebar(data) {
     var b = data.brand, sb = data.blogPage.sidebar;
-    var raw = data.products.find(function (p) { return p.id === 'royal-1g'; }) ||
-      data.products.filter(function (p) { return p.category === 'saffron' && p.status === 'available'; })
-        .sort(function (x, y) { return x.price - y.price; })[0];
+    // Cheapest saffron that can actually be ordered. Do not reintroduce a
+    // hardcoded id here: it would ignore status and could advertise a product
+    // that is out of stock.
+    var raw = data.products
+      .filter(function (p) { return p.category === 'saffron' && p.status === 'available'; })
+      .sort(function (x, y) { return x.price - y.price; })[0];
     var pv = raw ? productView(raw) : null;
     var priceHtml = pv
       ? '<span data-price="' + esc(pv.price) + '">AED ' + esc(pv.price) + '</span> <span>/ ' + esc(pv.size) + ' tin</span>'
