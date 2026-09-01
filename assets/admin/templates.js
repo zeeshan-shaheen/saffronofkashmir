@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = '37dea64cd3e1';
+  var BUILD_ID = 'deefdd883949';
 
   /* ---------- helpers ---------- */
 
@@ -515,22 +515,42 @@
           description: b.orgDescription,
           sameAs: socialList(b).length ? socialList(b).map(function (s) { return s.url; }) : undefined,
           address: { '@type': 'PostalAddress', addressCountry: 'IN', addressRegion: 'Jammu & Kashmir' },
-          contactPoint: (b.whatsappNumbers && b.whatsappNumbers.length)
-            ? b.whatsappNumbers.map(function(wn, i) {
-                var n = waNumbers(b);
-                var isUae = wn.number === n.uae;
-                var cp = {
-                  '@type': 'ContactPoint',
-                  // The UAE line takes enquiries and support; India takes orders too.
-                  contactType: isUae ? 'customer support' : 'sales',
-                  telephone: '+' + wn.number,
-                  // Mirrors the routing lists in main.js so schema and behaviour agree.
-                  areaServed: isUae ? ['AE', 'SA', 'QA', 'OM', 'KW', 'BH'] : 'IN'
-                };
-                if (i === 0) cp.email = b.email;
-                return cp;
-              })
-            : { '@type': 'ContactPoint', contactType: 'sales', telephone: b.phoneTel, email: b.email }
+          /* One contact point per number, plus one for everywhere else.
+             The email goes on all of them: it was previously attached only to
+             the first, which left the India line publishing a phone number with
+             no address beside it.
+             The rest-of-world point exists because the shipping policy is the
+             authority here and it says orders go to India, the six Gulf markets
+             named below, and most other countries on request, excluding the
+             European Union and the United Kingdom. Listing only the seven
+             claimed a narrower service area than the site actually offers. */
+          contactPoint: (function () {
+            var n = waNumbers(b);
+            var pts = (b.whatsappNumbers || []).map(function (wn) {
+              var isUae = wn.number === n.uae;
+              return {
+                '@type': 'ContactPoint',
+                // The UAE line takes enquiries and support; India takes orders too.
+                contactType: isUae ? 'customer support' : 'sales',
+                telephone: '+' + wn.number,
+                // Mirrors the routing lists in main.js so schema and behaviour agree.
+                areaServed: isUae ? ['AE', 'SA', 'QA', 'OM', 'KW', 'BH'] : 'IN',
+                email: b.email
+              };
+            });
+            if (n.uae) {
+              pts.push({
+                '@type': 'ContactPoint',
+                contactType: 'customer support',
+                telephone: '+' + n.uae,
+                areaServed: 'Worldwide, excluding the European Union and the United Kingdom',
+                email: b.email
+              });
+            }
+            return pts.length
+              ? pts
+              : { '@type': 'ContactPoint', contactType: 'sales', telephone: b.phoneTel, email: b.email };
+          })()
         },
         { '@type': 'WebSite', url: b.siteUrl, name: b.name },
         {
