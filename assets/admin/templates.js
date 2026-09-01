@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = 'f6a88553c8de';
+  var BUILD_ID = '0ca5f30716ab';
 
   /* ---------- helpers ---------- */
 
@@ -266,6 +266,25 @@
     return '<a class="btn btn-whatsapp"' + waAttrs(brand, text) +
       ' data-wa-pos="' + esc(pos || 'card') + '" data-wa-product="' + esc(pv.id || '') + '"' +
       ' target="_blank" rel="noopener">' + label + '</a>';
+  }
+
+  /* Headline and terms must always appear together. Emitting the headline
+     alone would promise a guarantee without stating what it covers, so this
+     returns nothing unless both halves are present. */
+  function guaranteeBlock(data) {
+    var g = data.guarantee;
+    if (!g || !g.headline || !g.terms) return '';
+    return '        <p class="guarantee"><strong>' + esc(g.headline) + '</strong> ' +
+      esc(g.terms) + '</p>\n';
+  }
+
+  /* The harvest year lives in one place, brand.harvestYear. It changes every
+     October, so never write the year as a literal in template copy. */
+  function harvestReportLine(data) {
+    var y = data.brand && data.brand.harvestYear;
+    if (!y) return '';
+    return '        <p class="harvest-report">The ' + esc(y) +
+      ' harvest lab report is available on request.</p>\n';
   }
 
   function productPriceHtml(p) {
@@ -626,7 +645,10 @@
         return '        <details>\n          <summary>' + esc(f.q) + '</summary>\n' +
           '          <p>' + inlineMd(b, f.a) + '</p>\n        </details>';
       }).join('\n') +
-      '\n      </div>\n    </div>\n  </section>\n';
+      '\n      </div>\n' +
+      guaranteeBlock(data) +
+      harvestReportLine(data) +
+      '    </div>\n  </section>\n';
 
     const c = data.contact;
     const waContactLines = (b.whatsappNumbers && b.whatsappNumbers.length)
@@ -829,9 +851,11 @@
       '      <div class="pd-info">\n' +
       '        <h1>' + esc(pv.name) + '</h1>\n' +
       '        <p class="pd-desc">' + esc(p.descBody || pv.pageDesc) + '</p>\n' +
+      harvestReportLine(data) +
       '        ' + productPriceHtml(pv) + '\n' +
       '        ' + orderBtn(b, pv, 'detail') + '\n' +
       specs +
+      guaranteeBlock(data) +
       '        <p class="pd-links"><a href="' + pageUrl('products.html#identify') + '">How to spot real saffron</a> · <a href="' + pageUrl('recipes.html') + '">Saffron recipes</a></p>\n' +
       '      </div>\n    </div>\n  </section>\n';
 
