@@ -279,6 +279,13 @@ are covered, not just the five top-level ones.
 compared. Verify those with targeted greps. A green parity run means no
 unintended change to visible copy. It is not evidence that a fix landed.
 
+**A change to an attribute, a heading level, or anything inside a `<script>`
+element is invisible to parity and reports zero blocks.** Two changes in
+Phase 4 did: mapping `## ` from `h3` to `h2`, and rewriting the Organization
+contact points in JSON-LD. Both showed `CHANGED BLOCKS 0` and both were real.
+Verify that class of change directly, by reading the emitted markup or schema,
+and never read a zero as confirmation.
+
 It reports **every** changed block on a page, not just the first. An earlier
 version stopped at the first difference, which hid a real body change on a page
 that also had a title change: the run reported the same result before and after
