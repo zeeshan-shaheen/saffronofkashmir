@@ -84,14 +84,50 @@ def capture(baseline):
     guard(baseline)
     os.makedirs(baseline, exist_ok=True)
     names = pages()
+    keep = set(rel.replace("/", "__") + ".txt" for rel in names)
+    # Clear files left by an earlier capture. Without this a retired page's
+    # baseline lingers and the removed-pages warning reports it every run.
+    stale = [f for f in os.listdir(baseline) if f.endswith(".txt") and f not in keep]
+    for f in stale:
+        os.remove(os.path.join(baseline, f))
     for rel in names:
         dst = os.path.join(baseline, rel.replace("/", "__") + ".txt")
         open(dst, "w", encoding="utf-8").write(textof(os.path.join(REPO, rel)))
-    print("captured " + str(len(names)) + " pages to " + baseline)
+    print("captured " + str(len(names)) + " pages to " + baseline
+          + (" (cleared %d stale)" % len(stale) if stale else ""))
+
+
+def baseline_pages(baseline):
+    """Page paths the baseline was captured from, recovered from its filenames."""
+    if not os.path.isdir(baseline):
+        return set()
+    return set(f[:-4].replace("__", "/") for f in os.listdir(baseline)
+               if f.endswith(".txt"))
 
 
 def compare(baseline):
     guard(baseline)
+
+    # A page that no longer exists produces no block, because the comparison
+    # iterates the pages that are here now. Without this the total silently
+    # drops and a page vanishing by accident looks identical to a clean run.
+    now, was = set(pages()), baseline_pages(baseline)
+    gone, added = sorted(was - now), sorted(now - was)
+    if gone or added:
+        print("!" * 70)
+        if gone:
+            print("PAGES REMOVED SINCE THE BASELINE (%d)" % len(gone))
+            for rel in gone:
+                print("    - " + rel)
+        if added:
+            print("PAGES ADDED SINCE THE BASELINE (%d)" % len(added))
+            for rel in added:
+                print("    + " + rel)
+        print("Intentional when a page is retired or created. If it is not,")
+        print("stop here: no diff block is produced for a page that is absent.")
+        print("!" * 70)
+        print("")
+
     ok = changed = missing = total = 0
     for rel in pages():
         b = os.path.join(baseline, rel.replace("/", "__") + ".txt")

@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = '9bc904048f48';
+  var BUILD_ID = '37dea64cd3e1';
 
   /* ---------- helpers ---------- */
 
@@ -863,6 +863,13 @@
       specs +
       guaranteeBlock(data) +
       '        <p class="pd-links"><a href="' + pageUrl('products.html#identify') + '">How to spot real saffron</a> · <a href="' + pageUrl('recipes.html') + '">Saffron recipes</a></p>\n' +
+      /* The graded saffron tins carry the two claims a buyer checks: which
+         grade this is, and what the lab report behind the purity guarantee
+         actually says. The gift products make neither claim, so they do not
+         get these links. */
+      (p.category === 'saffron'
+        ? '        <p class="pd-links"><a href="/blog/grade-names/">What Mongra grade means</a> · <a href="/blog/read-lab-report/">How to read our lab report</a></p>\n'
+        : '') +
       '      </div>\n    </div>\n  </section>\n';
 
     var others = data.products.filter(function (x) { return productSlug(x) !== productSlug(p); });
