@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = 'dd1960b99b25';
+  var BUILD_ID = '745372317efb';
 
   /* ---------- helpers ---------- */
 
@@ -263,7 +263,7 @@
     var available = pv.status === 'available';
     var label = available ? 'Order on WhatsApp' : 'Notify me when available';
     var text = available ? pv.waText : pv.notifyWaText;
-    return '<a class="btn btn-whatsapp"' + waAttrs(brand, text) +
+    return '<a class="btn btn-whatsapp"' + waAttrs(brand, text) + +
       ' data-wa-pos="' + esc(pos || 'card') + '" data-wa-product="' + esc(pv.id || '') + '"' +
       ' target="_blank" rel="noopener">' + label + '</a>';
   }
