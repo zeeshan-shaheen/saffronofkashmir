@@ -157,9 +157,23 @@ node --check build.js
 # 2. Build
 node build.js
 
-# 3. Parity check — python _parity_check.py
-# 4. JSON-LD check — python _check_jsonld.py
+# 3. Parity check
+python tools/parity_check.py
+
+# 4. JSON-LD check — python _check_jsonld.py (still outside the repo)
+
+# 5. Junk-token check
+python tools/check_output.py
 ```
+
+**`tools/check_output.py` fails on JavaScript coercion artefacts in generated
+output**: `NaN`, `undefined`, `[object Object]`, `Infinity`, `-Infinity` and
+`null`. It exists because `node --check` accepts `x + + y` as valid JavaScript,
+so the 29 Aug 2026 unary-plus bug shipped `NaNcard` into 15 order buttons and
+neither the syntax check, `JSON.parse`, nor the CI output-drift check could see
+it. It covers all 31 generated files and runs in the Build check workflow. It
+has no allowlist and no bypass: if a page ever legitimately needs one of those
+words, change the check deliberately in a reviewable commit.
 
 **A dirty `git status` straight after a build is expected, not a problem.**
 `core.autocrlf=true` plus `.gitattributes` `* text=auto` means git checks files
@@ -191,66 +205,21 @@ that also had a title change: the run reported the same result before and after
 the fix. Blocks come from `difflib` opcodes, so a title change of a different
 word count does not cascade into false diffs down the rest of the page.
 
-Parity script (recreate outside the repo):
-```python
-import re, html, os, sys, glob, difflib
-try: sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # page copy has emoji
-except Exception: pass
-REPO = r"d:\SOK git clone\saffronofkashmir"
-BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_parity_baseline")
-CONTEXT = 6
+Parity script: **`tools/parity_check.py`**, in the repo so it gets history and
+review. It used to be reproduced as a listing in this file, and drifted: the
+listing covered 5 pages while the script people actually ran covered 28, and
+nothing could have caught that. Do not paste a copy back in here.
 
-def textof(p):
-    s = open(p, encoding="utf-8").read()
-    s = re.sub(r"<script.*?</script>", " ", s, flags=re.S)
-    s = re.sub(r"<[^>]+>", " ", s)
-    s = html.unescape(s)
-    return re.sub(r"\s+", " ", s).strip()
-
-def pages():
-    out = [os.path.basename(p) for p in sorted(glob.glob(os.path.join(REPO, "*.html")))
-           if os.path.basename(p) != "admin.html"]
-    for sub in ("products", "blog"):
-        for p in sorted(glob.glob(os.path.join(REPO, sub, "*", "index.html"))):
-            out.append(os.path.relpath(p, REPO).replace("\\", "/"))
-    return out
-
-def capture():
-    os.makedirs(BASE, exist_ok=True)
-    for rel in pages():
-        open(os.path.join(BASE, rel.replace("/", "__") + ".txt"), "w",
-             encoding="utf-8").write(textof(os.path.join(REPO, rel)))
-    print("captured " + str(len(pages())) + " pages")
-
-def compare():
-    ok = changed = missing = total = 0
-    for rel in pages():
-        b = os.path.join(BASE, rel.replace("/", "__") + ".txt")
-        if not os.path.exists(b):
-            print("NO BASELINE: " + rel); missing += 1; continue
-        old = open(b, encoding="utf-8").read().strip()
-        new = textof(os.path.join(REPO, rel))
-        if old == new:
-            ok += 1; continue
-        ow, nw = old.split(), new.split()
-        blocks = [o for o in difflib.SequenceMatcher(None, ow, nw, autojunk=False)
-                  .get_opcodes() if o[0] != "equal"]
-        changed += 1; total += len(blocks)
-        print(rel + "  (" + str(len(blocks)) + " changed blocks)")
-        for n, (tag, i1, i2, j1, j2) in enumerate(blocks, 1):
-            print("  [" + str(n) + "] " + tag + " at word " + str(i1))
-            before = " ".join(ow[max(0, i1 - CONTEXT):i1])
-            if before: print("      after: ..." + before)
-            print("      old: " + (" ".join(ow[i1:i2]) or "(nothing)"))
-            print("      new: " + (" ".join(nw[j1:j2]) or "(nothing)"))
-        print("")
-    print("PAGES OK " + str(ok) + "   PAGES CHANGED " + str(changed) +
-          "   CHANGED BLOCKS " + str(total) + "   MISSING BASELINE " + str(missing))
-
-capture() if len(sys.argv) > 1 and sys.argv[1] == "capture" else compare()
+```powershell
+python tools/parity_check.py capture    # before editing, from a clean tree
+python tools/parity_check.py            # after editing
 ```
-Run `python _parity_check.py capture` from a clean tree first, then
-`python _parity_check.py` after editing.
+
+Baselines still live OUTSIDE the repo and the script refuses to write one
+inside it. `.nojekyll` publishes underscore-prefixed directories, so a
+committed baseline of extracted page text would ship as plain-text duplicates
+of every page. The default location is `<system temp>/sok-parity-baseline`;
+override with `--baseline DIR`.
 
 **Important:** Intentional new visible content (e.g. a badge, a new nav element) WILL show in the parity diff — that is expected. Read the diff and confirm only your intended text changed.
 

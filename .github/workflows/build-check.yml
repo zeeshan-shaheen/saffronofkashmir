@@ -12,3 +12,5 @@ jobs:
         run: node build.js
       - name: Fail if output differs from committed files
         run: git add -A && git diff --cached --exit-code
+      - name: Fail on junk tokens in generated output
+        run: python3 tools/check_output.py
