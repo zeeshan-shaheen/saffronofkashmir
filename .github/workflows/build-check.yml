@@ -18,3 +18,5 @@ jobs:
         run: python3 tools/check_product_ids.py
       - name: Fail on conflicting values for a tracked figure
         run: python3 tools/check_figures.py
+      - name: Fail on an invalid related-post reference
+        run: python3 tools/check_related.py

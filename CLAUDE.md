@@ -191,7 +191,27 @@ python tools/check_product_ids.py
 
 # 7. Figure consistency check
 python tools/check_figures.py
+
+# 8. Related-post reference check
+python tools/check_related.py
 ```
+
+**`tools/check_related.py` fails on an invalid `related` reference.** "More from
+the blog" used to be `slice(0, 4)` on data-file order, so all thirteen posts
+linked to the same four oldest posts while the nine substantial ones had one
+internal link each. Each post now carries a curated `related` list, with a
+fallback to same category then newest first when one is absent.
+
+It enforces **validity, not presence**: every id must resolve to a post that
+exists, no post may list itself, and no reference may point at a draft. A post
+with no list is fine, because the fallback already beats what it replaced.
+Retiring a post therefore fails the build until every list referencing it is
+updated, which is the point. A redirect does not fix an internal link.
+
+`livePosts()` sorts by `dateISO` descending. Nine posts share `2026-08-29`, so
+the tiebreak is explicit: same-date posts keep their data-file order. This sets
+the `blogs.html` order and the related fallback order. `sitemap.xml`, `llms.txt`
+and the page-emission loop are unaffected beyond the order of their entries.
 
 **`tools/check_figures.py` fails when a tracked figure is stated with
 different values in different places.** pampore-legacy claimed the growing
