@@ -188,7 +188,28 @@ python tools/check_output.py
 
 # 6. Product id check
 python tools/check_product_ids.py
+
+# 7. Figure consistency check
+python tools/check_figures.py
 ```
+
+**`tools/check_figures.py` fails when a tracked figure is stated with
+different values in different places.** pampore-legacy claimed the growing
+area fell to under 2,500 hectares by 2010 while four other posts said 5,707
+falling to 3,665 as of 2025, on a site whose credibility argument is that
+other people's figures do not add up.
+
+It scans `data/site-data.json`, not generated output, and that is deliberate:
+the harvest-diary draft carries the same figures and emits no page, so a
+generated-output scan would be blind to a contradiction until the day it was
+published. `check_product_ids.py` reads generated output for the opposite
+reason. Each check reads whichever representation makes its defect hardest to
+miss.
+
+It tracks an explicit list of figures rather than detecting numbers
+generically, because prices, tin weights, dates and crocin values legitimately
+differ between posts and a check that fires on correct data gets switched off.
+The header comment explains how to add a figure.
 
 **`tools/check_product_ids.py` fails when a product's `id` is not the last path
 segment of its own URL.** `sku` and `data-wa-product` are both emitted from

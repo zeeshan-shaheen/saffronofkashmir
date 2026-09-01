@@ -16,3 +16,5 @@ jobs:
         run: python3 tools/check_output.py
       - name: Fail if a product id does not match its URL segment
         run: python3 tools/check_product_ids.py
+      - name: Fail on conflicting values for a tracked figure
+        run: python3 tools/check_figures.py
