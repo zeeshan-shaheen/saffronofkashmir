@@ -426,7 +426,7 @@
   },
   "guarantee": {
     "headline": "Purity guaranteed.",
-    "terms": "Have any tin independently tested at an accredited lab. If it does not meet ISO 3632 Category I, we refund the purchase in full, including the cost of the test. Unopened or partially used tins, within 90 days of purchase."
+    "terms": "Have any tin independently tested at an accredited lab. If it does not meet ISO 3632 Category I, we refund the purchase in full, including the cost of the test. This applies within 90 days of purchase, opened or unopened, and is separate from our returns policy, which covers unopened tins within 7 days."
   },
   "faq": {
     "eyebrow": "Good to Know",
@@ -1031,6 +1031,10 @@
         {
           "heading": "Opened tins",
           "body": "We cannot accept a return once the seal is broken. This is a food safety rule and we do not make exceptions."
+        },
+        {
+          "heading": "The one exception",
+          "body": "A failed independent lab test is the only circumstance in which we refund an opened tin. If a tin does not meet ISO 3632 Category I at an accredited lab, we refund the purchase in full including the cost of the test, within 90 days. That is our [purity guarantee](/#faq), and it is separate from the returns above. It is not a route to returning saffron you have changed your mind about."
         },
         {
           "heading": "Damaged in transit, or never arrived",
