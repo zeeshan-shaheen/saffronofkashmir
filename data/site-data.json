@@ -59,6 +59,7 @@
     ],
     "fssaiNumber": "21026111000535",
     "foundingYear": "2026",
+    "harvestYear": "2025",
     "orgDescription": "Premium Kashmiri Mongra saffron, harvested in Pampore, Kashmir.",
     "gaId": "G-9569ES4LBP",
     "fbPixelId": "1140202034977517",
@@ -112,15 +113,15 @@
     "privacyLastUpdated": "2026-08-09",
     "home": {
       "title": "Saffron of Kashmir | Buy Pure Mongra Saffron from Pampore",
-      "description": "Buy authentic Kashmiri Mongra saffron direct from Pampore. ISO 3632 Category I, NABL-accredited lab report. Order on WhatsApp, from AED 65.",
+      "description": "Buy authentic Kashmiri Mongra saffron direct from Pampore. Lab tested to ISO 3632 Category I, NABL-accredited lab report. Order on WhatsApp, from AED 65.",
       "ogTitle": "Saffron of Kashmir | Pure Mongra Saffron from Pampore",
-      "ogDescription": "Authentic Kashmiri Mongra saffron, grown and packed in Pampore. ISO 3632 Category I. Order on WhatsApp."
+      "ogDescription": "Authentic Kashmiri Mongra saffron, grown and packed in Pampore. Lab tested to ISO 3632 Category I. Order on WhatsApp."
     },
     "products": {
       "title": "Mongra Saffron, Honey, Oil & Kahwa | Saffron of Kashmir",
-      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. ISO 3632 Category I. Order on WhatsApp.",
+      "description": "Shop Kashmiri Mongra saffron tins (2g AED 65, 5g AED 160, 10g AED 300), saffron honey, saffron oil & Kahwa blend. Lab tested to ISO 3632 Category I.",
       "ogTitle": "Products - Pure Mongra Saffron | Saffron of Kashmir",
-      "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. ISO 3632 Category I. Grown and packed in Pampore."
+      "ogDescription": "Mongra saffron tins, saffron honey, saffron oil, and Kashmiri Kahwa blend. Lab tested to ISO 3632 Category I. Grown and packed in Pampore."
     },
     "recipes": {
       "title": "Kashmiri Saffron Recipes | Saffron of Kashmir",
@@ -145,7 +146,7 @@
     },
     "waCtaLabel": "Order on WhatsApp",
     "points": [
-      "ISO 3632 Category I",
+      "Lab tested to ISO 3632 Category I",
       "Grown and packed in Pampore",
       "Free delivery in India over INR 4000",
       "No minimum order"
@@ -204,10 +205,10 @@
       "unitLabel": "/ tin",
       "price": 65,
       "altContext": "saffron tin from Pampore, Kashmir",
-      "descBody": "Pure Kashmiri Mongra saffron. Crimson stigma tips only. ISO 3632 Category I.",
+      "descBody": "Pure Kashmiri Mongra saffron. Crimson stigma tips only. Lab tested to ISO 3632 Category I.",
       "image": "2gm-1.webp",
       "homeDesc": "Perfect introduction to genuine Mongra grade. 15-20 servings of tea or rice.",
-      "pageDesc": "Pure crimson stigma tips, no style. ISO 3632 Category I. 15-20 servings.",
+      "pageDesc": "Pure crimson stigma tips, no style. Lab tested to ISO 3632 Category I. 15-20 servings.",
       "category": "saffron",
       "featured": true,
       "status": "available",
@@ -215,7 +216,7 @@
       "specs": [
         {
           "label": "Grade",
-          "value": "ISO 3632 Category I (Mongra) - red stigma tips only"
+          "value": "Lab tested to ISO 3632 Category I (Mongra) - red stigma tips only"
         },
         {
           "label": "Origin",
@@ -231,7 +232,7 @@
         },
         {
           "label": "Certified",
-          "value": "FSSAI registered | ISO 3632 Category I | Lab report on request"
+          "value": "FSSAI registered | lab tested to ISO 3632 Category I | Lab report on request"
         }
       ],
       "compare": {
@@ -247,7 +248,7 @@
       "unitLabel": "/ tin",
       "price": 160,
       "altContext": "Mongra saffron collector's tin",
-      "descBody": "Pure Kashmiri Mongra saffron. ISO 3632 Category I.",
+      "descBody": "Pure Kashmiri Mongra saffron. Lab tested to ISO 3632 Category I.",
       "valueBlurb": "best value for home chefs",
       "image": "5gm-1.webp",
       "homeDesc": "For the serious saffron lover. 80-100 servings. Gift-worthy collector's edition tin.",
@@ -259,7 +260,7 @@
       "specs": [
         {
           "label": "Grade",
-          "value": "ISO 3632 Category I - Mongra (stigma tips only)"
+          "value": "Lab tested to ISO 3632 Category I - Mongra (stigma tips only)"
         },
         {
           "label": "Origin",
@@ -287,7 +288,7 @@
       "unitLabel": "/ tin",
       "price": 300,
       "altContext": "Mongra saffron collector's tin",
-      "descBody": "Pure Kashmiri Mongra saffron. Best per-gram value. ISO 3632 Category I.",
+      "descBody": "Pure Kashmiri Mongra saffron. Best per-gram value. Lab tested to ISO 3632 Category I.",
       "valueBlurb": "our best per-gram price",
       "image": "10gm-1.webp",
       "homeDesc": "Our largest tin. Best value for restaurants, gifting, or the dedicated home chef.",
@@ -299,7 +300,7 @@
       "specs": [
         {
           "label": "Grade",
-          "value": "ISO 3632 Category I - Mongra (stigma tips only)"
+          "value": "Lab tested to ISO 3632 Category I - Mongra (stigma tips only)"
         },
         {
           "label": "Origin",
@@ -423,6 +424,10 @@
       }
     ]
   },
+  "guarantee": {
+    "headline": "Purity guaranteed.",
+    "terms": "Have any tin independently tested at an accredited lab. If it does not meet ISO 3632 Category I, we refund the purchase in full, including the cost of the test. Unopened or partially used tins, within 90 days of purchase."
+  },
   "faq": {
     "eyebrow": "Good to Know",
     "heading": "Frequently Asked Questions",
@@ -457,7 +462,7 @@
       },
       {
         "q": "How much does Kashmiri Mongra saffron cost?",
-        "a": "Our Mongra saffron starts at AED 65 for a 2g tin, AED 160 for 5g, and AED 300 for 10g. Every tin is the same ISO 3632 Category I saffron; the larger tins give the best price per gram. Prices show in your local currency on the site."
+        "a": "Our Mongra saffron starts at AED 65 for a 2g tin, AED 160 for 5g, and AED 300 for 10g. Every tin is the same saffron, lab tested to ISO 3632 Category I; the larger tins give the best price per gram. Prices show in your local currency on the site."
       }
     ]
   },
@@ -468,7 +473,7 @@
   },
   "footer": {
     "about": "Kashmiri Mongra saffron from Pampore, tested to ISO 3632 Category I. FSSAI registered.",
-    "bottomRight": "Premium Kashmiri Mongra Saffron - ISO 3632 Category I"
+    "bottomRight": "Premium Kashmiri Mongra Saffron - lab tested to ISO 3632 Category I"
   },
   "productsPage": {
     "h1": "Buy Kashmiri Mongra Saffron from Pampore",
@@ -723,7 +728,7 @@
     ],
     "sidebar": {
       "orderHeading": "Order Mongra Saffron",
-      "orderText": "Pure Kashmiri Mongra grade. ISO 3632 Category I. Grown and packed in Pampore.",
+      "orderText": "Pure Kashmiri Mongra grade. Lab tested to ISO 3632 Category I. Grown and packed in Pampore.",
       "priceAmount": 65,
       "priceUnit": "/ 1g tin",
       "waLabel": "Order on WhatsApp",
