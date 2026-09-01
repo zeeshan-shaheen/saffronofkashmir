@@ -130,6 +130,26 @@ site.
 5. **Never put real images into any package/zip.** Images live in the repo.
 6. Apostrophes/quotes: data uses real `'` and `'`; testimonials use curly quotes. Keep them.
 7. **NEVER edit `assets/admin/templates.js` or `assets/admin/admin.js` through the GitHub web editor**, or through any route that commits without running `node build.js`. The build id is the hash of both files, and only `build.js` restamps it, so a direct edit to either deploys immediately carrying the OLD `BUILD_ID`. The live `build-id.json` then disagrees with the scripts actually being served, and the pre-publish guard **locks the admin panel out of publishing** until someone rebuilds. Recovery: pull, run `node build.js`, commit the restamped `templates.js` and `build-id.json`, push. CI only catches the drift on the next push, so the lockout can persist for as long as nobody pushes.
+8. **No verification guard is trusted until it has been observed failing for the
+   reason it exists.** Break the thing it watches, confirm it fails and names the
+   fault, restore, confirm it passes. A guard only ever seen green is an
+   untested assumption. Every guard in this repo that was never watched fail had
+   already stopped working:
+   - `node --check` passes on a stray unary plus. The `NaN` bug reached
+     production and sat there.
+   - The parity script reported the same DIFF count in two different states,
+     hiding a real body-copy change.
+   - A required status check named a context nothing reports. It gated nothing
+     for three weeks, in either direction.
+   - The baseline write-guard permitted the write it exists to block, because
+     the two paths differed in drive-letter case.
+   - The JSON-LD listing in this file checked 3 blocks while the executed script
+     checked 27.
+9. **No executable lives in documentation.** Anything runnable goes in `tools/`
+   under version control. This file points at file paths and never embeds a
+   script listing. Both listings that were embedded here drifted from the
+   versions actually being run, and prose cannot be diffed against the thing it
+   claims to describe.
 
 ---
 ## Writing style — write like a person, not an AI
