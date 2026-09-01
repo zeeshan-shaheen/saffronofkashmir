@@ -61,13 +61,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://saffronofkashmir.com/blog/gi-635/</loc>
+    <loc>https://saffronofkashmir.com/blog/pampore-legacy/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://saffronofkashmir.com/blog/read-lab-report/</loc>
+    <loc>https://saffronofkashmir.com/blog/purity-tests/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -85,13 +85,25 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://saffronofkashmir.com/blog/what-saffron-costs/</loc>
+    <loc>https://saffronofkashmir.com/blog/grade-names/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://saffronofkashmir.com/blog/grade-names/</loc>
+    <loc>https://saffronofkashmir.com/blog/gi-635/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blog/read-lab-report/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://saffronofkashmir.com/blog/what-saffron-costs/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -110,18 +122,6 @@
   </url>
   <url>
     <loc>https://saffronofkashmir.com/blog/arabic-cuisine/</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://saffronofkashmir.com/blog/purity-tests/</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://saffronofkashmir.com/blog/pampore-legacy/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

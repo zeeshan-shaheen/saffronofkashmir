@@ -757,6 +757,7 @@
   "posts": [
     {
       "id": "pampore-legacy",
+      "dateModified": "2026-09-01",
       "categoryKey": "heritage",
       "dateISO": "2025-02-10",
       "dateDisplay": "February 10, 2025",
@@ -814,6 +815,7 @@
     },
     {
       "id": "arithmetic-of-origin",
+      "dateModified": "2026-09-01",
       "categoryKey": "guide",
       "dateISO": "2026-08-29",
       "dateDisplay": "August 29, 2026",
@@ -826,6 +828,7 @@
     },
     {
       "id": "production-figures",
+      "dateModified": "2026-09-01",
       "categoryKey": "guide",
       "dateISO": "2026-08-29",
       "dateDisplay": "August 29, 2026",
@@ -850,6 +853,7 @@
     },
     {
       "id": "grade-names",
+      "dateModified": "2026-09-01",
       "categoryKey": "guide",
       "dateISO": "2026-08-29",
       "dateDisplay": "August 29, 2026",
