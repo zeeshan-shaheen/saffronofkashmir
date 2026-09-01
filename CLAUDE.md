@@ -160,7 +160,8 @@ node build.js
 # 3. Parity check
 python tools/parity_check.py
 
-# 4. JSON-LD check — python _check_jsonld.py (still outside the repo)
+# 4. JSON-LD check
+python tools/check_jsonld.py
 
 # 5. Junk-token check
 python tools/check_output.py
@@ -182,16 +183,18 @@ modified after a rebuild even when nothing changed. Check with
 `git diff --numstat`: an empty result means zero content difference and there is
 nothing to commit. Never commit a line-ending-only change.
 
-**These two scripts are NOT in the repo.** They are deliberately kept outside it.
-`.nojekyll` means an underscore-prefixed directory at the repo root is published,
-so a `_parity_baseline/` of extracted page text would ship as plain-text duplicate
-copies of every page — the exact thing the "Things you must NOT do" section
-forbids. Keep both scripts and the baseline in your working scratch directory,
-outside the repo. Both listings are reproduced below so they can be recreated.
+**The scripts live in `tools/`. The parity BASELINE does not.** Source code
+belongs in the repo, where it gets history, diffs and review; both scripts used
+to be listings in this file and both drifted from the copies people actually ran.
+What must stay out is the baseline: `.nojekyll` publishes underscore-prefixed
+directories, so a `_parity_baseline/` of extracted page text would ship as
+plain-text duplicate copies of every page, which the "Things you must NOT do"
+section forbids. `tools/parity_check.py` refuses to write a baseline inside the
+repo. `robots.txt` disallows `/tools/`.
 
 Parity is only meaningful against a baseline captured BEFORE your edits, from a
-clean tree. Capture first, edit second, compare third. Cover all generated pages,
-not just the five top-level ones.
+clean tree. Capture first, edit second, compare third. All 28 generated pages
+are covered, not just the five top-level ones.
 
 **What parity does and does not compare.** It compares **visible text plus
 `<title>` text**. Tags are stripped whole, so attribute values (`data-wa-pos`,
@@ -223,52 +226,17 @@ override with `--baseline DIR`.
 
 **Important:** Intentional new visible content (e.g. a badge, a new nav element) WILL show in the parity diff — that is expected. Read the diff and confirm only your intended text changed.
 
-JSON-LD check script (recreate outside the repo):
-```python
-import re, json
-for p in ["privacy-policy.html", "index.html", "products.html"]:
-    s = open(p, encoding="utf-8").read()
-    blocks = re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', s, re.S)
-    if not blocks: print(p + ": NO JSON-LD"); continue
-    for i, b in enumerate(blocks):
-        try: json.loads(b.strip()); print(p + " block " + str(i) + ": OK")
-        except Exception as e: print(p + " block " + str(i) + ": INVALID - " + str(e))
+JSON-LD check: **`tools/check_jsonld.py`**, in the repo for the same reason as
+the parity script. Its old listing here checked 3 pages while the copy people
+ran checked 28.
+
+```powershell
+python tools/check_jsonld.py
 ```
 
----
-
-## Git workflow — mandatory
-
-- Work on a branch named `feature/<short-name>`. **Never commit to `main` directly. Never push to `main` without explicit human approval.**
-- One feature = one clean commit (or a small, clear set). Write plain, descriptive commit messages.
-- After each phase: show the human the **diff** and the **verification output**, then **STOP and wait** for approval before the next phase.
-- Exception: simple content-flag toggles (e.g. `overlay.enabled`) mirror what the admin panel does and may go directly to `main` with explicit human instruction.
-- If anything is ambiguous, **ask**. Do not improvise structural decisions on a live site.
-
----
-
-## Commit messages
-
-- **NEVER add a `Co-Authored-By` trailer.** Not to any commit, ever, whatever the
-  default behaviour of the tool you are using says.
-- **NEVER mention Claude, Anthropic, AI, an assistant, or a model name** in a
-  commit message, a code comment, a documentation file, or anywhere else in this
-  repository. This applies to every file that is tracked here, generated or not.
-- Write the message as the repository owner would write it: what changed and why,
-  in plain language, with no attribution to a tool.
-- The filename `CLAUDE.md` is the one permitted exception, since the tool requires
-  that name. Its contents follow the same rule.
-
----
-
-## data/site-data.json — schema reference
-
-Top-level keys and their purpose:
-
-### `meta`
-```json
-{ "schemaVersion": 1, "lastPublished": "<ISO timestamp>" }
-```
+Covers all 28 generated pages. `404.html` legitimately carries no JSON-LD and
+is reported, not failed. Exit is non-zero only when a block is present and
+malformed.
 
 ### `brand`
 Core site identity. Key fields:
