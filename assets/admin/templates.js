@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = '0ca5f30716ab';
+  var BUILD_ID = 'fe6fef5c6cfc';
 
   /* ---------- helpers ---------- */
 
@@ -100,7 +100,13 @@
     return blocks.map(function (b) {
       b = b.trim();
       if (!b) return '';
-      if (b.startsWith('## ')) return '              <h3>' + esc(b.slice(3).trim()) + '</h3>';
+      /* Article sections are h2. They used to be h3, which left every post
+         jumping h1 to h3 with the only h2 on the page belonging to the
+         related-links widget. There is deliberately no '### ' branch: no post
+         body uses one, and a third level would need its own mapping here
+         rather than falling through to the paragraph case below, which would
+         render the hashes literally. */
+      if (b.startsWith('## ')) return '              <h2>' + esc(b.slice(3).trim()) + '</h2>';
       // A block whose every line starts "- " becomes a list. Additive: no
       // existing post body contains one, so no current output changes.
       var lines = b.split('\n');
