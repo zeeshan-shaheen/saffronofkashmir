@@ -123,18 +123,43 @@ covers the apex only. Under Full (Strict) a request to `www` that reached the
 origin would return **526**. The redirect runs at the edge before any origin
 fetch, so the certificate never comes into play.
 
-### Known defect
+### Known defect: two rules drop the query string
 
-**`www-to-apex` and `html-to-extensionless` drop the query string.** `[verified]`
+**`www-to-apex` and `html-to-extensionless` drop the query string.** `[verified
+2 Sep 2026, still failing after Preserve query string was enabled]`
 
 ```
-www.saffronofkashmir.com/?utm_source=x   ->  /              query lost
-/products.html?utm_source=x              ->  /products      query lost
+curl -sSI "https://www.saffronofkashmir.com/?probe=838130808"
+  301  Location: https://saffronofkashmir.com/                    query lost
+
+curl -sSI "https://saffronofkashmir.com/products.html?probe=838130808"
+  301  Location: https://saffronofkashmir.com/products            query lost
+```
+
+Re-tested with a unique token per request and no `cf-cache-status` on the
+response, so this is not a cached redirect.
+
+The other four rules preserve it:
+
+```
+/blog/mongra-grade/?utm_source=x&a=1  ->  /blog/grade-names/?utm_source=x&a=1
+/blog/five-fakes?utm_source=x         ->  /blog/purity-tests/?utm_source=x
+/products/?utm_source=x               ->  /products?utm_source=x
+/index.html?utm_source=x              ->  /?utm_source=x
 ```
 
 Any campaign link using `www` or a legacy `.html` path loses its attribution.
-The other four rules preserve it. Fixable by enabling query-string preservation
-on those two rules.
+
+**Diagnostic.** Both failing rules transform the path: `www` keeps `/products`,
+and `.html` is stripped. If their targets are built from
+`http.request.uri.path`, the query is excluded by construction and the Preserve
+query string setting has nothing to act on; the expression must use
+`http.request.uri`, or append `http.request.uri.query`.
+`trailing-slash-to-canonical` also transforms the path and does preserve, so
+copy whatever it does.
+
+Re-run the two `curl` commands above after any change. Do not mark this fixed
+until both show the query in the `Location`.
 
 ---
 
