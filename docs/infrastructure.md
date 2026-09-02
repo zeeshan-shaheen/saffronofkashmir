@@ -71,7 +71,7 @@ Pages IPs is `[verified]`, which confirms both are proxied.
 **DNS only (grey cloud), and must stay that way:**
 
 - `MX` for Zoho (`mx.zoho.com` 10, `mx2.zoho.com` 20, `mx3.zoho.com` 50)
-  — presence `[verified]`
+  (presence `[verified]`)
 - `TXT` records, including SPF `[unconfirmed]`
 - `DKIM` for Zoho and for MailerLite `[unconfirmed]`
 
@@ -84,18 +84,21 @@ and domain authentication.
 
 Order matters. Listed in the order they must run.
 
-**`[unconfirmed]` for every expression, rule name, and the order itself.**
-The status codes, targets and query-string behaviour below are `[verified]` by
-observation.
+Rule names and the order itself are `[unconfirmed]`. The status codes, targets,
+query-string behaviour and the two corrected expressions below are `[verified]`
+by observation on 2 Sep 2026.
 
 | # | rule | observed behaviour |
 |---|---|---|
 | 1 | retirement: `/blog/mongra-grade` | `301` to `/blog/grade-names/`, query preserved |
 | 2 | retirement: `/blog/five-fakes` | `301` to `/blog/purity-tests/`, query preserved |
-| 3 | `www-to-apex` | `301` to apex, **query dropped** |
+| 3 | `www-to-apex` | `301` to apex, path and query preserved |
 | 4 | `trailing-slash-to-canonical` | `301` strips the trailing slash, query preserved |
 | 5 | `index-html-to-root` | `301` `/index.html` to `/`, query preserved |
-| 6 | `html-to-extensionless` | `301` strips `.html`, **query dropped** |
+| 6 | `html-to-extensionless`, query present | `301` strips `.html`, query preserved |
+| 7 | `html-to-extensionless`, no query | `301` strips `.html` |
+
+All seven preserve the query string. `[verified 2 Sep 2026]`
 
 Retirement rule expressions, as applied:
 
@@ -123,43 +126,72 @@ covers the apex only. Under Full (Strict) a request to `www` that reached the
 origin would return **526**. The redirect runs at the edge before any origin
 fetch, so the certificate never comes into play.
 
-### Known defect: two rules drop the query string
+### Query string handling
 
-**`www-to-apex` and `html-to-extensionless` drop the query string.** `[verified
-2 Sep 2026, still failing after Preserve query string was enabled]`
+All seven rules preserve the query string. `[verified 2 Sep 2026]`
 
-```
-curl -sSI "https://www.saffronofkashmir.com/?probe=838130808"
-  301  Location: https://saffronofkashmir.com/                    query lost
+**Preserve query string has no effect when the target is a fully-specified
+dynamic expression.** The checkbox was ticked on both failing rules and changed
+nothing. The query has to be in the expression itself.
 
-curl -sSI "https://saffronofkashmir.com/products.html?probe=838130808"
-  301  Location: https://saffronofkashmir.com/products            query lost
-```
-
-Re-tested with a unique token per request and no `cf-cache-status` on the
-response, so this is not a cached redirect.
-
-The other four rules preserve it:
+`www-to-apex` targets:
 
 ```
-/blog/mongra-grade/?utm_source=x&a=1  ->  /blog/grade-names/?utm_source=x&a=1
-/blog/five-fakes?utm_source=x         ->  /blog/purity-tests/?utm_source=x
-/products/?utm_source=x               ->  /products?utm_source=x
-/index.html?utm_source=x              ->  /?utm_source=x
+concat("https://saffronofkashmir.com", http.request.uri)
 ```
 
-Any campaign link using `www` or a legacy `.html` path loses its attribution.
+`http.request.uri` is path and query together, and it omits the `?` when there
+is no query, so a query-less request does not pick up a bare separator. This is
+what `trailing-slash-to-canonical` was already doing, which is why that rule
+never had the fault.
 
-**Diagnostic.** Both failing rules transform the path: `www` keeps `/products`,
-and `.html` is stripped. If their targets are built from
-`http.request.uri.path`, the query is excluded by construction and the Preserve
-query string setting has nothing to act on; the expression must use
-`http.request.uri`, or append `http.request.uri.query`.
-`trailing-slash-to-canonical` also transforms the path and does preserve, so
-copy whatever it does.
+`html-to-extensionless` is **two rules**, split on whether a query exists:
 
-Re-run the two `curl` commands above after any change. Do not mark this fixed
-until both show the query in the `Location`.
+```
+query present   when  http.request.uri.query ne ""
+  concat("https://saffronofkashmir.com", substring(http.request.uri.path, 0, -5),
+         "?", http.request.uri.query)
+
+no query        when  http.request.uri.query eq ""
+  concat("https://saffronofkashmir.com", substring(http.request.uri.path, 0, -5))
+```
+
+Split rather than one rule using `regex_replace`, because **`regex_replace`
+requires a Business plan and is not available on this zone**. The split also
+avoids appending a bare `?` to a query-less request, which a single
+unconditional `concat` would do.
+
+`-5` strips `.html`. Both rules stay scoped to top-level paths: a `.html` path
+under a subdirectory does not match and still returns 404.
+
+### Regression tests
+
+Run all eight after any change to these rules. The first four must show the
+query, the next two must show no trailing `?`, the last two must stay 404.
+
+```
+curl -sSI "https://www.saffronofkashmir.com/?a=1"               | grep -i location
+curl -sSI "https://www.saffronofkashmir.com/products/?a=1"      | grep -i location
+curl -sSI "https://saffronofkashmir.com/products.html?a=1"      | grep -i location
+curl -sSI "https://saffronofkashmir.com/terms.html?a=1&b=2%20x" | grep -i location
+curl -sSI "https://www.saffronofkashmir.com/"                   | grep -i location
+curl -sSI "https://saffronofkashmir.com/products.html"          | grep -i location
+curl -sS -o /dev/null -w "%{http_code}\n" "https://saffronofkashmir.com/blog/gi-635.html"
+curl -sS -o /dev/null -w "%{http_code}\n" "https://saffronofkashmir.com/products/royal-mongra-2g.html"
+```
+
+Results, 2 Sep 2026:
+
+```
+www/?a=1                        -> https://saffronofkashmir.com/?a=1
+www/products/?a=1               -> https://saffronofkashmir.com/products/?a=1
+/products.html?a=1              -> https://saffronofkashmir.com/products?a=1
+/terms.html?a=1&b=2%20x         -> https://saffronofkashmir.com/terms?a=1&b=2%20x
+www/                            -> https://saffronofkashmir.com/
+/products.html                  -> https://saffronofkashmir.com/products
+/blog/gi-635.html               -> 404
+/products/royal-mongra-2g.html  -> 404
+```
 
 ---
 
@@ -180,7 +212,29 @@ Leave them disabled. Do not re-enable without re-checking those three points.
 
 ---
 
-## 5. What cannot be done in the repository
+## 5. Pricing
+
+**The INR price is not a conversion of the AED price.** India is priced
+separately, at roughly half the AED price converted.
+
+`brand.currencies.INR` carries `markup: -50`, and the displayed price is
+`aed * rate * (1 + markup / 100)`. AED 65 shows as about INR 846, where a
+straight conversion would be about INR 1,691.
+
+**A Merchant Center feed built by converting AED will be wrong for India by a
+factor of two.** Country pricing has to come from the INR figure the site
+actually shows, not from the base price.
+
+Product JSON-LD carries AED only. That matches what a crawler sees, because the
+currency switcher is client-side and Google does not run it. Do not add a second
+Offer in INR: nothing on the page binds a currency to a country, so a second
+Offer gives Google no basis to choose between them. The supported routes are a
+Merchant Center feed with per-country pricing, or country-specific URLs, neither
+of which exists yet.
+
+---
+
+## 6. What cannot be done in the repository
 
 **GitHub Pages has no redirect mechanism.** No `_redirects`, no `.htaccess`, no
 config file of any kind. Every redirect on this site is a Cloudflare rule
@@ -210,7 +264,7 @@ rather than read and should be checked against the dashboard:
 1. SSL/TLS mode is literally set to **Full (Strict)**.
 2. The exact expression, action, target, status code and query-string setting of
    each of the six active rules.
-3. The **order** the six rules appear in.
+3. The **order** the seven rules appear in.
 4. The five disabled rules: that they exist, their names, their expressions, and
    that they are Disabled rather than deleted.
 5. The full DNS record list, and which records are proxied against DNS only,
