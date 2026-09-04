@@ -304,6 +304,11 @@ contact points in JSON-LD. Both showed `CHANGED BLOCKS 0` and both were real.
 Verify that class of change directly, by reading the emitted markup or schema,
 and never read a zero as confirmation.
 
+**A sentence ending on a link renders in parity output with a space before the
+full stop, because tags are stripped whole.** That is a false positive rather
+than a blind spot: verify against the emitted HTML before treating any spacing
+or punctuation difference in parity output as a copy defect.
+
 It reports **every** changed block on a page, not just the first. An earlier
 version stopped at the first difference, which hid a real body change on a page
 that also had a title change: the run reported the same result before and after
