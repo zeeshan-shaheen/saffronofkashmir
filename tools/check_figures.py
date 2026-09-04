@@ -85,6 +85,28 @@ TRACKED = [
             r"between\s+([\d.]+)\s+to\s+([\d.]+)\s+kg per hectare",
         ],
     },
+    {
+        "name": "Iran's share of world saffron production",
+        "accepted": {"85", "90"},
+        "patterns": [
+            r"Iran at\s+(\d+)\s+to\s+\d+\s+percent of world production",
+            r"Iran at\s+\d+\s+to\s+(\d+)\s+percent of world production",
+            r"Gonabad says over\s+(\d+)\s+percent",
+        ],
+    },
+    {
+        # The PDO's own floor, NOT the ISO 3632 Category I floor. The site states
+        # the ISO figure as 190 or 200 and read-lab-report explains why sources
+        # differ. Conflating the two is the defect this entry exists to catch, so
+        # the patterns deliberately key on "colouring power", which is the PDO's
+        # wording and appears nowhere else on the site.
+        "name": "PDO Azafran de La Mancha colouring power floor",
+        "accepted": {"200"},
+        "patterns": [
+            r"colouring power above\s+(\d+)",
+            r"colouring power floor of\s+(\d+)",
+        ],
+    },
 ]
 
 
