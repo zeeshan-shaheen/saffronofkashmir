@@ -183,6 +183,56 @@ Applies to ALL copy in data/site-data.json AND any hardcoded text in templates.j
 - Short, concrete sentences in the voice of a Pampore saffron seller, not a brochure.
 - Test: read it aloud. If it sounds like marketing copy or a chatbot, rewrite it plainer.
 ---
+
+## Making a claim — the four principles
+
+These are not style. They are the argumentative standard the blog already holds
+itself to, extracted from the copy rather than invented, and written down here
+because until 5 Sep 2026 they existed only in the posts. Any page that makes a
+claim about the market, about another seller's product, or about our own, must
+satisfy all four. They bind an interactive feature that returns a verdict at
+least as hard as they bind prose, because a verdict reads as more authoritative
+than a paragraph.
+
+**1. Declare the interest before the argument, not after it.** The reader is
+told what we sell and what that biases us toward, in the first section, before
+the reasoning they are being asked to weigh.
+
+> "We grow saffron in Pampore and we sell it. Any article from us ranking the
+> three origins is marketing in a lab coat, so here is where this ends up before
+> you read the argument."
+> - `origins-compared`
+
+**2. State the limit of our own knowledge.** Where we cannot know something, say
+so plainly, including when the admission weakens the page.
+
+> "We are also not claiming to be able to identify anyone else's saffron from a
+> distance. We cannot. Nobody can, from a product page. That is exactly why the
+> documents matter."
+> - `arithmetic-of-origin`
+
+**3. Separate the complaint from the accusation.** Name the narrow thing that is
+actually wrong, and say explicitly which broader charge is not being made.
+
+> "We are not saying Iranian saffron is bad. It is not. Much of it is excellent
+> and it feeds most of the world. We are saying that a thing sold as Kashmiri
+> should be Kashmiri... Those are different complaints and only the second one
+> is ours."
+> - `arithmetic-of-origin`
+
+**4. Do not resolve an ambiguity in our own favour.** Where sources disagree,
+publish the disagreement rather than the reading that flatters us.
+
+> "We are not going to resolve that for you by picking the number that flatters
+> us. If you see 190 in one place and 200 in another, that is why."
+> - `read-lab-report`
+
+A fifth follows from the four and is worth stating separately: **do not perform
+the standard**. A sentence that announces our own honesty is weaker than one
+that demonstrates it, and it was cut from `origins-compared` for that reason.
+Show the working; do not narrate the virtue.
+
+---
 ## Verification — run after EVERY change, before committing
 
 ```powershell
