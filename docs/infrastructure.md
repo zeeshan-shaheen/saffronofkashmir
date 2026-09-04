@@ -161,8 +161,41 @@ requires a Business plan and is not available on this zone**. The split also
 avoids appending a bare `?` to a query-less request, which a single
 unconditional `concat` would do.
 
-`-5` strips `.html`. Both rules stay scoped to top-level paths: a `.html` path
-under a subdirectory does not match and still returns 404.
+`-5` strips `.html`.
+
+**The condition is an enumerated list of paths, not a wildcard over top-level
+`.html`.** `[verified 5 Sep 2026]` Observed behaviour:
+
+```
+index.html            301 -> /                     zzz-not-real.html    404, no redirect
+products.html         301 -> /products             purity-checker.html  404, no redirect
+recipes.html          301 -> /recipes
+blogs.html            301 -> /blogs
+privacy-policy.html   301 -> /privacy-policy
+terms.html            301 -> /terms
+shipping-policy.html  301 -> /shipping-policy
+returns-policy.html   301 -> /returns-policy
+```
+
+The eight existing pages redirect. An arbitrary top-level `.html` path does not,
+so it is not a general rule. A `.html` path under a subdirectory does not match
+either and still returns 404.
+
+**Consequence, and it is the reason this is written down.** GitHub Pages serves
+an extensionless request from the matching `.html` file, so a new file-backed
+page is reachable at BOTH addresses the moment it ships. Until both
+`html-to-extensionless` rules are edited to include it, the new page serves
+`200` at its `.html` address as well as its clean one. That is a duplicate
+address, which is the defect the rule exists to remove.
+
+Two ways to avoid it:
+
+- Add the new path to both rules, the query variant and the no-query variant,
+  before or with the deploy. Two dashboard edits, easy to forget.
+- **Build the page directory-backed instead**, as `<name>/index.html` served at
+  `/<name>/`. GitHub Pages serves the slash form and `301`s the no-slash form to
+  it with no Cloudflare rule at all, which is how every `/blog/<slug>/` and
+  `/products/<slug>/` page already works. Prefer this.
 
 ### Regression tests
 

@@ -27,7 +27,7 @@ saffronofkashmir/
 │   │   ├── templates.js        ← pure render functions (UMD, runs in Node + browser)
 │   │   └── admin.js            ← browser-only admin panel logic
 │   ├── js/
-│   │   └── main.js             ← runtime JS for the live site (no libraries, ~4 KB)
+│   │   └── main.js             ← runtime JS for the live site (no libraries, ~17 KB)
 │   └── css/
 │       └── style.css           ← single stylesheet, no frameworks
 ├── admin.html                  ← browser-only admin panel (noindex)
@@ -561,14 +561,22 @@ formatted with `Intl.NumberFormat`.
 
 ## main.js — runtime modules
 
-All wrapped in one IIFE (`(function () { 'use strict'; ... })()`). No libraries. Current modules (in order):
+All wrapped in one IIFE (`(function () { 'use strict'; ... })()`). No libraries.
+**17450 bytes as of 5 Sep 2026.** This list went stale once, omitting three modules
+entirely; the file itself is the authority, and its own header comment is also
+wrong about its size.
+
+Current modules, in source order:
 
 1. **Mobile nav toggle** — `.nav-toggle` ↔ `.nav-links.open`
 2. **Back to top** — `.back-top` shows after 600px scroll
-3. **Filter bars** — `[data-filter-bar]` / `[data-filter-target]` / `[data-category]` for products and blog
-4. **WhatsApp tracking** — delegated click on `a[href*="wa.me"]` → `gtag('event', 'whatsapp_click', { item })`
-5. **Currency switcher** — geo-detects via `https://ipapi.co/json/` (free, 1000 req/day) on first visit; maps country code to currency; saves to `localStorage` key `sok_currency`; responds to `<select>` change; applies `Intl.NumberFormat` to all `[data-price]` elements
-6. **First-visit overlay** — 4 s delay OR first scroll trigger; `sessionStorage` key `sok_overlay_seen`; `localStorage` key `sok_overlay_done`; JSONP Mailchimp submit (endpoint `/post?` → `/post-json?` + `&c=sokMcCb`); ESC + backdrop dismiss
+3. **Generic filter bars** — `[data-filter-bar]` / `[data-filter-target]` / `[data-category]` for products and blog
+4. **Order attribution** — first touch wins: the source that brought a visitor here is recorded once and never overwritten, so a repeat buyer keeps one ref across sessions. Stores a source label, landing path, timestamp and random code in this browser only. No IP, no fingerprint, no third-party request. Stamps the ref onto `wa.me` links that already carry a message, idempotently; links with no message of their own are left alone
+5. **WhatsApp conversion tracking** — delegated click on `a[href*="wa.me"]` → `gtag('event', 'whatsapp_click', { item })`
+6. **Social profile click tracking**
+7. **Currency switcher and WhatsApp routing** — one geo lookup via `https://ipapi.co/json/` serves both. Currency to `localStorage` key `sok_currency`, country to `sok_country`, and deliberately no second geolocation call. Timezone fallback when ipapi is unreachable or over its daily cap. Applies `Intl.NumberFormat` to all `[data-price]` elements, and swaps routed WhatsApp hrefs to the number for that country, re-stamping the attribution ref the swap would otherwise drop
+8. **First-visit discount overlay** — 4 s delay OR first scroll trigger; `sessionStorage` key `sok_overlay_seen`; `localStorage` key `sok_overlay_done`; JSONP Mailchimp submit (endpoint `/post?` → `/post-json?` + `&c=sokMcCb`); ESC + backdrop dismiss. Phone-width viewports never open it
+9. **Print a single recipe** — opens its `details`, prints, restores
 
 ### Country → currency mapping (in main.js)
 ```
