@@ -261,6 +261,9 @@ python tools/check_figures.py
 
 # 8. Related-post reference check
 python tools/check_related.py
+
+# 9. Purity checker claim check
+python tools/check_checker.py
 ```
 
 **`tools/check_related.py` fails on an invalid `related` reference.** "More from
