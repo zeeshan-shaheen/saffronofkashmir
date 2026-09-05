@@ -107,6 +107,35 @@ TRACKED = [
             r"colouring power floor of\s+(\d+)",
         ],
     },
+    {
+        # Restated by the purity checker as well as by purity-tests, which is
+        # exactly the drift this file exists to catch: the tool and the post
+        # must not disagree about how the test is run.
+        "name": "water test, thread count",
+        "accepted": {"3-4"},
+        "patterns": [
+            r"Place\s+([\d-]+)\s+threads in a glass of cold water",
+        ],
+    },
+    {
+        "name": "water test, observation window",
+        "accepted": {"10-15"},
+        "patterns": [
+            r"cold water and watch for\s+([\d-]+)\s+minutes",
+        ],
+    },
+    {
+        # Stated in five posts and now in the checker's cannotSee panel.
+        "name": "ISO 3632 moisture maximum, percent",
+        "accepted": {"12"},
+        "patterns": [
+            r"moisture maximum of\s+(\d+)\s+percent",
+            r"[Mm]oisture maximum is\s+(\d+)\s+percent",
+            r"moisture at\s+(\d+)\s+percent maximum",
+            r"ISO 3632 allows up to\s+(\d+)",
+            r"ISO 3632 limit of\s+(\d+)\s+percent maximum",
+        ],
+    },
 ]
 
 

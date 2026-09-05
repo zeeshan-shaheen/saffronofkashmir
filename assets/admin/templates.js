@@ -19,7 +19,7 @@
      admin.js compares this value against the build-id.json on the live site
      before publishing, and blocks the publish if they differ. See the 29 Aug
      2026 incident in docs/RESUME.md. */
-  var BUILD_ID = 'a1f3cc99f870';
+  var BUILD_ID = 'c0b028438e1a';
 
   /* ---------- helpers ---------- */
 
@@ -92,6 +92,114 @@
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
       .replace(/\*\*([^*]+)\*\*/g, '$1')
       .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1$2');
+  }
+
+  /* Purity checker.
+
+     Pure, like everything else here: data in, HTML string out. No DOM, no
+     browser API, so it runs under Node in build.js and in the admin panel.
+
+     Everything renders on first paint, including every reasoning string. With
+     JavaScript off this is a readable document: real radio inputs inside real
+     fieldsets, each option followed by the sentence that explains it. main.js
+     unhides the controls and collapses the reasoning to reveal-on-select. The
+     reasoning IS the product, so it is never JavaScript-only.
+
+     tools/check_checker.py enforces that every string here is anchored to a
+     sentence in a live post. */
+  function checkerHtml(data, p) {
+    var c = p && p.checker;
+    if (!c || !c.questions || !c.questions.length) return '';
+    var b = data.brand;
+    var out = '';
+
+    out += '          <section class="checker" id="purity-checker" aria-labelledby="checker-h">\n';
+    out += '            <h2 id="checker-h">' + esc(c.heading) + '</h2>\n';
+    out += '            <p class="checker-intro">' + inlineMd(b, c.intro) + '</p>\n';
+    out += '            <form class="checker-form" novalidate>\n';
+
+    c.questions.forEach(function (q, qi) {
+      out += '              <fieldset class="checker-q">\n';
+      out += '                <legend>' + esc(q.prompt) + '</legend>\n';
+      if (q.help) out += '                <p class="checker-help">' + esc(q.help) + '</p>\n';
+      (q.options || []).forEach(function (o, oi) {
+        var id = 'ck-' + esc(q.id) + '-' + oi;
+        out += '                <div class="checker-opt">\n';
+        out += '                  <input type="radio" id="' + id + '" name="ck-' + esc(q.id) + '"'
+             + ' value="' + oi + '" data-signal="' + esc(o.signal) + '">\n';
+        out += '                  <label for="' + id + '">' + esc(o.label) + '</label>\n';
+        out += '                  <p class="checker-because" id="' + id + '-why">'
+             + esc(o.because) + '</p>\n';
+        out += '                </div>\n';
+      });
+      out += '              </fieldset>\n';
+    });
+
+    /* Hidden by default and unhidden by main.js. With JavaScript off there is
+       nothing to compute, so offering a button that reloads the page would be
+       worse than offering none. */
+    out += '              <div class="checker-controls" hidden>\n';
+    out += '                <button type="submit" class="btn">Show what this adds up to</button>\n';
+    out += '                <button type="reset" class="btn btn-outline">Start again</button>\n';
+    out += '              </div>\n';
+    out += '            </form>\n';
+
+    out += '            <div class="checker-result" role="status" aria-live="polite"></div>\n';
+
+    /* Every outcome renders as static content too, so the reasoning survives
+       with JavaScript off and is indexable. main.js reads these. */
+    out += '            <div class="checker-outcomes">\n';
+    ['indicator', 'nothing', 'inconclusive'].forEach(function (k) {
+      var oc = (c.outcomes || {})[k];
+      if (!oc) return;
+      out += '              <div class="checker-outcome" data-outcome="' + k + '">\n';
+      out += '                <h3>' + esc(oc.heading) + '</h3>\n';
+      out += '                <p>' + inlineMd(b, oc.body) + '</p>\n';
+      out += '              </div>\n';
+    });
+    out += '            </div>\n';
+
+    if (c.notes && c.notes.length) {
+      out += '            <ul class="checker-notes">\n';
+      c.notes.forEach(function (n) {
+        out += '              <li>' + inlineMd(b, n.text) + '</li>\n';
+      });
+      out += '            </ul>\n';
+    }
+
+    if (c.cannotSee && c.cannotSee.length) {
+      out += '            <aside class="checker-cannot">\n';
+      out += '              <h3>What none of this can detect</h3>\n';
+      out += '              <ul>\n';
+      c.cannotSee.forEach(function (n) {
+        out += '                <li>' + inlineMd(b, n.text) + '</li>\n';
+      });
+      out += '              </ul>\n';
+      out += '            </aside>\n';
+    }
+
+    if (c.footer) out += '            <p class="checker-footer">' + inlineMd(b, c.footer) + '</p>\n';
+    out += '          </section>\n';
+    return out;
+  }
+
+  /* Renders a post body with the checker spliced in after the named section.
+     Splitting here rather than putting a placeholder in the body keeps the
+     body pure mini-markdown and keeps the bare-brace sweep meaningful.
+     check_checker.py asserts afterSection resolves, so the fall-through is a
+     safety net rather than a supported path. */
+  function bodyWithChecker(data, p) {
+    var body = String((p && p.body) || '');
+    var c = p && p.checker;
+    if (!c || !c.afterSection) return bodyToHtml(data.brand, body);
+    var head = '## ' + c.afterSection;
+    var i = body.indexOf(head);
+    if (i === -1) return bodyToHtml(data.brand, body) + checkerHtml(data, p);
+    var j = body.indexOf('\n## ', i + head.length);
+    if (j === -1) return bodyToHtml(data.brand, body) + checkerHtml(data, p);
+    return bodyToHtml(data.brand, body.slice(0, j)) + '\n'
+         + checkerHtml(data, p)
+         + bodyToHtml(data.brand, body.slice(j + 1));
   }
 
   // Blog body: blank-line paragraphs; lines starting "## " become <h3>.
@@ -1321,7 +1429,7 @@
       '          ' + postMeta(p, catLabel, true) + '\n' +
       '          <h1>' + esc(p.title) + '</h1>\n' +
       '          <p class="excerpt">' + esc(p.excerpt) + '</p>\n' +
-      bodyToHtml(b, p.body) + '\n' +
+      bodyWithChecker(data, p) + '\n' +
       '          <p class="pd-links"><a href="' + pageUrl('blogs.html') + '">All articles</a></p>\n' +
       '        </article>\n\n' + blogSidebar(data) +
       '      </div>\n    </div>\n  </section>\n' + more + '</main>\n\n' +
@@ -1519,6 +1627,7 @@
     renderProductDetail: renderProductDetail,
     renderRecipes: renderRecipes, renderBlogs: renderBlogs,
     renderPostPage: renderPostPage, postSlug: postSlug, postUrl: postUrl,
+    checkerHtml: checkerHtml, bodyWithChecker: bodyWithChecker,
     render404: render404, renderSitemap: renderSitemap,
     renderLlms: renderLlms, renderPrivacyPolicy: renderPrivacyPolicy,
     renderPolicyPage: renderPolicyPage,

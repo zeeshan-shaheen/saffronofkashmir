@@ -427,4 +427,61 @@
       win.print();
     });
   });
+
+  // Purity checker.
+  // The markup is complete and readable before this runs: real radios in real
+  // fieldsets, every reasoning string on the page. CSS does the reveal through
+  // input:checked, so selecting an option needs no JavaScript either. This adds
+  // only what genuinely cannot work without it: the controls and the outcome.
+  document.addEventListener('DOMContentLoaded', function () {
+    var root = document.querySelector('.checker');
+    if (!root) return;
+    var form = root.querySelector('.checker-form');
+    var result = root.querySelector('.checker-result');
+    var controls = root.querySelector('.checker-controls');
+    if (!form || !result || !controls) return;
+
+    // Marks the section as enhanced. Until this class lands, CSS keeps every
+    // reasoning paragraph visible, which is the no-JS reading.
+    root.classList.add('checker-js');
+    controls.hidden = false;
+
+    function outcomeFor(signals, total) {
+      if (signals.indexOf('indicator') !== -1) return 'indicator';
+      if (signals.length < total) return 'inconclusive';
+      if (signals.indexOf('inconclusive') !== -1) return 'inconclusive';
+      return 'nothing';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var groups = form.querySelectorAll('fieldset.checker-q');
+      var signals = [];
+      groups.forEach(function (g) {
+        var picked = g.querySelector('input[type="radio"]:checked');
+        if (picked) signals.push(picked.getAttribute('data-signal'));
+      });
+
+      if (!signals.length) {
+        result.innerHTML = '<p class="checker-none">Answer at least one question first.</p>';
+        return;
+      }
+
+      var key = outcomeFor(signals, groups.length);
+      var src = root.querySelector('.checker-outcome[data-outcome="' + key + '"]');
+      if (!src) return;
+
+      result.innerHTML = '<div class="checker-verdict" data-outcome="' + key + '">' +
+        src.innerHTML + '</div>';
+
+      // Focus moves only on submit, never on selection, so keyboard users are
+      // not thrown out of the form while answering.
+      var h = result.querySelector('h3');
+      if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
+    });
+
+    form.addEventListener('reset', function () {
+      result.innerHTML = '';
+    });
+  });
 })();

@@ -770,7 +770,213 @@
     },
     {
       "id": "purity-tests",
-      "dateModified": "2026-09-01",
+      "dateModified": "2026-09-05",
+      "checker": {
+        "afterSection": "The rub test",
+        "heading": "Work out what you have",
+        "intro": "We sell saffron, so a tool on our own site that judges yours is worth reading with suspicion. It gives no score and it cannot tell you your saffron is good. It tells you whether what you saw matches something known to indicate adulteration, and it lists what it cannot see at all.",
+        "questions": [
+          {
+            "id": "structure",
+            "prompt": "Under a magnifier, what does one end of a thread look like?",
+            "help": "A cheap magnifier is enough. This is the check worth doing first.",
+            "options": [
+              {
+                "label": "One end flares out, wider than the rest of the thread",
+                "signal": "nothing",
+                "because": "A genuine saffron stigma is trumpet-shaped at one end, flaring out.",
+                "anchor": "A genuine saffron stigma is trumpet-shaped at one end, flaring out."
+              },
+              {
+                "label": "Flat or floppy, or no flared end anywhere",
+                "signal": "indicator",
+                "because": "Safflower, marigold petal and corn silk do not have that structure, because they are not stigmas.",
+                "anchor": "Safflower, marigold petal and corn silk do not have that structure, because they are not stigmas."
+              },
+              {
+                "label": "I have not looked under magnification",
+                "signal": "inconclusive",
+                "because": "The single most useful thing you can do at home costs the price of a cheap magnifier.",
+                "anchor": "The single most useful thing you can do at home costs the price of a cheap magnifier."
+              }
+            ]
+          },
+          {
+            "id": "water",
+            "prompt": "Place 3-4 threads in a glass of cold water and watch for 10-15 minutes. What happened?",
+            "help": "Cold water, not hot. Hot water forces colour out of almost anything.",
+            "options": [
+              {
+                "label": "Colour came out slowly and the threads stayed red",
+                "signal": "nothing",
+                "because": "Genuine saffron releases colour slowly and the thread keeps its red.",
+                "anchor": "Genuine saffron releases colour slowly and the thread keeps its red."
+              },
+              {
+                "label": "Colour came out fast and the threads went pale",
+                "signal": "indicator",
+                "because": "Many fakes release colour fast and go pale.",
+                "anchor": "Many fakes release colour fast and go pale."
+              },
+              {
+                "label": "I have not run it",
+                "signal": "inconclusive",
+                "because": "Place 3-4 threads in a glass of cold water and watch for 10-15 minutes.",
+                "anchor": "Place 3-4 threads in a glass of cold water and watch for 10-15 minutes."
+              }
+            ]
+          },
+          {
+            "id": "soda",
+            "prompt": "Add a pinch of baking soda to that water. What colour did it turn?",
+            "help": "Use the same glass from the previous question.",
+            "options": [
+              {
+                "label": "Bright golden yellow",
+                "signal": "nothing",
+                "because": "Genuine saffron turns it a bright golden yellow.",
+                "anchor": "Genuine saffron turns it a bright golden yellow."
+              },
+              {
+                "label": "Red, green, or a murky brown",
+                "signal": "indicator",
+                "because": "Some adulterated samples turn it red, green or a murky brown, as the alkali reacts with a synthetic pigment.",
+                "anchor": "Some adulterated samples turn it red, green or a murky brown, as the alkali reacts with a synthetic pigment."
+              },
+              {
+                "label": "I have not run it",
+                "signal": "inconclusive",
+                "because": "Add a pinch of baking soda to the water from the test above.",
+                "anchor": "Add a pinch of baking soda to the water from the test above."
+              }
+            ]
+          },
+          {
+            "id": "rub",
+            "prompt": "Rub a single thread between your fingers. What did it do?",
+            "help": "One thread is enough, and you will not get it back.",
+            "options": [
+              {
+                "label": "Stained my fingers golden yellow and softened",
+                "signal": "nothing",
+                "because": "A genuine stigma stains your fingers golden yellow and softens without crumbling.",
+                "anchor": "A genuine stigma stains your fingers golden yellow and softens without crumbling."
+              },
+              {
+                "label": "Bled colour quickly and broke up",
+                "signal": "indicator",
+                "because": "A dyed thread often bleeds colour quickly and breaks up.",
+                "anchor": "A dyed thread often bleeds colour quickly and breaks up."
+              },
+              {
+                "label": "I have not run it",
+                "signal": "inconclusive",
+                "because": "Rub a single thread between your fingers.",
+                "anchor": "Rub a single thread between your fingers."
+              }
+            ]
+          },
+          {
+            "id": "aroma",
+            "prompt": "Open the tin and smell it. How strong is the aroma?",
+            "help": "This one is subjective and it is supporting evidence, not a test.",
+            "options": [
+              {
+                "label": "Strong",
+                "signal": "nothing",
+                "because": "Of the three measured compounds, safranal is the volatile one. It is what you smell.",
+                "anchor": "Of the three measured compounds, safranal is the volatile one. It is what you smell.",
+                "anchorPost": "storing-saffron"
+              },
+              {
+                "label": "Faint, or almost nothing",
+                "signal": "inconclusive",
+                "because": "If you open the tin and it smells faint, the safranal has gone even though the crocin may be largely intact.",
+                "anchor": "if you open the tin and it smells faint, the safranal has gone even though the crocin may be largely intact",
+                "anchorPost": "storing-saffron"
+              },
+              {
+                "label": "I cannot judge it",
+                "signal": "inconclusive",
+                "because": "Aroma degrades before colour does.",
+                "anchor": "aroma degrades before colour does",
+                "anchorPost": "storing-saffron"
+              }
+            ]
+          },
+          {
+            "id": "price",
+            "prompt": "What did it cost per gram, against what growers charge?",
+            "help": "Price is context for the answers above, not an answer of its own.",
+            "options": [
+              {
+                "label": "In the range hand-picked saffron sells for",
+                "signal": "nothing",
+                "because": "That does not mean an expensive listing is genuine.",
+                "anchor": "That does not mean an expensive listing is genuine."
+              },
+              {
+                "label": "Far cheaper than hand-picking could support",
+                "signal": "indicator",
+                "because": "A listing priced where that labour cannot possibly have happened is describing a different product, whatever the photographs show.",
+                "anchor": "A listing priced where that labour cannot possibly have happened is describing a different product, whatever the photographs show."
+              },
+              {
+                "label": "I do not know, it was a gift",
+                "signal": "inconclusive",
+                "because": "Price is not a test, but it is evidence.",
+                "anchor": "Price is not a test, but it is evidence."
+              }
+            ]
+          }
+        ],
+        "notes": [
+          {
+            "text": "Yellow style in the tin is a grade question, not adulteration. A tin with more style in it is a different cut, not a faked one.",
+            "anchor": "The style is part of the flower, so this is not adulteration.",
+            "anchorPost": "grade-names"
+          },
+          {
+            "text": "A faint smell points at age or storage rather than fraud, which is why it is not counted as an indicator here.",
+            "anchor": "aroma degrades before colour does",
+            "anchorPost": "storing-saffron"
+          }
+        ],
+        "cannotSee": [
+          {
+            "text": "Genuine saffron blended into a larger quantity of something cheaper and sold under the better name.",
+            "anchor": "Everything in the tin is saffron. The origin claim is still false for most of the weight.",
+            "anchorPost": "arithmetic-of-origin"
+          },
+          {
+            "text": "Genuine saffron that is simply weak and would test below Category I.",
+            "anchor": "Genuine saffron that is simply weak, which passes the water test and fails on crocin."
+          },
+          {
+            "text": "Moisture loading, whether deliberate or from bad storage.",
+            "anchor": "There is no home version of this test."
+          },
+          {
+            "text": "Artificial dye applied to genuine saffron to make a weak batch look strong.",
+            "anchor": "No home test finds these reliably. HPLC does."
+          }
+        ],
+        "outcomes": {
+          "indicator": {
+            "heading": "At least one answer is a known indicator",
+            "body": "One or more of your observations matches something this article names as a sign of adulteration. That is not proof, and it is not a verdict on whoever sold it to you. Ask for the lab report and the lot number for the tin you have."
+          },
+          "nothing": {
+            "heading": "Nothing you observed is a known indicator",
+            "body": "None of your answers matches a sign of adulteration described in this article. That is worth something and it is not a clean bill of health. What none of these tests can see is listed below, and it is the larger part of the problem."
+          },
+          "inconclusive": {
+            "heading": "Not enough was observed to say",
+            "body": "You have not run enough of these for the answers to point anywhere. The structural check under a magnifier is the one worth doing first."
+          }
+        },
+        "footer": "Every question here ends in the same place: the three numbers on the lab report for your lot. [How to read one](/blog/read-lab-report/). If a test ever goes against us, [our purity guarantee](/#faq) says what happens next."
+      },
       "categoryKey": "guide",
       "dateISO": "2025-03-05",
       "dateDisplay": "March 5, 2025",
